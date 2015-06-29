@@ -1,0 +1,1 @@
+C:\wamp\bin\php\php5.5.12\php.exe C:\Users\djou\Downloads\composer.phar create-project --prefer-dist cakephp/app App
