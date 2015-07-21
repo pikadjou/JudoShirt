@@ -17,7 +17,11 @@ class CategoriesDesignsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.categories_designs'
+        'app.categories_designs',
+        'app.categories',
+        'app.designs',
+        'app.tags',
+        'app.tags_designs'
     ];
 
     /**
@@ -60,6 +64,16 @@ class CategoriesDesignsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

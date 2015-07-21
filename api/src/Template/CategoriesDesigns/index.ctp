@@ -13,8 +13,8 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('categoriesId') ?></th>
-            <th><?= $this->Paginator->sort('designsId') ?></th>
+            <th><?= $this->Paginator->sort('category_id') ?></th>
+            <th><?= $this->Paginator->sort('design_id') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -22,8 +22,12 @@
     <?php foreach ($categoriesDesigns as $categoriesDesign): ?>
         <tr>
             <td><?= $this->Number->format($categoriesDesign->id) ?></td>
-            <td><?= $this->Number->format($categoriesDesign->categoriesId) ?></td>
-            <td><?= $this->Number->format($categoriesDesign->designsId) ?></td>
+            <td>
+                <?= $categoriesDesign->has('category') ? $this->Html->link($categoriesDesign->category->name, ['controller' => 'Categories', 'action' => 'view', $categoriesDesign->category->id]) : '' ?>
+            </td>
+            <td>
+                <?= $categoriesDesign->has('design') ? $this->Html->link($categoriesDesign->design->name, ['controller' => 'Designs', 'action' => 'view', $categoriesDesign->design->id]) : '' ?>
+            </td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $categoriesDesign->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $categoriesDesign->id]) ?>

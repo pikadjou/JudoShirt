@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
 /**
  * TagsDesigns Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Tags
+ * @property \Cake\ORM\Association\BelongsTo $Designs
  */
 class TagsDesignsTable extends Table
 {
@@ -25,6 +27,12 @@ class TagsDesignsTable extends Table
         $this->table('tags_designs');
         $this->displayField('id');
         $this->primaryKey('id');
+        $this->belongsTo('Tags', [
+            'foreignKey' => 'tag_id'
+        ]);
+        $this->belongsTo('Designs', [
+            'foreignKey' => 'design_id'
+        ]);
     }
 
     /**
@@ -38,17 +46,21 @@ class TagsDesignsTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create');
-            
-        $validator
-            ->add('tagsId', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('tagsId', 'create')
-            ->notEmpty('tagsId');
-            
-        $validator
-            ->add('designsId', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('designsId', 'create')
-            ->notEmpty('designsId');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['tag_id'], 'Tags'));
+        $rules->add($rules->existsIn(['design_id'], 'Designs'));
+        return $rules;
     }
 }

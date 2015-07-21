@@ -18,6 +18,9 @@ class CategoriesDesignsController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Categories', 'Designs']
+        ];
         $this->set('categoriesDesigns', $this->paginate($this->CategoriesDesigns));
         $this->set('_serialize', ['categoriesDesigns']);
     }
@@ -32,7 +35,7 @@ class CategoriesDesignsController extends AppController
     public function view($id = null)
     {
         $categoriesDesign = $this->CategoriesDesigns->get($id, [
-            'contain' => []
+            'contain' => ['Categories', 'Designs']
         ]);
         $this->set('categoriesDesign', $categoriesDesign);
         $this->set('_serialize', ['categoriesDesign']);
@@ -55,7 +58,9 @@ class CategoriesDesignsController extends AppController
                 $this->Flash->error(__('The categories design could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('categoriesDesign'));
+        $categories = $this->CategoriesDesigns->Categories->find('list', ['limit' => 200]);
+        $designs = $this->CategoriesDesigns->Designs->find('list', ['limit' => 200]);
+        $this->set(compact('categoriesDesign', 'categories', 'designs'));
         $this->set('_serialize', ['categoriesDesign']);
     }
 
@@ -80,7 +85,9 @@ class CategoriesDesignsController extends AppController
                 $this->Flash->error(__('The categories design could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('categoriesDesign'));
+        $categories = $this->CategoriesDesigns->Categories->find('list', ['limit' => 200]);
+        $designs = $this->CategoriesDesigns->Designs->find('list', ['limit' => 200]);
+        $this->set(compact('categoriesDesign', 'categories', 'designs'));
         $this->set('_serialize', ['categoriesDesign']);
     }
 

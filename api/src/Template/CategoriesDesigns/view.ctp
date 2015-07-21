@@ -14,13 +14,15 @@
 <div class="categoriesDesigns view large-10 medium-9 columns">
     <h2><?= h($categoriesDesign->id) ?></h2>
     <div class="row">
+        <div class="large-5 columns strings">
+            <h6 class="subheader"><?= __('Category') ?></h6>
+            <p><?= $categoriesDesign->has('category') ? $this->Html->link($categoriesDesign->category->name, ['controller' => 'Categories', 'action' => 'view', $categoriesDesign->category->id]) : '' ?></p>
+            <h6 class="subheader"><?= __('Design') ?></h6>
+            <p><?= $categoriesDesign->has('design') ? $this->Html->link($categoriesDesign->design->name, ['controller' => 'Designs', 'action' => 'view', $categoriesDesign->design->id]) : '' ?></p>
+        </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>
             <p><?= $this->Number->format($categoriesDesign->id) ?></p>
-            <h6 class="subheader"><?= __('CategoriesId') ?></h6>
-            <p><?= $this->Number->format($categoriesDesign->categoriesId) ?></p>
-            <h6 class="subheader"><?= __('DesignsId') ?></h6>
-            <p><?= $this->Number->format($categoriesDesign->designsId) ?></p>
         </div>
     </div>
 </div>

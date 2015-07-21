@@ -19,8 +19,8 @@
     <fieldset>
         <legend><?= __('Edit Categories Design') ?></legend>
         <?php
-            echo $this->Form->input('categoriesId');
-            echo $this->Form->input('designsId');
+            echo $this->Form->input('category_id', ['options' => $categories, 'empty' => true]);
+            echo $this->Form->input('design_id', ['options' => $designs, 'empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

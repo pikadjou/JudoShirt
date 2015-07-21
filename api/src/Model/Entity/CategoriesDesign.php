@@ -15,7 +15,9 @@ class CategoriesDesign extends Entity
      * @var array
      */
     protected $_accessible = [
-        'categoriesId' => true,
-        'designsId' => true,
+        'category_id' => true,
+        'design_id' => true,
+        'category' => true,
+        'design' => true,
     ];
 }

@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
 /**
  * CategoriesDesigns Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Association\BelongsTo $Designs
  */
 class CategoriesDesignsTable extends Table
 {
@@ -25,6 +27,12 @@ class CategoriesDesignsTable extends Table
         $this->table('categories_designs');
         $this->displayField('id');
         $this->primaryKey('id');
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id'
+        ]);
+        $this->belongsTo('Designs', [
+            'foreignKey' => 'design_id'
+        ]);
     }
 
     /**
@@ -38,17 +46,21 @@ class CategoriesDesignsTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create');
-            
-        $validator
-            ->add('categoriesId', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('categoriesId', 'create')
-            ->notEmpty('categoriesId');
-            
-        $validator
-            ->add('designsId', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('designsId', 'create')
-            ->notEmpty('designsId');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+        $rules->add($rules->existsIn(['design_id'], 'Designs'));
+        return $rules;
     }
 }
