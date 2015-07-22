@@ -11,14 +11,35 @@ use App\Controller\AppController;
 class DesignsController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+       $this->loadComponent('RequestHandler');
+    }
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
+    public function index($catId = null)
     {
-        $this->set('designs', $this->paginate($this->Designs));
+
+        $designs = $this->Designs->find('all')
+                                ->contain([
+                                    'Tags', 
+                                    'Categories'
+                                ]);
+
+        if($catId !== null){
+            $designs->matching('Categories', function(\Cake\ORM\Query $q) use ($catId) {
+                return $q->where([
+                    'Categories.id' => $catId
+                ]);
+            });
+        }
+                                
+
+        $this->set('designs', $designs);
         $this->set('_serialize', ['designs']);
     }
 

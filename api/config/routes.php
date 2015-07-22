@@ -70,8 +70,16 @@ Router::scope('/', function ($routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+    $routes->extensions(['json']);
+    
     $routes->fallbacks('InflectedRoute');
 });
+
+/*Router::prefix('api', function ($routes) {
+
+    $routes->extensions(['json']);
+});
+*/
 
 Router::prefix('admin', function ($routes) {
 

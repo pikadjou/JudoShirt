@@ -11,6 +11,11 @@ use App\Controller\AppController;
 class CategoriesController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
     /**
      * Index method
      *
@@ -18,7 +23,9 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $this->set('categories', $this->paginate($this->Categories));
+        $categories = $this->Categories->find('all');
+        
+        $this->set('categories', $categories);
         $this->set('_serialize', ['categories']);
     }
 
