@@ -71,4 +71,30 @@ class DesignsTable extends Table
 
         return $validator;
     }
+    
+    
+    /**
+     * Default get all design by category id.
+     *
+     * @param integer $id (optional)
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getAllById($catId = null)
+    {
+        $designs = $this->find('all')
+                                ->contain([
+                                    'Tags', 
+                                    'Categories'
+                                ]);
+
+        if($catId !== null){
+            $designs->matching('Categories', function(\Cake\ORM\Query $q) use ($catId) {
+                return $q->where([
+                    'Categories.id' => $catId
+                ]);
+            });
+        }
+        
+        return $designs;
+    }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Utils;
 
-class ServiceBase
+class ServiceDesign extends ServiceDesign
 {
     public $id = 0;
     public $categories = [];

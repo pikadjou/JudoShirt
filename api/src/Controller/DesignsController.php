@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use App\Services\ServiceBase;
+use App\Services\DesignRequestHandler;
 
 /**
  * Designs Controller
@@ -25,28 +25,12 @@ class DesignsController extends AppController
     public function index($catId = null)
     {
 
-        $designs = $this->Designs->find('all')
-                                ->contain([
-                                    'Tags', 
-                                    'Categories'
-                                ]);
-
-        if($catId !== null){
-            $designs->matching('Categories', function(\Cake\ORM\Query $q) use ($catId) {
-                return $q->where([
-                    'Categories.id' => $catId
-                ]);
-            });
-        }
+        $designs = $this->Designs->getAllById($catId);
         
-        $service = new ServiceBase();
-        foreach($designs as $k => $v){
-            $service->setId(0);
-            break;
-        }                        
+        $response = new DesignRequestHandler\DesignRHResponse();
 
-        $this->set('service', $service);
-        $this->set('_serialize', ['service']);
+        $this->set('response', $response);
+        $this->set('_serialize', ['response']);
     }
 
     /**
