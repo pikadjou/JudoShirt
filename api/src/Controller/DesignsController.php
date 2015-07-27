@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Services\ServiceBase;
 
 /**
  * Designs Controller
@@ -37,10 +38,15 @@ class DesignsController extends AppController
                 ]);
             });
         }
-                                
+        
+        $service = new ServiceBase();
+        foreach($designs as $k => $v){
+            $service->setId(0);
+            break;
+        }                        
 
-        $this->set('designs', $designs);
-        $this->set('_serialize', ['designs']);
+        $this->set('service', $service);
+        $this->set('_serialize', ['service']);
     }
 
     /**
