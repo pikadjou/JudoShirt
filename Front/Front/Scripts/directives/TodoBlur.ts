@@ -1,6 +1,6 @@
 /// <reference path='../_all.ts' />
 
-module todos {
+module JudoShirt {
     'use strict';
 
     /**

@@ -1,12 +1,12 @@
 /// <reference path='../_all.ts' />
 
-module todos {
+module JudoShirt {
     'use strict';
 
     /**
      * Services that persists and retrieves TODOs from localStorage.
      */
-    export class TodoStorage implements ITodoStorage {
+    export class TodoStorage {
 
         STORAGE_ID = 'todos-angularjs-typescript';
 

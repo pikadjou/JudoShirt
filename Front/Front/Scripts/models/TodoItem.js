@@ -1,8 +1,7 @@
 /// <reference path='../_all.ts' />
-var todos;
-(function (todos) {
+var JudoShirt;
+(function (JudoShirt) {
     'use strict';
-
     var TodoItem = (function () {
         function TodoItem(title, completed) {
             this.title = title;
@@ -10,5 +9,5 @@ var todos;
         }
         return TodoItem;
     })();
-    todos.TodoItem = TodoItem;
-})(todos || (todos = {}));
+    JudoShirt.TodoItem = TodoItem;
+})(JudoShirt || (JudoShirt = {}));

@@ -1,16 +1,21 @@
 /// <reference path='_all.ts' />
 
 /**
- * The main TodoMVC app module.
+ * The main JudoShirt app module.
  *
  * @type {angular.Module}
  */
-module todos {
+module JudoShirt {
     'use strict';
 
-    var todomvc = angular.module('todomvc', [])
-            .controller('todoCtrl', TodoCtrl)
-            .directive('todoBlur', todoBlur)
-            .directive('todoFocus', todoFocus)
-            .service('todoStorage', TodoStorage);
+    var JudoShirtMvc = angular.module('JudoShirt', ['ngRoute']);
+
+	JudoShirtMvc.config([
+		<any>'$routeProvider',
+		($routeProvider: angular.route.IRouteProvider) => {
+			$routeProvider
+				.when('/', { templateUrl: 'scripts/templates/pages/home.html' })
+				.otherwise({ redirectTo: '/' });
+		}
+	]);
 }

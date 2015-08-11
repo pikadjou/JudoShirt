@@ -1,6 +1,6 @@
 /// <reference path='../_all.ts' />
 
-module todos {
+module JudoShirt {
 	'use strict';
 
 	/**
@@ -26,9 +26,8 @@ module todos {
 		// dependencies are injected via AngularJS $injector
 		// controller's name is registered in Application.ts and specified from ng-controller attribute in index.html
 		constructor(
-			private $scope: ITodoScope,
-			private $location: ng.ILocationService,
-			private todoStorage: ITodoStorage,
+			private $scope: any,
+			private todoStorage: any,
 			private filterFilter
 		) {
 			this.todos = $scope.todos = todoStorage.get();
@@ -42,11 +41,10 @@ module todos {
 
 			// watching for events/changes in scope, which are caused by view/user input
 			// if you subscribe to scope or event with lifetime longer than this controller, make sure you unsubscribe.
-			$scope.$watch('todos', () => this.onTodos(), true);
-			$scope.$watch('location.path()', path => this.onPath(path))
+			//$scope.$watch('todos', () => this.onTodos(), true);
+			//$scope.$watch('location.path()', path => this.onPath(path))
 
-			if ($location.path() === '') $location.path('/');
-			$scope.location = $location;
+			
 		}
 
 		onPath(path: string) {
