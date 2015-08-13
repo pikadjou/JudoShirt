@@ -787,13 +787,16 @@
     <Content Include="lib\angular\i18n\angular-locale_zh.js" />
     <Content Include="lib\angular\i18n\angular-locale_zu-za.js" />
     <Content Include="lib\angular\i18n\angular-locale_zu.js" />
+    <Content Include="lib\signals\signal.js" />
+    <Content Include="scripts\controllers\modules\ModuleTest.html" />
+    <Content Include="scripts\templates\pages\produit.html" />
     <Content Include="scripts\templates\pages\home.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="scripts\Application.ts" />
     <TypeScriptCompile Include="scripts\controllers\TodoCtrl.ts" />
-    <TypeScriptCompile Include="scripts\directives\TodoBlur.ts" />
+    <TypeScriptCompile Include="scripts\controllers\modules\ModuleTest.ts" />
     <TypeScriptCompile Include="scripts\directives\TodoFocus.ts" />
     <TypeScriptCompile Include="scripts\models\TodoItem.ts" />
     <TypeScriptCompile Include="scripts\services\TodoStorage.ts" />
@@ -801,6 +804,7 @@
     <TypeScriptCompile Include="typing\angular-route.d.ts" />
     <TypeScriptCompile Include="typing\angular.d.ts" />
     <TypeScriptCompile Include="typing\jquery.d.ts" />
+    <TypeScriptCompile Include="typing\signal.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\version.json" />
@@ -827,6 +831,7 @@
   <ItemGroup>
     <Folder Include="content\" />
     <Folder Include="Properties\" />
+    <Folder Include="scripts\controllers\pages\" />
     <Folder Include="scripts\tools\" />
   </ItemGroup>
   <ItemGroup>
