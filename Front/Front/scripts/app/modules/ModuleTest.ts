@@ -3,18 +3,6 @@
 module JudoShirt {
     'use strict';
 
-	class DirectiveFactory {
-		public static GetFactoryFor<T extends ng.IDirective>(classType: Function): ng.IDirectiveFactory {
-			var factory = (...args: any[]): T => {
-				var directive = <any>classType;
-				return new directive(args);
-			}
-
-			factory.$inject = classType.$inject;
-			return factory;
-		}
-	}
-
 	export class C_MyDirective {
 		
 		// $inject annotation.
@@ -32,8 +20,8 @@ module JudoShirt {
 		}
 	}
 
-	class MyDirective implements ng.IDirective {
-		public templateUrl = "scripts/controllers/modules/ModuleTest.html";
+	export class MyDirective implements ng.IDirective {
+		public templateUrl = "scripts/app/modules/ModuleTest.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {
@@ -49,7 +37,5 @@ module JudoShirt {
 
 		public controller = C_MyDirective;
 	}
-	JudoShirt.JudoShirtApp.JudoShirtApp.directive(MyDirective.Name, DirectiveFactory.GetFactoryFor<MyDirective>(MyDirective));
-
-	
+	JudoShirtApp.JudoShirtApp.directive(MyDirective.Name, JudoShirtApp.Application.GetDirectiveFactory<MyDirective>(MyDirective));
 }

@@ -11,18 +11,22 @@ module JudoShirt {
 	export class JudoShirtApp {
 
 		static JudoShirtApp: angular.IModule = angular.module('JudoShirt', ['ngRoute']);
+		static Application = JudoShirt.Init.Application.getInstance();
+
 		static init() {
 			this.JudoShirtApp.config([
 				<any>'$routeProvider',
 				($routeProvider: angular.route.IRouteProvider) => {
 					$routeProvider
-						.when('/', { templateUrl: 'scripts/templates/pages/home.html' })
-						.when('/produit/:id', { templateUrl: 'scripts/templates/pages/produit.html' })
+						.when('/', { templateUrl: 'scripts/app/pages/home.html' })
+						.when('/produit/:id', { templateUrl: 'scripts/app/pages/produit.html' })
 						.otherwise({ redirectTo: '/' });
 				}
 			]);
+
+
 		}
-	} 
+	}
 	
 	JudoShirtApp.init();
 }

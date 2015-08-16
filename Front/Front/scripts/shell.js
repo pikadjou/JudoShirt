@@ -17,6 +17,7 @@ var JudoShirt;
             ]);
         };
         JudoShirtApp.JudoShirtApp = angular.module('JudoShirt', ['ngRoute']);
+        JudoShirtApp.Application = JudoShirt.Init.Application.getInstance();
         return JudoShirtApp;
     })();
     JudoShirt.JudoShirtApp = JudoShirtApp;
