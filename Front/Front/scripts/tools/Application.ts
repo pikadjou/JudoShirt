@@ -21,5 +21,15 @@
 			factory.$inject = classType.$inject;
 			return factory;
 		}
+
+		//public GetServiceFactory<T extends ng.IDirective>(classType: Function): ng.IServiceProvider {
+		//	var factory = (...args: any[]): T => {
+		//		var directive = <any>classType;
+		//		return new directive(args);
+		//	}
+
+		//	factory.$inject = classType.$inject;
+		//	return factory;
+		//}
 	}
 }

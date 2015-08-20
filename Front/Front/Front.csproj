@@ -788,15 +788,16 @@
     <Content Include="lib\angular\i18n\angular-locale_zu-za.js" />
     <Content Include="lib\angular\i18n\angular-locale_zu.js" />
     <Content Include="lib\signals\signal.js" />
-    <Content Include="scripts\app\modules\ModuleTest.html" />
+    <Content Include="scripts\app\modules\CategoriesList.html" />
     <Content Include="scripts\app\pages\produit.html" />
     <Content Include="scripts\app\pages\home.html" />
+    <TypeScriptCompile Include="scripts\tools\Serveur.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="scripts\shell.ts" />
     <TypeScriptCompile Include="scripts\app\TodoCtrl.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\ModuleTest.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\CategoriesList.ts" />
     <TypeScriptCompile Include="scripts\models\TodoItem.ts" />
     <TypeScriptCompile Include="scripts\services\TodoStorage.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
