@@ -12,7 +12,7 @@ module JudoShirt.Service {
 
 		private server: JudoShirt.Init.Serveur;
 
-		public GetAdjustmentHistoryReceived: signals.Signal;
+		//public GetAdjustmentHistoryReceived: Signals.Signal;
 
 		public static instance: CategoriesRequestHandler;
 		public static getInstance(): CategoriesRequestHandler {
@@ -32,7 +32,7 @@ module JudoShirt.Service {
 		}
 
 		private addEvents(): void {
-			this.GetAdjustmentHistoryReceived = new signals.Signal();
+			//this.GetAdjustmentHistoryReceived = new signals.Signal();
 
 			//this.server.packetReceived.add(this.onPacketReceived, this);
 		}
@@ -44,7 +44,7 @@ module JudoShirt.Service {
 			switch (response.Identifier) {
 				case ("GetAdjustmentHistory"):
 					parsedResponse = <any>(JSON.parse(response.Content));
-					this.GetAdjustmentHistoryReceived.dispatch(parsedResponse);
+					//this.GetAdjustmentHistoryReceived.dispatch(parsedResponse);
 					break;
 				default:
 					break;

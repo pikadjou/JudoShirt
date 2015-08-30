@@ -2,26 +2,38 @@
 <html lang="en" ng-app="JudoShirt" data-framework="typescript">
 <head>
 	<meta charset="utf-8">
-	<title>Typescript & AngularJS • TodoMVC</title>
-	<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
-	<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
-	<style>
-		[ng-cloak] {
-			display: none;
-		}
-	</style>
+	<title>Judo Shirt</title>
+	<link href="content/css/Site.css" rel="stylesheet" />
 </head>
 <body>
 
-	<div ng-view></div>
+	<div class="container">
+		<header>
+			<headercontainer></headercontainer>
+		</header>
+		<div class="content">
+			<div ng-view></div>
+		</div>
+		<footer>
+			footer
+		</footer>
+	</div>
+
+	
 
 
-
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="lib/signals/signal.js"></script>
 	<script src="lib/angular/angular.js"></script>
 	<script src="lib/angular/angular-route.js"></script>
+	<script src="lib/foundation/foundation.min.js"></script>
 	<script src="scripts/tools/Application.js"></script>
 	<script src="scripts/shell.js"></script>
+	<script src="scripts/app/container/header.js"></script>
 	<script src="scripts/app/modules/CategoriesList.js"></script>
+
+	<script>
+		$(document).foundation();
+	</script>
 </body>
 </html>

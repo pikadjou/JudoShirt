@@ -18,6 +18,8 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="content\css\Site.css" />
+    <Content Include="content\img\logo.jpg" />
     <Content Include="index.html" />
     <Content Include="lib\angular\angular-animate.js" />
     <Content Include="lib\angular\angular-animate.min.js" />
@@ -787,19 +789,44 @@
     <Content Include="lib\angular\i18n\angular-locale_zh.js" />
     <Content Include="lib\angular\i18n\angular-locale_zu-za.js" />
     <Content Include="lib\angular\i18n\angular-locale_zu.js" />
+    <Content Include="lib\foundation\foundation.min.js" />
+    <Content Include="lib\foundation\foundation\foundation.abide.js" />
+    <Content Include="lib\foundation\foundation\foundation.accordion.js" />
+    <Content Include="lib\foundation\foundation\foundation.alert.js" />
+    <Content Include="lib\foundation\foundation\foundation.clearing.js" />
+    <Content Include="lib\foundation\foundation\foundation.dropdown.js" />
+    <Content Include="lib\foundation\foundation\foundation.equalizer.js" />
+    <Content Include="lib\foundation\foundation\foundation.interchange.js" />
+    <Content Include="lib\foundation\foundation\foundation.joyride.js" />
+    <Content Include="lib\foundation\foundation\foundation.js" />
+    <Content Include="lib\foundation\foundation\foundation.magellan.js" />
+    <Content Include="lib\foundation\foundation\foundation.offcanvas.js" />
+    <Content Include="lib\foundation\foundation\foundation.reveal.js" />
+    <Content Include="lib\foundation\foundation\foundation.slider.js" />
+    <Content Include="lib\foundation\foundation\foundation.tab.js" />
+    <Content Include="lib\foundation\foundation\foundation.tooltip.js" />
+    <Content Include="lib\foundation\foundation\foundation.topbar.js" />
+    <Content Include="lib\foundation\foundation\jquery.cookie.js" />
+    <Content Include="lib\foundation\vendor\fastclick.js" />
+    <Content Include="lib\foundation\vendor\jquery.cookie.js" />
+    <Content Include="lib\foundation\vendor\jquery.js" />
+    <Content Include="lib\foundation\vendor\modernizr.js" />
+    <Content Include="lib\foundation\vendor\placeholder.js" />
     <Content Include="lib\signals\signal.js" />
+    <Content Include="scripts\app\container\header.html" />
     <Content Include="scripts\app\modules\CategoriesList.html" />
     <Content Include="scripts\app\pages\produit.html" />
     <Content Include="scripts\app\pages\home.html" />
+    <TypeScriptCompile Include="scripts\app\container\header.ts" />
     <TypeScriptCompile Include="scripts\tools\Serveur.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="scripts\shell.ts" />
-    <TypeScriptCompile Include="scripts\app\TodoCtrl.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\home.ts" />
     <TypeScriptCompile Include="scripts\app\modules\CategoriesList.ts" />
     <TypeScriptCompile Include="scripts\models\TodoItem.ts" />
-    <TypeScriptCompile Include="scripts\services\TodoStorage.ts" />
+    <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
     <TypeScriptCompile Include="scripts\_all.ts" />
     <TypeScriptCompile Include="typing\angular-route.d.ts" />
@@ -822,6 +849,59 @@
     <Content Include="lib\angular\angular-animate.min.js.map" />
     <Content Include="lib\angular\angular.min.js.map" />
     <Content Include="packages.config" />
+    <Content Include="content\sass\application\_master.scss" />
+    <Content Include="content\sass\config.rb" />
+    <Content Include="content\sass\foundation\components\_accordion.scss" />
+    <Content Include="content\sass\foundation\components\_alert-boxes.scss" />
+    <Content Include="content\sass\foundation\components\_block-grid.scss" />
+    <Content Include="content\sass\foundation\components\_breadcrumbs.scss" />
+    <Content Include="content\sass\foundation\components\_button-groups.scss" />
+    <Content Include="content\sass\foundation\components\_buttons.scss" />
+    <Content Include="content\sass\foundation\components\_clearing.scss" />
+    <Content Include="content\sass\foundation\components\_dropdown-buttons.scss" />
+    <Content Include="content\sass\foundation\components\_dropdown.scss" />
+    <Content Include="content\sass\foundation\components\_flex-video.scss" />
+    <Content Include="content\sass\foundation\components\_forms.scss" />
+    <Content Include="content\sass\foundation\components\_global.scss" />
+    <Content Include="content\sass\foundation\components\_grid.scss" />
+    <Content Include="content\sass\foundation\components\_icon-bar.scss" />
+    <Content Include="content\sass\foundation\components\_iconbar.scss" />
+    <Content Include="content\sass\foundation\components\_inline-lists.scss" />
+    <Content Include="content\sass\foundation\components\_joyride.scss" />
+    <Content Include="content\sass\foundation\components\_keystrokes.scss" />
+    <Content Include="content\sass\foundation\components\_labels.scss" />
+    <Content Include="content\sass\foundation\components\_magellan.scss" />
+    <Content Include="content\sass\foundation\components\_offcanvas.scss" />
+    <Content Include="content\sass\foundation\components\_orbit.scss" />
+    <Content Include="content\sass\foundation\components\_pagination.scss" />
+    <Content Include="content\sass\foundation\components\_panels.scss" />
+    <Content Include="content\sass\foundation\components\_pricing-tables.scss" />
+    <Content Include="content\sass\foundation\components\_progress-bars.scss" />
+    <Content Include="content\sass\foundation\components\_range-slider.scss" />
+    <Content Include="content\sass\foundation\components\_reveal-new.scss" />
+    <Content Include="content\sass\foundation\components\_reveal.scss" />
+    <Content Include="content\sass\foundation\components\_side-nav.scss" />
+    <Content Include="content\sass\foundation\components\_split-buttons.scss" />
+    <Content Include="content\sass\foundation\components\_sub-nav.scss" />
+    <Content Include="content\sass\foundation\components\_switch.scss" />
+    <Content Include="content\sass\foundation\components\_switches.scss" />
+    <Content Include="content\sass\foundation\components\_tables.scss" />
+    <Content Include="content\sass\foundation\components\_tabs.scss" />
+    <Content Include="content\sass\foundation\components\_thumbs.scss" />
+    <Content Include="content\sass\foundation\components\_toolbar.scss" />
+    <Content Include="content\sass\foundation\components\_tooltips.scss" />
+    <Content Include="content\sass\foundation\components\_top-bar.scss" />
+    <Content Include="content\sass\foundation\components\_type.scss" />
+    <Content Include="content\sass\foundation\components\_visibility.scss" />
+    <Content Include="content\sass\foundation\components\_xy-center.scss" />
+    <Content Include="content\sass\foundation\_functions.scss" />
+    <Content Include="content\sass\foundation\_settings.scss" />
+    <Content Include="content\sass\Site.scss" />
+    <Content Include="content\sass\_foundation.mvc.scss" />
+    <Content Include="content\sass\_foundation.scss" />
+    <Content Include="content\sass\_normalize.scss" />
+    <Content Include="content\sass\_slick.scss" />
+    <Content Include="content\sass\application\_common.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -830,7 +910,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\" />
+    <Folder Include="lib\jquery\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

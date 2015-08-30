@@ -1,4 +1,3 @@
-/// <reference path='../_all.ts' />
 
 module JudoShirt {
 	'use strict';
@@ -8,7 +7,7 @@ module JudoShirt {
 	 * - retrieves and persists the model via the todoStorage service
 	 * - exposes the model to the template and provides event handlers
 	 */
-	export class TodoCtrl {
+	export class Home {
 
 		private todos: TodoItem[];
 
