@@ -22,6 +22,14 @@
 			return factory;
 		}
 
+		public static NewGuid() {
+			return (this.G() + this.G() + "-" + this.G() + "-" + this.G() + "-" +
+				this.G() + "-" + this.G() + this.G() + this.G()).toLowerCase();
+		}
+
+		private static G() {
+			return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+		}
 		//public GetServiceFactory<T extends ng.IDirective>(classType: Function): ng.IServiceProvider {
 		//	var factory = (...args: any[]): T => {
 		//		var directive = <any>classType;

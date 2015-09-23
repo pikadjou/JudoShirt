@@ -7,13 +7,16 @@ module JudoShirt {
 		
 
 		public static $inject = [
-			'$scope'
+			'$scope',
+			Services.CategoriesRequestHandler.Name
 		];
 		constructor(
-			private $scope: any
+			private $scope: any,
+			private RH: Services.CategoriesRequestHandler
 			) {
 			$scope.vm = $scope;
 
+			this.RH.GetCategories("");
 		}
 	}
 

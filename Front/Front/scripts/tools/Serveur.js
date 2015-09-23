@@ -3,16 +3,37 @@ var JudoShirt;
     var Init;
     (function (Init) {
         'use strict';
-        var Serveur = (function () {
-            function Serveur() {
+        var Server = (function () {
+            function Server($resource) {
+                this.$resource = $resource;
+                this.packetReceived = new signals.Signal();
             }
-            Serveur.getInstance = function () {
+            Server.getInstance = function () {
                 if (this.uniqueInstance == null)
-                    this.uniqueInstance = new Serveur();
+                    console.warn("serveur is not set");
                 return this.uniqueInstance;
             };
-            return Serveur;
+            Server.prototype.request = function (request) {
+                // utilisation de $ressource for ajax request
+                return request.Id;
+            };
+            Server.prototype.onPacketReceived = function (response) {
+                if (response.Id === "00000000-0000-0000-0000-000000000000") {
+                }
+                this.packetReceived.dispatch(response);
+            };
+            Server.$inject = ['$resource'];
+            return Server;
         })();
-        Init.Serveur = Serveur;
+        Init.Server = Server;
+        var Request = (function () {
+            function Request(identifier, content) {
+                this.Id = Init.Application.NewGuid();
+                this.Identifier = identifier;
+                this.Content = (typeof content == "string") ? content : JSON.stringify(content);
+            }
+            return Request;
+        })();
+        Init.Request = Request;
     })(Init = JudoShirt.Init || (JudoShirt.Init = {}));
 })(JudoShirt || (JudoShirt = {}));

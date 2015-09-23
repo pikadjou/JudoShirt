@@ -23,6 +23,13 @@ var JudoShirt;
                 factory.$inject = classType.$inject;
                 return factory;
             };
+            Application.NewGuid = function () {
+                return (this.G() + this.G() + "-" + this.G() + "-" + this.G() + "-" +
+                    this.G() + "-" + this.G() + this.G() + this.G()).toLowerCase();
+            };
+            Application.G = function () {
+                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+            };
             return Application;
         })();
         Init.Application = Application;

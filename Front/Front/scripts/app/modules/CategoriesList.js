@@ -3,12 +3,15 @@ var JudoShirt;
 (function (JudoShirt) {
     'use strict';
     var C_CategoriesList = (function () {
-        function C_CategoriesList($scope) {
+        function C_CategoriesList($scope, RH) {
             this.$scope = $scope;
+            this.RH = RH;
             $scope.vm = $scope;
+            this.RH.GetCategories("");
         }
         C_CategoriesList.$inject = [
-            '$scope'
+            '$scope',
+            JudoShirt.Services.CategoriesRequestHandler.Name
         ];
         return C_CategoriesList;
     })();

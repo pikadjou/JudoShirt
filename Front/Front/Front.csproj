@@ -818,7 +818,7 @@
     <Content Include="scripts\app\pages\produit.html" />
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
-    <TypeScriptCompile Include="scripts\tools\Serveur.ts" />
+    <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

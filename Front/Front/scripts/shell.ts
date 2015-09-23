@@ -12,8 +12,10 @@ module JudoShirt {
 
 		static JudoShirtApp: angular.IModule = angular.module('JudoShirt', ['ngRoute']);
 		static Application = JudoShirt.Init.Application.getInstance();
+		//static Server = new JudoShirt.Init.Serveur();
 
 		static init() {
+
 			this.JudoShirtApp.config([
 				<any>'$routeProvider',
 				($routeProvider: angular.route.IRouteProvider) => {
