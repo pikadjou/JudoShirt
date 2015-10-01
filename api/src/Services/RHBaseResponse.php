@@ -4,10 +4,17 @@ namespace App\Services;
 
 class RHBaseResponse
 {
-    public $name = "";
+    //public $Identifier = "";
     
     function __construct(){
-        $this->name = get_class($this);
+        /*$classe = get_class($this);
+        $explode = explode("\\", $classe);
+        
+        $name = $explode[count($explode) - 1];
+        
+        $this->set('Identifier', $name);
+         * */
+         
     }
 }
 

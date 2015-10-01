@@ -8,7 +8,11 @@ var JudoShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetCategories("");
+            this.RH.GetCategoriesReceived.add(this.onPacketRecieved, this);
         }
+        C_CategoriesList.prototype.onPacketRecieved = function (response) {
+            this.$scope.vm.list = response.categories;
+        };
         C_CategoriesList.$inject = [
             '$scope',
             JudoShirt.Services.CategoriesRequestHandler.Name

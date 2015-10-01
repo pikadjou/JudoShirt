@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use App\Services\CategoriesRequestHandler;
 /**
  * Categories Controller
  *
@@ -23,10 +23,13 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->Categories->find('all');
+        $query = $this->Categories->getAll();
+        $categories = $query->toArray();
         
-        $this->set('categories', $categories);
-        $this->set('_serialize', ['categories']);
+        $response = new CategoriesRequestHandler\GetCategoriesResponse();
+        $response->init($categories);
+
+        parent::setJson($response);
     }
 
     /**

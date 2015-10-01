@@ -28,16 +28,17 @@ module JudoShirt.Services {
 		private addEvents(): void {
 			this.GetCategoriesReceived = new signals.Signal();
 
-			//this.server.packetReceived.add(this.onPacketReceived, this);
+			//this.server.packetReceived.add
+			this.server.packetReceived.add(this.onPacketReceived, this);
 		}
 
-		private onPacketReceived(response: any) {
-			if (!response || !response.Content || response.Content.trim() === '') return;
+		public onPacketReceived(response: any) {
+			if (!response || !response.Content) return;
 
 			var parsedResponse: any = null;
 			switch (response.Identifier) {
-				case ("GetCategories"):
-					parsedResponse = <any>(JSON.parse(response.Content));
+				case ("GetCategoriesResponse"):
+					parsedResponse = <any>(response.Content);
 					this.GetCategoriesReceived.dispatch(parsedResponse);
 					break;
 				default:

@@ -16,6 +16,7 @@ var JudoShirt;
                 return this.uniqueInstance;
             };
             Server.prototype.request = function (request) {
+                var _this = this;
                 if (request.Type.toLocaleUpperCase() === "GET") {
                     var url = this.urlApi;
                     url = url + "/" + request.Controller;
@@ -26,7 +27,7 @@ var JudoShirt;
                     url = url + this.urlExtension;
                     this.$http.get(url).
                         then(function (response) {
-                        console.log(response);
+                        _this.onPacketReceived(response.data);
                     }, function (response) {
                         console.log(response);
                     });

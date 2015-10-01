@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use App\Services\DesignRequestHandler;
+use App\Services\DesignsRequestHandler;
 
 /**
  * Designs Controller
@@ -16,23 +16,66 @@ class DesignsController extends AppController
     {
         parent::initialize();
        $this->loadComponent('RequestHandler');
+       
+       
+       $this->loadModel("Categories");
     }
     /**
      * Index method
      *
      * @return void
      */
-    public function index($catId = null)
+    public function getDesigns($catId = null)
     {
-
-        $designs = $this->Designs->getAllById($catId);
+        if($catId === null){
+            $query = $this->Designs->getAll();
+        }else{
+            $query = $this->Designs->getAllById($catId);
+        }
+        $query->contain([
+            'Categories'
+        ]);
+        $query->contain([
+            'Tags'
+        ]);
         
-        $response = new DesignRequestHandler\DesignRHResponse();
-
-        $this->set('response', $response);
-        $this->set('_serialize', ['response']);
+        $designs = $query->toArray();
+        
+        $category = null;
+        if($catId !== null){
+            $category = $this->Categories->getOne($catId)->first();    
+        }
+        
+        $response = new DesignsRequestHandler\GetDesignsResponse();
+        $response->init($designs, $category);
+        
+        parent::setJson($response);
     }
 
+    /**
+     * Index method
+     *
+     * @return void
+     */
+    public function getInformationDesign($id)
+    {
+        $query = $this->Designs->getOne($id);
+        
+        $query->contain([
+            'Categories'
+        ]);
+        $query->contain([
+            'Tags'
+        ]);
+        
+        $design = $query->first();
+        
+        
+        $response = new DesignsRequestHandler\GetInformationDesignResponse();
+        $response->init($design);
+        
+        parent::setJson($response);
+    }
     /**
      * View method
      *

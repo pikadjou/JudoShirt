@@ -37,8 +37,8 @@
 
 				
 				this.$http.get(url).
-					then(function (response) {
-						console.log(response);
+					then((response: any) => {
+						this.onPacketReceived(response.data);
 					}, function (response) {
 						console.log(response);
 					});

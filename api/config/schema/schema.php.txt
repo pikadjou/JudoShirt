@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema JudoShirt
+-- Schema mangelav_judoshirt
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema JudoShirt
+-- Schema mangelav_judoshirt
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `JudoShirt` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `JudoShirt` ;
+CREATE SCHEMA IF NOT EXISTS `mangelav_judoshirt` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `mangelav_judoshirt` ;
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`designs`
+-- Table `mangelav_judoshirt`.`designs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`designs` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`designs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NULL COMMENT '',
   `content` TEXT NULL COMMENT '',
@@ -30,9 +30,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`categories`
+-- Table `mangelav_judoshirt`.`categories`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`categories` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`categories` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NULL COMMENT '',
   `content` TEXT NULL COMMENT '',
@@ -41,32 +41,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`categories_designs`
+-- Table `mangelav_judoshirt`.`categories_designs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`categories_designs` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`categories_designs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
-  `categoriesId` INT UNSIGNED NOT NULL COMMENT '',
-  `designsId` INT UNSIGNED NOT NULL COMMENT '',
+  `category_id` INT UNSIGNED NOT NULL COMMENT '',
+  `design_id` INT UNSIGNED NOT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
-  INDEX `fk_categories_has_designs_designs1_idx` (`designsId` ASC)  COMMENT '',
-  INDEX `fk_categories_has_designs_categories_idx` (`categoriesId` ASC)  COMMENT '',
-  CONSTRAINT `fk_categories_has_designs_categories`
-    FOREIGN KEY (`categoriesId`)
-    REFERENCES `JudoShirt`.`categories` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_categories_has_designs_designs1`
-    FOREIGN KEY (`designsId`)
-    REFERENCES `JudoShirt`.`designs` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `fk_categories_has_designs_designs1_idx` (`design_id` ASC)  COMMENT '',
+  INDEX `fk_categories_has_designs_categories_idx` (`category_id` ASC)  COMMENT '')
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`tags`
+-- Table `mangelav_judoshirt`.`tags`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`tags` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`tags` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '')
@@ -74,32 +64,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`tags_designs`
+-- Table `mangelav_judoshirt`.`tags_designs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`tags_designs` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`tags_designs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
-  `tagsId` INT UNSIGNED NOT NULL COMMENT '',
-  `designsId` INT UNSIGNED NOT NULL COMMENT '',
-  INDEX `fk_tags_has_designs_designs1_idx` (`designsId` ASC)  COMMENT '',
-  INDEX `fk_tags_has_designs_tags1_idx` (`tagsId` ASC)  COMMENT '',
-  PRIMARY KEY (`id`)  COMMENT '',
-  CONSTRAINT `fk_tags_has_designs_tags1`
-    FOREIGN KEY (`tagsId`)
-    REFERENCES `JudoShirt`.`tags` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tags_has_designs_designs1`
-    FOREIGN KEY (`designsId`)
-    REFERENCES `JudoShirt`.`designs` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `tag_id` INT UNSIGNED NOT NULL COMMENT '',
+  `design_id` INT UNSIGNED NOT NULL COMMENT '',
+  INDEX `fk_tags_has_designs_designs1_idx` (`design_id` ASC)  COMMENT '',
+  INDEX `fk_tags_has_designs_tags1_idx` (`tag_id` ASC)  COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`promotions`
+-- Table `mangelav_judoshirt`.`promotions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`promotions` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`promotions` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NULL COMMENT '',
   `image` VARCHAR(45) NULL COMMENT '',
@@ -110,9 +90,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JudoShirt`.`configs`
+-- Table `mangelav_judoshirt`.`configs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `JudoShirt`.`configs` (
+CREATE TABLE IF NOT EXISTS `mangelav_judoshirt`.`configs` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NULL COMMENT '',
   `value` VARCHAR(45) NULL COMMENT '',

@@ -813,12 +813,27 @@
     <Content Include="lib\foundation\vendor\modernizr.js" />
     <Content Include="lib\foundation\vendor\placeholder.js" />
     <Content Include="lib\signals\signal.js" />
+    <Content Include="scripts\app\App.js">
+      <DependentUpon>App.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="scripts\app\App.min.js">
+      <DependentUpon>App.js</DependentUpon>
+    </Content>
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\widgets\topTen.html" />
     <Content Include="scripts\app\modules\CategoriesList.html" />
     <Content Include="scripts\app\pages\produit.html" />
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Designs\DesignsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
+    <Content Include="scripts\services\Services.js">
+      <DependentUpon>Services.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="scripts\services\Services.min.js">
+      <DependentUpon>Services.js</DependentUpon>
+    </Content>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -902,6 +917,14 @@
     <Content Include="content\sass\_normalize.scss" />
     <Content Include="content\sass\_slick.scss" />
     <Content Include="content\sass\application\_common.scss" />
+    <Content Include="scripts\app\App.js.bundle" />
+    <Content Include="scripts\app\App.min.js.map">
+      <DependentUpon>App.min.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\services\Services.js.bundle" />
+    <Content Include="scripts\services\Services.min.js.map">
+      <DependentUpon>Services.min.js</DependentUpon>
+    </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

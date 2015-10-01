@@ -72,7 +72,35 @@ class DesignsTable extends Table
         return $validator;
     }
     
+    /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getAll()
+    {
+        $designs = $this->find('all')
+                                ->contain([
+                                    'Tags', 
+                                    'Categories'
+                                ]);
+        
+        return $designs;
+    }
     
+    /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getOne($id)
+    {
+        $design = $this->find()->where(["id" => $id])->limit(1);
+        
+        return $design;
+    }
     /**
      * Default get all design by category id.
      *
@@ -83,8 +111,8 @@ class DesignsTable extends Table
     {
         $designs = $this->find('all')
                                 ->contain([
-                                    'Tags', 
-                                    'Categories'
+                                    //'Tags', 
+                                    //'Categories.id'
                                 ]);
 
         if($catId !== null){

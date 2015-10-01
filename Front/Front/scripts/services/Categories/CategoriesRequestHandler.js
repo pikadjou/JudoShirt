@@ -15,14 +15,15 @@ var JudoShirt;
             };
             CategoriesRequestHandler.prototype.addEvents = function () {
                 this.GetCategoriesReceived = new signals.Signal();
+                this.server.packetReceived.add(this.onPacketReceived, this);
             };
             CategoriesRequestHandler.prototype.onPacketReceived = function (response) {
-                if (!response || !response.Content || response.Content.trim() === '')
+                if (!response || !response.Content)
                     return;
                 var parsedResponse = null;
                 switch (response.Identifier) {
-                    case ("GetCategories"):
-                        parsedResponse = (JSON.parse(response.Content));
+                    case ("GetCategoriesResponse"):
+                        parsedResponse = (response.Content);
                         this.GetCategoriesReceived.dispatch(parsedResponse);
                         break;
                     default:

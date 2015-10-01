@@ -53,4 +53,29 @@ class CategoriesTable extends Table
 
         return $validator;
     }
+    
+    /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getAll()
+    {
+        $category = $this->find();
+        
+        return $category;
+    }
+    /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getOne($id)
+    {
+        $category = $this->find()->where(["id" => $id])->limit(1);
+        
+        return $category;
+    }
 }

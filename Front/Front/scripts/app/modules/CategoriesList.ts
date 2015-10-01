@@ -17,6 +17,12 @@ module JudoShirt {
 			$scope.vm = $scope;
 
 			this.RH.GetCategories("");
+
+			this.RH.GetCategoriesReceived.add(this.onPacketRecieved, this);
+		}
+
+		public onPacketRecieved(response: any) {
+			this.$scope.vm.list = response.categories;
 		}
 	}
 
