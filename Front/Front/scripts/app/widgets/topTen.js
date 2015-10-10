@@ -7,8 +7,8 @@ var JudoShirt;
             this.$scope = $scope;
             this.RH = RH;
             $scope.vm = $scope;
-            this.RH.GetDesigns("");
-            this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
+            this.RH.GetTopDesignsReceived.add(this.onPacketRecieved, this);
+            this.RH.GetTopDesigns([2]);
         }
         C_WidgetTopTen.prototype.onPacketRecieved = function (response) {
             this.$scope.vm.category = response.category;

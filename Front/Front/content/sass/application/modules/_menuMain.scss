@@ -1,0 +1,14 @@
+﻿.main-menu__container{
+	ul{
+		background-color: $bg-panel-dark;
+
+		margin: 0;
+
+		@include border-radius(0 0 10px 10px);
+		li{
+			text-align: center;
+			color: white;
+			padding: 15px;
+		}
+	}
+}

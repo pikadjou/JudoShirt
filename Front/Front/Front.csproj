@@ -19,7 +19,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="content\css\Site.css" />
+    <Content Include="content\img\background1.jpg" />
+    <Content Include="content\img\background2.jpg" />
     <Content Include="content\img\logo.jpg" />
+    <Content Include="content\sass\Site.css">
+      <DependentUpon>Site.scss</DependentUpon>
+    </Content>
+    <Content Include="content\sass\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="index.html" />
     <Content Include="lib\angular\angular-animate.js" />
     <Content Include="lib\angular\angular-animate.min.js" />
@@ -819,12 +827,22 @@
     <Content Include="scripts\app\App.min.js">
       <DependentUpon>App.js</DependentUpon>
     </Content>
+    <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\modules\langSelector.html" />
+    <Content Include="scripts\app\modules\featuredDesigns.html" />
+    <Content Include="scripts\app\widgets\promotionDesigns.html" />
+    <Content Include="scripts\app\widgets\new.html" />
     <Content Include="scripts\app\widgets\topTen.html" />
-    <Content Include="scripts\app\modules\CategoriesList.html" />
+    <Content Include="scripts\app\modules\menuMain.html" />
     <Content Include="scripts\app\pages\produit.html" />
     <Content Include="scripts\app\pages\home.html" />
+    <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\featuredDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
@@ -839,7 +857,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="scripts\shell.ts" />
     <TypeScriptCompile Include="scripts\app\pages\home.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\CategoriesList.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menuMain.ts" />
     <TypeScriptCompile Include="scripts\models\TodoItem.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
@@ -917,7 +935,9 @@
     <Content Include="content\sass\_normalize.scss" />
     <Content Include="content\sass\_slick.scss" />
     <Content Include="content\sass\application\_common.scss" />
-    <Content Include="scripts\app\App.js.bundle" />
+    <Content Include="scripts\app\App.js.bundle">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="scripts\app\App.min.js.map">
       <DependentUpon>App.min.js</DependentUpon>
     </Content>
@@ -925,6 +945,13 @@
     <Content Include="scripts\services\Services.min.js.map">
       <DependentUpon>Services.min.js</DependentUpon>
     </Content>
+    <Content Include="content\sass\Site.css.map">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
+    <Content Include="content\sass\application\modules\_menuTop.scss" />
+    <Content Include="content\sass\application\modules\_headerContent.scss" />
+    <Content Include="content\sass\application\modules\_menuMain.scss" />
+    <Content Include="content\sass\application\widgets\_new.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -933,6 +960,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="content\sass\application\container\" />
+    <Folder Include="content\sass\application\pages\" />
     <Folder Include="lib\jquery\" />
     <Folder Include="Properties\" />
   </ItemGroup>

@@ -3,7 +3,7 @@
 module JudoShirt {
     'use strict';
 
-	export class C_WidgetTopTen {
+	export class C_WidgetNew {
 		
 
 		public static $inject = [
@@ -16,9 +16,9 @@ module JudoShirt {
 			) {
 			$scope.vm = $scope;
 
-			this.RH.GetTopDesignsReceived.add(this.onPacketRecieved, this);
+			this.RH.GetNewDesignsReceived.add(this.onPacketRecieved, this);
 
-			this.RH.GetTopDesigns([2]);
+			this.RH.GetNewDesigns([5]);
 
 		}
 
@@ -28,21 +28,21 @@ module JudoShirt {
 		}
 	}
 
-	export class WidgetTopTen implements ng.IDirective {
-		public templateUrl = "scripts/app/widgets/topTen.html";
+	export class WidgetNew implements ng.IDirective {
+		public templateUrl = "scripts/app/widgets/new.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {
 		};
 
-		public static Name = "WidgetTopTen".toLocaleLowerCase();
+		public static Name = "WidgetNew".toLocaleLowerCase();
 
 		public static $inject = [];
 		constructor(/*list of dependencies*/) {
 
 		}
 
-		public controller = C_WidgetTopTen;
+		public controller = C_WidgetNew;
 	}
-	JudoShirtApp.JudoShirtApp.directive(WidgetTopTen.Name, JudoShirtApp.Application.GetDirectiveFactory<WidgetTopTen>(WidgetTopTen));
+	JudoShirtApp.JudoShirtApp.directive(WidgetNew.Name, JudoShirtApp.Application.GetDirectiveFactory<WidgetNew>(WidgetNew));
 }

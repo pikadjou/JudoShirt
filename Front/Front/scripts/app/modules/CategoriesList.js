@@ -12,6 +12,7 @@ var JudoShirt;
         }
         C_CategoriesList.prototype.onPacketRecieved = function (response) {
             this.$scope.vm.list = response.categories;
+            this.$scope.vm.cssClass = "small-block-grid-" + response.categories.length;
         };
         C_CategoriesList.$inject = [
             '$scope',

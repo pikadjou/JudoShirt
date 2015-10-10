@@ -1,11 +1,28 @@
-﻿.vertical-align-wrapper {
-  display: table;
-  width: 100%;
-  height: 100%;
+﻿body{
+	background: url(../img/background2.jpg);
+	background-size: 100% 100%;
+}
+header{
+	margin-bottom: 20px;
+}
+.page{
+	.sidebar{
+		padding: 0px;
+	}
 }
 
-/* line 430, ../../../Sass/circus-casino_es/common/_vars.scss */
-.vertical-align-box {
-  display: table-cell;
-  vertical-align: middle;
+$color-bleu: #499bff;
+
+$link-color: white;
+
+$bg-menu-top : $color-bleu;
+$bg-panel-light: white;
+$bg-panel-dark: #5a616b;
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
 }

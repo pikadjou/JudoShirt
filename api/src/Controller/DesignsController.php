@@ -76,6 +76,96 @@ class DesignsController extends AppController
         
         parent::setJson($response);
     }
+    
+    
+    public function getTopDesigns($limit = null, $tags = true)
+    {
+        $category = $this->Categories->getTop()->first(); 
+        
+        $designs = [];
+        if($category){
+            $query = $this->Designs->getAllById($category->id);
+            
+            if($limit){
+                $query->limit($limit);
+            }
+            if($tags){
+                $this->Designs->addTags($query);
+            }
+            
+            $designs = $query->toArray();
+        }
+        
+        $response = new DesignsRequestHandler\GetTopDesignsResponse();
+        $response->init($designs, $category);
+        
+        parent::setJson($response);
+    }
+    
+    public function getNewDesigns($limit = null, $tags = true)
+    {
+        $category = $this->Categories->getNew()->first(); 
+        
+        $designs = [];
+        if($category){
+            $query = $this->Designs->getAllById($category->id);
+            
+            if($limit){
+                $query->limit($limit);
+            }
+            if($tags){
+                $this->Designs->addTags($query);
+            }
+            
+            $designs = $query->toArray();
+        }
+        
+        $response = new DesignsRequestHandler\GetNewDesignsResponse();
+        $response->init($designs, $category);
+        
+        parent::setJson($response);
+    }
+    
+    public function getPromoDesigns($limit = null, $tags = true)
+    {
+        $category = $this->Categories->getPromotion()->first(); 
+        
+        $designs = [];
+        if($category){
+            $query = $this->Designs->getAllById($category->id);
+            
+            if($limit){
+                $query->limit($limit);
+            }
+            if($tags){
+                $this->Designs->addTags($query);
+            }
+            
+            $designs = $query->toArray();
+        }
+        
+        $response = new DesignsRequestHandler\GetPromotionDesignsResponse();
+        $response->init($designs, $category);
+        
+        parent::setJson($response);
+    }
+    
+    public function getFeaturedDesigns()
+    {
+        $category = $this->Categories->getHome()->first(); 
+        
+        $designs = [];
+        if($category){
+            $query = $this->Designs->getAllById($category->id);
+            
+            $designs = $query->toArray();
+        }
+        
+        $response = new DesignsRequestHandler\GetFeaturedDesignsResponse();
+        $response->init($designs, $category);
+        
+        parent::setJson($response);
+    }
     /**
      * View method
      *

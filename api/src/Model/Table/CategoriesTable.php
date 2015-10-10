@@ -62,7 +62,7 @@ class CategoriesTable extends Table
      */
     public function getAll()
     {
-        $category = $this->find();
+        $category = $this->find()->where(["visible" => 1]);
         
         return $category;
     }
@@ -77,5 +77,56 @@ class CategoriesTable extends Table
         $category = $this->find()->where(["id" => $id])->limit(1);
         
         return $category;
+    }
+    /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getTop()
+    {
+        $design = $this->find()->where(["type" => 1])->limit(1);
+        
+        return $design;
+    }
+    
+     /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getNew()
+    {
+        $design = $this->find()->where(["type" => 2])->limit(1);
+        
+        return $design;
+    }
+    
+     /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getHome()
+    {
+        $design = $this->find()->where(["type" => 3])->limit(1);
+        
+        return $design;
+    }
+    
+    /**
+     * Default get all design by category id.
+     *
+     * @param 
+     * @return App\Model\Table\DesignsTable
+     */
+    public function getPromotion()
+    {
+        $design = $this->find()->where(["type" => 4])->limit(1);
+        
+        return $design;
     }
 }

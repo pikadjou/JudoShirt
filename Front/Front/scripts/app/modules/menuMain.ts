@@ -3,7 +3,7 @@
 module JudoShirt {
     'use strict';
 
-	export class C_CategoriesList {
+	export class C_MenuMain {
 		
 
 		public static $inject = [
@@ -23,24 +23,25 @@ module JudoShirt {
 
 		public onPacketRecieved(response: any) {
 			this.$scope.vm.list = response.categories;
+			this.$scope.vm.cssClass = "small-block-grid-" + response.categories.length
 		}
 	}
 
-	export class CategoriesList implements ng.IDirective {
-		public templateUrl = "scripts/app/modules/CategoriesList.html";
+	export class MenuMain implements ng.IDirective {
+		public templateUrl = "scripts/app/modules/menuMain.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {
 		};
 
-		public static Name = "CategoriesList".toLocaleLowerCase();
+		public static Name = "MenuMain".toLocaleLowerCase();
 
 		public static $inject = [];
 		constructor(/*list of dependencies*/) {
 
 		}
 
-		public controller = C_CategoriesList;
+		public controller = C_MenuMain;
 	}
-	JudoShirtApp.JudoShirtApp.directive(CategoriesList.Name, JudoShirtApp.Application.GetDirectiveFactory<CategoriesList>(CategoriesList));
+	JudoShirtApp.JudoShirtApp.directive(MenuMain.Name, JudoShirtApp.Application.GetDirectiveFactory<MenuMain>(MenuMain));
 }

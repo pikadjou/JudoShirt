@@ -125,4 +125,16 @@ class DesignsTable extends Table
         
         return $designs;
     }
+    
+    
+    /**
+     * Make join
+     */
+    public function addTags($query, $select = []){
+        
+        $query->contain([
+            'Tags'
+        ]);
+        
+    }
 }

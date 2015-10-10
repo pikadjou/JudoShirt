@@ -21,10 +21,11 @@ var JudoShirt;
                     var url = this.urlApi;
                     url = url + "/" + request.Controller;
                     url = url + "/" + request.View;
-                    for (var i = 0, l = request.Content; i < l; i++) {
+                    for (var i = 0, l = request.Content.length; i < l; i++) {
                         url = url + "/" + request.Content[i];
                     }
                     url = url + this.urlExtension;
+                    console.log("PACKET_SEND : url : " + url);
                     this.$http.get(url).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
