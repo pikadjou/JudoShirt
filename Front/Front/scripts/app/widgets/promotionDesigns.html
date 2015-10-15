@@ -1,8 +1,9 @@
-﻿<div>
-	<h3>{{ vm.category.name }}</h3>
-	<div class="row">
+﻿<div class="widget__container">
+	<h4 class="title">{{ vm.category.name }}</h4>
+	<div class="row collapse content">
 		<div ng-repeat="model in vm.list" class="small-12 columns">
-			{{model.name}}
+			<div class="model-name">{{model.name}}</div>
+			<span class="category-name">{{model.name}}</span>
 		</div>
 	</div>
 </div>

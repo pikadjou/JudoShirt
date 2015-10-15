@@ -844,7 +844,12 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Designs\DesignsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Category.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Design.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Tag.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="scripts\services\Services.js">
       <DependentUpon>Services.js.bundle</DependentUpon>
@@ -952,6 +957,7 @@
     <Content Include="content\sass\application\modules\_headerContent.scss" />
     <Content Include="content\sass\application\modules\_menuMain.scss" />
     <Content Include="content\sass\application\widgets\_new.scss" />
+    <Content Include="content\sass\application\widgets\_top-ten.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

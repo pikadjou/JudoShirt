@@ -1,4 +1,12 @@
-﻿body{
+﻿$color-bleu: #499bff;
+
+$link-color: white;
+
+$bg-menu-top : $color-bleu;
+$bg-panel-light: white;
+$bg-panel-dark: #5a616b;
+
+body{
 	background: url(../img/background2.jpg);
 	background-size: 100% 100%;
 }
@@ -11,13 +19,29 @@ header{
 	}
 }
 
-$color-bleu: #499bff;
+.widget__container{
+	.title{
+		padding: 15px;
+		margin: 0;
+		background-color: #f7f6f6;
+		color: #5a616b;
 
-$link-color: white;
+		font-size: 14px;
 
-$bg-menu-top : $color-bleu;
-$bg-panel-light: white;
-$bg-panel-dark: #5a616b;
+		text-align: center;
+	}
+	.content{
+		background-color: $bg-panel-light;
+		padding: 5px;
+		.model-name{
+			margin-top: 5px;
+		}
+		.category-name{
+			display: block;
+			font-size: 10px;
+		}
+	}
+}
 
 @mixin border-radius($radius) {
   border-radius: $radius;

@@ -8852,6 +8852,29 @@ header {
   padding: 0px;
 }
 
+.widget__container .title {
+  padding: 15px;
+  margin: 0;
+  background-color: #f7f6f6;
+  color: #5a616b;
+  font-size: 14px;
+  text-align: center;
+}
+
+.widget__container .content {
+  background-color: white;
+  padding: 5px;
+}
+
+.widget__container .content .model-name {
+  margin-top: 5px;
+}
+
+.widget__container .content .category-name {
+  display: block;
+  font-size: 10px;
+}
+
 .menu-top__container {
   background-color: #499bff;
   padding: 10px;
@@ -8897,17 +8920,8 @@ header {
   padding: 15px;
 }
 
-.widget-menu__container .title {
-  padding: 15px;
-  margin: 0;
-  background-color: #f7f6f6;
-  color: #5a616b;
-  font-size: 14px;
-  text-align: center;
-}
-
-.widget-menu__container .content {
-  background-color: white;
+.widget-top-ten__container {
+  margin-top: 10px;
 }
 
 /*# sourceMappingURL=Site.css.map */
