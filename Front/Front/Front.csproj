@@ -829,18 +829,21 @@
     </Content>
     <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\modules\categoryDesigns.html" />
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\featuredDesigns.html" />
+    <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\widgets\promotionDesigns.html" />
     <Content Include="scripts\app\widgets\new.html" />
     <Content Include="scripts\app\widgets\topTen.html" />
     <Content Include="scripts\app\modules\menuMain.html" />
-    <Content Include="scripts\app\pages\produit.html" />
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\categoryDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\featuredDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\category.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />

@@ -18,7 +18,41 @@ header{
 		padding: 0px;
 	}
 }
-
+a{
+	color: $link-color;
+}
+.DesignList__container{
+	padding: 5px;
+	background-color: $bg-panel-light;
+	h3{
+		padding: 5px;
+		background-color: $color-bleu;
+		color: white;
+	}
+	.list{
+		margin: 0px;
+		text-align: center;
+		li{
+			padding: 0px;
+			.article{
+				margin: 5px;
+				border: 1px solid #dddddd;
+				img{
+					padding: 10px;
+					max-height: 200px;
+				}
+				.name{
+					font-size: 14px;
+					font-weight: bold;
+				}
+				.content{
+					font-size: 13px;
+				}
+			}
+			
+		}
+	}
+}
 .widget__container{
 	.title{
 		padding: 15px;

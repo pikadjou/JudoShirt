@@ -6,7 +6,6 @@ var JudoShirt;
         (function (CategoriesClass) {
             var GetCategoriesResponse = (function () {
                 function GetCategoriesResponse() {
-                    this.categories = Services.Entity.Category[];
                 }
                 return GetCategoriesResponse;
             })();

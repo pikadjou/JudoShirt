@@ -10,14 +10,16 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/scripts/app/container/header.js</file>
-	<file>/scripts/app/container/footer.js</file>
-    <file>/scripts/app/modules/MenuMain.js</file>
-	<file>/scripts/app/modules/featuredDesigns.js</file>
-	<file>/scripts/app/modules/langSelector.js</file>
-    <file>/scripts/app/pages/home.js</file>
-	<file>/scripts/app/widgets/topTen.js</file>
-	<file>/scripts/app/widgets/new.js</file>
-	<file>/scripts/app/widgets/promotionDesigns.js</file>
+		<file>/scripts/app/container/header.js</file>
+		<file>/scripts/app/container/footer.js</file>
+		<file>/scripts/app/modules/MenuMain.js</file>
+		<file>/scripts/app/modules/featuredDesigns.js</file>
+		<file>/scripts/app/modules/categoryDesigns.js</file>
+		<file>/scripts/app/modules/langSelector.js</file>
+		<file>/scripts/app/pages/home.js</file>
+		<file>/scripts/app/pages/category.js</file>
+		<file>/scripts/app/widgets/topTen.js</file>
+		<file>/scripts/app/widgets/new.js</file>
+		<file>/scripts/app/widgets/promotionDesigns.js</file>
   </files>
 </bundle>

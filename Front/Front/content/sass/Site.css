@@ -8852,6 +8852,49 @@ header {
   padding: 0px;
 }
 
+a {
+  color: white;
+}
+
+.DesignList__container {
+  padding: 5px;
+  background-color: white;
+}
+
+.DesignList__container h3 {
+  padding: 5px;
+  background-color: #499bff;
+  color: white;
+}
+
+.DesignList__container .list {
+  margin: 0px;
+  text-align: center;
+}
+
+.DesignList__container .list li {
+  padding: 0px;
+}
+
+.DesignList__container .list li .article {
+  margin: 5px;
+  border: 1px solid #dddddd;
+}
+
+.DesignList__container .list li .article img {
+  padding: 10px;
+  max-height: 200px;
+}
+
+.DesignList__container .list li .article .name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.DesignList__container .list li .article .content {
+  font-size: 13px;
+}
+
 .widget__container .title {
   padding: 15px;
   margin: 0;

@@ -54,7 +54,8 @@ var JudoShirt;
                 this.addEvents();
             }
             DesignsRequestHandler.prototype.GetDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", []));
+                if (request === void 0) { request = []; }
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
             };
             DesignsRequestHandler.prototype.GetTopDesigns = function (request) {
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));

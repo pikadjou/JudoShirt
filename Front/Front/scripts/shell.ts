@@ -20,7 +20,8 @@ module JudoShirt {
 				<any>'$routeProvider',
 				($routeProvider: angular.route.IRouteProvider) => {
 					$routeProvider
-						.when('/', { templateUrl: 'scripts/app/pages/home.html' })
+						.when('/', { templateUrl: 'scripts/app/pages/home.html', controller: 'PageHome' })
+						.when('/category/:id', { templateUrl: 'scripts/app/pages/category.html', controller: 'PageCategory' })
 						.when('/produit/:id', { templateUrl: 'scripts/app/pages/produit.html' })
 						.otherwise({ redirectTo: '/' });
 				}

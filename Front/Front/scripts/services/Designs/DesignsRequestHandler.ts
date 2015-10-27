@@ -23,8 +23,8 @@ module JudoShirt.Services {
 			this.addEvents();
 		}
 
-		public GetDesigns(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", []));
+		public GetDesigns(request: any = []): string {
+			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
 		}
 		public GetTopDesigns(request: any): string {
 			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));

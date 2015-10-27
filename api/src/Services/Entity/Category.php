@@ -18,9 +18,9 @@ class Category
         $this->name = $category->name;
         $this->content = $category->content;
         
-        for($i = 0, $l = count($design->categories); $i < $l; $i++){
-            $this->categories[] = new \App\Services\Entity\Category($design->categories[$i]);
-        };
+//        for($i = 0, $l = count($design->categories); $i < $l; $i++){
+//            $this->categories[] = new \App\Services\Entity\Category($design->categories[$i]);
+//        };
     }
 }
 

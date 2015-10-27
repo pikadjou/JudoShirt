@@ -2,7 +2,7 @@
 	<div class="row">
 		<ul ng-class="vm.cssClass">
 			<li ng-repeat="model in vm.list">
-				{{model.name}}
+				<a href="#" ng-href="#/category/{{model.id}}">{{model.name}}</a>
 			</li>
 		</ul>
 	</div>
