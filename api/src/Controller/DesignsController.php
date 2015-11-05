@@ -20,6 +20,30 @@ class DesignsController extends AppController
        
        $this->loadModel("Categories");
     }
+    
+    /**
+     * Index method
+     *
+     * @return void
+     */
+    public function getDesign($id)
+    {
+        $query = $this->Designs->getOne($id);
+ 
+        $query->contain([
+            'Categories'
+        ]);
+        $query->contain([
+            'Tags'
+        ]);
+        
+        $design = $query->first();
+        
+        $response = new DesignsRequestHandler\GetDesignResponse();
+        $response->init($design);
+        
+        parent::setJson($response);
+    }
     /**
      * Index method
      *

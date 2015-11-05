@@ -10,6 +10,7 @@ module JudoShirt.Services {
 		static $inject = ['Server'];
         public static Name = "DesignsRequestHandler";
 
+		public GetDesignReceived: Signal;
 		public GetDesignsReceived: Signal;
 		public GetTopDesignsReceived: Signal;
 		public GetNewDesignsReceived: Signal;
@@ -23,6 +24,9 @@ module JudoShirt.Services {
 			this.addEvents();
 		}
 
+		public GetDesign(request: any = []): string {
+			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
+		}
 		public GetDesigns(request: any = []): string {
 			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
 		}
@@ -40,13 +44,13 @@ module JudoShirt.Services {
 		}
 
 		private addEvents(): void {
+			this.GetDesignReceived = new signals.Signal();
 			this.GetDesignsReceived = new signals.Signal();
 			this.GetTopDesignsReceived = new signals.Signal();
 			this.GetNewDesignsReceived = new signals.Signal();
 			this.GetPromoDesignsReceived = new signals.Signal();
 			this.GetFeaturedDesignsReceived = new signals.Signal();
 
-			//this.server.packetReceived.add
 			this.server.packetReceived.add(this.onPacketReceived, this);
 		}
 
@@ -55,6 +59,10 @@ module JudoShirt.Services {
 
 			var parsedResponse: any = null;
 			switch (response.Identifier) {
+				case ("GetDesignResponse"):
+					parsedResponse = <any>(response.Content);
+					this.GetDesignReceived.dispatch(parsedResponse);
+					break;
 				case ("GetDesignsResponse"):
 					parsedResponse = <any>(response.Content);
 					this.GetDesignsReceived.dispatch(parsedResponse);

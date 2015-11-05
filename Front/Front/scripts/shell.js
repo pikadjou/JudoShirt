@@ -12,7 +12,8 @@ var JudoShirt;
                     $routeProvider
                         .when('/', { templateUrl: 'scripts/app/pages/home.html', controller: 'PageHome' })
                         .when('/category/:id', { templateUrl: 'scripts/app/pages/category.html', controller: 'PageCategory' })
-                        .when('/produit/:id', { templateUrl: 'scripts/app/pages/produit.html' })
+                        .when('/design/:id', { templateUrl: 'scripts/app/pages/design.html', controller: 'PageDesign' })
+                        .when('/produit/:id', { templateUrl: 'scripts/app/pages/produit.html', controller: 'PageProduct' })
                         .otherwise({ redirectTo: '/' });
                 }
             ]);

@@ -53,6 +53,10 @@ var JudoShirt;
                 this.controller = "designs";
                 this.addEvents();
             }
+            DesignsRequestHandler.prototype.GetDesign = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
+            };
             DesignsRequestHandler.prototype.GetDesigns = function (request) {
                 if (request === void 0) { request = []; }
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
@@ -70,6 +74,7 @@ var JudoShirt;
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
             };
             DesignsRequestHandler.prototype.addEvents = function () {
+                this.GetDesignReceived = new signals.Signal();
                 this.GetDesignsReceived = new signals.Signal();
                 this.GetTopDesignsReceived = new signals.Signal();
                 this.GetNewDesignsReceived = new signals.Signal();
@@ -82,6 +87,10 @@ var JudoShirt;
                     return;
                 var parsedResponse = null;
                 switch (response.Identifier) {
+                    case ("GetDesignResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetDesignReceived.dispatch(parsedResponse);
+                        break;
                     case ("GetDesignsResponse"):
                         parsedResponse = (response.Content);
                         this.GetDesignsReceived.dispatch(parsedResponse);

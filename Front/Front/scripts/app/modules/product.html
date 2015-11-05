@@ -1,0 +1,12 @@
+﻿<div class="DesignList__container CategoryDesigns__container">
+	<h3 class="title">{{ vm.category.name }}</h3>
+	<ul class="small-block-grid-3 list">
+		<li ng-repeat="design in vm.list">
+			<div class="article">
+				<img ng-src="{{design.thumbnail}}" />
+				<span class="name">{{design.name}}</span>
+				<p class="content">{{design.content.substring(0, 50) + "..."}}</p>
+			</div>
+		</li>
+	</ul>
+</div>

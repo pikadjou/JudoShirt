@@ -8867,6 +8867,10 @@ a {
   color: white;
 }
 
+.DesignList__container a {
+  color: black;
+}
+
 .DesignList__container .list {
   margin: 0px;
   text-align: center;
