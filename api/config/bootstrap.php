@@ -203,6 +203,7 @@ Type::build('datetime')->useLocaleParser();
 
 
 //configuration about spreadShirt api
-Configure::write('HOST', '//localhost');
-Configure::write('SPREADSHIRT_API_KEY', '');
-Configure::write('SPREADSHIRT_API_SECRET', '');
+Configure::write('SPREADSHIRT_HOST', 'http://api.spreadshirt.net/api/v1/');
+Configure::write('SPREADSHIRT_API_KEY', '38dc47e4-550f-4d36-9f12-c25e6f754957');
+Configure::write('SPREADSHIRT_API_SECRET', 'baea0b0f-4e8c-4a53-95e4-56694e8c1937');
+Configure::write('SPREADSHIRT_SHOP_ID', '688862');

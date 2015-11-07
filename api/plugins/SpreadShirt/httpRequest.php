@@ -7,15 +7,19 @@ class HttpRequest{
     private $_secretKey = "";
     private $_apiKey = "";
     
+    public $_urlShop = "";
+    
     function __construct() {
         $this->_secretKey = Configure::read('SPREADSHIRT_API_SECRET');
         $this->_apiKey = Configure::read('SPREADSHIRT_API_KEY');
+        
+        $this->_urlShop = Configure::read('SPREADSHIRT_HOST') + "shops/" + Configure::read('SPREADSHIRT_SHOP_ID'); + "/";
     }
-    
+        
     public function getRequest($url){
         
         $url = $this->encodeUrl($url);
-        $url = $this->secureUrl("GET", $url);
+        //$url = $this->secureUrl("GET", $url);
         
         // Open the Curl session
         $session = curl_init($url);

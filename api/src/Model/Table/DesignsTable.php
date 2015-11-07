@@ -37,6 +37,11 @@ class DesignsTable extends Table
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'tags_designs'
         ]);
+        
+        $this->hasMany('Products', [
+            'foreignKey' => 'design_id',
+            'dependent' => true,
+        ]);
     }
 
     /**
