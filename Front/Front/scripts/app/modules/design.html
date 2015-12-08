@@ -1,1 +1,15 @@
-﻿<img ng-src="{{design.thumbnail}}" />
+﻿<div class="DesignList__container CategoryDesigns__container">
+	<h3 class="title">Desing name</h3>
+	<ul class="small-block-grid-3 list">
+		<li ng-repeat="product in vm.products">
+			<div class="article">
+				<a href="/product/!#!-A{{product.shopId}}">
+					<img ng-src="{{product.thumbnail}}" />
+					<span class="name">{{product.name}}</span>
+					<p class="content">{{product.content.substring(0, 50) + "..."}}</p>
+					<span class="name">{{product.price}}</span>
+				</a>
+			</div>
+		</li>
+	</ul>
+</div>

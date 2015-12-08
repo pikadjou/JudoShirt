@@ -29,7 +29,7 @@ module JudoShirt {
 	}
 
 	export class WidgetPromotionDesigns implements ng.IDirective {
-		public templateUrl = "scripts/app/widgets/promotionDesigns.html";
+		public templateUrl = "/scripts/app/widgets/promotionDesigns.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

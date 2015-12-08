@@ -23,7 +23,7 @@
             echo $this->Form->input('content');
             echo $this->Form->input('thumbnail');
             echo $this->Form->input('header');
-            echo $this->Form->input('idShop');
+            echo $this->Form->input('shopId');
             echo $this->Form->input('idCustomShop');
             echo $this->Form->input('categories._ids', ['options' => $categories]);
             echo $this->Form->input('tags._ids', ['options' => $tags]);

@@ -52,7 +52,7 @@
 			if (response.Id === "00000000-0000-0000-0000-000000000000") {
 				//error
 			}
-
+			console.log("PACKET_RECIEVED : data : ", response);
 			// Dispatch the request, services should receive this if binded correctly
 			this.packetReceived.dispatch(response);
 			

@@ -17,7 +17,7 @@ var JudoShirt;
         Container.C_Footer = C_Footer;
         var Footer = (function () {
             function Footer() {
-                this.templateUrl = "scripts/app/container/footer.html";
+                this.templateUrl = "/scripts/app/container/footer.html";
                 this.restrict = "E";
                 this.replace = true;
                 this.scope = {};

@@ -17,7 +17,7 @@ var JudoShirt;
         Container.C_Header = C_Header;
         var Header = (function () {
             function Header() {
-                this.templateUrl = "scripts/app/container/header.html";
+                this.templateUrl = "/scripts/app/container/header.html";
                 this.restrict = "E";
                 this.replace = true;
                 this.scope = {};

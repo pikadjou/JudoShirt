@@ -9,7 +9,7 @@ class Design
     public $content = "";
     public $thumbnail = "";
     public $header = "";
-    public $idShop = 0;
+    public $shopId = 0;
     public $idCustomShop = 0;
     
     public $categories = [];
@@ -21,7 +21,7 @@ class Design
         $this->content = $design->content;
         $this->thumbnail = $design->thumbnail;
         $this->header = $design->header;
-        $this->idShop = $design->idShop;
+        $this->shopId = $design->shopId;
         $this->idCustomShop = $design->idCustomShop;
         
         for($i = 0, $l = count($design->categories); $i < $l; $i++){

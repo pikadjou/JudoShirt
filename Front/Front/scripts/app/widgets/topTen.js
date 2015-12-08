@@ -23,7 +23,7 @@ var JudoShirt;
     JudoShirt.C_WidgetTopTen = C_WidgetTopTen;
     var WidgetTopTen = (function () {
         function WidgetTopTen() {
-            this.templateUrl = "scripts/app/widgets/topTen.html";
+            this.templateUrl = "/scripts/app/widgets/topTen.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

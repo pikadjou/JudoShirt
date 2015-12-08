@@ -16,7 +16,7 @@
             <th><?= $this->Paginator->sort('name') ?></th>
             <th><?= $this->Paginator->sort('thumbnail') ?></th>
             <th><?= $this->Paginator->sort('header') ?></th>
-            <th><?= $this->Paginator->sort('idShop') ?></th>
+            <th><?= $this->Paginator->sort('shopId') ?></th>
             <th><?= $this->Paginator->sort('idCustomShop') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -28,7 +28,7 @@
             <td><?= h($design->name) ?></td>
             <td><?= h($design->thumbnail) ?></td>
             <td><?= h($design->header) ?></td>
-            <td><?= h($design->idShop) ?></td>
+            <td><?= h($design->shopId) ?></td>
             <td><?= h($design->idCustomShop) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $design->id]) ?>

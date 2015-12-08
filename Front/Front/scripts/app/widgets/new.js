@@ -23,7 +23,7 @@ var JudoShirt;
     JudoShirt.C_WidgetNew = C_WidgetNew;
     var WidgetNew = (function () {
         function WidgetNew() {
-            this.templateUrl = "scripts/app/widgets/new.html";
+            this.templateUrl = "/scripts/app/widgets/new.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

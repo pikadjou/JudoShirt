@@ -20,7 +20,7 @@ module JudoShirt.Container {
 	export class Header implements ng.IDirective {
 		public static Name = "headercontainer".toLocaleLowerCase();
 
-		public templateUrl = "scripts/app/container/header.html";
+		public templateUrl = "/scripts/app/container/header.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

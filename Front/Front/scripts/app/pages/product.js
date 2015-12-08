@@ -2,13 +2,16 @@ var JudoShirt;
 (function (JudoShirt) {
     'use strict';
     var PageProduct = (function () {
-        function PageProduct($scope) {
+        function PageProduct($scope, $routeParams) {
             this.$scope = $scope;
+            this.$routeParams = $routeParams;
             $scope.vm = this;
+            $scope.vm.id = $routeParams.id || 0;
         }
         PageProduct.Name = "PageProduct";
         PageProduct.$inject = [
-            '$scope'
+            '$scope',
+            '$routeParams'
         ];
         return PageProduct;
     })();

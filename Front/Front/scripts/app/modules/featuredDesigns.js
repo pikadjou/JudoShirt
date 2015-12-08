@@ -23,7 +23,7 @@ var JudoShirt;
     JudoShirt.C_FeaturedDesigns = C_FeaturedDesigns;
     var FeaturedDesigns = (function () {
         function FeaturedDesigns() {
-            this.templateUrl = "scripts/app/modules/featuredDesigns.html";
+            this.templateUrl = "/scripts/app/modules/featuredDesigns.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

@@ -23,7 +23,7 @@ var JudoShirt;
     JudoShirt.C_WidgetPromotionDesigns = C_WidgetPromotionDesigns;
     var WidgetPromotionDesigns = (function () {
         function WidgetPromotionDesigns() {
-            this.templateUrl = "scripts/app/widgets/promotionDesigns.html";
+            this.templateUrl = "/scripts/app/widgets/promotionDesigns.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

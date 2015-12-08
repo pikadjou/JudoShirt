@@ -5,7 +5,7 @@
 		public content: string;
 		public thumbnail: string;
 		public header: string;
-		public idShop: number;
+		public shopId: number;
 		public idCustomShop: number;
 
 		public categories: Category[];

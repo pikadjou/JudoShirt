@@ -21,8 +21,8 @@
             <p><?= h($design->thumbnail) ?></p>
             <h6 class="subheader"><?= __('Header') ?></h6>
             <p><?= h($design->header) ?></p>
-            <h6 class="subheader"><?= __('IdShop') ?></h6>
-            <p><?= h($design->idShop) ?></p>
+            <h6 class="subheader"><?= __('shopId') ?></h6>
+            <p><?= h($design->shopId) ?></p>
             <h6 class="subheader"><?= __('IdCustomShop') ?></h6>
             <p><?= h($design->idCustomShop) ?></p>
         </div>

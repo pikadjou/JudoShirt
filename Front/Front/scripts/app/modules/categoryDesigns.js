@@ -23,7 +23,7 @@ var JudoShirt;
     JudoShirt.C_CategoryDesigns = C_CategoryDesigns;
     var CategoryDesigns = (function () {
         function CategoryDesigns() {
-            this.templateUrl = "scripts/app/modules/categoryDesigns.html";
+            this.templateUrl = "/scripts/app/modules/categoryDesigns.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {

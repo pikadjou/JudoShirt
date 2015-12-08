@@ -18,7 +18,7 @@ module JudoShirt {
 	}
 
 	export class LangSelector implements ng.IDirective {
-		public templateUrl = "scripts/app/modules/langSelector.html";
+		public templateUrl = "/scripts/app/modules/langSelector.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

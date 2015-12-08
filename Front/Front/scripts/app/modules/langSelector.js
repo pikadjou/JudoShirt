@@ -16,7 +16,7 @@ var JudoShirt;
     JudoShirt.C_LangSelector = C_LangSelector;
     var LangSelector = (function () {
         function LangSelector() {
-            this.templateUrl = "scripts/app/modules/langSelector.html";
+            this.templateUrl = "/scripts/app/modules/langSelector.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

@@ -21,14 +21,15 @@ header{
 a{
 	color: $link-color;
 }
+h3{
+	padding: 5px;
+	background-color: $color-bleu;
+	color: white;
+}
 .DesignList__container{
 	padding: 5px;
 	background-color: $bg-panel-light;
-	h3{
-		padding: 5px;
-		background-color: $color-bleu;
-		color: white;
-	}
+	
 	a{
 		color: black;
 	}
@@ -55,6 +56,11 @@ a{
 			
 		}
 	}
+}
+
+iframe{
+	border: none;
+	width: 100%;
 }
 .widget__container{
 	.title{

@@ -33,7 +33,7 @@
             <th><?= __('Content') ?></th>
             <th><?= __('Thumbnail') ?></th>
             <th><?= __('Header') ?></th>
-            <th><?= __('IdShop') ?></th>
+            <th><?= __('shopId') ?></th>
             <th><?= __('IdCustomShop') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -44,7 +44,7 @@
             <td><?= h($designs->content) ?></td>
             <td><?= h($designs->thumbnail) ?></td>
             <td><?= h($designs->header) ?></td>
-            <td><?= h($designs->idShop) ?></td>
+            <td><?= h($designs->shopId) ?></td>
             <td><?= h($designs->idCustomShop) ?></td>
 
             <td class="actions">

@@ -820,6 +820,7 @@
     <Content Include="lib\foundation\vendor\jquery.js" />
     <Content Include="lib\foundation\vendor\modernizr.js" />
     <Content Include="lib\foundation\vendor\placeholder.js" />
+    <Content Include="lib\jquery\iframe-autoresize.js" />
     <Content Include="lib\signals\signal.js" />
     <Content Include="scripts\app\App.js">
       <DependentUpon>App.js.bundle</DependentUpon>
@@ -829,14 +830,17 @@
     </Content>
     <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\modules\basket.html" />
     <Content Include="scripts\app\modules\design.html" />
-    <Content Include="scripts\app\modules\product.html" />
     <Content Include="scripts\app\modules\categoryDesigns.html" />
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\featuredDesigns.html" />
+    <Content Include="scripts\app\modules\product.html" />
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
+    <Content Include="scripts\app\pages\basket.html" />
     <Content Include="scripts\app\pages\product.html" />
+    <Content Include="scripts\app\widgets\account.html" />
     <Content Include="scripts\app\widgets\promotionDesigns.html" />
     <Content Include="scripts\app\widgets\new.html" />
     <Content Include="scripts\app\widgets\topTen.html" />
@@ -844,14 +848,17 @@
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\basket.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\product.ts" />
     <TypeScriptCompile Include="scripts\app\modules\categoryDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\featuredDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\product.ts" />
     <TypeScriptCompile Include="scripts\app\pages\category.ts" />
     <TypeScriptCompile Include="scripts\app\pages\design.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\basket.ts" />
     <TypeScriptCompile Include="scripts\app\pages\product.ts" />
+    <TypeScriptCompile Include="scripts\app\widgets\account.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
@@ -861,6 +868,7 @@
     <TypeScriptCompile Include="scripts\services\Entity\Category.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Design.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Tag.ts" />
+    <TypeScriptCompile Include="scripts\services\Products\ProductsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="scripts\services\Services.js">
       <DependentUpon>Services.js.bundle</DependentUpon>
@@ -899,7 +907,6 @@
     <Content Include="lib\angular\angular.min.js.map" />
     <Content Include="packages.config" />
     <Content Include="content\sass\application\_master.scss" />
-    <Content Include="content\sass\config.rb" />
     <Content Include="content\sass\foundation\components\_accordion.scss" />
     <Content Include="content\sass\foundation\components\_alert-boxes.scss" />
     <Content Include="content\sass\foundation\components\_block-grid.scss" />
@@ -969,6 +976,7 @@
     <Content Include="content\sass\application\modules\_menuMain.scss" />
     <Content Include="content\sass\application\widgets\_new.scss" />
     <Content Include="content\sass\application\widgets\_top-ten.scss" />
+    <Content Include="content\sass\application\widgets\_account.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -979,7 +987,6 @@
   <ItemGroup>
     <Folder Include="content\sass\application\container\" />
     <Folder Include="content\sass\application\pages\" />
-    <Folder Include="lib\jquery\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

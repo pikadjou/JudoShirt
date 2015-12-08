@@ -23,7 +23,7 @@ var JudoShirt;
     JudoShirt.C_MenuMain = C_MenuMain;
     var MenuMain = (function () {
         function MenuMain() {
-            this.templateUrl = "scripts/app/modules/menuMain.html";
+            this.templateUrl = "/scripts/app/modules/menuMain.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

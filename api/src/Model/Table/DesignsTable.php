@@ -69,7 +69,7 @@ class DesignsTable extends Table
             ->allowEmpty('header');
             
         $validator
-            ->allowEmpty('idShop');
+            ->allowEmpty('shopId');
             
         $validator
             ->allowEmpty('idCustomShop');
@@ -103,6 +103,13 @@ class DesignsTable extends Table
     public function getOne($id)
     {
         $design = $this->find()->where(["id" => $id])->limit(1);
+        
+        return $design;
+    }
+    
+    public function getByShopId($id)
+    {
+        $design = $this->find()->where(["shopId" => $id])->limit(1);
         
         return $design;
     }

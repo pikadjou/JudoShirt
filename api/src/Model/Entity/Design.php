@@ -19,8 +19,9 @@ class Design extends Entity
         'content' => true,
         'thumbnail' => true,
         'header' => true,
-        'idShop' => true,
+        'shopId' => true,
         'idCustomShop' => true,
+        'lastProductsUpdate' => true,
         'categories' => true,
         'tags' => true,
     ];

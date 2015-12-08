@@ -30,7 +30,7 @@ module JudoShirt {
 	}
 
 	export class FeaturedDesigns implements ng.IDirective {
-		public templateUrl = "scripts/app/modules/featuredDesigns.html";
+		public templateUrl = "/scripts/app/modules/featuredDesigns.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

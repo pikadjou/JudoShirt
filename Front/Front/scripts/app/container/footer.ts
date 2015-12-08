@@ -20,7 +20,7 @@ module JudoShirt.Container {
 	export class Footer implements ng.IDirective {
 		public static Name = "FooterContainer".toLocaleLowerCase();
 
-		public templateUrl = "scripts/app/container/footer.html";
+		public templateUrl = "/scripts/app/container/footer.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

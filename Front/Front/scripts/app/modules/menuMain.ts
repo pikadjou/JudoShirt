@@ -28,7 +28,7 @@ module JudoShirt {
 	}
 
 	export class MenuMain implements ng.IDirective {
-		public templateUrl = "scripts/app/modules/menuMain.html";
+		public templateUrl = "/scripts/app/modules/menuMain.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

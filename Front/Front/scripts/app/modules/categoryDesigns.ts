@@ -29,7 +29,7 @@ module JudoShirt {
 	}
 
 	export class CategoryDesigns implements ng.IDirective {
-		public templateUrl = "scripts/app/modules/categoryDesigns.html";
+		public templateUrl = "/scripts/app/modules/categoryDesigns.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

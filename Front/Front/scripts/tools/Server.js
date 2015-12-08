@@ -38,6 +38,7 @@ var JudoShirt;
             Server.prototype.onPacketReceived = function (response) {
                 if (response.Id === "00000000-0000-0000-0000-000000000000") {
                 }
+                console.log("PACKET_RECIEVED : data : ", response);
                 this.packetReceived.dispatch(response);
             };
             Server.$inject = ['$http'];

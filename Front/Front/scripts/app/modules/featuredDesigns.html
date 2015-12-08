@@ -3,7 +3,7 @@
 	<ul class="small-block-grid-3 list">
 		<li ng-repeat="design in vm.list">
 			<div class="article">
-				<a href="#/design/{{design.id}}">
+				<a href="/design/{{design.shopId}}">
 					<img ng-src="{{design.thumbnail}}" />
 					<span class="name">{{design.name}}</span>
 					<p class="content">{{design.content.substring(0, 50) + "..."}}</p>

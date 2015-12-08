@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `JudoShirt`.`designs` (
   `content` TEXT NULL COMMENT '',
   `thumbnail` VARCHAR(45) NULL COMMENT '',
   `header` VARCHAR(45) NULL COMMENT '',
-  `idShop` VARCHAR(45) NULL COMMENT '',
+  `shopId` VARCHAR(45) NULL COMMENT '',
   `idCustomShop` VARCHAR(45) NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '')
 ENGINE = InnoDB;

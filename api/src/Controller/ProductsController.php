@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Services\ProductsRequestHandler;
 /**
  * Categories Controller
  *
@@ -14,24 +15,41 @@ class ProductsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
+        
+         $this->loadModel("Designs");
     }
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
+    public function getProducts($id)
     {
-        $products = $this->Products->getAllByDesign(120416418);
-        //$products = $query->toArray();
+       $query = $this->Designs->getByShopId($id);
+       $design = $query->first();
         
-        debug($products);
-        /*
-        $response = new CategoriesRequestHandler\GetCategoriesResponse();
-        $response->init($categories);
+        $query = $this->Products->findByDesign($design);
+        $products = $query->toArray();
+               
+        $response = new ProductsRequestHandler\GetProductsResponse();
+        $response->init($products);
 
         parent::setJson($response);
-         * */
+    }
+    
+    public function getProduct($id = null)
+    {
+        $id = 104331399;
+       // $query = $this->Designs->getOneByShopId($id);
+        //$design = $query->first();
+        
+        $query = $this->Products->getByShopId($id);
+        //$product = $query->first();
+               
+      //  $response = new ProductsRequestHandler\GetProductsResponse();
+      //  $response->init($products);
+
+      //  parent::setJson($response);
 
     }
 }

@@ -525,7 +525,7 @@ select {
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 62.5rem;
+  max-width: 75rem;
 }
 
 .row:before, .row:after {
@@ -4747,55 +4747,6 @@ kbd {
   border-radius: 3px;
 }
 
-.label {
-  font-weight: normal;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  text-align: center;
-  text-decoration: none;
-  line-height: 1;
-  white-space: nowrap;
-  display: inline-block;
-  position: relative;
-  margin-bottom: inherit;
-  padding: 0.25rem 0.5rem 0.25rem;
-  font-size: 0.6875rem;
-  background-color: #008CBA;
-  color: #FFFFFF;
-}
-
-.label.radius {
-  border-radius: 3px;
-}
-
-.label.round {
-  border-radius: 1000px;
-}
-
-.label.alert {
-  background-color: #f04124;
-  color: #FFFFFF;
-}
-
-.label.warning {
-  background-color: #f08a24;
-  color: #FFFFFF;
-}
-
-.label.success {
-  background-color: #43AC6A;
-  color: #FFFFFF;
-}
-
-.label.secondary {
-  background-color: #e7e7e7;
-  color: #333333;
-}
-
-.label.info {
-  background-color: #a0d3e8;
-  color: #333333;
-}
-
 [data-magellan-expedition], [data-magellan-expedition-clone] {
   background: #FFFFFF;
   z-index: 50;
@@ -5555,7 +5506,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal, dialog {
     width: 80%;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5583,7 +5534,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal.tiny, dialog.tiny {
     width: 30%;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5593,7 +5544,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal.small, dialog.small {
     width: 40%;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5603,7 +5554,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal.medium, dialog.medium {
     width: 60%;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5613,7 +5564,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal.large, dialog.large {
     width: 70%;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5623,7 +5574,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal.xlarge, dialog.xlarge {
     width: 95%;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -5642,7 +5593,7 @@ ul.pagination li {
 @media only screen and (min-width: 40.063em) {
   .reveal-modal.full, dialog.full {
     width: 100vw;
-    max-width: 62.5rem;
+    max-width: 75rem;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -7445,7 +7396,7 @@ meta.foundation-mq-topbar {
     background: #333333;
   }
   .contain-to-grid .top-bar {
-    max-width: 62.5rem;
+    max-width: 75rem;
     margin: 0 auto;
     margin-bottom: 0;
   }
@@ -8856,15 +8807,15 @@ a {
   color: white;
 }
 
-.DesignList__container {
-  padding: 5px;
-  background-color: white;
-}
-
-.DesignList__container h3 {
+h3 {
   padding: 5px;
   background-color: #499bff;
   color: white;
+}
+
+.DesignList__container {
+  padding: 5px;
+  background-color: white;
 }
 
 .DesignList__container a {
@@ -8897,6 +8848,11 @@ a {
 
 .DesignList__container .list li .article .content {
   font-size: 13px;
+}
+
+iframe {
+  border: none;
+  width: 100%;
 }
 
 .widget__container .title {
@@ -8969,6 +8925,10 @@ a {
 
 .widget-top-ten__container {
   margin-top: 10px;
+}
+
+.widget__account #accountShop .navigation {
+  border: none;
 }
 
 /*# sourceMappingURL=Site.css.map */

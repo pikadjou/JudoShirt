@@ -2,38 +2,38 @@
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
-    var C_Designs = (function () {
-        function C_Designs($scope, RH) {
+    var C_Design = (function () {
+        function C_Design($scope, RH) {
             this.$scope = $scope;
             this.RH = RH;
             $scope.vm = $scope;
-            this.RH.GetDesignReceived.add(this.onPacketRecieved, this);
-            this.RH.GetDesign([$scope.designid]);
+            this.RH.GetProductsReceived.add(this.onPacketRecieved, this);
+            this.RH.GetProducts([$scope.designid]);
         }
-        C_Designs.prototype.onPacketRecieved = function (response) {
-            this.$scope.vm.design = response.design;
+        C_Design.prototype.onPacketRecieved = function (response) {
+            this.$scope.vm.products = response.products;
         };
-        C_Designs.$inject = [
+        C_Design.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            JudoShirt.Services.ProductsRequestHandler.Name
         ];
-        return C_Designs;
+        return C_Design;
     })();
-    JudoShirt.C_Designs = C_Designs;
-    var Designs = (function () {
-        function Designs() {
-            this.templateUrl = "scripts/app/modules/design.html";
+    JudoShirt.C_Design = C_Design;
+    var Design = (function () {
+        function Design() {
+            this.templateUrl = "/scripts/app/modules/design.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {
                 designid: '@'
             };
-            this.controller = C_Designs;
+            this.controller = C_Design;
         }
-        Designs.Name = "Designs".toLocaleLowerCase();
-        Designs.$inject = [];
-        return Designs;
+        Design.Name = "Designs".toLocaleLowerCase();
+        Design.$inject = [];
+        return Design;
     })();
-    JudoShirt.Designs = Designs;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Designs.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Designs));
+    JudoShirt.Design = Design;
+    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Design.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Design));
 })(JudoShirt || (JudoShirt = {}));

@@ -3,45 +3,60 @@
 module JudoShirt {
     'use strict';
 
-	export class C_CategoryDesigns {
+	export class C_Product {
 		
-
+		public sce = null;
 		public static $inject = [
 			'$scope',
-			Services.DesignsRequestHandler.Name
+			'$sce'
 		];
 		constructor(
 			private $scope: any,
-			private RH: Services.DesignsRequestHandler
+			private $sce: any
 			) {
+			this.sce = $sce;
 			$scope.vm = $scope;
-			this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
 
-			this.RH.GetDesigns([$scope.catid]);
+			$scope.vm.iframeresize = this.iframeresize;
+			$scope.vm.trustSrc = this.trustSrc;
 
+			//$scope.vm.url = "https://shop.spreadshirt.fr/mangelavie/-A" + $scope.productid;
+
+			(<any>window).spread_shop_config = {
+				shopName: 'mangelavie',
+				locale: 'fr_FR',
+				prefix: '//shop.spreadshirt.fr',
+				baseId: 'productShop'
+			};
+
+			(<any>window).shopclient();
 		}
 
-		public onPacketRecieved(response: any) {
-			this.$scope.vm.category = response.category;
-			this.$scope.vm.list = response.designs;
+		public iframeresize() {
 
+			//var the_height = (<any>document.getElementById('iframe')).contentWindow.document.body.scrollHeight;
+			(<any>$('#iframe-container')).height(2000);
+		}
+
+		public trustSrc = (url) => {
+			return this.sce.trustAsResourceUrl(url);
 		}
 	}
 
-	export class CategoryDesigns implements ng.IDirective {
-		public templateUrl = "scripts/app/modules/categoryDesigns.html";
+	export class Product implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/product.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {
-			catid: '@'
+			productid: '@'
 		};
 
-		public static Name = "CategoryDesigns".toLocaleLowerCase();
+		public static Name = "Product".toLocaleLowerCase();
 
 		public static $inject = [];
 		constructor() { }
 
-		public controller = C_CategoryDesigns;
+		public controller = C_Product;
 	}
-	JudoShirtApp.JudoShirtApp.directive(CategoryDesigns.Name, JudoShirtApp.Application.GetDirectiveFactory<CategoryDesigns>(CategoryDesigns));
+	JudoShirtApp.JudoShirtApp.directive(Product.Name, JudoShirtApp.Application.GetDirectiveFactory<Product>(Product));
 }

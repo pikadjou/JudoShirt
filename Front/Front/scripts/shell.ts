@@ -18,13 +18,21 @@ module JudoShirt {
 
 			this.JudoShirtApp.config([
 				<any>'$routeProvider',
-				($routeProvider: angular.route.IRouteProvider) => {
+				<any>'$locationProvider',
+				($routeProvider: angular.route.IRouteProvider, $locationProvider: any) => {
 					$routeProvider
-						.when('/', { templateUrl: 'scripts/app/pages/home.html', controller: 'PageHome' })
-						.when('/category/:id', { templateUrl: 'scripts/app/pages/category.html', controller: 'PageCategory' })
-						.when('/design/:id', { templateUrl: 'scripts/app/pages/design.html', controller: 'PageDesign' })
-						.when('/produit/:id', { templateUrl: 'scripts/app/pages/produit.html', controller: 'PageProduct' })
+						.when('/', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
+						.when('/category/:id', { templateUrl: '/scripts/app/pages/category.html', controller: 'PageCategory' })
+						.when('/design/:id', { templateUrl: '/scripts/app/pages/design.html', controller: 'PageDesign' })
+						.when('/product/:hash', { templateUrl: '/scripts/app/pages/product.html', controller: 'PageProduct' })
+						.when('/panier', { templateUrl: '/scripts/app/pages/basket.html', controller: 'PageBasket' })
+						.when('/test/:hash', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
 						.otherwise({ redirectTo: '/' });
+
+					$locationProvider.html5Mode({
+						enabled: true,
+						requireBase: false
+					}).hashPrefix('!');
 				}
 			]);
 
