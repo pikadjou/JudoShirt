@@ -8813,6 +8813,10 @@ h3 {
   color: white;
 }
 
+.no-padding {
+  padding: 0px;
+}
+
 .DesignList__container {
   padding: 5px;
   background-color: white;
@@ -8925,6 +8929,26 @@ iframe {
 
 .widget-top-ten__container {
   margin-top: 10px;
+}
+
+.widget__account #accountShop #header-html {
+  display: none !important;
+}
+
+.widget__account #accountShop #department-filter {
+  display: none !important;
+}
+
+.widget__account #accountShop #sprd-content {
+  display: none !important;
+}
+
+.widget__account #accountShop #footer-html {
+  display: none !important;
+}
+
+.widget__account #accountShop #footer {
+  display: none !important;
 }
 
 .widget__account #accountShop .navigation {

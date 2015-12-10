@@ -6,25 +6,29 @@ var JudoShirt;
         function C_WidgetAccount($scope) {
             this.$scope = $scope;
             $scope.vm = $scope;
-            window.spread_shop_config = {
-                shopName: 'mangelavie',
-                locale: 'fr_FR',
-                prefix: '//shop.spreadshirt.fr',
-                baseId: 'accountShop'
-            };
-            window.shopclient();
-            var intervalId = setInterval(function () {
-                var element = $("#sprd-main");
-                if (element) {
-                    element.attr("id", "shop");
-                    element.find("#header-html").remove();
-                    element.find("#department-filter").remove();
-                    element.find("#sprd-content").remove();
-                    element.find("#footer-html").remove();
-                    element.find("#footer").remove();
-                    clearInterval(intervalId);
-                }
-            }, 100);
+            setTimeout(function () {
+                window.spread_shop_config = {
+                    shopName: 'mangelavie',
+                    locale: 'fr_FR',
+                    prefix: '//shop.spreadshirt.fr',
+                    baseId: 'accountShop'
+                };
+                window.shopclient();
+                var intervalId = setInterval(function () {
+                    var element = $("#sprd-main").first();
+                    if (element && element.length > 0) {
+                        element.attr("id", "shop");
+                        setTimeout(function () {
+                            element.find("#header-html").remove();
+                            element.find("#department-filter").remove();
+                            element.find("#sprd-content").remove();
+                            element.find("#footer-html").remove();
+                            element.find("#footer").remove();
+                        }, 10000, element);
+                        clearInterval(intervalId);
+                    }
+                }, 100);
+            }, 20000);
         }
         C_WidgetAccount.$inject = [
             '$scope'

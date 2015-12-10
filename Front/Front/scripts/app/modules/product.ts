@@ -29,7 +29,27 @@ module JudoShirt {
 				baseId: 'productShop'
 			};
 
+			//var tmp = $("#sprd-main");
+
+			//if (tmp && tmp.length > 0) {
+			//	tmp.attr("id", "tmp1");
+			//}
 			(<any>window).shopclient();
+
+			var intervalId = setInterval(function () {
+				var element = $("#sprd-main").first();
+
+				if (element && element.length > 0) {
+
+					element.attr("id", "shop");
+
+					clearInterval(intervalId);
+				}
+
+			}, 100);
+			//if (tmp && tmp.length > 0) {
+			//	tmp.attr("id", "sprd-main");
+			//}
 		}
 
 		public iframeresize() {
