@@ -14,41 +14,14 @@ module JudoShirt {
 			) {
 			$scope.vm = $scope;
 
-
-			setTimeout(function () {
-				(<any>window).spread_shop_config = {
-					shopName: 'mangelavie',
-					locale: 'fr_FR',
-					prefix: '//shop.spreadshirt.fr',
-					baseId: 'accountShop'
-				};
-(<any>window).shopclient();
-
-			
-			var intervalId = setInterval(function () {
-				var element = $("#sprd-main").first();
-
-				if (element && element.length > 0) {
-
-					//if (tmp && tmp.length > 0) {
-					//	tmp.attr("id", "sprd-main");
-					//}
-
-					element.attr("id", "shop");
-					setTimeout(function(){
-
-						element.find("#header-html").remove();
-						element.find("#department-filter").remove();
-						element.find("#sprd-content").remove();
-						element.find("#footer-html").remove();
-						element.find("#footer").remove();
-					}, 10000, element);
-					
-					clearInterval(intervalId);
-				}
-				
-			}, 100);
-			}, 20000);
+			var config = {
+				shopName: 'mangelavie',
+				locale: 'fr_FR',
+				prefix: '//shop.spreadshirt.fr',
+				baseId: 'accountShop'
+			};
+			//set shop
+			JudoShirtApp.Application.addShopConfiguration(config, true);
 			
 		}
 	}

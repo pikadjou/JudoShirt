@@ -15,20 +15,13 @@ var JudoShirt;
             $scope.vm = $scope;
             $scope.vm.iframeresize = this.iframeresize;
             $scope.vm.trustSrc = this.trustSrc;
-            window.spread_shop_config = {
+            var config = {
                 shopName: 'mangelavie',
                 locale: 'fr_FR',
                 prefix: '//shop.spreadshirt.fr',
                 baseId: 'productShop'
             };
-            window.shopclient();
-            var intervalId = setInterval(function () {
-                var element = $("#sprd-main").first();
-                if (element && element.length > 0) {
-                    element.attr("id", "shop");
-                    clearInterval(intervalId);
-                }
-            }, 100);
+            JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false);
         }
         C_Product.prototype.iframeresize = function () {
             $('#iframe-container').height(2000);
