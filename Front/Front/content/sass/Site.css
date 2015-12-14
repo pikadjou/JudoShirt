@@ -2266,6 +2266,7 @@ body {
 }
 
 header {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -2352,6 +2353,14 @@ iframe {
   font-size: 10px;
 }
 
+#startpageButton {
+  display: none;
+}
+
+#department-filter {
+  display: none;
+}
+
 .menu-top__container {
   background-color: #499bff;
   padding: 10px;
@@ -2399,6 +2408,10 @@ iframe {
 
 .widget-top-ten__container {
   margin-top: 10px;
+}
+
+.widget__account #accountShop .SprdHeader {
+  z-index: 20;
 }
 
 .widget__account #accountShop #header-html {

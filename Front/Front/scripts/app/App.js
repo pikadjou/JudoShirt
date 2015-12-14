@@ -282,6 +282,11 @@ var JudoShirt;
             $scope.vm = $scope;
             $scope.vm.iframeresize = this.iframeresize;
             $scope.vm.trustSrc = this.trustSrc;
+            $scope.$on('$locationChangeStart', function (event, next, current) {
+                if (next.indexOf("!#!") >= 0) {
+                    event.preventDefault();
+                }
+            });
             var config = {
                 shopName: 'mangelavie',
                 locale: 'fr_FR',

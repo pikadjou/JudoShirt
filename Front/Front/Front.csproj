@@ -977,6 +977,7 @@
     <Content Include="content\sass\application\widgets\_new.scss" />
     <Content Include="content\sass\application\widgets\_top-ten.scss" />
     <Content Include="content\sass\application\widgets\_account.scss" />
+    <Content Include="content\sass\application\_spreadshirt.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
