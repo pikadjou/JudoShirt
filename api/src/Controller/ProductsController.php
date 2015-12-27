@@ -17,6 +17,8 @@ class ProductsController extends AppController
         $this->loadComponent('RequestHandler');
         
          $this->loadModel("Designs");
+         
+         //$this->render('index');
     }
     /**
      * Index method

@@ -42,9 +42,16 @@
 
 		private _activeInstance: boolean = false;
 		private _shopConfigurationList = [];
-		public addShopConfiguration(config: any, light: boolean = false) {
+		public addShopConfiguration(config: any, light: boolean = false, changeBasketCount: boolean = false, changeWishCount : boolean = false) {
+
+
+			config.shopName = 'mangelavie',
+			config.locale = 'fr_FR',
+			config.prefix = '//shop.spreadshirt.fr',
 
 			config.light = light;
+			config.changeBasketCount = changeBasketCount;
+			config.changeWishCount = changeWishCount;
 			this._shopConfigurationList.push(config);
 
 
@@ -73,6 +80,20 @@
 					
 					element.attr("id", "shop");
 
+					if (config.changeBasketCount) {
+						$("body").on('DOMSubtreeModified', "#basketCountText", function () {
+							alert("Span HTML is now " + $(this).html());
+						});
+					}
+
+					if (config.changeWishCount) {
+						$("body").on('DOMSubtreeModified', "#wishlistCountText", function () {
+							alert("Span HTML is now " + $(this).html());
+						});
+					}
+
+					
+					
 					if (config.light === true) {
 						setTimeout(() => {
 							element.find("#header-html").remove();

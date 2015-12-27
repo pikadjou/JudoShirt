@@ -31,6 +31,16 @@ class CategoriesTable extends Table
             'targetForeignKey' => 'design_id',
             'joinTable' => 'categories_designs'
         ]);
+        
+        $this->hasMany('Children', [
+            'className' => 'categories',
+            'foreignKey' => 'parent_id',
+            'dependent' => true,
+        ]);
+        $this->belongsTo('Parent', [
+            'className' => 'categories',
+            'foreignKey' => 'parent_id'
+        ]);
     }
 
     /**

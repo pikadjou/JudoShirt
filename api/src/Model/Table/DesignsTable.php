@@ -149,4 +149,15 @@ class DesignsTable extends Table
         ]);
         
     }
+    public function addCategories($query, $select = []){
+        
+        $query->contain([
+            'Categories' => function ($q) {
+                return $q
+                     ->where(['Categories.visible' => true])
+                    ->contain(['Parent']);
+             }
+        ]);
+        
+    }
 }

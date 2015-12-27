@@ -92,6 +92,18 @@ iframe{
 	}
 }
 
+
+
+.article-widget{
+	a{
+		color: black;
+	}
+	img{
+		width: 50%;
+	}
+}
+
+
 @mixin border-radius($radius) {
   border-radius: $radius;
   -webkit-border-radius: $radius;

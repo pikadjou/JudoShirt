@@ -224,27 +224,36 @@ var JudoShirt;
 })(JudoShirt || (JudoShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/design.js
-/// <reference path='../../_all.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
-    var C_Design = (function () {
+    var C_Design = (function (_super) {
+        __extends(C_Design, _super);
         function C_Design($scope, RH) {
+            _super.call(this);
             this.$scope = $scope;
             this.RH = RH;
-            $scope.vm = $scope;
+            this.designid = 0;
+            this.products = [];
+            this.init($scope);
             this.RH.GetProductsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetProducts([$scope.designid]);
+            this.RH.GetProducts([this.designid]);
         }
         C_Design.prototype.onPacketRecieved = function (response) {
-            this.$scope.vm.products = response.products;
+            this.products = response.products;
         };
         C_Design.$inject = [
             '$scope',
             JudoShirt.Services.ProductsRequestHandler.Name
         ];
         return C_Design;
-    })();
+    })(JudoShirt.Init.AbstractModule);
     JudoShirt.C_Design = C_Design;
     var Design = (function () {
         function Design() {
@@ -288,12 +297,9 @@ var JudoShirt;
                 }
             });
             var config = {
-                shopName: 'mangelavie',
-                locale: 'fr_FR',
-                prefix: '//shop.spreadshirt.fr',
                 baseId: 'productShop'
             };
-            JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false);
+            JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
         }
         C_Product.prototype.iframeresize = function () {
             $('#iframe-container').height(2000);
@@ -369,6 +375,53 @@ var JudoShirt;
     })();
     JudoShirt.Basket = Basket;
     JudoShirt.JudoShirtApp.JudoShirtApp.directive(Basket.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Basket));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/app/modules/print.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var JudoShirt;
+(function (JudoShirt) {
+    'use strict';
+    var C_Print = (function (_super) {
+        __extends(C_Print, _super);
+        function C_Print($scope, RH) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.RH = RH;
+            this.printList = [];
+            this.init($scope);
+            this.RH.GetPrintsReceived.add(this.onPacketRecieved, this);
+            this.RH.GetPrints();
+        }
+        C_Print.prototype.onPacketRecieved = function (response) {
+            this.printList = response.prints;
+        };
+        C_Print.$inject = [
+            '$scope',
+            JudoShirt.Services.PrintsRequestHandler.Name
+        ];
+        return C_Print;
+    })(JudoShirt.Init.AbstractModule);
+    JudoShirt.C_Print = C_Print;
+    var Print = (function () {
+        function Print() {
+            this.templateUrl = "/scripts/app/modules/print.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_Print;
+        }
+        Print.Name = "Print".toLocaleLowerCase();
+        Print.$inject = [];
+        return Print;
+    })();
+    JudoShirt.Print = Print;
+    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Print.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Print));
 })(JudoShirt || (JudoShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/home.js
@@ -475,6 +528,27 @@ var JudoShirt;
     JudoShirt.JudoShirtApp.JudoShirtApp.controller(PageBasket.Name, PageBasket);
 })(JudoShirt || (JudoShirt = {}));
 
+///#source 1 1 /scripts/app/pages/print.js
+var JudoShirt;
+(function (JudoShirt) {
+    'use strict';
+    var PagePrint = (function () {
+        function PagePrint($scope, $routeParams) {
+            this.$scope = $scope;
+            this.$routeParams = $routeParams;
+            $scope.vm = this;
+        }
+        PagePrint.Name = "PagePrint";
+        PagePrint.$inject = [
+            '$scope',
+            '$routeParams'
+        ];
+        return PagePrint;
+    })();
+    JudoShirt.PagePrint = PagePrint;
+    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PagePrint.Name, PagePrint);
+})(JudoShirt || (JudoShirt = {}));
+
 ///#source 1 1 /scripts/app/widgets/topTen.js
 /// <reference path='../../_all.ts' />
 var JudoShirt;
@@ -530,7 +604,7 @@ var JudoShirt;
         }
         C_WidgetNew.prototype.onPacketRecieved = function (response) {
             this.$scope.vm.category = response.category;
-            this.$scope.vm.list = response.designs;
+            this.$scope.vm.designs = response.designs;
         };
         C_WidgetNew.$inject = [
             '$scope',
@@ -632,5 +706,81 @@ var JudoShirt;
     })();
     JudoShirt.WidgetAccount = WidgetAccount;
     JudoShirt.JudoShirtApp.JudoShirtApp.directive(WidgetAccount.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetAccount));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/app/templates/article.js
+var JudoShirt;
+(function (JudoShirt) {
+    'use strict';
+    var C_TemplateArticle = (function () {
+        function C_TemplateArticle($scope) {
+            this.$scope = $scope;
+            this.vm = this;
+            this.design = null;
+            $scope.vm = this.vm = $scope;
+        }
+        C_TemplateArticle.prototype.test = function () {
+            console.log("test");
+        };
+        C_TemplateArticle.$inject = [
+            '$scope'
+        ];
+        return C_TemplateArticle;
+    })();
+    JudoShirt.C_TemplateArticle = C_TemplateArticle;
+    var TemplateArticle = (function () {
+        function TemplateArticle() {
+            this.templateUrl = "/scripts/app/templates/article.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {
+                design: '='
+            };
+            this.controller = C_TemplateArticle;
+        }
+        TemplateArticle.Name = "TemplateArticle".toLocaleLowerCase();
+        TemplateArticle.$inject = [];
+        return TemplateArticle;
+    })();
+    JudoShirt.TemplateArticle = TemplateArticle;
+    JudoShirt.JudoShirtApp.JudoShirtApp.directive(TemplateArticle.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticle));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/app/templates/articleWidget.js
+var JudoShirt;
+(function (JudoShirt) {
+    'use strict';
+    var C_TemplateArticleWidget = (function () {
+        function C_TemplateArticleWidget($scope) {
+            this.$scope = $scope;
+            this.vm = this;
+            this.design = null;
+            $scope.vm = this.vm = $scope;
+        }
+        C_TemplateArticleWidget.prototype.test = function () {
+            console.log("test");
+        };
+        C_TemplateArticleWidget.$inject = [
+            '$scope'
+        ];
+        return C_TemplateArticleWidget;
+    })();
+    JudoShirt.C_TemplateArticleWidget = C_TemplateArticleWidget;
+    var TemplateArticleWidget = (function () {
+        function TemplateArticleWidget() {
+            this.templateUrl = "/scripts/app/templates/articleWidget.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {
+                design: '='
+            };
+            this.controller = C_TemplateArticleWidget;
+        }
+        TemplateArticleWidget.Name = "TemplateArticleWidget".toLocaleLowerCase();
+        TemplateArticleWidget.$inject = [];
+        return TemplateArticleWidget;
+    })();
+    JudoShirt.TemplateArticleWidget = TemplateArticleWidget;
+    JudoShirt.JudoShirtApp.JudoShirtApp.directive(TemplateArticleWidget.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
 })(JudoShirt || (JudoShirt = {}));
 

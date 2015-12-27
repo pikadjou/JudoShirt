@@ -835,11 +835,15 @@
     <Content Include="scripts\app\modules\categoryDesigns.html" />
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\featuredDesigns.html" />
+    <Content Include="scripts\app\modules\print.html" />
     <Content Include="scripts\app\modules\product.html" />
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
     <Content Include="scripts\app\pages\basket.html" />
+    <Content Include="scripts\app\pages\print.html" />
     <Content Include="scripts\app\pages\product.html" />
+    <Content Include="scripts\app\templates\articleWidget.html" />
+    <Content Include="scripts\app\templates\article.html" />
     <Content Include="scripts\app\widgets\account.html" />
     <Content Include="scripts\app\widgets\promotionDesigns.html" />
     <Content Include="scripts\app\widgets\new.html" />
@@ -853,11 +857,15 @@
     <TypeScriptCompile Include="scripts\app\modules\categoryDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\featuredDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\print.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product.ts" />
     <TypeScriptCompile Include="scripts\app\pages\category.ts" />
     <TypeScriptCompile Include="scripts\app\pages\design.ts" />
     <TypeScriptCompile Include="scripts\app\pages\basket.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\print.ts" />
     <TypeScriptCompile Include="scripts\app\pages\product.ts" />
+    <TypeScriptCompile Include="scripts\app\templates\articleWidget.ts" />
+    <TypeScriptCompile Include="scripts\app\templates\article.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\account.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
@@ -865,10 +873,13 @@
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Print.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Category.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Design.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Tag.ts" />
+    <TypeScriptCompile Include="scripts\services\Prints\PrintsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Products\ProductsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\tools\AbstractModule.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="scripts\services\Services.js">
       <DependentUpon>Services.js.bundle</DependentUpon>

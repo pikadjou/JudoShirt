@@ -53,6 +53,8 @@ class ProductsTable extends Table
     public function getByShopIdNoCache($id){
         return $this->find()->where(["shopId" => $id])->limit(1);
     }
+    
+    //not used
     public function getByShopId($id){
         
         $product = $this->getByShopIdNoCache($id)->contain('Colors')->first();       
@@ -80,15 +82,15 @@ class ProductsTable extends Table
             
            // debug($response_product_type->appearances);
             foreach($response_product_type->appearances->appearance as $appearance){
-                debug($appearance);
+                //debug($appearance);
                 $color = $this->_colorsModel->newEntity();
                 $color->shopId = (int)$appearance->attributes('id');
                 $color->color = (string)$appearance->colors->color;
                 $color->thumbnail = (string)$appearance->resources->resource->attributes('xlink', true);
                 
-                debug($color);
+                //debug($color);
             }
-            debug($response_product_type);
+           // debug($response_product_type);
         }
             
         
@@ -106,11 +108,10 @@ class ProductsTable extends Table
         $date->sub(new \DateInterval('PT' . 60 . 'M'));
         $cacheTime = $date->getTimestamp();
         
-  //      debug($cacheTime);
-    //    debug($actualTime);
-      //  debug($lastUpdate);
-        
+//        debug($lastUpdate);
+//        debug($cacheTime);
         if($lastUpdate === null || $lastUpdate < $cacheTime){
+            
             $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($id)";
         
             $response = $this->_spreadshirt->getRequest($url) ;

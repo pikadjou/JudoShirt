@@ -26,12 +26,9 @@ module JudoShirt {
 				}				
 			});
 			var config = {
-				shopName: 'mangelavie',
-				locale: 'fr_FR',
-				prefix: '//shop.spreadshirt.fr',
 				baseId: 'productShop'
 			};
-			JudoShirtApp.Application.addShopConfiguration(config, false);
+			JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
 		}
 
 		public iframeresize() {

@@ -1,10 +1,10 @@
-/// <reference path='../../_all.ts' />
-
 module JudoShirt {
     'use strict';
 
-	export class C_Design {
+	export class C_Design extends JudoShirt.Init.AbstractModule {
 		
+		public designid: number = 0;
+		public products: any = [];
 
 		public static $inject = [
 			'$scope',
@@ -14,25 +14,20 @@ module JudoShirt {
 			private $scope: any,
 			private RH: Services.ProductsRequestHandler
 			) {
-			$scope.vm = $scope;
+			super();
 
+			this.init($scope);
 			//$scope.vm.iframeresize = this.iframeresize;
 			this.RH.GetProductsReceived.add(this.onPacketRecieved, this);
 
-			this.RH.GetProducts([$scope.designid]);
+			this.RH.GetProducts([this.designid]);
 
 		}
 
 		public onPacketRecieved(response: any) {
-			this.$scope.vm.products = response.products;
+			this.products = response.products;
 
 		}
-
-		//public iframeresize() {
-
-		//	var the_height = (<any>document.getElementById('iframe')).contentWindow.document.body.scrollHeight;
-		//	(<any>$('#iframe-container')).height(500);
-		//}
 	}
 
 	export class Design implements ng.IDirective {

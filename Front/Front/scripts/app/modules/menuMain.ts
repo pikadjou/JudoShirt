@@ -23,7 +23,7 @@ module JudoShirt {
 
 		public onPacketRecieved(response: Services.CategoriesClass.GetCategoriesResponse) {
 			this.$scope.vm.list = response.categories;
-			this.$scope.vm.cssClass = "small-block-grid-" + response.categories.length
+			this.$scope.vm.cssClass = "small-block-grid-" + response.categories.length;
 		}
 	}
 

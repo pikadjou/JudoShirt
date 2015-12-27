@@ -12,7 +12,7 @@ var JudoShirt;
         }
         C_WidgetNew.prototype.onPacketRecieved = function (response) {
             this.$scope.vm.category = response.category;
-            this.$scope.vm.list = response.designs;
+            this.$scope.vm.designs = response.designs;
         };
         C_WidgetNew.$inject = [
             '$scope',

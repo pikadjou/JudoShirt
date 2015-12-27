@@ -27,6 +27,10 @@ var JudoShirt;
                         templateUrl: '/scripts/app/pages/home.html',
                         controller: 'PageHome',
                     })
+                        .when('/print', {
+                        templateUrl: '/scripts/app/pages/print.html',
+                        controller: 'PagePrint',
+                    })
                         .otherwise({ redirectTo: '/' });
                     $locationProvider.html5Mode({
                         enabled: true,

@@ -12,6 +12,7 @@
   <files>
     <file>/scripts/services/Categories/CategoriesRequestHandler.js</file>
     <file>/scripts/services/Designs/DesignsRequestHandler.js</file>
-	  <file>/scripts/services/Products/ProductsRequestHandler.js</file>
+	 <file>/scripts/services/Products/ProductsRequestHandler.js</file>
+	  <file>/scripts/services/Prints/PrintsRequestHandler.js</file>
   </files>
 </bundle>

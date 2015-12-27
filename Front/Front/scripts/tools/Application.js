@@ -32,9 +32,16 @@ var JudoShirt;
             Application.G = function () {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
             };
-            Application.prototype.addShopConfiguration = function (config, light) {
+            Application.prototype.addShopConfiguration = function (config, light, changeBasketCount, changeWishCount) {
                 if (light === void 0) { light = false; }
-                config.light = light;
+                if (changeBasketCount === void 0) { changeBasketCount = false; }
+                if (changeWishCount === void 0) { changeWishCount = false; }
+                config.shopName = 'mangelavie',
+                    config.locale = 'fr_FR',
+                    config.prefix = '//shop.spreadshirt.fr',
+                    config.light = light;
+                config.changeBasketCount = changeBasketCount;
+                config.changeWishCount = changeWishCount;
                 this._shopConfigurationList.push(config);
                 if (this._activeInstance === false) {
                     this._setFirstShopInstance();
@@ -54,6 +61,16 @@ var JudoShirt;
                     var element = $("#sprd-main").first();
                     if (element && element.length > 0) {
                         element.attr("id", "shop");
+                        if (config.changeBasketCount) {
+                            $("body").on('DOMSubtreeModified', "#basketCountText", function () {
+                                alert("Span HTML is now " + $(this).html());
+                            });
+                        }
+                        if (config.changeWishCount) {
+                            $("body").on('DOMSubtreeModified', "#wishlistCountText", function () {
+                                alert("Span HTML is now " + $(this).html());
+                            });
+                        }
                         if (config.light === true) {
                             setTimeout(function () {
                                 element.find("#header-html").remove();

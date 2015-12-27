@@ -140,6 +140,7 @@ class DesignsController extends AppController
             if($tags){
                 $this->Designs->addTags($query);
             }
+            $this->Designs->addCategories($query);
             
             $designs = $query->toArray();
         }

@@ -2353,6 +2353,14 @@ iframe {
   font-size: 10px;
 }
 
+.article-widget a {
+  color: black;
+}
+
+.article-widget img {
+  width: 50%;
+}
+
 #startpageButton {
   display: none;
 }

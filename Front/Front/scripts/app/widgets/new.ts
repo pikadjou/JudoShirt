@@ -24,7 +24,7 @@ module JudoShirt {
 
 		public onPacketRecieved(response: any) {
 			this.$scope.vm.category = response.category;
-			this.$scope.vm.list = response.designs;
+			this.$scope.vm.designs = response.designs;
 		}
 	}
 

@@ -1,9 +1,9 @@
 ﻿<div class="widget__container">
-	<h4 class="title">{{ vm.category.name }}</h4>
+	<h4 class="title">Nouveauté</h4>
 	<div class="row collapse content">
-		<div ng-repeat="model in vm.list" class="small-12 columns">
-			<div class="model-name">{{model.name}}</div>
-			<span class="category-name">{{model.name}}</span>
+		<div ng-repeat="design in vm.designs" class="small-12 columns">
+			<templatearticlewidget design="design">
+			</templatearticlewidget>
 		</div>
 	</div>
 </div>

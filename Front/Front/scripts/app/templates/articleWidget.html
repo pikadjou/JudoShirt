@@ -1,0 +1,21 @@
+﻿<div class="article-widget">
+	<a href="/design/{{vm.design.shopId}}">
+		<img ng-src="{{vm.design.thumbnail}}" />
+		<span class="model-name">{{vm.design.name}}</span>
+	</a>
+	<div>
+		<span ng-repeat="category in vm.design.categories">
+
+			<span ng-if="category.parent">
+				<a href="/category/{{category.parent.id}}">
+					<span>{{category.parent.name}} ></span>
+				</a>
+			</span>
+
+			<a href="/category/{{category.id}}">
+				<span>{{category.name}}</span>
+			</a>
+		</span>
+	</div>
+
+</div>

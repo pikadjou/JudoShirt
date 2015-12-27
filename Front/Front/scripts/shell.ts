@@ -41,6 +41,12 @@ module JudoShirt {
 							controller: 'PageHome',
 							
 						})
+						.when('/print',
+						{
+							templateUrl: '/scripts/app/pages/print.html',
+							controller: 'PagePrint',
+
+						})
 						.otherwise({ redirectTo: '/' });
 
 					$locationProvider.html5Mode({
