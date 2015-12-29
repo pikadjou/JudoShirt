@@ -3,6 +3,8 @@
 
 	export class AbstractModule {
 
+		public _signal = JudoShirt.Init.Signals.getInstance();
+
 		constructor() {
 
 		}

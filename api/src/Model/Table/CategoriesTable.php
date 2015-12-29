@@ -139,4 +139,10 @@ class CategoriesTable extends Table
         
         return $design;
     }
+    
+    public function addChildren($query){
+        
+        $query->contain(['Children']);
+        
+    }
 }

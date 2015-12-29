@@ -63,12 +63,12 @@ var JudoShirt;
                         element.attr("id", "shop");
                         if (config.changeBasketCount) {
                             $("body").on('DOMSubtreeModified', "#basketCountText", function () {
-                                alert("Span HTML is now " + $(this).html());
+                                JudoShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
                             });
                         }
                         if (config.changeWishCount) {
                             $("body").on('DOMSubtreeModified', "#wishlistCountText", function () {
-                                alert("Span HTML is now " + $(this).html());
+                                JudoShirt.Init.Signals.getInstance().changeWishCount.dispatch();
                             });
                         }
                         if (config.light === true) {

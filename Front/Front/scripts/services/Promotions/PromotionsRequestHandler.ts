@@ -5,25 +5,25 @@ module JudoShirt.Services {
     /**
      * Services that persists and retrieves TODOs from Storage.
      */
-    export class CategoriesRequestHandler {
+    export class PromotionsRequestHandler {
 
 		static $inject = ['Server'];
-        public static Name = "CategoriesRequestHandler";
+        public static Name = "PromotionsRequestHandler";
 
-		public GetCategoriesReceived: Signal;
-		public controller = "categories";
+		public GetPromotionsActiveReceived: Signal;
+		public controller = "promotions";
 		constructor(
 			private server: JudoShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
-		public GetCategories(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
+		public GetPromotionsActive(request: any): string {
+			return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
 		}
 
 		private addEvents(): void {
-			this.GetCategoriesReceived = new signals.Signal();
+			this.GetPromotionsActiveReceived = new signals.Signal();
 
 			//this.server.packetReceived.add
 			this.server.packetReceived.add(this.onPacketReceived, this);
@@ -34,14 +34,14 @@ module JudoShirt.Services {
 
 			var parsedResponse: any = null;
 			switch (response.Identifier) {
-				case ("GetCategoriesResponse"):
+				case ("GetPromotionsResponse"):
 					parsedResponse = <any>(response.Content);
-					this.GetCategoriesReceived.dispatch(parsedResponse);
+					this.GetPromotionsActiveReceived.dispatch(parsedResponse);
 					break;
 				default:
 					break;
 			}
 		}
     }
-	JudoShirtApp.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
+	JudoShirtApp.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
 }

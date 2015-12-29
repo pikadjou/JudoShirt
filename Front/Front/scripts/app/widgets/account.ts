@@ -3,8 +3,9 @@
 module JudoShirt {
     'use strict';
 
-	export class C_WidgetAccount {
+	export class C_WidgetAccount extends JudoShirt.Init.AbstractModule {
 		
+		public baseId: string = 'accountShop';
 
 		public static $inject = [
 			'$scope'
@@ -12,17 +13,30 @@ module JudoShirt {
 		constructor(
 			private $scope: any
 			) {
-			$scope.vm = $scope;
+
+			super();
+
+			this.init($scope);
 
 			var config = {
-				shopName: 'mangelavie',
-				locale: 'fr_FR',
-				prefix: '//shop.spreadshirt.fr',
-				baseId: 'accountShop'
+				baseId: this.baseId
 			};
 			//set shop
 			JudoShirtApp.Application.addShopConfiguration(config, true);
 			
+			this._signal.changeBasketCount.add(this.ReloadShop, this);
+			this._signal.changeWishCount.add(this.ReloadShop, this);
+
+		}
+
+		public ReloadShop = () => {
+			$("#" + this.baseId).empty();
+
+			var config = {
+				baseId: this.baseId
+			};
+			//set shop
+			JudoShirtApp.Application.addShopConfiguration(config, true);
 		}
 	}
 

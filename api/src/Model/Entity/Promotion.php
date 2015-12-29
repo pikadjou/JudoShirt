@@ -16,8 +16,9 @@ class Promotion extends Entity
      */
     protected $_accessible = [
         'name' => true,
+        'content' => true,
         'image' => true,
         'startDate' => true,
-        'endDate' => true,
+        'endDate' => true
     ];
 }

@@ -275,22 +275,22 @@ var JudoShirt;
 
 ///#source 1 1 /scripts/app/modules/product.js
 /// <reference path='../../_all.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
-    var C_Product = (function () {
-        function C_Product($scope, $sce) {
-            var _this = this;
+    var C_Product = (function (_super) {
+        __extends(C_Product, _super);
+        function C_Product($scope) {
+            _super.call(this);
             this.$scope = $scope;
-            this.$sce = $sce;
             this.sce = null;
-            this.trustSrc = function (url) {
-                return _this.sce.trustAsResourceUrl(url);
-            };
-            this.sce = $sce;
-            $scope.vm = $scope;
-            $scope.vm.iframeresize = this.iframeresize;
-            $scope.vm.trustSrc = this.trustSrc;
+            this.init($scope);
             $scope.$on('$locationChangeStart', function (event, next, current) {
                 if (next.indexOf("!#!") >= 0) {
                     event.preventDefault();
@@ -301,15 +301,11 @@ var JudoShirt;
             };
             JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
         }
-        C_Product.prototype.iframeresize = function () {
-            $('#iframe-container').height(2000);
-        };
         C_Product.$inject = [
-            '$scope',
-            '$sce'
+            '$scope'
         ];
         return C_Product;
-    })();
+    })(JudoShirt.Init.AbstractModule);
     JudoShirt.C_Product = C_Product;
     var Product = (function () {
         function Product() {
@@ -422,6 +418,62 @@ var JudoShirt;
     })();
     JudoShirt.Print = Print;
     JudoShirt.JudoShirtApp.JudoShirtApp.directive(Print.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Print));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/app/modules/promotions/slider.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var JudoShirt;
+(function (JudoShirt) {
+    'use strict';
+    var C_Slider = (function (_super) {
+        __extends(C_Slider, _super);
+        function C_Slider($scope, RH) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.RH = RH;
+            this.promotions = [];
+            this.init($scope);
+            this.RH.GetPromotionsActiveReceived.add(this.onPacketRecieved, this);
+            this.RH.GetPromotionsActive([]);
+        }
+        C_Slider.prototype.onPacketRecieved = function (response) {
+            this.promotions = response.promotions;
+            setTimeout(function () {
+                $('.promotions__slider').slick({
+                    autoplay: true,
+                    autoplaySpeed: 8000,
+                    arrows: true,
+                    prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+                    nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+                });
+            }, 500);
+        };
+        C_Slider.$inject = [
+            '$scope',
+            JudoShirt.Services.PromotionsRequestHandler.Name
+        ];
+        return C_Slider;
+    })(JudoShirt.Init.AbstractModule);
+    JudoShirt.C_Slider = C_Slider;
+    var Slider = (function () {
+        function Slider() {
+            this.templateUrl = "/scripts/app/modules/promotions/slider.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_Slider;
+        }
+        Slider.Name = "Slider".toLocaleLowerCase();
+        Slider.$inject = [];
+        return Slider;
+    })();
+    JudoShirt.Slider = Slider;
+    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Slider.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Slider));
 })(JudoShirt || (JudoShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/home.js
@@ -671,26 +723,42 @@ var JudoShirt;
 
 ///#source 1 1 /scripts/app/widgets/account.js
 /// <reference path='../../_all.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
-    var C_WidgetAccount = (function () {
+    var C_WidgetAccount = (function (_super) {
+        __extends(C_WidgetAccount, _super);
         function C_WidgetAccount($scope) {
+            var _this = this;
+            _super.call(this);
             this.$scope = $scope;
-            $scope.vm = $scope;
+            this.baseId = 'accountShop';
+            this.ReloadShop = function () {
+                $("#" + _this.baseId).empty();
+                var config = {
+                    baseId: _this.baseId
+                };
+                JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
+            };
+            this.init($scope);
             var config = {
-                shopName: 'mangelavie',
-                locale: 'fr_FR',
-                prefix: '//shop.spreadshirt.fr',
-                baseId: 'accountShop'
+                baseId: this.baseId
             };
             JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
+            this._signal.changeBasketCount.add(this.ReloadShop, this);
+            this._signal.changeWishCount.add(this.ReloadShop, this);
         }
         C_WidgetAccount.$inject = [
             '$scope'
         ];
         return C_WidgetAccount;
-    })();
+    })(JudoShirt.Init.AbstractModule);
     JudoShirt.C_WidgetAccount = C_WidgetAccount;
     var WidgetAccount = (function () {
         function WidgetAccount() {

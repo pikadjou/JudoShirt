@@ -14,7 +14,7 @@ class GetCategoriesResponse extends \App\Services\RHBaseResponse
     function init ($categories) {
         for($i = 0, $l = count($categories); $i < $l; $i++){
             $this->categories[] = new \App\Services\Entity\Category($categories[$i]);
-        };
+        }
     }
 }
 

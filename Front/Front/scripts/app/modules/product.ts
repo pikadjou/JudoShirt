@@ -3,22 +3,18 @@
 module JudoShirt {
     'use strict';
 
-	export class C_Product {
+	export class C_Product extends JudoShirt.Init.AbstractModule {
 		
 		public sce = null;
 		public static $inject = [
-			'$scope',
-			'$sce'
+			'$scope'
 		];
 		constructor(
-			private $scope: any,
-			private $sce: any
+			private $scope: any
 			) {
-			this.sce = $sce;
-			$scope.vm = $scope;
+			super();
 
-			$scope.vm.iframeresize = this.iframeresize;
-			$scope.vm.trustSrc = this.trustSrc;
+			this.init($scope);
 
 			$scope.$on('$locationChangeStart', function (event, next, current) {
 				if (next.indexOf("!#!") >= 0) {
@@ -29,16 +25,6 @@ module JudoShirt {
 				baseId: 'productShop'
 			};
 			JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
-		}
-
-		public iframeresize() {
-
-			//var the_height = (<any>document.getElementById('iframe')).contentWindow.document.body.scrollHeight;
-			(<any>$('#iframe-container')).height(2000);
-		}
-
-		public trustSrc = (url) => {
-			return this.sce.trustAsResourceUrl(url);
 		}
 	}
 

@@ -21,6 +21,7 @@
 	    <file>/scripts/app/modules/product.js</file>
 		<file>/scripts/app/modules/basket.js</file>
 		<file>/scripts/app/modules/print.js</file>
+		<file>/scripts/app/modules/promotions/slider.js</file>
 	  
 		<file>/scripts/app/pages/home.js</file>
 		<file>/scripts/app/pages/category.js</file>

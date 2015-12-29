@@ -5,6 +5,7 @@ var JudoShirt;
         'use strict';
         var AbstractModule = (function () {
             function AbstractModule() {
+                this._signal = JudoShirt.Init.Signals.getInstance();
             }
             AbstractModule.prototype.init = function ($scope) {
                 for (var prop in $scope) {

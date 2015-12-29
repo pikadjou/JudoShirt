@@ -30,15 +30,6 @@
 		private static G() {
 			return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 		}
-		//public GetServiceFactory<T extends ng.IDirective>(classType: Function): ng.IServiceProvider {
-		//	var factory = (...args: any[]): T => {
-		//		var directive = <any>classType;
-		//		return new directive(args);
-		//	}
-
-		//	factory.$inject = classType.$inject;
-		//	return factory;
-		//}
 
 		private _activeInstance: boolean = false;
 		private _shopConfigurationList = [];
@@ -82,13 +73,13 @@
 
 					if (config.changeBasketCount) {
 						$("body").on('DOMSubtreeModified', "#basketCountText", function () {
-							alert("Span HTML is now " + $(this).html());
+							JudoShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
 						});
 					}
 
 					if (config.changeWishCount) {
 						$("body").on('DOMSubtreeModified', "#wishlistCountText", function () {
-							alert("Span HTML is now " + $(this).html());
+							JudoShirt.Init.Signals.getInstance().changeWishCount.dispatch();
 						});
 					}
 

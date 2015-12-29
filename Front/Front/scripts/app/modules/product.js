@@ -1,20 +1,20 @@
 /// <reference path='../../_all.ts' />
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
-    var C_Product = (function () {
-        function C_Product($scope, $sce) {
-            var _this = this;
+    var C_Product = (function (_super) {
+        __extends(C_Product, _super);
+        function C_Product($scope) {
+            _super.call(this);
             this.$scope = $scope;
-            this.$sce = $sce;
             this.sce = null;
-            this.trustSrc = function (url) {
-                return _this.sce.trustAsResourceUrl(url);
-            };
-            this.sce = $sce;
-            $scope.vm = $scope;
-            $scope.vm.iframeresize = this.iframeresize;
-            $scope.vm.trustSrc = this.trustSrc;
+            this.init($scope);
             $scope.$on('$locationChangeStart', function (event, next, current) {
                 if (next.indexOf("!#!") >= 0) {
                     event.preventDefault();
@@ -25,15 +25,11 @@ var JudoShirt;
             };
             JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
         }
-        C_Product.prototype.iframeresize = function () {
-            $('#iframe-container').height(2000);
-        };
         C_Product.$inject = [
-            '$scope',
-            '$sce'
+            '$scope'
         ];
         return C_Product;
-    })();
+    })(JudoShirt.Init.AbstractModule);
     JudoShirt.C_Product = C_Product;
     var Product = (function () {
         function Product() {

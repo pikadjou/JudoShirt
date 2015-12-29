@@ -21,7 +21,7 @@ class Category
         
         for($i = 0, $l = count($category->children); $i < $l; $i++){
             $this->children[] = new \App\Services\Entity\Category($category->children[$i]);
-        };
+        }
         
         if($category->parent){
             $this->parent = new \App\Services\Entity\Category($category->parent);

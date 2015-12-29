@@ -41,6 +41,9 @@ class PromotionsTable extends Table
             
         $validator
             ->allowEmpty('name');
+        
+        $validator
+            ->allowEmpty('content');
             
         $validator
             ->allowEmpty('image');
@@ -54,5 +57,13 @@ class PromotionsTable extends Table
             ->allowEmpty('endDate');
 
         return $validator;
+    }
+    
+    public function getActive() {
+        
+        $date = date('Y-m-d');
+        $promotions = $this->find()->where(["startDate <=" => $date, "endDate >=" => $date]);
+        
+        return $promotions;
     }
 }

@@ -24,6 +24,8 @@ class CategoriesController extends AppController
     public function index()
     {
         $query = $this->Categories->getAll();
+        $this->Categories->addChildren($query);
+        
         $categories = $query->toArray();
         
         $response = new CategoriesRequestHandler\GetCategoriesResponse();

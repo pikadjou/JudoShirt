@@ -830,6 +830,7 @@
     </Content>
     <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\modules\promotions\slider.html" />
     <Content Include="scripts\app\modules\basket.html" />
     <Content Include="scripts\app\modules\design.html" />
     <Content Include="scripts\app\modules\categoryDesigns.html" />
@@ -852,6 +853,7 @@
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\promotions\slider.ts" />
     <TypeScriptCompile Include="scripts\app\modules\basket.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design.ts" />
     <TypeScriptCompile Include="scripts\app\modules\categoryDesigns.ts" />
@@ -870,9 +872,12 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Promotions\PromotionsClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Promotions\PromotionsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Promotion.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Print.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Category.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Design.ts" />
@@ -896,6 +901,7 @@
     <TypeScriptCompile Include="scripts\models\TodoItem.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
+    <TypeScriptCompile Include="scripts\tools\Signals.ts" />
     <TypeScriptCompile Include="scripts\_all.ts" />
     <TypeScriptCompile Include="typing\angular-route.d.ts" />
     <TypeScriptCompile Include="typing\angular.d.ts" />
@@ -989,6 +995,7 @@
     <Content Include="content\sass\application\widgets\_top-ten.scss" />
     <Content Include="content\sass\application\widgets\_account.scss" />
     <Content Include="content\sass\application\_spreadshirt.scss" />
+    <Content Include="content\sass\application\modules\_slider.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
