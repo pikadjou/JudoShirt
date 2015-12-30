@@ -7,10 +7,12 @@ module JudoShirt {
 
 		public static $inject = [
 			'$scope',
+			'$location',
 			Services.PromotionsRequestHandler.Name
 		];
 		constructor(
 			private $scope: any,
+			private $location : any,
 			private RH: Services.PromotionsRequestHandler
 			) {
 
@@ -36,6 +38,28 @@ module JudoShirt {
 				});
 			}, 500);
 			
+		}
+
+		public goToPromotion = (promotion : Services.Entity.Promotion) => {
+
+			var url = "/";
+			switch (promotion.type) {
+				case "category":
+					url += "category" + "/" + promotion.params;
+					break;
+				case "design":
+					url += "design" + "/" + promotion.params;
+					break;
+				case "url":
+					url = promotion.params;
+					window.location.href = url;
+					return;
+					break;
+				default: return;
+					break;
+			}
+
+			this.$location.path(url);
 		}
 	}
 

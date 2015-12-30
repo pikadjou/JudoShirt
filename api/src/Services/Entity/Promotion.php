@@ -9,6 +9,9 @@ class Promotion
     public $content = "";
     public $image = "";
     
+    public $type = "";
+    public $params = "";
+    
     public $startDate = null;
     public $endDate = [];
     
@@ -19,6 +22,9 @@ class Promotion
         $this->id = $promotion->id;
         $this->name = $promotion->name;
         $this->content = $promotion->content;
+        
+        $this->type = $promotion->type;
+        $this->params = $promotion->params;
         
         $this->image = $promotion->image;
         $this->startDate = $promotion->startDate;

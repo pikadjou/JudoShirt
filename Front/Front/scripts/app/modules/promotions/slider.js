@@ -9,11 +9,33 @@ var JudoShirt;
     'use strict';
     var C_Slider = (function (_super) {
         __extends(C_Slider, _super);
-        function C_Slider($scope, RH) {
+        function C_Slider($scope, $location, RH) {
+            var _this = this;
             _super.call(this);
             this.$scope = $scope;
+            this.$location = $location;
             this.RH = RH;
             this.promotions = [];
+            this.goToPromotion = function (promotion) {
+                var url = "/";
+                switch (promotion.type) {
+                    case "category":
+                        url += "category" + "/" + promotion.params;
+                        break;
+                    case "design":
+                        url += "design" + "/" + promotion.params;
+                        break;
+                    case "url":
+                        url = promotion.params;
+                        window.location.href = url;
+                        return;
+                        break;
+                    default:
+                        return;
+                        break;
+                }
+                _this.$location.path(url);
+            };
             this.init($scope);
             this.RH.GetPromotionsActiveReceived.add(this.onPacketRecieved, this);
             this.RH.GetPromotionsActive([]);
@@ -32,6 +54,7 @@ var JudoShirt;
         };
         C_Slider.$inject = [
             '$scope',
+            '$location',
             JudoShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_Slider;

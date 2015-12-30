@@ -1,8 +1,10 @@
 ﻿<div class="Slider__container">
 	<div class="promotions__slider">
 		<div ng-repeat="promotion in vm.promotions">
-			<img src="{{promotion.image}}" />
-			{{promotion.content}}
+			<a herf="#" ng-click="vm.goToPromotion(promotion)">
+				<img src="{{promotion.image}}" />
+				{{promotion.content}}
+			</a>
 		</div>
 	</div>
 </div>

@@ -18,6 +18,8 @@ class Promotion extends Entity
         'name' => true,
         'content' => true,
         'image' => true,
+        'type' => true,
+        'params' => true,
         'startDate' => true,
         'endDate' => true
     ];
