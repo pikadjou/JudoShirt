@@ -872,6 +872,8 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Product.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Type.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />

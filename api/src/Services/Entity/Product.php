@@ -11,6 +11,8 @@ class Product
     public $thumbnail = "";
     public $shopId = 0;
     
+    public $types = [];
+    
     function __construct($product){
         if($product === null){
             return;
@@ -21,6 +23,10 @@ class Product
         $this->price = $product->price;
         $this->thumbnail = $product->thumbnail;
         $this->shopId = $product->shopId;
+        
+        for($i = 0, $l = count($product->types); $i < $l; $i++){
+            $this->types[] = new \App\Services\Entity\Type($product->types[$i]);
+        }
     }
 }
 

@@ -31,6 +31,9 @@ class ProductsController extends AppController
        $design = $query->first();
         
         $query = $this->Products->findByDesign($design);
+        
+        $this->Products->addType($query);
+        
         $products = $query->toArray();
                
         $response = new ProductsRequestHandler\GetProductsResponse();

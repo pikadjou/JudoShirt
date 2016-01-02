@@ -236,17 +236,86 @@ var JudoShirt;
     var C_Design = (function (_super) {
         __extends(C_Design, _super);
         function C_Design($scope, RH) {
+            var _this = this;
             _super.call(this);
             this.$scope = $scope;
             this.RH = RH;
             this.designid = 0;
             this.products = [];
+            this.types = [];
+            this.typeIds = [];
+            this.kindIds = [];
+            this.addRemoveType = function (type, listNum) {
+                if (listNum === void 0) { listNum = 1; }
+                var ids = [];
+                if (listNum === 1) {
+                    ids = _this.typeIds;
+                }
+                else {
+                    ids = _this.kindIds;
+                }
+                var index = ids.indexOf(type.id);
+                if (type.active === true) {
+                    type.active = false;
+                    if (index > -1) {
+                        ids.splice(index, 1);
+                    }
+                }
+                else {
+                    type.active = true;
+                    if (index === -1) {
+                        ids.push(type.id);
+                    }
+                }
+            };
+            this.isActiveProduct = function (product) {
+                var findType = false;
+                var findKind = false;
+                if (_this.typeIds.length === 0) {
+                    findType = true;
+                }
+                if (_this.kindIds.length === 0) {
+                    findKind = true;
+                }
+                if (findType === true && findKind === true) {
+                    return true;
+                }
+                for (var arrayT = product.types, iT = 0, lT = arrayT.length, type = null; iT < lT; iT++) {
+                    if (_this.typeIds.indexOf(arrayT[iT].id) > -1) {
+                        findType = true;
+                    }
+                    else if (_this.kindIds.indexOf(arrayT[iT].id) > -1) {
+                        findKind = true;
+                    }
+                }
+                if (findType === true && findKind === true) {
+                    return true;
+                }
+                return false;
+            };
             this.init($scope);
             this.RH.GetProductsReceived.add(this.onPacketRecieved, this);
             this.RH.GetProducts([this.designid]);
         }
         C_Design.prototype.onPacketRecieved = function (response) {
             this.products = response.products;
+            for (var array = this.products, i = 0, l = array.length, product = null; i < l; i++) {
+                product = array[i];
+                if (product.types.length > 0) {
+                    for (var arrayT = product.types, iT = 0, lT = arrayT.length, type = null; iT < lT; iT++) {
+                        type = arrayT[iT];
+                        this.addType(type);
+                    }
+                }
+            }
+        };
+        C_Design.prototype.addType = function (type) {
+            for (var array = this.types, i = 0, l = array.length; i < l; i++) {
+                if (array[i].id === type.id) {
+                    return;
+                }
+            }
+            this.types.push(type);
         };
         C_Design.$inject = [
             '$scope',

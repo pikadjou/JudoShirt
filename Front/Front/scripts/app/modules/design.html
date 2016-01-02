@@ -1,7 +1,19 @@
 ﻿<div class="DesignList__container CategoryDesigns__container">
 	<h3 class="title">Desing name</h3>
+
+	<div ng-repeat="type in vm.types | filter:{ type: '1' }">
+		<a href="#" ng-click="vm.addRemoveType(type, 1)">
+			{{type.name}}{{type.active}}
+		</a>
+	</div>
+
+	<div ng-repeat="type in vm.types | filter:{ type: '2' }">
+		<a href="#" ng-click="vm.addRemoveType(type, 2)">
+			{{type.name}}{{type.active}}
+		</a>
+	</div>
 	<ul class="small-block-grid-3 list">
-		<li ng-repeat="product in vm.products">
+		<li ng-repeat="product in vm.products" ng-if="vm.isActiveProduct(product)">
 			<div class="article">
 				<a href="/product/!#!-A{{product.shopId}}">
 					<img ng-src="{{product.thumbnail}}" />
