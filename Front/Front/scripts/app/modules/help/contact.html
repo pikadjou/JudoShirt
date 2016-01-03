@@ -1,0 +1,50 @@
+﻿<div class="Contact__Container Module">
+	<h3 class="title">Page de contact</h3>
+	<div class="Module_Content">
+		<div>
+			<span class="success label">{{vm.message}}</span>
+		</div>
+		<form>
+			<div class="row">
+				<div class="small-3 columns">
+					<label for="name" class="text-right">Nom*:</label>
+				</div>
+				<div class="small-9 columns">
+					<input type="text" id="name" placeholder="Nom" required ng-model="vm.form.name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<label for="nickname" class="text-right">Prenom*:</label>
+				</div>
+				<div class="small-9 columns">
+					<input type="text" id="nickname" placeholder="Prenom" required ng-model="vm.form.nickname">
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<label for="mail" class="text-right">Email*:</label>
+				</div>
+				<div class="small-9 columns">
+					<input type="email" id="mail" placeholder="Email" required ng-model="vm.form.mail">
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-3 columns">
+					<label for="message" class="text-right">Votre message*:</label>
+				</div>
+				<div class="small-9 columns">
+					<textarea placeholder="Votre message" required ng-model="vm.form.message"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="small-6 columns">
+					<p class="">* champ obligatoire.</p>
+				</div>
+				<div class="small-6 columns">
+					<input type="submit" class="button" value="Submit" ng-click="vm.submit()">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,14 +1,48 @@
 ﻿.main-menu__container{
 	ul{
-		background-color: $bg-panel-dark;
-
 		margin: 0;
 
+		
+		background-color: $bg-panel-dark;
 		@include border-radius(0 0 10px 10px);
 		li{
+			list-style: none;
+
 			text-align: center;
 			color: white;
-			padding: 15px;
+
+			position: relative;
+
+			padding: 0;
+
+			border-right: 1px solid black;
+			a{
+				display: block;
+				width: 100%;
+				padding: 15px;
+				
+			}
+			ul.submenu{
+				position: absolute;
+				width: 100%;
+				z-index: 10;
+				display: none;
+
+				background-color: #212121;
+				li{
+					list-style: none;
+				}
+			}
+
+			&:hover{
+				
+				ul.submenu{
+					display: block;
+				}
+			}
+		}
+		li:last-child{
+			border: none;
 		}
 	}
 }

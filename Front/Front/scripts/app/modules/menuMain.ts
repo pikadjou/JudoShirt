@@ -3,9 +3,10 @@
 module JudoShirt {
     'use strict';
 
-	export class C_MenuMain {
+	export class C_MenuMain extends JudoShirt.Init.AbstractModule{
 		
-
+		public categories: Services.Entity.Category[] = [];
+		public cssClass: string = "";
 		public static $inject = [
 			'$scope',
 			Services.CategoriesRequestHandler.Name
@@ -14,7 +15,9 @@ module JudoShirt {
 			private $scope: any,
 			private RH: Services.CategoriesRequestHandler
 			) {
-			$scope.vm = $scope;
+			super();
+
+			this.init($scope);
 
 			this.RH.GetCategories("");
 
@@ -22,8 +25,8 @@ module JudoShirt {
 		}
 
 		public onPacketRecieved(response: Services.CategoriesClass.GetCategoriesResponse) {
-			this.$scope.vm.list = response.categories;
-			this.$scope.vm.cssClass = "small-block-grid-" + response.categories.length;
+			this.categories = response.categories;
+			this.cssClass = "small-block-grid-" + response.categories.length;
 		}
 	}
 

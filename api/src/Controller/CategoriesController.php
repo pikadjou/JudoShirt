@@ -23,7 +23,7 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $query = $this->Categories->getAll();
+        $query = $this->Categories->getParents();
         $this->Categories->addChildren($query);
         
         $categories = $query->toArray();

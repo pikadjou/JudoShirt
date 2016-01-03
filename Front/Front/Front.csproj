@@ -830,6 +830,7 @@
     </Content>
     <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\modules\help\contact.html" />
     <Content Include="scripts\app\modules\promotions\slider.html" />
     <Content Include="scripts\app\modules\basket.html" />
     <Content Include="scripts\app\modules\design.html" />
@@ -841,6 +842,7 @@
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
     <Content Include="scripts\app\pages\basket.html" />
+    <Content Include="scripts\app\pages\help\contact.html" />
     <Content Include="scripts\app\pages\print.html" />
     <Content Include="scripts\app\pages\product.html" />
     <Content Include="scripts\app\templates\articleWidget.html" />
@@ -853,6 +855,7 @@
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\slider.ts" />
     <TypeScriptCompile Include="scripts\app\modules\basket.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design.ts" />
@@ -864,6 +867,7 @@
     <TypeScriptCompile Include="scripts\app\pages\category.ts" />
     <TypeScriptCompile Include="scripts\app\pages\design.ts" />
     <TypeScriptCompile Include="scripts\app\pages\basket.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\help\contact.ts" />
     <TypeScriptCompile Include="scripts\app\pages\print.ts" />
     <TypeScriptCompile Include="scripts\app\pages\product.ts" />
     <TypeScriptCompile Include="scripts\app\templates\articleWidget.ts" />
@@ -872,6 +876,8 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Help\HelpClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Help\HelpRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Product.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Type.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsClass.ts" />

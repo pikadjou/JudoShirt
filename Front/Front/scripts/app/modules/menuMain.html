@@ -1,8 +1,13 @@
 ﻿<div class="main-menu__container">
 	<div class="row">
 		<ul ng-class="vm.cssClass">
-			<li ng-repeat="model in vm.list">
-				<a href="#" ng-href="/category/{{model.id}}">{{model.name}}</a>
+			<li ng-repeat="category in vm.categories">
+				<a href="#" ng-href="/category/{{category.id}}">{{category.name}}</a>
+				<ul class="submenu">
+					<li ng-repeat="child in category.children">
+						<a href="#" ng-href="/category/{{child.id}}">{{child.name}}</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
 	</div>

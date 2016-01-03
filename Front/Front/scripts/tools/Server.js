@@ -17,16 +17,26 @@ var JudoShirt;
             };
             Server.prototype.request = function (request) {
                 var _this = this;
+                var url = this.urlApi;
+                url = url + "/" + request.Controller;
+                url = url + "/" + request.View;
                 if (request.Type.toLocaleUpperCase() === "GET") {
-                    var url = this.urlApi;
-                    url = url + "/" + request.Controller;
-                    url = url + "/" + request.View;
                     for (var i = 0, l = request.Content.length; i < l; i++) {
                         url = url + "/" + request.Content[i];
                     }
                     url = url + this.urlExtension;
                     console.log("PACKET_SEND : url : " + url);
                     this.$http.get(url).
+                        then(function (response) {
+                        _this.onPacketReceived(response.data);
+                    }, function (response) {
+                        console.log(response);
+                    });
+                }
+                else if (request.Type.toLocaleUpperCase() === "POST") {
+                    url = url + this.urlExtension;
+                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    this.$http.post(url, request.Content).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {

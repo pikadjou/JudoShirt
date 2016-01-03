@@ -21,6 +21,10 @@ header{
 }
 a{
 	color: $link-color;
+	text-decoration: none;
+	&:hover{
+		color: cornflowerblue;
+	}
 }
 h3{
 	padding: 5px;
@@ -32,6 +36,15 @@ h3{
 	padding: 0px;
 }
 
+.Module{
+	background-color: white;
+	h3{
+		margin: 0;
+	}
+	.Module_Content{
+		padding: 5px;
+	}
+}
 .DesignList__container{
 	padding: 5px;
 	background-color: $bg-panel-light;

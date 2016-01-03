@@ -76,6 +76,13 @@ class CategoriesTable extends Table
         
         return $category;
     }
+    
+    public function getParents()
+    {
+        $category = $this->find()->where(["visible" => 1, "parent_id IS" => null]);
+        
+        return $category;
+    }
     /**
      * Default get all design by category id.
      *

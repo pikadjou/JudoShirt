@@ -10,10 +10,13 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
-    <file>/scripts/services/Categories/CategoriesRequestHandler.js</file>
-    <file>/scripts/services/Designs/DesignsRequestHandler.js</file>
-	 <file>/scripts/services/Products/ProductsRequestHandler.js</file>
-	  <file>/scripts/services/Prints/PrintsRequestHandler.js</file>
-	  <file>/scripts/services/Promotions/PromotionsRequestHandler.js</file>
+		<file>/scripts/services/Categories/CategoriesRequestHandler.js</file>
+		<file>/scripts/services/Designs/DesignsRequestHandler.js</file>
+		<file>/scripts/services/Products/ProductsRequestHandler.js</file>
+		<file>/scripts/services/Prints/PrintsRequestHandler.js</file>
+		<file>/scripts/services/Promotions/PromotionsRequestHandler.js</file>
+	  
+		<file>/scripts/services/Help/HelpClass.js</file>
+		<file>/scripts/services/Help/HelpRequestHandler.js</file>
   </files>
 </bundle>

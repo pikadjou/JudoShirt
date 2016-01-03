@@ -22,14 +22,17 @@ var JudoShirt;
                             }
                         }
                     })
-                        .when('/panier', { templateUrl: '/scripts/app/pages/basket.html', controller: 'PageBasket' })
-                        .when('/test/:hash', {
-                        templateUrl: '/scripts/app/pages/home.html',
-                        controller: 'PageHome',
+                        .when('/panier', {
+                        templateUrl: '/scripts/app/pages/basket.html',
+                        controller: 'PageBasket'
                     })
                         .when('/print', {
                         templateUrl: '/scripts/app/pages/print.html',
                         controller: 'PagePrint',
+                    })
+                        .when('/contact', {
+                        templateUrl: '/scripts/app/pages/help/contact.html',
+                        controller: 'PageContact',
                     })
                         .otherwise({ redirectTo: '/' });
                     $locationProvider.html5Mode({

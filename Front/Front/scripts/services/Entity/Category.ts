@@ -2,13 +2,8 @@
 	export class Category {
 		public id: number;
 		public name: string;
-		public content: string;
-		public thumbnail: string;
-		public header: string;
-		public shopId: number;
-		public idCustomShop: number;
-
-		public categories: any[];
-		public tags: any[];
+		
+		public parent: Services.Entity.Category;
+		public children: Services.Entity.Category[];
 	}
 } 
