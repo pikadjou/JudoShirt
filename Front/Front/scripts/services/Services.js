@@ -209,6 +209,35 @@ var JudoShirt;
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
+///#source 1 1 /scripts/services/Promotions/PromotionsClass.js
+var JudoShirt;
+(function (JudoShirt) {
+    var Services;
+    (function (Services) {
+        var PromotionsClass;
+        (function (PromotionsClass) {
+            var GetPromotionsActiveResponse = (function () {
+                function GetPromotionsActiveResponse() {
+                }
+                return GetPromotionsActiveResponse;
+            })();
+            PromotionsClass.GetPromotionsActiveResponse = GetPromotionsActiveResponse;
+            var GetPromotionRequest = (function () {
+                function GetPromotionRequest() {
+                }
+                return GetPromotionRequest;
+            })();
+            PromotionsClass.GetPromotionRequest = GetPromotionRequest;
+            var GetPromotionResponse = (function () {
+                function GetPromotionResponse() {
+                }
+                return GetPromotionResponse;
+            })();
+            PromotionsClass.GetPromotionResponse = GetPromotionResponse;
+        })(PromotionsClass = Services.PromotionsClass || (Services.PromotionsClass = {}));
+    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
+})(JudoShirt || (JudoShirt = {}));
+
 ///#source 1 1 /scripts/services/Promotions/PromotionsRequestHandler.js
 var JudoShirt;
 (function (JudoShirt) {
@@ -224,8 +253,17 @@ var JudoShirt;
             PromotionsRequestHandler.prototype.GetPromotionsActive = function (request) {
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
             };
+            PromotionsRequestHandler.prototype.GetSlide = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
+            };
+            PromotionsRequestHandler.prototype.GetPromotion = function (request) {
+                var array = [];
+                array.push(request.slug);
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
+            };
             PromotionsRequestHandler.prototype.addEvents = function () {
                 this.GetPromotionsActiveReceived = new signals.Signal();
+                this.GetPromotionReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             PromotionsRequestHandler.prototype.onPacketReceived = function (response) {
@@ -236,6 +274,10 @@ var JudoShirt;
                     case ("GetPromotionsResponse"):
                         parsedResponse = (response.Content);
                         this.GetPromotionsActiveReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetPromotionResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetPromotionReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

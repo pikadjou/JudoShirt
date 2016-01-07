@@ -8,6 +8,9 @@
 module JudoShirt {
     'use strict';
 
+	export class Config {
+		public static Maintenance = false; 
+	}
 	export class JudoShirtApp {
 
 		static JudoShirtApp: angular.IModule = angular.module('JudoShirt', ['ngRoute']);
@@ -15,6 +18,16 @@ module JudoShirt {
 		//static Server = new JudoShirt.Init.Serveur();
 
 		static init() {
+
+			
+			if (Config.Maintenance) {
+				var indexMaintenance = window.location.href.indexOf("/maintenance");
+
+				if (indexMaintenance === -1) {
+					window.location.href = '/maintenance.html';
+					return;
+				}
+			}
 
 			this.JudoShirtApp.config([
 				<any>'$routeProvider',
@@ -51,18 +64,37 @@ module JudoShirt {
 							controller: 'PageContact',
 
 						})
+						.when('/promotions',
+							{
+								templateUrl: '/scripts/app/pages/promotions/list.html',
+								controller: 'PagePromotionList',
+
+						})
+						.when('/promotion/:id',
+							{
+								templateUrl: '/scripts/app/pages/promotions/entity.html',
+								controller: 'PagePromotionEntity',
+
+							})
+						//other
+						.when('/maintenance',
+							{
+								templateUrl: '/scripts/app/pages/maintenance.html'
+							})
 						.otherwise({ redirectTo: '/' });
 
 					$locationProvider.html5Mode({
 						enabled: true,
 						requireBase: false
 					}).hashPrefix('!');
+
+					
 				}
 			]);
 
 
 		}
 	}
-	
+
 	JudoShirtApp.init();
 }

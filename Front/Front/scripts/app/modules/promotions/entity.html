@@ -1,0 +1,28 @@
+﻿<div class="Slider__container">
+	<div class="promotions__slider">
+		<div class="row">
+			<div class="small-12 columns">
+				<a href="/promotion/{{vm.promotion.id}}">
+					{{vm.promotion.name}}
+				</a>
+			</div>
+			<div class="small-6 columns">
+				<img src="{{vm.promotion.image}}" />
+			</div>
+			<div class="small-6 columns">
+				{{vm.promotion.content}}
+			</div>
+			<div class="small-6 columns">
+				{{vm.promotion.startDate}}
+			</div>
+			<div class="small-6 columns">
+				{{vm.promotion.endDate}}
+			</div>
+			<div class="small-12 columns">
+				<a href="#" ng-click="vm.goToPromotion(promotion)">
+					Lien
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

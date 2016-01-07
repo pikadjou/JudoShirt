@@ -1,0 +1,47 @@
+
+
+information livraison
+
+designer perso
+
+design css
+
+rapidité serveur
+
+identification/connection - liste des commandes
+
+systeme de tag
+
+gestion url par le serveur
+internationalisation
+
+page avis
+
+newslettre
+footer
+
+minification + cache
+
+order (promotion, product, design)
+
+slog (categories, promotion, design)
+--------------------------
+----- DONE ---------------
+--------------------------
+page de liste des promotions/blog (uniquement spreadshirt?) //need design
+
+page d'information type d'impression //need desing
+
+update panier / liste des favoris // done
+
+Abstractcontroller Directive // done
+
+promotion slider // need design
+
+filter homme/femme/enfant/autre - Tshirt //need design
+
+formulaire de contact => send mail // check information + captcha
+
+menu deroulant // done
+
+page de maintenance // need design

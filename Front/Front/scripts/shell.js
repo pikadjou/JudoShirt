@@ -2,10 +2,24 @@
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
+    var Config = (function () {
+        function Config() {
+        }
+        Config.Maintenance = false;
+        return Config;
+    })();
+    JudoShirt.Config = Config;
     var JudoShirtApp = (function () {
         function JudoShirtApp() {
         }
         JudoShirtApp.init = function () {
+            if (Config.Maintenance) {
+                var indexMaintenance = window.location.href.indexOf("/maintenance");
+                if (indexMaintenance === -1) {
+                    window.location.href = '/maintenance.html';
+                    return;
+                }
+            }
             this.JudoShirtApp.config([
                 '$routeProvider',
                 '$locationProvider',
@@ -33,6 +47,17 @@ var JudoShirt;
                         .when('/contact', {
                         templateUrl: '/scripts/app/pages/help/contact.html',
                         controller: 'PageContact',
+                    })
+                        .when('/promotions', {
+                        templateUrl: '/scripts/app/pages/promotions/list.html',
+                        controller: 'PagePromotionList',
+                    })
+                        .when('/promotion/:id', {
+                        templateUrl: '/scripts/app/pages/promotions/entity.html',
+                        controller: 'PagePromotionEntity',
+                    })
+                        .when('/maintenance', {
+                        templateUrl: '/scripts/app/pages/maintenance.html'
                     })
                         .otherwise({ redirectTo: '/' });
                     $locationProvider.html5Mode({

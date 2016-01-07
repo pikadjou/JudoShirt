@@ -7,9 +7,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 var JudoShirt;
 (function (JudoShirt) {
     'use strict';
-    var C_Slider = (function (_super) {
-        __extends(C_Slider, _super);
-        function C_Slider($scope, $location, RH) {
+    var C_PromotionList = (function (_super) {
+        __extends(C_PromotionList, _super);
+        function C_PromotionList($scope, $location, RH) {
             var _this = this;
             _super.call(this);
             this.$scope = $scope;
@@ -25,6 +25,9 @@ var JudoShirt;
                     case "design":
                         url += "design" + "/" + promotion.params;
                         break;
+                    case "promotion":
+                        url += "promotion" + "/" + promotion.params;
+                        break;
                     case "url":
                         url = promotion.params;
                         window.location.href = url;
@@ -38,40 +41,31 @@ var JudoShirt;
             };
             this.init($scope);
             this.RH.GetPromotionsActiveReceived.add(this.onPacketRecieved, this);
-            this.RH.GetSlide([]);
+            this.RH.GetPromotionsActive([]);
         }
-        C_Slider.prototype.onPacketRecieved = function (response) {
+        C_PromotionList.prototype.onPacketRecieved = function (response) {
             this.promotions = response.promotions;
-            setTimeout(function () {
-                $('.promotions__slider').slick({
-                    autoplay: true,
-                    autoplaySpeed: 8000,
-                    arrows: true,
-                    prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-                    nextArrow: '<a href="#" class="slider__next"><span></span></a>'
-                });
-            }, 500);
         };
-        C_Slider.$inject = [
+        C_PromotionList.$inject = [
             '$scope',
             '$location',
             JudoShirt.Services.PromotionsRequestHandler.Name
         ];
-        return C_Slider;
+        return C_PromotionList;
     })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Slider = C_Slider;
-    var Slider = (function () {
-        function Slider() {
-            this.templateUrl = "/scripts/app/modules/promotions/slider.html";
+    JudoShirt.C_PromotionList = C_PromotionList;
+    var PromotionList = (function () {
+        function PromotionList() {
+            this.templateUrl = "/scripts/app/modules/promotions/list.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};
-            this.controller = C_Slider;
+            this.controller = C_PromotionList;
         }
-        Slider.Name = "Slider".toLocaleLowerCase();
-        Slider.$inject = [];
-        return Slider;
+        PromotionList.Name = "PromotionList".toLocaleLowerCase();
+        PromotionList.$inject = [];
+        return PromotionList;
     })();
-    JudoShirt.Slider = Slider;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Slider.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Slider));
+    JudoShirt.PromotionList = PromotionList;
+    JudoShirt.JudoShirtApp.JudoShirtApp.directive(PromotionList.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionList));
 })(JudoShirt || (JudoShirt = {}));

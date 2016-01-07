@@ -14,6 +14,8 @@
 		<file>/scripts/services/Designs/DesignsRequestHandler.js</file>
 		<file>/scripts/services/Products/ProductsRequestHandler.js</file>
 		<file>/scripts/services/Prints/PrintsRequestHandler.js</file>
+
+	  <file>/scripts/services/Promotions/PromotionsClass.js</file>
 		<file>/scripts/services/Promotions/PromotionsRequestHandler.js</file>
 	  
 		<file>/scripts/services/Help/HelpClass.js</file>

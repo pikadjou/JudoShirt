@@ -11,6 +11,8 @@ module JudoShirt.Services {
         public static Name = "PromotionsRequestHandler";
 
 		public GetPromotionsActiveReceived: Signal;
+		public GetPromotionReceived: Signal;
+
 		public controller = "promotions";
 		constructor(
 			private server: JudoShirt.Services.Server
@@ -21,9 +23,18 @@ module JudoShirt.Services {
 		public GetPromotionsActive(request: any): string {
 			return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
 		}
+		public GetSlide(request: any): string {
+			return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
+		}
+		public GetPromotion(request: Services.PromotionsClass.GetPromotionRequest): string {
+			var array = [];
+			array.push(request.slug);
+			return this.server.request(new JudoShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
+		}
 
 		private addEvents(): void {
 			this.GetPromotionsActiveReceived = new signals.Signal();
+			this.GetPromotionReceived = new signals.Signal();
 
 			//this.server.packetReceived.add
 			this.server.packetReceived.add(this.onPacketReceived, this);
@@ -37,6 +48,10 @@ module JudoShirt.Services {
 				case ("GetPromotionsResponse"):
 					parsedResponse = <any>(response.Content);
 					this.GetPromotionsActiveReceived.dispatch(parsedResponse);
+					break;
+				case ("GetPromotionResponse"):
+					parsedResponse = <any>(response.Content);
+					this.GetPromotionReceived.dispatch(parsedResponse);
 					break;
 				default:
 					break;

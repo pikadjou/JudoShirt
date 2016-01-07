@@ -1,0 +1,31 @@
+﻿<div class="Slider__container Module">
+	<h3 class="title">Promotions</h3>
+	<div class="Module_Content">
+		<div ng-repeat="promotion in vm.promotions">
+			<div class="row">
+				<div class="small-12 columns">
+					<a href="/promotion/{{promotion.id}}">
+						{{promotion.name}}
+					</a>
+				</div>
+				<div class="small-6 columns">
+					<img src="{{promotion.image}}" />
+				</div>
+				<div class="small-6 columns">
+					{{promotion.content}}
+				</div>
+				<div class="small-6 columns">
+					{{promotion.startDate}}
+				</div>
+				<div class="small-6 columns">
+					{{promotion.endDate}}
+				</div>
+				<div class="small-12 columns">
+					<a href="#" ng-click="vm.goToPromotion(promotion)">
+						Lien
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -12,8 +12,17 @@ var JudoShirt;
             PromotionsRequestHandler.prototype.GetPromotionsActive = function (request) {
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
             };
+            PromotionsRequestHandler.prototype.GetSlide = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
+            };
+            PromotionsRequestHandler.prototype.GetPromotion = function (request) {
+                var array = [];
+                array.push(request.slug);
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
+            };
             PromotionsRequestHandler.prototype.addEvents = function () {
                 this.GetPromotionsActiveReceived = new signals.Signal();
+                this.GetPromotionReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             PromotionsRequestHandler.prototype.onPacketReceived = function (response) {
@@ -24,6 +33,10 @@ var JudoShirt;
                     case ("GetPromotionsResponse"):
                         parsedResponse = (response.Content);
                         this.GetPromotionsActiveReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetPromotionResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetPromotionReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

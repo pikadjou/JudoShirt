@@ -1,7 +1,7 @@
 module JudoShirt {
     'use strict';
 
-	export class C_Slider extends JudoShirt.Init.AbstractModule{
+	export class C_PromotionList extends JudoShirt.Init.AbstractModule{
 
 		public promotions: JudoShirt.Services.Entity.Promotion[] = [];
 
@@ -22,21 +22,11 @@ module JudoShirt {
 
 			this.RH.GetPromotionsActiveReceived.add(this.onPacketRecieved, this);
 
-			this.RH.GetSlide([]);
+			this.RH.GetPromotionsActive([]);
 		}
 
 		public onPacketRecieved(response: JudoShirt.Services.PromotionsClass.GetPromotionsActiveResponse) {
 			this.promotions = response.promotions;
-
-			setTimeout(function () {
-				(<any>$('.promotions__slider')).slick({
-					autoplay: true,
-					autoplaySpeed: 8000,
-					arrows: true,
-					prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-					nextArrow: '<a href="#" class="slider__next"><span></span></a>'
-				});
-			}, 500);
 			
 		}
 
@@ -49,6 +39,9 @@ module JudoShirt {
 					break;
 				case "design":
 					url += "design" + "/" + promotion.params;
+					break;
+				case "promotion":
+					url += "promotion" + "/" + promotion.params;
 					break;
 				case "url":
 					url = promotion.params;
@@ -63,19 +56,19 @@ module JudoShirt {
 		}
 	}
 
-	export class Slider implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/promotions/slider.html";
+	export class PromotionList implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/promotions/list.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {
 		};
 
-		public static Name = "Slider".toLocaleLowerCase();
+		public static Name = "PromotionList".toLocaleLowerCase();
 
 		public static $inject = [];
 		constructor() { }
 
-		public controller = C_Slider;
+		public controller = C_PromotionList;
 	}
-	JudoShirtApp.JudoShirtApp.directive(Slider.Name, JudoShirtApp.Application.GetDirectiveFactory<Slider>(Slider));
+	JudoShirtApp.JudoShirtApp.directive(PromotionList.Name, JudoShirtApp.Application.GetDirectiveFactory<PromotionList>(PromotionList));
 }

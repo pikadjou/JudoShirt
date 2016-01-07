@@ -59,10 +59,24 @@ class PromotionsTable extends Table
         return $validator;
     }
     
+    public function getOne($id) {
+        
+        $promotion = $this->find()->where(["id" => $id])->limit(1);
+        
+        return $promotion;
+    }
+    
     public function getActive() {
         
         $date = date('Y-m-d');
         $promotions = $this->find()->where(["startDate <=" => $date, "endDate >=" => $date]);
+        
+        return $promotions;
+    }
+    
+    public function getSlide() {
+        
+        $promotions = $this->getActive()->where(["slide" => true]);
         
         return $promotions;
     }

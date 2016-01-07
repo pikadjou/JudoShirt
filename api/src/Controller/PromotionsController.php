@@ -30,4 +30,28 @@ class PromotionsController extends AppController
 
         parent::setJson($response);
     }
+    
+    public function getSlide(){
+        
+        $query = $this->Promotions->getSlide();
+        
+        $promotions = $query->toArray();
+        
+        $response = new PromotionsRequestHandler\GetPromotionsResponse();
+        $response->init($promotions);
+
+        parent::setJson($response);
+    }
+    
+     public function getPromotion($id){
+        
+        $query = $this->Promotions->getOne($id);
+        
+        $promotion = $query->first();
+        
+        $response = new PromotionsRequestHandler\GetPromotionResponse();
+        $response->init($promotion);
+
+        parent::setJson($response);
+    }
 }

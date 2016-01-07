@@ -23,7 +23,9 @@
 		<file>/scripts/app/modules/print.js</file>
 	  
 		<file>/scripts/app/modules/promotions/slider.js</file>
-
+		<file>/scripts/app/modules/promotions/list.js</file>
+		<file>/scripts/app/modules/promotions/entity.js</file>
+	  
 		<file>/scripts/app/modules/help/contact.js</file>
 	  
 		<file>/scripts/app/pages/home.js</file>
@@ -34,6 +36,9 @@
 		<file>/scripts/app/pages/print.js</file>
 	  
 		<file>/scripts/app/pages/help/contact.js</file>
+	  
+		<file>/scripts/app/pages/promotions/list.js</file>
+		<file>/scripts/app/pages/promotions/entity.js</file>
 	  
 		<file>/scripts/app/widgets/topTen.js</file>
 		<file>/scripts/app/widgets/new.js</file>

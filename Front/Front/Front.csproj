@@ -822,6 +822,7 @@
     <Content Include="lib\foundation\vendor\placeholder.js" />
     <Content Include="lib\jquery\iframe-autoresize.js" />
     <Content Include="lib\signals\signal.js" />
+    <Content Include="maintenance.html" />
     <Content Include="scripts\app\App.js">
       <DependentUpon>App.js.bundle</DependentUpon>
     </Content>
@@ -831,6 +832,8 @@
     <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
+    <Content Include="scripts\app\modules\promotions\entity.html" />
+    <Content Include="scripts\app\modules\promotions\list.html" />
     <Content Include="scripts\app\modules\promotions\slider.html" />
     <Content Include="scripts\app\modules\basket.html" />
     <Content Include="scripts\app\modules\design.html" />
@@ -839,12 +842,15 @@
     <Content Include="scripts\app\modules\featuredDesigns.html" />
     <Content Include="scripts\app\modules\print.html" />
     <Content Include="scripts\app\modules\product.html" />
+    <Content Include="scripts\app\pages\maintenance.html" />
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
     <Content Include="scripts\app\pages\basket.html" />
     <Content Include="scripts\app\pages\help\contact.html" />
     <Content Include="scripts\app\pages\print.html" />
     <Content Include="scripts\app\pages\product.html" />
+    <Content Include="scripts\app\pages\promotions\entity.html" />
+    <Content Include="scripts\app\pages\promotions\list.html" />
     <Content Include="scripts\app\templates\articleWidget.html" />
     <Content Include="scripts\app\templates\article.html" />
     <Content Include="scripts\app\widgets\account.html" />
@@ -856,6 +862,8 @@
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\promotions\entity.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\promotions\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\slider.ts" />
     <TypeScriptCompile Include="scripts\app\modules\basket.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design.ts" />
@@ -870,6 +878,8 @@
     <TypeScriptCompile Include="scripts\app\pages\help\contact.ts" />
     <TypeScriptCompile Include="scripts\app\pages\print.ts" />
     <TypeScriptCompile Include="scripts\app\pages\product.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\promotions\entity.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\promotions\list.ts" />
     <TypeScriptCompile Include="scripts\app\templates\articleWidget.ts" />
     <TypeScriptCompile Include="scripts\app\templates\article.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\account.ts" />
@@ -906,7 +916,6 @@
     <TypeScriptCompile Include="scripts\shell.ts" />
     <TypeScriptCompile Include="scripts\app\pages\home.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menuMain.ts" />
-    <TypeScriptCompile Include="scripts\models\TodoItem.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
     <TypeScriptCompile Include="scripts\tools\Signals.ts" />
@@ -1015,6 +1024,7 @@
     <Folder Include="content\sass\application\container\" />
     <Folder Include="content\sass\application\pages\" />
     <Folder Include="Properties\" />
+    <Folder Include="scripts\models\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
