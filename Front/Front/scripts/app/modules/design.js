@@ -15,6 +15,7 @@ var JudoShirt;
             this.$scope = $scope;
             this.RH = RH;
             this.designid = 0;
+            this.design = null;
             this.products = [];
             this.types = [];
             this.typeIds = [];
@@ -73,6 +74,7 @@ var JudoShirt;
         }
         C_Design.prototype.onPacketRecieved = function (response) {
             this.products = response.products;
+            this.design = response.design;
             for (var array = this.products, i = 0, l = array.length, product = null; i < l; i++) {
                 product = array[i];
                 if (product.types.length > 0) {

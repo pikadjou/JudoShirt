@@ -1,6 +1,8 @@
 ﻿<div class="DesignList__container CategoryDesigns__container">
-	<h3 class="title">Desing name</h3>
-
+	<h3 class="title">{{vm.design.name}}</h3>
+	<div ng-if="vm.design.idCustomShop">
+		<a href="/designer/{{vm.design.idCustomShop}}">Custommiser le design</a>
+	</div>
 	<div ng-repeat="type in vm.types | filter:{ type: '1' }">
 		<a href="#" ng-click="vm.addRemoveType(type, 1)">
 			{{type.name}}{{type.active}}

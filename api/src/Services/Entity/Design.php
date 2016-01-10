@@ -26,11 +26,11 @@ class Design
         
         for($i = 0, $l = count($design->categories); $i < $l; $i++){
             $this->categories[] = new \App\Services\Entity\Category($design->categories[$i]);
-        };
+        }
         
         for($i = 0, $l = count($design->tags); $i < $l; $i++){
             $this->tags[] = new \App\Services\Entity\Tag($design->tags[$i]);
-        };
+        }
     }
 }
 

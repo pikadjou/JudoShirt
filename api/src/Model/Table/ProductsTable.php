@@ -103,6 +103,7 @@ class ProductsTable extends Table
     
     public function findByDesign($design)
     {
+        debug($design);
         $id = $design->shopId;
         $lastUpdate = $design->lastProductsUpdate;
         
@@ -114,7 +115,7 @@ class ProductsTable extends Table
         
 //        debug($lastUpdate);
 //        debug($cacheTime);
-        //$lastUpdate = null;
+//        $lastUpdate = null;
                 
         if($lastUpdate === null || $lastUpdate < $cacheTime){
             
@@ -122,37 +123,38 @@ class ProductsTable extends Table
  
             $response = $this->_spreadshirt->getRequest($url) ;
             $response = simplexml_load_string($response);
-            //debug($response);
+            debug($response);
+            if($response->article){
+                foreach ($response->article as $article){
+                    $articleId = (string)$article->attributes()->id;
+                    //debug($articleId);
+                    $product = $this->getByShopIdNoCache($articleId)->first();
 
-            foreach ($response->article as $article){
-                $articleId = (string)$article->attributes()->id;
-                //debug($articleId);
-                $product = $this->getByShopIdNoCache($articleId)->first();
+                    if(!$product){
+                        $product = $this->newEntity();
+                    }
 
-                if(!$product){
-                    $product = $this->newEntity();
+                    $product->shopId = $articleId;
+                    $product->design_id = $id;
+                    $product->name = (string)$article->name;
+                    $product->content = (string)$article->description;
+                    $product->price = (string)$article->price->vatIncluded;
+
+                    $product->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
+
+                    //debug($product);
+                    $this->save($product);
+
+                    $url = (string)$article->product->productType->attributes('xlink', true);
+                    $url .= "?locale=fr_FR";
+
+                    $this->addTypesToProduct($product, $url);
+
                 }
 
-                $product->shopId = $articleId;
-                $product->design_id = $id;
-                $product->name = (string)$article->name;
-                $product->content = (string)$article->description;
-                $product->price = (string)$article->price->vatIncluded;
-
-                $product->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
-
-                //debug($product);
-                $this->save($product);
-                
-                $url = (string)$article->product->productType->attributes('xlink', true);
-                $url .= "?locale=fr_FR";
-                
-                $this->addTypesToProduct($product, $url);
-                
+                $design->lastProductsUpdate = $actualTime;
+                $this->_desingsModel->save($design);
             }
-            
-            $design->lastProductsUpdate = $actualTime;
-            $this->_desingsModel->save($design);
         }
         
         $products = $this->find()->where(["design_id" => $id]);

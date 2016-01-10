@@ -4,6 +4,7 @@ module JudoShirt {
 	export class C_Design extends JudoShirt.Init.AbstractModule {
 		
 		public designid: number = 0;
+		public design: Services.Entity.Design = null;
 		public products: Services.Entity.Product[] = [];
 
 		public types: Services.Entity.Type[] = [];
@@ -30,6 +31,7 @@ module JudoShirt {
 
 		public onPacketRecieved(response: any) {
 			this.products = response.products;
+			this.design = response.design;
 
 			for (var array = this.products, i = 0, l = array.length, product : Services.Entity.Product = null; i < l; i++) {
 				product = array[i];

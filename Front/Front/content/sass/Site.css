@@ -3325,6 +3325,79 @@ iframe {
   display: none;
 }
 
+#promoExpander {
+  color: white;
+  background-color: #499bff;
+}
+
+.footer_container {
+  margin: 10px 0;
+}
+
+.footer_container .columns {
+  text-align: center;
+}
+
+.footer_container .footer_header {
+  border-radius: 0 0 10px 10px;
+  -webkit-border-radius: 0 0 10px 10px;
+  -moz-border-radius: 0 0 10px 10px;
+  -ms-border-radius: 0 0 10px 10px;
+  -o-border-radius: 0 0 10px 10px;
+  background-color: #499bff;
+  padding: 10px;
+  color: white;
+  font-size: 14px;
+}
+
+.footer_container .footer_content {
+  background-color: white;
+}
+
+.footer_container .footer_content .contact {
+  padding: 10px;
+}
+
+.footer_container .footer_content .contact img {
+  padding: 10px;
+  display: inline-block;
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.footer_container .footer_content .contact .logo a {
+  display: block;
+  width: 100%;
+}
+
+.footer_container .footer_content .contact .logo img {
+  max-width: 100%;
+  max-height: 100px;
+  padding: 0;
+  width: 400px;
+}
+
+.footer_container .footer_content .payement h5 {
+  margin: 5px;
+}
+
+.footer_container .footer_content .payement img {
+  display: inline-block;
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.footer_container .footer_content .spreadshirt a {
+  width: 100%;
+  margin-top: 10px;
+  color: #499bff;
+}
+
+.footer_container .footer_content .spreadshirt img {
+  margin-top: 10px;
+  width: 80%;
+}
+
 .menu-top__container {
   background-color: #499bff;
   padding: 10px;

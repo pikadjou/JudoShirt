@@ -18,7 +18,7 @@ class ProductsController extends AppController
         
          $this->loadModel("Designs");
          
-         //$this->render('index');
+        //$this->render('index');
     }
     /**
      * Index method
@@ -27,8 +27,8 @@ class ProductsController extends AppController
      */
     public function getProducts($id)
     {
-       $query = $this->Designs->getByShopId($id);
-       $design = $query->first();
+        $query = $this->Designs->getByShopId($id);
+        $design = $query->first();
         
         $query = $this->Products->findByDesign($design);
         
@@ -37,7 +37,7 @@ class ProductsController extends AppController
         $products = $query->toArray();
                
         $response = new ProductsRequestHandler\GetProductsResponse();
-        $response->init($products);
+        $response->init($products, $design);
 
         parent::setJson($response);
     }

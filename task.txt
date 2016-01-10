@@ -1,10 +1,14 @@
-
-
 information livraison
 
 designer perso
 
 design css
+
+visible design
+
+get children too in category
+
+condition general de vente
 
 rapidité serveur
 
@@ -12,19 +16,18 @@ identification/connection - liste des commandes
 
 systeme de tag
 
-gestion url par le serveur
+gestion url par le serveur - slug (categories, promotion, design)
 internationalisation
 
 page avis
 
 newslettre
-footer
+
 
 minification + cache
 
 order (promotion, product, design)
 
-slog (categories, promotion, design)
 --------------------------
 ----- DONE ---------------
 --------------------------
@@ -45,3 +48,5 @@ formulaire de contact => send mail // check information + captcha
 menu deroulant // done
 
 page de maintenance // need design
+
+footer //need design

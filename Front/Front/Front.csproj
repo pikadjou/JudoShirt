@@ -19,9 +19,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="content\css\Site.css" />
+    <Content Include="content\img\americanexpress-logo.png" />
     <Content Include="content\img\background1.jpg" />
     <Content Include="content\img\background2.jpg" />
+    <Content Include="content\img\bpost-logo.png" />
+    <Content Include="content\img\dhl-logo.jpg" />
+    <Content Include="content\img\email-logo.png" />
+    <Content Include="content\img\fb-logo.jpg" />
     <Content Include="content\img\logo.jpg" />
+    <Content Include="content\img\logo_cb.png" />
+    <Content Include="content\img\mastercard-logo.jpg" />
+    <Content Include="content\img\paypal-logo.png" />
+    <Content Include="content\img\twitter-logo.png" />
+    <Content Include="content\img\ups-logo.jpg" />
     <Content Include="content\sass\Site.css">
       <DependentUpon>Site.scss</DependentUpon>
     </Content>
@@ -831,6 +841,7 @@
     </Content>
     <Content Include="scripts\app\container\footer.html" />
     <Content Include="scripts\app\container\header.html" />
+    <Content Include="scripts\app\modules\custom\designer.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
     <Content Include="scripts\app\modules\promotions\entity.html" />
     <Content Include="scripts\app\modules\promotions\list.html" />
@@ -842,6 +853,7 @@
     <Content Include="scripts\app\modules\featuredDesigns.html" />
     <Content Include="scripts\app\modules\print.html" />
     <Content Include="scripts\app\modules\product.html" />
+    <Content Include="scripts\app\pages\custom\custom.html" />
     <Content Include="scripts\app\pages\maintenance.html" />
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
@@ -861,6 +873,7 @@
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\entity.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\list.ts" />
@@ -873,6 +886,7 @@
     <TypeScriptCompile Include="scripts\app\modules\print.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product.ts" />
     <TypeScriptCompile Include="scripts\app\pages\category.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\custom\custom.ts" />
     <TypeScriptCompile Include="scripts\app\pages\design.ts" />
     <TypeScriptCompile Include="scripts\app\pages\basket.ts" />
     <TypeScriptCompile Include="scripts\app\pages\help\contact.ts" />
@@ -1013,6 +1027,7 @@
     <Content Include="content\sass\application\widgets\_account.scss" />
     <Content Include="content\sass\application\_spreadshirt.scss" />
     <Content Include="content\sass\application\modules\_slider.scss" />
+    <Content Include="content\sass\application\container\_footer.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -1021,7 +1036,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="content\sass\application\container\" />
     <Folder Include="content\sass\application\pages\" />
     <Folder Include="Properties\" />
     <Folder Include="scripts\models\" />

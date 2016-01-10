@@ -1,0 +1,9 @@
+﻿<div class="DesignList__container CategoryDesigns__container">
+	<h3 class="title">{{vm.design.name}}</h3>
+	
+	<div id="iframe-container">
+		<iframe id="iframe" ng-src="{{vm.trustSrc(vm.url)}}" iframe-onload="{{vm.iframeresize()}}" style="width: 100%; height: 100%">
+			<span>Your browser does not support iframes.</span>
+		</iframe>
+	</div>
+</div>

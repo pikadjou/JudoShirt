@@ -75,6 +75,12 @@ module JudoShirt {
 								templateUrl: '/scripts/app/pages/promotions/entity.html',
 								controller: 'PagePromotionEntity',
 
+						})
+						.when('/designer/:id',
+							{
+								templateUrl: '/scripts/app/pages/custom/custom.html',
+								controller: 'PageCustom',
+
 							})
 						//other
 						.when('/maintenance',
