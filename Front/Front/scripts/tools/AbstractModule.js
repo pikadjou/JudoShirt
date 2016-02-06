@@ -6,6 +6,7 @@ var JudoShirt;
         var AbstractModule = (function () {
             function AbstractModule() {
                 this._signal = JudoShirt.Init.Signals.getInstance();
+                this.CoreLib = CoreLib;
             }
             AbstractModule.prototype.init = function ($scope) {
                 for (var prop in $scope) {

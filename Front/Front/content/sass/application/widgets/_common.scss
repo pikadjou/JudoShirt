@@ -1,0 +1,38 @@
+﻿.widget__container{
+	margin-bottom: 10px;
+	.widget__title{
+		padding: 15px;
+		margin: 0;
+		background-color: #f7f6f6;
+		color: #5a616b;
+
+		font-size: 14px;
+
+		text-align: center;
+	}
+	.widget__content{
+		background-color: $bg-panel-light;
+		padding: 5px;
+		a{
+			color: $black-color;
+		}
+		.article__widget{
+			.article__title{
+				text-align: center;
+
+				margin: 2px;
+			}
+			.article__content{
+				.category{
+					display: block;
+					text-align: right;
+
+					font-size: rem-calc(12);
+					a{
+						padding: 2px;
+					}
+				}
+			}
+		}
+	}
+}

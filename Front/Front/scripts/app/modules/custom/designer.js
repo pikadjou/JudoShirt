@@ -20,7 +20,7 @@ var JudoShirt;
                 return _this.$sce.trustAsResourceUrl(url);
             };
             this.init($scope);
-            this.url = "http://1058386.spreadshirt.fr/-A" + this.customid + "/customize/noCache/1";
+            this.url = "http://1058386.spreadshirt.fr/-A" + this.customid + "/customize/designCategory/1058386/";
             $('#iframe-container').height(2000);
         }
         C_Designer.prototype.iframeresize = function () {

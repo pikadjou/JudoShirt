@@ -1,4 +1,7 @@
 ﻿@import "common";
+@import "widgets/common";
+@import "modules/common";
+
 @import "spreadshirt";
 
 @import "container/footer";
@@ -7,6 +10,11 @@
 @import "modules/headerContent";
 @import "modules/menuMain";
 @import "modules/slider";
+@import "modules/design";
+@import "modules/product";
+@import "modules/print";
+@import "modules/promotion";
+
 
 @import "widgets/new";
 @import "widgets/top-ten";

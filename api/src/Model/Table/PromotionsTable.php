@@ -69,7 +69,7 @@ class PromotionsTable extends Table
     public function getActive() {
         
         $date = date('Y-m-d');
-        $promotions = $this->find()->where(["startDate <=" => $date, "endDate >=" => $date]);
+        $promotions = $this->find()->where(["startDate <=" => $date, "endDate >=" => $date, "visible" => true])->order('priority');
         
         return $promotions;
     }

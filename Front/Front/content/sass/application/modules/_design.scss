@@ -1,0 +1,47 @@
+﻿.design__container{
+	.custom{
+		float: right;
+		a{
+			color: $black-color;
+		}
+	}
+	.filters{
+		.group{
+			margin-bottom: 15px;
+			border-bottom: 1px solid $light-gray-color;
+		}
+		.filter{
+			padding: 2px 2px 0px 2px;
+			a{
+				color: $black-color;
+				background-color: $blue-color;
+				padding: 5px;
+
+				font-size: rem-calc(14);
+
+				@include radius(10px 10px 0 0);
+			}
+
+			&.actif{
+				a{
+					color: $white-color;
+					background-color: $dark-bleu-color;
+				}
+			}
+		}
+	}
+
+	.article__container{
+		.name{
+			font-weight: normal;
+			font-size: rem-calc(14);
+		}
+		.price{
+			color: $blue-color;
+			font-weight: bold;
+		}
+		button{
+			padding: 10px;
+		}
+	}
+}

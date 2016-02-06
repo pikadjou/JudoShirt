@@ -10,11 +10,13 @@ var JudoShirt;
     'use strict';
     var C_WidgetAccount = (function (_super) {
         __extends(C_WidgetAccount, _super);
-        function C_WidgetAccount($scope) {
+        function C_WidgetAccount($scope, RH) {
             var _this = this;
             _super.call(this);
             this.$scope = $scope;
+            this.RH = RH;
             this.baseId = 'accountShop';
+            this.methodesList = [];
             this.ReloadShop = function () {
                 $("#" + _this.baseId).empty();
                 var config = {
@@ -23,6 +25,8 @@ var JudoShirt;
                 JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
             };
             this.init($scope);
+            this.RH.GetLoginMethodesReveived.add(this.onPacketRecieved, this);
+            this.RH.GetLoginMethodes([]);
             var config = {
                 baseId: this.baseId
             };
@@ -30,8 +34,17 @@ var JudoShirt;
             this._signal.changeBasketCount.add(this.ReloadShop, this);
             this._signal.changeWishCount.add(this.ReloadShop, this);
         }
+        C_WidgetAccount.prototype.onPacketRecieved = function (response) {
+            this.methodesList = response.methodesList;
+            var methode = this.methodesList[0];
+            var request = [];
+            request.Url = methode.link;
+            request.Data = methode.data;
+            this.RH.Login(request);
+        };
         C_WidgetAccount.$inject = [
-            '$scope'
+            '$scope',
+            JudoShirt.Services.UsersRequestHandler.Name
         ];
         return C_WidgetAccount;
     })(JudoShirt.Init.AbstractModule);

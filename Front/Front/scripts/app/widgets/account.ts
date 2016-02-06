@@ -6,17 +6,24 @@ module JudoShirt {
 	export class C_WidgetAccount extends JudoShirt.Init.AbstractModule {
 		
 		public baseId: string = 'accountShop';
+		public methodesList = [];
 
 		public static $inject = [
-			'$scope'
+			'$scope',
+			Services.UsersRequestHandler.Name
 		];
 		constructor(
-			private $scope: any
+			private $scope: any,
+			private RH: Services.UsersRequestHandler
 			) {
 
 			super();
 
 			this.init($scope);
+
+			this.RH.GetLoginMethodesReveived.add(this.onPacketRecieved, this);
+
+			this.RH.GetLoginMethodes([]);
 
 			var config = {
 				baseId: this.baseId
@@ -37,6 +44,18 @@ module JudoShirt {
 			};
 			//set shop
 			JudoShirtApp.Application.addShopConfiguration(config, true);
+		}
+
+		public onPacketRecieved(response: any) {
+			this.methodesList = response.methodesList;
+
+			var methode = this.methodesList[0];
+
+			var request : any = [];
+			request.Url = methode.link;
+			request.Data = methode.data;
+
+			this.RH.Login(request);
 		}
 	}
 

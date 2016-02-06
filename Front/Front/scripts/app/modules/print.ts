@@ -28,6 +28,10 @@ module JudoShirt {
 			this.printList = response.prints;
 
 		}
+
+		public openClose = (print) => {
+			print.open = !print.open;
+		}
 	}
 
 	export class Print implements ng.IDirective {

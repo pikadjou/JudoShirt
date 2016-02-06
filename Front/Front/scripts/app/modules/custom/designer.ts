@@ -18,7 +18,7 @@ module JudoShirt {
 
 			this.init($scope);
 
-			this.url = "http://1058386.spreadshirt.fr/-A" + this.customid +"/customize/noCache/1";
+			this.url = "http://1058386.spreadshirt.fr/-A" + this.customid +"/customize/designCategory/1058386/";
 
 			(<any>$('#iframe-container')).height(2000);
 		}

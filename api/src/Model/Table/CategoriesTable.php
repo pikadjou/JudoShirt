@@ -72,7 +72,7 @@ class CategoriesTable extends Table
      */
     public function getAll()
     {
-        $category = $this->find()->where(["visible" => 1]);
+        $category = $this->find()->where(["visible" => 1])->order('visible');
         
         return $category;
     }

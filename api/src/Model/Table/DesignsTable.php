@@ -86,10 +86,8 @@ class DesignsTable extends Table
     public function getAll()
     {
         $designs = $this->find('all')
-                                ->contain([
-                                    'Tags', 
-                                    'Categories'
-                                ]);
+                        ->where(["Designs.visible" => true])
+                        ->order('Designs.priority');
         
         return $designs;
     }
@@ -121,11 +119,7 @@ class DesignsTable extends Table
      */
     public function getAllById($catId = null)
     {
-        $designs = $this->find('all')
-                                ->contain([
-                                    //'Tags', 
-                                    //'Categories.id'
-                                ]);
+        $designs = $this->getAll();
 
         if($catId !== null){
             $designs->matching('Categories', function(\Cake\ORM\Query $q) use ($catId) {
@@ -134,6 +128,7 @@ class DesignsTable extends Table
                 ]);
             });
         }
+        $this->addCategories($designs);
         
         return $designs;
     }
@@ -154,8 +149,9 @@ class DesignsTable extends Table
         $query->contain([
             'Categories' => function ($q) {
                 return $q
-                     ->where(['Categories.visible' => true])
-                    ->contain(['Parent']);
+                    ->where(['Categories.visible' => true])
+                    ->contain(['Parent'])
+                    ->order('Categories.priority');
              }
         ]);
         

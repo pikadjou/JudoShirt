@@ -14,8 +14,13 @@ var JudoShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
             };
+            ProductsRequestHandler.prototype.GetProduct = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
+            };
             ProductsRequestHandler.prototype.addEvents = function () {
                 this.GetProductsReceived = new signals.Signal();
+                this.GetProductReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             ProductsRequestHandler.prototype.onPacketReceived = function (response) {
@@ -26,6 +31,10 @@ var JudoShirt;
                     case ("GetProductsResponse"):
                         parsedResponse = (response.Content);
                         this.GetProductsReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetProductResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetProductReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

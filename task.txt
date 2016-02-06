@@ -4,8 +4,6 @@ designer perso
 
 design css
 
-visible design
-
 get children too in category
 
 condition general de vente
@@ -24,10 +22,9 @@ page avis
 newslettre
 
 
-minification + cache
+minification + cache + debug
 
-order (promotion, product, design)
-
+sprd_auth_token=85197f50-9b3c-4e48-8f4e-01e523d3ddcb&abid=ac6727f2-a96f-4055-ac7e-53c5140a04af
 --------------------------
 ----- DONE ---------------
 --------------------------
@@ -50,3 +47,7 @@ menu deroulant // done
 page de maintenance // need design
 
 footer //need design
+
+order (promotion, product, design)
+
+visible design

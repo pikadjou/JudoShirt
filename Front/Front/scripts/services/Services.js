@@ -140,8 +140,13 @@ var JudoShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new JudoShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
             };
+            ProductsRequestHandler.prototype.GetProduct = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
+            };
             ProductsRequestHandler.prototype.addEvents = function () {
                 this.GetProductsReceived = new signals.Signal();
+                this.GetProductReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             ProductsRequestHandler.prototype.onPacketReceived = function (response) {
@@ -152,6 +157,10 @@ var JudoShirt;
                     case ("GetProductsResponse"):
                         parsedResponse = (response.Content);
                         this.GetProductsReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetProductResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetProductReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;
@@ -347,6 +356,67 @@ var JudoShirt;
         })();
         Services.HelpRequestHandler = HelpRequestHandler;
         JudoShirt.JudoShirtApp.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
+    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/services/Users/UsersClass.js
+var JudoShirt;
+(function (JudoShirt) {
+    var Services;
+    (function (Services) {
+        var UsersClass;
+        (function (UsersClass) {
+            var GetLoginMetohesRecieved = (function () {
+                function GetLoginMetohesRecieved() {
+                }
+                return GetLoginMetohesRecieved;
+            })();
+            UsersClass.GetLoginMetohesRecieved = GetLoginMetohesRecieved;
+        })(UsersClass = Services.UsersClass || (Services.UsersClass = {}));
+    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/services/Users/UsersRequestHandler.js
+var JudoShirt;
+(function (JudoShirt) {
+    var Services;
+    (function (Services) {
+        'use strict';
+        var UsersRequestHandler = (function () {
+            function UsersRequestHandler(server) {
+                this.server = server;
+                this.controller = "users";
+                this.addEvents();
+            }
+            UsersRequestHandler.prototype.Login = function (request) {
+                this.server.loginRequest(request);
+            };
+            UsersRequestHandler.prototype.GetLoginMethodes = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "GetLoginMethodes", this.controller, "GetLoginMethodes", []));
+            };
+            UsersRequestHandler.prototype.addEvents = function () {
+                this.GetLoginMethodesReveived = new signals.Signal();
+                this.server.packetReceived.add(this.onPacketReceived, this);
+            };
+            UsersRequestHandler.prototype.onPacketReceived = function (response) {
+                if (!response || !response.Content)
+                    return;
+                var parsedResponse = null;
+                switch (response.Identifier) {
+                    case ("GetLoginMethodesResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetLoginMethodesReveived.dispatch(parsedResponse);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            UsersRequestHandler.$inject = ['Server'];
+            UsersRequestHandler.Name = "UsersRequestHandler";
+            return UsersRequestHandler;
+        })();
+        Services.UsersRequestHandler = UsersRequestHandler;
+        JudoShirt.JudoShirtApp.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 

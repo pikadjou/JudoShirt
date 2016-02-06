@@ -1,0 +1,46 @@
+﻿.module__container{
+	background-color: white;
+	.module__title{
+		margin: 0;
+		padding: 10px;
+	}
+	.module__content{
+		padding: 5px;
+	}
+}
+
+.article-list__container{
+	margin: 0px;
+	padding: 5px;
+	
+	a{
+		color: black;
+	}
+	.list{
+		
+		text-align: center;
+		li{
+			padding: 0px;
+			
+		}
+	}
+}
+
+.article__container{
+	margin: 5px;
+	border: 1px solid $light-gray-color;
+	text-align: center;
+	img{
+		padding: 10px;
+
+		height: 150px;
+	}
+	.name{
+		font-size: 16px;
+		font-weight: bold;
+	}
+	button{
+		@include border-radius(5px);
+		background-color: $dark-gray-color;
+	}
+}

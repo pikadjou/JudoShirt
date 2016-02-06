@@ -14,6 +14,9 @@ var JudoShirt;
             this.$scope = $scope;
             this.RH = RH;
             this.printList = [];
+            this.openClose = function (print) {
+                print.open = !print.open;
+            };
             this.init($scope);
             this.RH.GetPrintsReceived.add(this.onPacketRecieved, this);
             this.RH.GetPrints();

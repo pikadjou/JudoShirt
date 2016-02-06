@@ -37,10 +37,15 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Flash');
     }
     
     public function setJson($content){
+        
+        if($content === null){
+            
+            $this->set('_serialize', []);
+            return;
+        }
         $classe = get_class($content);
         $explode = explode("\\", $classe);
         

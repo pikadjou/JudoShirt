@@ -5,19 +5,28 @@ module JudoShirt {
 
 	export class C_Product extends JudoShirt.Init.AbstractModule {
 		
+		public productid: number = 0;
+		public product: Services.Entity.Product = null;
+
 		public sce = null;
 		public static $inject = [
-			'$scope'
+			'$scope',
+			Services.ProductsRequestHandler.Name
 		];
 		constructor(
-			private $scope: any
+			private $scope: any,
+			private RH: Services.ProductsRequestHandler
 			) {
 			super();
 
 			this.init($scope);
 
+			this.RH.GetProductReceived.add(this.onPacketRecieved, this);
+
+			this.RH.GetProduct([this.productid]);
+
 			$scope.$on('$locationChangeStart', function (event, next, current) {
-				if (next.indexOf("!#!") >= 0) {
+				if (next.indexOf("#!") >= 0) {
 					event.preventDefault();
 				}				
 			});
@@ -25,6 +34,10 @@ module JudoShirt {
 				baseId: 'productShop'
 			};
 			JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
+		}
+
+		public onPacketRecieved(response: any) {
+			this.product = response.product;
 		}
 	}
 

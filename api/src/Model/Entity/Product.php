@@ -20,6 +20,7 @@ class Product extends Entity
         'thumbnail' => true,
         'price' => true,
         'shopId' => true,
-        'design_id' => true
+        'design_id' => true,
+        'idCustomShop' => true
     ];
 }

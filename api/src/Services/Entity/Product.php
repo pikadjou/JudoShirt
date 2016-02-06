@@ -10,6 +10,7 @@ class Product
     public $price = "";
     public $thumbnail = "";
     public $shopId = 0;
+    public $idCustomShop = 0;
     
     public $types = [];
     
@@ -23,6 +24,7 @@ class Product
         $this->price = $product->price;
         $this->thumbnail = $product->thumbnail;
         $this->shopId = $product->shopId;
+        $this->idCustomShop = $product->idCustomShop;
         
         for($i = 0, $l = count($product->types); $i < $l; $i++){
             $this->types[] = new \App\Services\Entity\Type($product->types[$i]);

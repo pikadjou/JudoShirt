@@ -7,28 +7,28 @@ module JudoShirt {
 	 * - retrieves and persists the model via the todoStorage service
 	 * - exposes the model to the template and provides event handlers
 	 */
-	export class PageProduct {
+	export class PageProduct extends JudoShirt.Init.AbstractModule{
 		public static Name = "PageProduct";
-		// $inject annotation.
-		// It provides $injector with information about dependencies to be injected into constructor
-		// it is better to have it close to the constructor, because the parameters must match in count and type.
-		// See http://docs.angularjs.org/guide/di
+		
+		public id: number = 0;
+
 		public static $inject = [
 			'$scope',
 			'$routeParams'
 		];
+
 
 		// dependencies are injected via AngularJS $injector
 		// controller's name is registered in Application.ts and specified from ng-controller attribute in index.html
 		constructor(
 			private $scope: any,
 			private $routeParams: any
-		) {
-			// 'vm' stands for 'view model'. We're adding a reference to the controller to the scope
-			// for its methods to be accessible from view / HTML
-			$scope.vm = this;
+			) {
+			super();
 
-			$scope.vm.id = $routeParams.id || 0;
+			this.init($scope);
+
+			this.id = $routeParams.id || 0;
 		}
 	}
 	JudoShirtApp.JudoShirtApp.controller(PageProduct.Name, PageProduct);

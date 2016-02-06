@@ -1,9 +1,16 @@
-﻿<div class="DesignList__container CategoryDesigns__container">
-	<h3 class="title">Type d'impression</h3>
-	<div ng-repeat="print in vm.printList">
-		<div class="print">
-			<h4>{{print.name}}</h4>
-			<p>{{print.content}}</p>
+﻿<div class="module__container print__container">
+	<h3 class="module__title">Type d'impression</h3>
+
+	<div class="module__content">
+		<div ng-repeat="print in vm.printList">
+			<div class="print">
+				<h4 class="print__title" ng-click="vm.openClose(print)">
+					{{print.name}}
+					<i class="fa fa-plus" ng-show="print.open"></i>
+					<i class="fa fa-minus" ng-show="!print.open"></i>
+				</h4>
+				<p class="print__content" ng-show="print.open">{{print.content}}</p>
+			</div>
 		</div>
 	</div>
 </div>

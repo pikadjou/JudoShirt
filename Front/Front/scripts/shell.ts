@@ -32,20 +32,16 @@ module JudoShirt {
 			this.JudoShirtApp.config([
 				<any>'$routeProvider',
 				<any>'$locationProvider',
-				($routeProvider: angular.route.IRouteProvider, $locationProvider: any) => {
+				<any>'$httpProvider',
+				($routeProvider: angular.route.IRouteProvider, $locationProvider: any, $httpProvider : any) => {
 					$routeProvider
 						.when('/', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
 						.when('/category/:id', { templateUrl: '/scripts/app/pages/category.html', controller: 'PageCategory' })
 						.when('/design/:id', { templateUrl: '/scripts/app/pages/design.html', controller: 'PageDesign' })
-						.when('/product/:hash',
+						.when('/product/:id',
 						{
 							templateUrl: '/scripts/app/pages/product.html',
 							controller: 'PageProduct',
-							resolve: {
-								"check": function ($location) {   //function to be resolved, accessFac and $location Injected
-									//console.log("test");
-								}
-							}
 						})
 						.when('/panier',
 						{
@@ -94,7 +90,11 @@ module JudoShirt {
 						requireBase: false
 					}).hashPrefix('!');
 
-					
+					//$httpProvider.defaults.useXDomain = true;
+					//delete $httpProvider.defaults.headers.common['X-Requested-With'];
+					//$httpProvider.defaults.useXDomain = true;
+					//$httpProvider.defaults.headers.common = 'Content-Type: application/json';
+					//delete $httpProvider.defaults.headers.common['X-Requested-With'];
 				}
 			]);
 

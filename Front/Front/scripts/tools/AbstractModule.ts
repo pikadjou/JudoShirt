@@ -4,6 +4,7 @@
 	export class AbstractModule {
 
 		public _signal = JudoShirt.Init.Signals.getInstance();
+		public CoreLib = CoreLib;
 
 		constructor() {
 

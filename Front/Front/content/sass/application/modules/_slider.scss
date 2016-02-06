@@ -50,4 +50,15 @@
 			border-left-color: #fff;
 		}
 	}
+
+	.text{
+		display: inline-block;
+
+		background: $blue-color;
+		color: $white-color;
+		width: 100%;
+		padding: 15px;
+
+		@include radius(0 0 5px 5px);
+	}
 }

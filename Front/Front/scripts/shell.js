@@ -23,18 +23,15 @@ var JudoShirt;
             this.JudoShirtApp.config([
                 '$routeProvider',
                 '$locationProvider',
-                function ($routeProvider, $locationProvider) {
+                '$httpProvider',
+                function ($routeProvider, $locationProvider, $httpProvider) {
                     $routeProvider
                         .when('/', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
                         .when('/category/:id', { templateUrl: '/scripts/app/pages/category.html', controller: 'PageCategory' })
                         .when('/design/:id', { templateUrl: '/scripts/app/pages/design.html', controller: 'PageDesign' })
-                        .when('/product/:hash', {
+                        .when('/product/:id', {
                         templateUrl: '/scripts/app/pages/product.html',
                         controller: 'PageProduct',
-                        resolve: {
-                            "check": function ($location) {
-                            }
-                        }
                     })
                         .when('/panier', {
                         templateUrl: '/scripts/app/pages/basket.html',

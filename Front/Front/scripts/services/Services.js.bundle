@@ -20,5 +20,8 @@
 	  
 		<file>/scripts/services/Help/HelpClass.js</file>
 		<file>/scripts/services/Help/HelpRequestHandler.js</file>
+
+	  <file>/scripts/services/Users/UsersClass.js</file>
+	  <file>/scripts/services/Users/UsersRequestHandler.js</file>
   </files>
 </bundle>

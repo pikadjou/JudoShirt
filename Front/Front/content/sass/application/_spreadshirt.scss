@@ -9,3 +9,28 @@ display: none;
 	color: $link-color;
 	background-color: $color-bleu;
 }
+
+.SprdMain{
+	.button{
+		margin: 0;
+
+		&:hover{
+			background-color: $white-color;
+		}
+	}
+	input{
+		margin: 0;
+	}
+
+	.row{
+		margin: 0;
+	}
+
+	img{
+		height: auto;
+	}
+
+	.TapPreventer{
+		display: none !important;
+	}
+}

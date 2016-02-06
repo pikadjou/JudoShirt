@@ -900,6 +900,8 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Users\UsersClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Users\UsersRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Help\HelpClass.ts" />
     <TypeScriptCompile Include="scripts\services\Help\HelpRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Product.ts" />
@@ -1028,6 +1030,12 @@
     <Content Include="content\sass\application\_spreadshirt.scss" />
     <Content Include="content\sass\application\modules\_slider.scss" />
     <Content Include="content\sass\application\container\_footer.scss" />
+    <Content Include="content\sass\application\widgets\_common.scss" />
+    <Content Include="content\sass\application\modules\_common.scss" />
+    <Content Include="content\sass\application\modules\_design.scss" />
+    <Content Include="content\sass\application\modules\_product.scss" />
+    <Content Include="content\sass\application\modules\_print.scss" />
+    <Content Include="content\sass\application\modules\_promotion.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

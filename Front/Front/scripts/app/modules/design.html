@@ -1,29 +1,57 @@
-﻿<div class="DesignList__container CategoryDesigns__container">
-	<h3 class="title">{{vm.design.name}}</h3>
-	<div ng-if="vm.design.idCustomShop">
-		<a href="/designer/{{vm.design.idCustomShop}}">Custommiser le design</a>
-	</div>
-	<div ng-repeat="type in vm.types | filter:{ type: '1' }">
-		<a href="#" ng-click="vm.addRemoveType(type, 1)">
-			{{type.name}}{{type.active}}
-		</a>
-	</div>
+﻿<div class="module__container design__container">
+	<h3 class="module__title">
+		{{vm.design.name}}
 
-	<div ng-repeat="type in vm.types | filter:{ type: '2' }">
-		<a href="#" ng-click="vm.addRemoveType(type, 2)">
-			{{type.name}}{{type.active}}
-		</a>
-	</div>
-	<ul class="small-block-grid-3 list">
-		<li ng-repeat="product in vm.products" ng-if="vm.isActiveProduct(product)">
-			<div class="article">
-				<a href="/product/!#!-A{{product.shopId}}">
-					<img ng-src="{{product.thumbnail}}" />
-					<span class="name">{{product.name}}</span>
-					<p class="content">{{product.content.substring(0, 50) + "..."}}</p>
-					<span class="name">{{product.price}}</span>
-				</a>
+		<span ng-if="vm.design.idCustomShop" class="custom">
+			<a href="/designer/{{vm.design.idCustomShop}}">Personnaliser</a>
+		</span>
+	</h3>
+	<div class="module__content">
+
+		<div class="filters">
+			<div class="group">
+				<span ng-repeat="type in vm.types | filter: { type: '1' }" class="filter"
+					  ng-class="{'actif': type.active === true }">
+					<a href="#" ng-click="vm.addRemoveType(type, 1)">
+						{{type.name}}
+					</a>
+				</span>
 			</div>
-		</li>
-	</ul>
+
+			<div class="group">
+				<span ng-repeat="type in vm.types | filter: { type: '2' }" class="filter"
+					  ng-class="{'actif': type.active === true }">
+					<a href="#" ng-click="vm.addRemoveType(type, 2)">
+						{{type.name}}
+					</a>
+				</span>
+			</div>
+		</div>
+
+		<div>
+			<ul class="small-block-grid-4 article-list__container">
+				<li ng-repeat="product in vm.products" ng-if="vm.isActiveProduct(product)">
+					<div class="article__container">
+						<a href="/product/{{product.shopId}}#!-A{{product.shopId}}">
+							<div class="row collapse">
+								<div class="small-12 columns">
+									<img ng-src="{{product.thumbnail}}" />
+								</div>
+								<div class="small-12 columns">
+									<span class="name">{{product.name}}</span>
+								</div>
+								<div class="small-12 columns">
+									<span class="price">{{product.price}} <i class="fa fa-eur"></i></span>
+								</div>
+								<div class="small-12 columns">
+									<button>Voir le produit</button>
+								</div>
+							</div>
+						</a>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+	</div>
 </div>

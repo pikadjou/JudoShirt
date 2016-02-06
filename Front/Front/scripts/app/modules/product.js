@@ -10,13 +10,18 @@ var JudoShirt;
     'use strict';
     var C_Product = (function (_super) {
         __extends(C_Product, _super);
-        function C_Product($scope) {
+        function C_Product($scope, RH) {
             _super.call(this);
             this.$scope = $scope;
+            this.RH = RH;
+            this.productid = 0;
+            this.product = null;
             this.sce = null;
             this.init($scope);
+            this.RH.GetProductReceived.add(this.onPacketRecieved, this);
+            this.RH.GetProduct([this.productid]);
             $scope.$on('$locationChangeStart', function (event, next, current) {
-                if (next.indexOf("!#!") >= 0) {
+                if (next.indexOf("#!") >= 0) {
                     event.preventDefault();
                 }
             });
@@ -25,8 +30,12 @@ var JudoShirt;
             };
             JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
         }
+        C_Product.prototype.onPacketRecieved = function (response) {
+            this.product = response.product;
+        };
         C_Product.$inject = [
-            '$scope'
+            '$scope',
+            JudoShirt.Services.ProductsRequestHandler.Name
         ];
         return C_Product;
     })(JudoShirt.Init.AbstractModule);

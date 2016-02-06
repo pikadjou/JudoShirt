@@ -61,7 +61,7 @@ class ProductsTable extends Table
     //not used
     public function getByShopId($id){
         
-        $product = $this->getByShopIdNoCache($id)->contain('Colors')->first();       
+        $product = $this->getByShopIdNoCache($id)->first();       
         $lastUpdate = $product->lastUpdate;
         
         $date = new \DateTime();
@@ -103,7 +103,7 @@ class ProductsTable extends Table
     
     public function findByDesign($design)
     {
-        debug($design);
+        //debug($design);
         $id = $design->shopId;
         $lastUpdate = $design->lastProductsUpdate;
         
@@ -115,7 +115,7 @@ class ProductsTable extends Table
         
 //        debug($lastUpdate);
 //        debug($cacheTime);
-//        $lastUpdate = null;
+        $lastUpdate = null;
                 
         if($lastUpdate === null || $lastUpdate < $cacheTime){
             
@@ -134,6 +134,7 @@ class ProductsTable extends Table
                         $product = $this->newEntity();
                     }
 
+                    debug($article->product);
                     $product->shopId = $articleId;
                     $product->design_id = $id;
                     $product->name = (string)$article->name;
@@ -157,7 +158,7 @@ class ProductsTable extends Table
             }
         }
         
-        $products = $this->find()->where(["design_id" => $id]);
+        $products = $this->find()->where(["design_id" => $id, "visible" => true])->order('priority');
         
         return $products;
     }
@@ -165,6 +166,11 @@ class ProductsTable extends Table
         
         $response = $this->_spreadshirt->getRequest($url) ;
         $response = simplexml_load_string($response);
+        
+        $product->name = (string)$response->name;
+        
+        $this->save($product);
+        
         
         $types = $this->_typesModel->addTypesForProduct($response);
 

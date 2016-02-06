@@ -1,8 +1,15 @@
-﻿<div class="article">
+﻿<div class="article__container">
 	<a href="/design/{{vm.design.shopId}}">
-		<img ng-src="{{vm.design.thumbnail}}" />
-		<span class="name">{{vm.design.name}}</span>
-		<p class="content">{{vm.design.content.substring(0, 50) + "..."}}</p>
-		<button>Voir</button>
+		<div class="row collapse">
+			<div class="small-12 columns">
+				<img ng-src="{{vm.design.thumbnail}}" />
+			</div>
+			<div class="small-12 columns">
+				<span class="name">{{vm.design.name}}</span>
+			</div>
+			<div class="small-12 columns">
+				<button>Voir les produits</button>
+			</div>
+		</div>
 	</a>
 </div>

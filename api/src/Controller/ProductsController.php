@@ -17,8 +17,9 @@ class ProductsController extends AppController
         $this->loadComponent('RequestHandler');
         
          $this->loadModel("Designs");
-         
-        //$this->render('index');
+        //if( Configure::read('debug') == true ){
+            //$this->render('index');
+        //}
     }
     /**
      * Index method
@@ -44,17 +45,14 @@ class ProductsController extends AppController
     
     public function getProduct($id = null)
     {
-        $id = 104331399;
-       // $query = $this->Designs->getOneByShopId($id);
-        //$design = $query->first();
         
-        $query = $this->Products->getByShopId($id);
-        //$product = $query->first();
-               
-      //  $response = new ProductsRequestHandler\GetProductsResponse();
-      //  $response->init($products);
+        $query = $this->Products->getByShopIdNoCache($id);
+        $product = $query->first();
+               debug($product);
+        $response = new ProductsRequestHandler\GetProductResponse();
+        $response->init($product);
 
-      //  parent::setJson($response);
+        parent::setJson($response);
 
     }
 }

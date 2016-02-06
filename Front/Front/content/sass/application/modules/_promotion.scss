@@ -1,0 +1,26 @@
+﻿.promotions__container{
+	.promotion__container{
+		.header{
+			background-color: $dark-bleu-color;
+			color: $white-color;
+			padding: 5px;
+
+			margin-bottom: 5px;
+
+			.date{
+				text-align: right; 
+			}
+		}
+		.banner{
+			max-width: 50%;
+
+			padding: 10px;
+
+			float: left;
+		}
+
+		.link{
+			clear: both;
+		}
+	}
+}
