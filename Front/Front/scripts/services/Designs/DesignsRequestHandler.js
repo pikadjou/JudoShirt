@@ -77,6 +77,6 @@ var JudoShirt;
             return DesignsRequestHandler;
         })();
         Services.DesignsRequestHandler = DesignsRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));

@@ -7,6 +7,7 @@ var JudoShirt;
             function Application() {
                 this._activeInstance = false;
                 this._shopConfigurationList = [];
+                this._cookieDomain = "." + location.host;
             }
             Application.getInstance = function () {
                 if (this.uniqueInstance == null)
@@ -85,6 +86,31 @@ var JudoShirt;
                     }
                 }, 100, config, intervalId);
             };
+            Application.prototype.setCookie = function (cName, cValue, expirationDays, path) {
+                if (path === void 0) { path = '/'; }
+                var today = new Date();
+                if (expirationDays === 0) {
+                    expirationDays = 365;
+                }
+                var validity = new Date(today.setDate(today.getDate() + expirationDays));
+                document.cookie = cName + "=" + cValue + "; expires=" + validity.toUTCString() + "; path=" + path + "; domain=" + this._cookieDomain;
+            };
+            Application.prototype.getCookie = function (cName) {
+                var cookies = document.cookie.split(';');
+                var cValue = '';
+                for (var i = 0; i < cookies.length; i++) {
+                    var c = cookies[i];
+                    while (c.charAt(0) == ' ')
+                        c = c.substr(1, c.length);
+                    if (c.indexOf(cName) == 0)
+                        cValue = c.substring((cName + '=').length, c.length);
+                }
+                return cValue;
+            };
+            Application.prototype.removeCookie = function (cName) {
+                this.setCookie(cName, "", -1);
+            };
+            Application.JudoShirtApp = angular.module('JudoShirt', ['ngRoute']);
             return Application;
         })();
         Init.Application = Application;
@@ -113,6 +139,9 @@ translationArray['month-11'] = 'Décembre';
 var CoreLib = {};
 CoreLib.timestampToDate = function (date, dateFormat) {
     if (dateFormat === void 0) { dateFormat = 'DD-MM-YY'; }
+    if (!date) {
+        return;
+    }
     if (typeof date === 'string') {
         date = new Date(date);
     }

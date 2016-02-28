@@ -27,5 +27,5 @@ var JudoShirt;
         return LangSelector;
     })();
     JudoShirt.LangSelector = LangSelector;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(LangSelector.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(LangSelector));
+    JudoShirt.Init.Application.JudoShirtApp.directive(LangSelector.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(LangSelector));
 })(JudoShirt || (JudoShirt = {}));

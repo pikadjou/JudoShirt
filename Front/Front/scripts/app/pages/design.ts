@@ -31,5 +31,5 @@ module JudoShirt {
 			$scope.vm.id = $routeParams.id || 0;
 		}
 	}
-	JudoShirtApp.JudoShirtApp.controller(PageDesign.Name, PageDesign);
+	JudoShirt.Init.Application.JudoShirtApp.controller(PageDesign.Name, PageDesign);
 }

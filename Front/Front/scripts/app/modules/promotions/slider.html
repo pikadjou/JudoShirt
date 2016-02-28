@@ -3,7 +3,7 @@
 		<div ng-repeat="promotion in vm.promotions">
 			<a herf="#" ng-click="vm.goToPromotion(promotion)">
 				<img src="{{promotion.image}}" />
-				<span class="text">{{promotion.content}}</span>
+				<span class="text">{{promotion.content.substring(0, 50)}}...</span>
 			</a>
 		</div>
 	</div>

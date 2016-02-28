@@ -13,5 +13,5 @@ var JudoShirt;
         return PageHome;
     })();
     JudoShirt.PageHome = PageHome;
-    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PageHome.Name, PageHome);
+    JudoShirt.Init.Application.JudoShirtApp.controller(PageHome.Name, PageHome);
 })(JudoShirt || (JudoShirt = {}));

@@ -77,5 +77,5 @@ module JudoShirt {
 
 		public controller = C_Slider;
 	}
-	JudoShirtApp.JudoShirtApp.directive(Slider.Name, JudoShirtApp.Application.GetDirectiveFactory<Slider>(Slider));
+	JudoShirt.Init.Application.JudoShirtApp.directive(Slider.Name, JudoShirtApp.Application.GetDirectiveFactory<Slider>(Slider));
 }

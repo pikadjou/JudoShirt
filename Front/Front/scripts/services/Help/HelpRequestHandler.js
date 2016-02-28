@@ -34,6 +34,6 @@ var JudoShirt;
             return HelpRequestHandler;
         })();
         Services.HelpRequestHandler = HelpRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));

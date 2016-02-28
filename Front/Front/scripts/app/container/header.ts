@@ -33,5 +33,5 @@ module JudoShirt.Container {
 
 		public controller = C_Header;
 	}
-	JudoShirtApp.JudoShirtApp.directive(Header.Name, JudoShirtApp.Application.GetDirectiveFactory<Header>(Header));
+	JudoShirt.Init.Application.JudoShirtApp.directive(Header.Name, JudoShirtApp.Application.GetDirectiveFactory<Header>(Header));
 }

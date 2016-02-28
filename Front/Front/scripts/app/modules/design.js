@@ -16,6 +16,7 @@ var JudoShirt;
             this.RH = RH;
             this.designid = 0;
             this.design = null;
+            this.mainCategory = null;
             this.products = [];
             this.types = [];
             this.typeIds = [];
@@ -84,6 +85,12 @@ var JudoShirt;
                     }
                 }
             }
+            for (var arrayC = this.design.categories, i = 0, l = arrayC.length, category = null; i < l; i++) {
+                category = arrayC[i];
+                if (category.parent) {
+                    this.mainCategory = category;
+                }
+            }
         };
         C_Design.prototype.addType = function (type) {
             for (var array = this.types, i = 0, l = array.length; i < l; i++) {
@@ -115,5 +122,5 @@ var JudoShirt;
         return Design;
     })();
     JudoShirt.Design = Design;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Design.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Design));
+    JudoShirt.Init.Application.JudoShirtApp.directive(Design.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Design));
 })(JudoShirt || (JudoShirt = {}));

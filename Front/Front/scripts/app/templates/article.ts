@@ -38,5 +38,5 @@ module JudoShirt {
 
 		public controller = C_TemplateArticle;
 	}
-	JudoShirtApp.JudoShirtApp.directive(TemplateArticle.Name, JudoShirtApp.Application.GetDirectiveFactory<TemplateArticle>(TemplateArticle));
+	JudoShirt.Init.Application.JudoShirtApp.directive(TemplateArticle.Name, JudoShirtApp.Application.GetDirectiveFactory<TemplateArticle>(TemplateArticle));
 }

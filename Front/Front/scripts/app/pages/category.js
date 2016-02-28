@@ -16,5 +16,5 @@ var JudoShirt;
         return PageCategory;
     })();
     JudoShirt.PageCategory = PageCategory;
-    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PageCategory.Name, PageCategory);
+    JudoShirt.Init.Application.JudoShirtApp.controller(PageCategory.Name, PageCategory);
 })(JudoShirt || (JudoShirt = {}));

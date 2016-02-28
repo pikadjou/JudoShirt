@@ -1,12 +1,75 @@
 ﻿<div class="row widget__account">
-	<div class="small-3 columns">
-		Welcom, Pikadjou
+	<div ng-if="vm.isAuthenticated" class="small-8 columns no-padding">
+		<div class="row collapse authenticated">
+			<div class="small-12 columns hello">
+				Bonjour, {{vm._login.user.name}} <i class="fa fa-smile-o"></i>
+			</div>
+			<div class="small-offset-3 small-6 end columns my-account">
+				<a ng-click="vm._accountPanelOpen = !vm._accountPanelOpen" class="title">
+					<i class="fa fa-shopping-bag"></i>
+					Mon compte
+					<i ng-show="!vm._accountPanelOpen" class="fa fa-chevron-down"></i>
+					<i ng-show="vm._accountPanelOpen" class="fa fa-chevron-up"></i>
+				</a>
+				<div ng-if="vm._accountPanelOpen === true" class="my-account-panel account-panel">
+					<ul>
+						<li><a href="/account/order" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-shopping-cart"></i> Mes commandes</a></li>
+						<li><a href="/account/detail" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-user"></i> Mes details</a></li>
+						<li><a ng-click="vm.logout()"><i class="fa fa-unlock"></i> Deconnection</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="small-3 columns">
-		Your account
+	<div ng-if="!vm.isAuthenticated" class="small-8 columns no-padding">
+		<div class="row collapse unauthenticated">
+			<div class="small-6 columns connection">
+				<a ng-click="vm._connectionPanelOpen = !vm._connectionPanelOpen" class="title">
+					Connection
+					<i ng-show="!vm._connectionPanelOpen" class="fa fa-chevron-down"></i>
+					<i ng-show="vm._connectionPanelOpen" class="fa fa-chevron-up"></i>
+				</a>
+				<div ng-if="vm._connectionPanelOpen === true" class="account-panel connection-panel">
+					<form>
+						<div class="row">
+							<div class="small-12 columns">
+								<label>
+									Pseudo ou email
+									<input type="text" placeholder="Pseudo ou email" ng-model="vm._loginForm.pseudo">
+
+									<span ng-if="vm._loginForm.errorPseudo" class="error">{{vm._loginForm.errorPseudo}}</span>
+								</label>
+							</div>
+							<div class="small-12 columns">
+								<label>
+									Mot de passe
+									<input type="password" placeholder="Mot de passe" ng-model="vm._loginForm.password">
+
+									<span ng-if="vm._loginForm.errorPassword" class="error">{{vm._loginForm.errorPassword}}</span>
+								</label>
+							</div>
+							<div class="small-12 columns">
+								<button class="button button-action" ng-click="vm.submit()" ng-class="{disable: vm._loader}">
+									<span ng-if="vm._loader"><i class="fa fa-spinner fa-spin"></i></span>
+									<span ng-if="!vm._loader">Connection</span>
+								</button>
+								<span ng-if="vm._loginForm.errorServeur" class="error">{{vm._loginForm.errorServeur}}</span>
+
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="small-6 columns subscribe">
+				<a href="/account/subscription" class="title">
+					Inscription
+				</a>
+			</div>
+		</div>
 	</div>
-	<div class="small-6 columns no-padding">
+	<div class="small-4 columns no-padding">
 		<div id="accountShop"></div>
 	</div>
+
 
 </div>

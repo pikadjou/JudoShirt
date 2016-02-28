@@ -1,28 +1,41 @@
-﻿<div class="Slider__container">
-	<div class="promotions__slider">
-		<div class="row">
-			<div class="small-12 columns">
-				<a href="/promotion/{{vm.promotion.id}}">
-					{{vm.promotion.name}}
-				</a>
+﻿<div class="module__container promotion__container">
+	<h3 class="module__title">Promotion - {{vm.promotion.name}}</h3>
+	<div class="module__content">
+		<a class="button back" href="/promotions">
+			<i class="fa fa-chevron-left"></i>retour à la list des promotions
+		</a>
+		<h4 class="header">
+			<div class="row">
+				<div class="small-8 columns">
+					<a href="/promotion/{{vm.promotion.id}}">
+						{{vm.promotion.name}}
+					</a>
+				</div>
+				<div class="small-4 columns date">
+					<span class="start">
+						{{vm.CoreLib.timestampToDate(vm.promotion.startDate)}}
+					</span>
+					<span class="separator">
+						au
+					</span>
+					<span class="end">
+						{{vm.CoreLib.timestampToDate(vm.promotion.endDate)}}
+					</span>
+				</div>
 			</div>
-			<div class="small-6 columns">
+		</h4>
+		<div class="content">
+			<div class="banner">
 				<img src="{{vm.promotion.image}}" />
 			</div>
-			<div class="small-6 columns">
-				{{vm.promotion.content}}
-			</div>
-			<div class="small-6 columns">
-				{{vm.promotion.startDate}}
-			</div>
-			<div class="small-6 columns">
-				{{vm.promotion.endDate}}
-			</div>
-			<div class="small-12 columns">
-				<a href="#" ng-click="vm.goToPromotion(promotion)">
-					Lien
-				</a>
-			</div>
+			{{vm.promotion.content}}
+		</div>
+
+		<div class="link">
+			<a href="#" ng-click="vm.goToPromotion(vm.promotion)">
+				Vers la promotion
+			</a>
 		</div>
 	</div>
+
 </div>

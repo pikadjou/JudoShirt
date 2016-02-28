@@ -47,6 +47,6 @@ var JudoShirt;
             return PromotionsRequestHandler;
         })();
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));

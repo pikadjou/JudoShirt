@@ -27,5 +27,5 @@ module JudoShirt {
 			$scope.vm = this;
 		}
 	}
-	JudoShirtApp.JudoShirtApp.controller(PageBasket.Name, PageBasket);
+	JudoShirt.Init.Application.JudoShirtApp.controller(PageBasket.Name, PageBasket);
 }

@@ -7,7 +7,9 @@
 		</span>
 	</h3>
 	<div class="module__content">
-
+		<a class="button back" href="/category/{{vm.mainCategory.id}}">
+			<i class="fa fa-chevron-left"></i>retour à la catégorie {{vm.mainCategory.name}}
+		</a>
 		<div class="filters">
 			<div class="group">
 				<span ng-repeat="type in vm.types | filter: { type: '1' }" class="filter"

@@ -1,39 +1,52 @@
-/// <reference path='../../_all.ts' />
-
-module JudoShirt {
+﻿module JudoShirt {
     'use strict';
 
+	
 	export class C_WidgetAccount extends JudoShirt.Init.AbstractModule {
 		
 		public baseId: string = 'accountShop';
 		public methodesList = [];
 
+		private _connectionPanelOpen = false;
+		private _accountPanelOpen = false;
+
+		private _loginForm:
+		{ pseudo: string, errorPseudo: string, password: string, errorPassword: string, errorServeur: string } =
+		{ pseudo: "", errorPseudo: "", password: "", errorPassword: "", errorServeur: "" }
+		private _loader = false;
 		public static $inject = [
-			'$scope',
-			Services.UsersRequestHandler.Name
+			'$scope'
 		];
 		constructor(
-			private $scope: any,
-			private RH: Services.UsersRequestHandler
+			private $scope: any
 			) {
 
 			super();
 
 			this.init($scope);
-
-			this.RH.GetLoginMethodesReveived.add(this.onPacketRecieved, this);
-
-			this.RH.GetLoginMethodes([]);
-
+			
+			this._signal.changeBasketCount.add(this.ReloadShop, this);
+			this._signal.changeWishCount.add(this.ReloadShop, this);
+			
 			var config = {
 				baseId: this.baseId
 			};
 			//set shop
 			JudoShirtApp.Application.addShopConfiguration(config, true);
-			
-			this._signal.changeBasketCount.add(this.ReloadShop, this);
-			this._signal.changeWishCount.add(this.ReloadShop, this);
 
+			this._login.addErrorHandler(this.errorLogin);
+		}
+
+		public Authenticated() {
+			super.Authenticated();
+			this._loader = false;
+
+			this.$scope.$apply();
+		}
+		public Unauthenticated() {
+			super.Unauthenticated();
+
+			this.$scope.$apply();
 		}
 
 		public ReloadShop = () => {
@@ -45,24 +58,42 @@ module JudoShirt {
 			//set shop
 			JudoShirtApp.Application.addShopConfiguration(config, true);
 		}
+		public submit() {
+			var valide = true;
+			if (this._loginForm.pseudo === "") {
+				valide = false;
+				this._loginForm.errorPseudo = "Ce champs ne peut �tre vide";
+			} else {
+				this._loginForm.errorPseudo = "";
+			}
+			if (this._loginForm.password === "") {
+				valide = false;
+				this._loginForm.errorPassword = "Ce champs ne peut �tre vide";
+			} else {
+				this._loginForm.errorPassword = "";
+			}
 
-		public onPacketRecieved(response: any) {
-			this.methodesList = response.methodesList;
+			if (valide) {
+				this._loader = true;
+				this._login.Login(this._loginForm.pseudo, this._loginForm.password);
+			}
+		}
+		public errorLogin = (message: string) => {
+			this._loader = false;
+			this._loginForm.errorServeur = message;
 
-			var methode = this.methodesList[0];
-
-			var request : any = [];
-			request.Url = methode.link;
-			request.Data = methode.data;
-
-			this.RH.Login(request);
+			this.$scope.$apply();
+		}
+		
+		public logout = () => {
+			this._login.Logout();
 		}
 	}
 
 	export class WidgetAccount  implements ng.IDirective {
 		public templateUrl = "/scripts/app/widgets/account.html";
 		public restrict = "E";
-		public replace = true;
+		public transclude = true;
 		public scope = {
 		};
 
@@ -75,5 +106,5 @@ module JudoShirt {
 
 		public controller = C_WidgetAccount ;
 	}
-	JudoShirtApp.JudoShirtApp.directive(WidgetAccount.Name, JudoShirtApp.Application.GetDirectiveFactory<WidgetAccount>(WidgetAccount));
+	JudoShirt.Init.Application.JudoShirtApp.directive(WidgetAccount.Name, JudoShirtApp.Application.GetDirectiveFactory<WidgetAccount>(WidgetAccount));
 }

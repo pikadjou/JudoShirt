@@ -44,5 +44,5 @@ var JudoShirt;
         return Print;
     })();
     JudoShirt.Print = Print;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Print.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Print));
+    JudoShirt.Init.Application.JudoShirtApp.directive(Print.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Print));
 })(JudoShirt || (JudoShirt = {}));

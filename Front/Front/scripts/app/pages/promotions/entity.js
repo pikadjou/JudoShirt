@@ -25,5 +25,5 @@ var JudoShirt;
         return PagePromotionEntity;
     })(JudoShirt.Init.AbstractModule);
     JudoShirt.PagePromotionEntity = PagePromotionEntity;
-    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
+    JudoShirt.Init.Application.JudoShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
 })(JudoShirt || (JudoShirt = {}));

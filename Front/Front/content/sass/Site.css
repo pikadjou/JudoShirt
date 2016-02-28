@@ -3195,8 +3195,6 @@ label.error {
 
 body {
   background: #C5C6C8;
-  /*background: url(../img/background2.jpg);
-	background-size: 100% 100%;*/
 }
 
 header {
@@ -3209,7 +3207,7 @@ header .logo {
 }
 
 header img {
-  height: 200px;
+  height: 100px;
   width: 80%;
   margin: auto;
 }
@@ -3224,13 +3222,30 @@ a {
 }
 
 a:hover {
-  color: cornflowerblue;
+  color: #499bff;
 }
 
 h3 {
   padding: 5px;
   background-color: #499bff;
   color: white;
+}
+
+a.back {
+  color: #5a616b;
+  background-color: #dddddd;
+  margin: 0;
+  padding: 5px;
+  font-size: 0.75rem;
+}
+
+a.back i {
+  padding: 5px;
+}
+
+a.back:hover {
+  background-color: #dddddd;
+  color: #499bff;
 }
 
 .no-padding {
@@ -3240,6 +3255,13 @@ h3 {
 iframe {
   border: none;
   width: 100%;
+}
+
+.button.button-action {
+  border-radius: 5px;
+  background-color: #5a616b;
+  color: white;
+  margin: 0;
 }
 
 .widget__container {
@@ -3577,6 +3599,10 @@ iframe {
   width: 100%;
   padding: 15px;
   border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
 }
 
 .design__container .custom {
@@ -3585,6 +3611,10 @@ iframe {
 
 .design__container .custom a {
   color: black;
+}
+
+.design__container .filters {
+  margin-top: 5px;
 }
 
 .design__container .filters .group {
@@ -3602,6 +3632,10 @@ iframe {
   padding: 5px;
   font-size: 0.875rem;
   border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  -ms-border-radius: 10px 10px 0 0;
+  -o-border-radius: 10px 10px 0 0;
 }
 
 .design__container .filters .filter.actif a {
@@ -3647,25 +3681,43 @@ iframe {
   font-size: 25px;
 }
 
-.promotions__container .promotion__container .header {
+.promotion__container .header {
   background-color: #28558B;
   color: white;
   padding: 5px;
   margin-bottom: 5px;
 }
 
-.promotions__container .promotion__container .header .date {
+.promotion__container .header .date {
   text-align: right;
 }
 
-.promotions__container .promotion__container .banner {
+.promotion__container .banner {
   max-width: 50%;
   padding: 10px;
   float: left;
 }
 
-.promotions__container .promotion__container .link {
+.promotion__container .link {
   clear: both;
+  text-align: center;
+}
+
+.promotion__container .link a {
+  display: inline-block;
+  width: 50%;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  padding: 5px;
+  color: black;
+  background-color: #C5C6C8;
+}
+
+.widget__account .unauthenticated, .widget__account .authenticated {
+  text-align: center;
 }
 
 .widget__account #accountShop .SprdHeader {
@@ -3694,6 +3746,87 @@ iframe {
 
 .widget__account #accountShop .navigation {
   border: none;
+}
+
+.widget__account a {
+  color: black;
+}
+
+.widget__account .hello {
+  font-family: "Indie Flower", cursive;
+  font-size: 1.5625rem;
+}
+
+.widget__account .subscribe .title {
+  color: black;
+  background-color: #C5C6C8;
+  border: 1px solid #5a616b;
+  padding: 10px;
+  display: block;
+  width: 80%;
+  margin: auto;
+}
+
+.widget__account .my-account .title, .widget__account .connection .title {
+  color: black;
+  background-color: #f0c14b;
+  border: 1px solid #E0AA21;
+  padding: 10px;
+  display: block;
+  margin: auto;
+}
+
+.widget__account .my-account .my-account-panel {
+  border-radius: 0 0 5px 5px;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+}
+
+.widget__account .my-account ul {
+  list-style: none;
+}
+
+.widget__account .my-account ul li a {
+  display: block;
+  padding: 7px;
+}
+
+.widget__account .my-account ul li a:hover {
+  text-decoration: underline;
+}
+
+.widget__account .connection-panel {
+  width: 250px;
+  left: 0;
+}
+
+.widget__account .connection-panel form {
+  margin: 0;
+}
+
+.account-panel {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border: 1px solid #C5C6C8;
+  background-color: #dddddd;
+  text-align: center;
+}
+
+.subscription__container #iframe-container, .order__container #iframe-container, .detail__container #iframe-container {
+  overflow: hidden;
+}
+
+.subscription__container #iframe, .order__container #iframe, .detail__container #iframe {
+  height: 2000px;
 }
 
 /*# sourceMappingURL=Site.css.map */

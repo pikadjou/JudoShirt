@@ -34,5 +34,5 @@ var JudoShirt;
         return WidgetTopTen;
     })();
     JudoShirt.WidgetTopTen = WidgetTopTen;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(WidgetTopTen.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetTopTen));
+    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetTopTen.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetTopTen));
 })(JudoShirt || (JudoShirt = {}));

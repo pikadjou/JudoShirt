@@ -53,5 +53,5 @@ var JudoShirt;
         return Contact;
     })();
     JudoShirt.Contact = Contact;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Contact.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Contact));
+    JudoShirt.Init.Application.JudoShirtApp.directive(Contact.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Contact));
 })(JudoShirt || (JudoShirt = {}));

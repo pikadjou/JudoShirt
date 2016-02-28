@@ -4,10 +4,18 @@
 	export class AbstractModule {
 
 		public _signal = JudoShirt.Init.Signals.getInstance();
+		public _application = JudoShirt.Init.Application.getInstance();
+		public _login = JudoShirt.Services.Login.getInstance();
 		public CoreLib = CoreLib;
 
+		public isAuthenticated = false;
 		constructor() {
 
+			if (this._login.isAuthenticated()) {
+				this.Authenticated();
+			}
+			this._login.authenticatedSignal.add(this.Authenticated, this);
+			this._login.unauthenticatedSignal.add(this.Unauthenticated, this);
 		}
 
 		public init($scope: any) {
@@ -19,6 +27,13 @@
 			}
 
 			$scope.vm = this;
+		}
+
+		public Authenticated() {
+			this.isAuthenticated = true;
+		}
+		public Unauthenticated() {
+			this.isAuthenticated = false;
 		}
 	}
 }

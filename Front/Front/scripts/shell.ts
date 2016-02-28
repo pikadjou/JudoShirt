@@ -10,12 +10,15 @@ module JudoShirt {
 
 	export class Config {
 		public static Maintenance = false; 
+
+		public static subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
+		public static orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
+		public static detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
 	}
 	export class JudoShirtApp {
 
-		static JudoShirtApp: angular.IModule = angular.module('JudoShirt', ['ngRoute']);
+		//static JudoShirtApp: angular.IModule = JudoShirt.Init.Application.JudoShirtApp;
 		static Application = JudoShirt.Init.Application.getInstance();
-		//static Server = new JudoShirt.Init.Serveur();
 
 		static init() {
 
@@ -29,7 +32,10 @@ module JudoShirt {
 				}
 			}
 
-			this.JudoShirtApp.config([
+			var injector = angular.injector(['ng', 'JudoShirt']);
+			var LoginService = injector.get('LoginService');
+
+			JudoShirt.Init.Application.JudoShirtApp.config([
 				<any>'$routeProvider',
 				<any>'$locationProvider',
 				<any>'$httpProvider',
@@ -77,6 +83,24 @@ module JudoShirt {
 								templateUrl: '/scripts/app/pages/custom/custom.html',
 								controller: 'PageCustom',
 
+						})
+						.when('/account/subscription',
+							{
+								templateUrl: '/scripts/app/pages/account/subscription.html',
+								controller: 'PageSubscription',
+
+							})
+						.when('/account/order',
+							{
+								templateUrl: '/scripts/app/pages/account/order.html',
+								controller: 'PageOrder',
+
+						})
+						.when('/account/detail',
+							{
+								templateUrl: '/scripts/app/pages/account/detail.html',
+								controller: 'PageDetail',
+
 							})
 						//other
 						.when('/maintenance',
@@ -98,7 +122,8 @@ module JudoShirt {
 				}
 			]);
 
-
+			
+			
 		}
 	}
 

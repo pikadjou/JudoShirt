@@ -32,5 +32,5 @@ var JudoShirt;
         return TemplateArticleWidget;
     })();
     JudoShirt.TemplateArticleWidget = TemplateArticleWidget;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(TemplateArticleWidget.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
+    JudoShirt.Init.Application.JudoShirtApp.directive(TemplateArticleWidget.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
 })(JudoShirt || (JudoShirt = {}));

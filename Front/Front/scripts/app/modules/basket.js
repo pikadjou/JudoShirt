@@ -42,5 +42,5 @@ var JudoShirt;
         return Basket;
     })();
     JudoShirt.Basket = Basket;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(Basket.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Basket));
+    JudoShirt.Init.Application.JudoShirtApp.directive(Basket.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Basket));
 })(JudoShirt || (JudoShirt = {}));

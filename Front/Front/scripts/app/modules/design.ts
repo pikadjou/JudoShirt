@@ -5,6 +5,7 @@ module JudoShirt {
 		
 		public designid: number = 0;
 		public design: Services.Entity.Design = null;
+		public mainCategory: Services.Entity.Category = null;
 		public products: Services.Entity.Product[] = [];
 
 		public types: Services.Entity.Type[] = [];
@@ -42,6 +43,14 @@ module JudoShirt {
 
 						this.addType(type);
 					}
+				}
+			}
+
+			for (var arrayC = this.design.categories, i = 0, l = arrayC.length, category : Services.Entity.Category = null; i < l; i++) {
+				category = arrayC[i];
+
+				if (category.parent) {
+					this.mainCategory = category;
 				}
 			}
 		}
@@ -128,5 +137,5 @@ module JudoShirt {
 
 		public controller = C_Design;
 	}
-	JudoShirtApp.JudoShirtApp.directive(Design.Name, JudoShirtApp.Application.GetDirectiveFactory<Design>(Design));
+	JudoShirt.Init.Application.JudoShirtApp.directive(Design.Name, JudoShirtApp.Application.GetDirectiveFactory<Design>(Design));
 }

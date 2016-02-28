@@ -30,5 +30,5 @@ module JudoShirt {
 
 		}
 	}
-	JudoShirtApp.JudoShirtApp.controller(PagePrint.Name, PagePrint);
+	JudoShirt.Init.Application.JudoShirtApp.controller(PagePrint.Name, PagePrint);
 }

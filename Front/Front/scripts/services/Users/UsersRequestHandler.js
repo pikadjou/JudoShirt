@@ -10,13 +10,19 @@ var JudoShirt;
                 this.addEvents();
             }
             UsersRequestHandler.prototype.Login = function (request) {
-                this.server.loginRequest(request);
+                return this.server.request(new JudoShirt.Services.Request("POST", "Login", this.controller, "Login", request));
             };
-            UsersRequestHandler.prototype.GetLoginMethodes = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetLoginMethodes", this.controller, "GetLoginMethodes", []));
+            UsersRequestHandler.prototype.Session = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
+            };
+            UsersRequestHandler.prototype.GetDetails = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
             };
             UsersRequestHandler.prototype.addEvents = function () {
                 this.GetLoginMethodesReveived = new signals.Signal();
+                this.GetLoginReveived = new signals.Signal();
+                this.GetSessionReveived = new signals.Signal();
+                this.GetDetailsReveived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             UsersRequestHandler.prototype.onPacketReceived = function (response) {
@@ -28,6 +34,18 @@ var JudoShirt;
                         parsedResponse = (response.Content);
                         this.GetLoginMethodesReveived.dispatch(parsedResponse);
                         break;
+                    case ("GetLoginResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetLoginReveived.dispatch(parsedResponse);
+                        break;
+                    case ("GetSessionResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetSessionReveived.dispatch(parsedResponse);
+                        break;
+                    case ("GetDetailsResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetDetailsReveived.dispatch(parsedResponse);
+                        break;
                     default:
                         break;
                 }
@@ -37,6 +55,6 @@ var JudoShirt;
             return UsersRequestHandler;
         })();
         Services.UsersRequestHandler = UsersRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));

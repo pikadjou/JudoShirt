@@ -58,5 +58,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirtApp.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+	JudoShirt.Init.Application.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
 }

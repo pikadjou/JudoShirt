@@ -13,5 +13,5 @@ var JudoShirt;
         return PageContact;
     })();
     JudoShirt.PageContact = PageContact;
-    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PageContact.Name, PageContact);
+    JudoShirt.Init.Application.JudoShirtApp.controller(PageContact.Name, PageContact);
 })(JudoShirt || (JudoShirt = {}));

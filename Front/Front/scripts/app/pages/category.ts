@@ -33,6 +33,6 @@ module JudoShirt {
 			
 		}
 	}
-	JudoShirtApp.JudoShirtApp.controller(PageCategory.Name, PageCategory);
+	JudoShirt.Init.Application.JudoShirtApp.controller(PageCategory.Name, PageCategory);
 
 }

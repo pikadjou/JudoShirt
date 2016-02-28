@@ -17,9 +17,7 @@ class ProductsController extends AppController
         $this->loadComponent('RequestHandler');
         
          $this->loadModel("Designs");
-        //if( Configure::read('debug') == true ){
-            //$this->render('index');
-        //}
+
     }
     /**
      * Index method
@@ -29,6 +27,7 @@ class ProductsController extends AppController
     public function getProducts($id)
     {
         $query = $this->Designs->getByShopId($id);
+        $this->Designs->addCategories($query);
         $design = $query->first();
         
         $query = $this->Products->findByDesign($design);
@@ -48,7 +47,7 @@ class ProductsController extends AppController
         
         $query = $this->Products->getByShopIdNoCache($id);
         $product = $query->first();
-               debug($product);
+        
         $response = new ProductsRequestHandler\GetProductResponse();
         $response->init($product);
 

@@ -6,6 +6,9 @@ var JudoShirt;
         function Config() {
         }
         Config.Maintenance = false;
+        Config.subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
+        Config.orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
+        Config.detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
         return Config;
     })();
     JudoShirt.Config = Config;
@@ -20,7 +23,9 @@ var JudoShirt;
                     return;
                 }
             }
-            this.JudoShirtApp.config([
+            var injector = angular.injector(['ng', 'JudoShirt']);
+            var LoginService = injector.get('LoginService');
+            JudoShirt.Init.Application.JudoShirtApp.config([
                 '$routeProvider',
                 '$locationProvider',
                 '$httpProvider',
@@ -57,6 +62,18 @@ var JudoShirt;
                         templateUrl: '/scripts/app/pages/custom/custom.html',
                         controller: 'PageCustom',
                     })
+                        .when('/account/subscription', {
+                        templateUrl: '/scripts/app/pages/account/subscription.html',
+                        controller: 'PageSubscription',
+                    })
+                        .when('/account/order', {
+                        templateUrl: '/scripts/app/pages/account/order.html',
+                        controller: 'PageOrder',
+                    })
+                        .when('/account/detail', {
+                        templateUrl: '/scripts/app/pages/account/detail.html',
+                        controller: 'PageDetail',
+                    })
                         .when('/maintenance', {
                         templateUrl: '/scripts/app/pages/maintenance.html'
                     })
@@ -68,7 +85,6 @@ var JudoShirt;
                 }
             ]);
         };
-        JudoShirtApp.JudoShirtApp = angular.module('JudoShirt', ['ngRoute']);
         JudoShirtApp.Application = JudoShirt.Init.Application.getInstance();
         return JudoShirtApp;
     })();

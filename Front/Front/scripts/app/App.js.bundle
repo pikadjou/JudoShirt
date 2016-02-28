@@ -26,6 +26,10 @@
 		<file>/scripts/app/modules/promotions/list.js</file>
 		<file>/scripts/app/modules/promotions/entity.js</file>
 
+	  <file>/scripts/app/modules/account/order.js</file>
+	  <file>/scripts/app/modules/account/detail.js</file>
+	  <file>/scripts/app/modules/account/subscription.js</file>
+	  
 	  <file>/scripts/app/modules/custom/designer.js</file>
 	  
 		<file>/scripts/app/modules/help/contact.js</file>
@@ -42,6 +46,10 @@
 		<file>/scripts/app/pages/promotions/list.js</file>
 		<file>/scripts/app/pages/promotions/entity.js</file>
 
+	  <file>/scripts/app/pages/account/order.js</file>
+	  <file>/scripts/app/pages/account/detail.js</file>
+	  <file>/scripts/app/pages/account/subscription.js</file>
+	  
 	  <file>/scripts/app/pages/custom/custom.js</file>
 	  
 		<file>/scripts/app/widgets/topTen.js</file>

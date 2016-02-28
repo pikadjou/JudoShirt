@@ -28,6 +28,6 @@ var JudoShirt;
             return Footer;
         })();
         Container.Footer = Footer;
-        JudoShirt.JudoShirtApp.JudoShirtApp.directive(Footer.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Footer));
+        JudoShirt.Init.Application.JudoShirtApp.directive(Footer.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Footer));
     })(Container = JudoShirt.Container || (JudoShirt.Container = {}));
 })(JudoShirt || (JudoShirt = {}));

@@ -32,5 +32,5 @@ module JudoShirt {
 			this.id = $routeParams.id || 0;
 		}
 	}
-	JudoShirtApp.JudoShirtApp.controller(PageCustom.Name, PageCustom);
+	JudoShirt.Init.Application.JudoShirtApp.controller(PageCustom.Name, PageCustom);
 }

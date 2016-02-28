@@ -41,5 +41,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirtApp.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
+	JudoShirt.Init.Application.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
 }

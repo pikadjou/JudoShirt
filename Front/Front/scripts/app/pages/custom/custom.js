@@ -25,5 +25,5 @@ var JudoShirt;
         return PageCustom;
     })(JudoShirt.Init.AbstractModule);
     JudoShirt.PageCustom = PageCustom;
-    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PageCustom.Name, PageCustom);
+    JudoShirt.Init.Application.JudoShirtApp.controller(PageCustom.Name, PageCustom);
 })(JudoShirt || (JudoShirt = {}));

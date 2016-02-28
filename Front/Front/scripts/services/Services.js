@@ -35,7 +35,7 @@ var JudoShirt;
             return CategoriesRequestHandler;
         })();
         Services.CategoriesRequestHandler = CategoriesRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
@@ -119,7 +119,7 @@ var JudoShirt;
             return DesignsRequestHandler;
         })();
         Services.DesignsRequestHandler = DesignsRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
@@ -171,7 +171,7 @@ var JudoShirt;
             return ProductsRequestHandler;
         })();
         Services.ProductsRequestHandler = ProductsRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
@@ -214,7 +214,7 @@ var JudoShirt;
             return PrintsRequestHandler;
         })();
         Services.PrintsRequestHandler = PrintsRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
@@ -297,7 +297,7 @@ var JudoShirt;
             return PromotionsRequestHandler;
         })();
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
@@ -355,7 +355,7 @@ var JudoShirt;
             return HelpRequestHandler;
         })();
         Services.HelpRequestHandler = HelpRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 
@@ -366,12 +366,24 @@ var JudoShirt;
     (function (Services) {
         var UsersClass;
         (function (UsersClass) {
+            var User = (function () {
+                function User() {
+                }
+                return User;
+            })();
+            UsersClass.User = User;
             var GetLoginMetohesRecieved = (function () {
                 function GetLoginMetohesRecieved() {
                 }
                 return GetLoginMetohesRecieved;
             })();
             UsersClass.GetLoginMetohesRecieved = GetLoginMetohesRecieved;
+            var LoginRequest = (function () {
+                function LoginRequest() {
+                }
+                return LoginRequest;
+            })();
+            UsersClass.LoginRequest = LoginRequest;
         })(UsersClass = Services.UsersClass || (Services.UsersClass = {}));
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
@@ -389,13 +401,19 @@ var JudoShirt;
                 this.addEvents();
             }
             UsersRequestHandler.prototype.Login = function (request) {
-                this.server.loginRequest(request);
+                return this.server.request(new JudoShirt.Services.Request("POST", "Login", this.controller, "Login", request));
             };
-            UsersRequestHandler.prototype.GetLoginMethodes = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetLoginMethodes", this.controller, "GetLoginMethodes", []));
+            UsersRequestHandler.prototype.Session = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
+            };
+            UsersRequestHandler.prototype.GetDetails = function (request) {
+                return this.server.request(new JudoShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
             };
             UsersRequestHandler.prototype.addEvents = function () {
                 this.GetLoginMethodesReveived = new signals.Signal();
+                this.GetLoginReveived = new signals.Signal();
+                this.GetSessionReveived = new signals.Signal();
+                this.GetDetailsReveived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             UsersRequestHandler.prototype.onPacketReceived = function (response) {
@@ -407,6 +425,18 @@ var JudoShirt;
                         parsedResponse = (response.Content);
                         this.GetLoginMethodesReveived.dispatch(parsedResponse);
                         break;
+                    case ("GetLoginResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetLoginReveived.dispatch(parsedResponse);
+                        break;
+                    case ("GetSessionResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetSessionReveived.dispatch(parsedResponse);
+                        break;
+                    case ("GetDetailsResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetDetailsReveived.dispatch(parsedResponse);
+                        break;
                     default:
                         break;
                 }
@@ -416,7 +446,123 @@ var JudoShirt;
             return UsersRequestHandler;
         })();
         Services.UsersRequestHandler = UsersRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
+})(JudoShirt || (JudoShirt = {}));
+
+///#source 1 1 /scripts/services/LoginService.js
+var JudoShirt;
+(function (JudoShirt) {
+    var Services;
+    (function (Services) {
+        'use strict';
+        var Login = (function () {
+            function Login(server, RH) {
+                this.server = server;
+                this.RH = RH;
+                this.authenticatedSignal = new signals.Signal();
+                this.unauthenticatedSignal = new signals.Signal();
+                this.Application = JudoShirt.Init.Application.getInstance();
+                this._token = "";
+                this._authenticated = false;
+                this.user = null;
+                this.errorHandler = [];
+                Login.uniqueInstance = this;
+                this.RH.GetSessionReveived.addOnce(this._getServeurSession, this);
+                var session = this.Application.getCookie("sprd_auth_token");
+                if (session) {
+                    this._token = session;
+                    this.CheckUserSessionId();
+                }
+            }
+            Login.getInstance = function () {
+                if (this.uniqueInstance == null)
+                    console.warn("Login is not set");
+                return this.uniqueInstance;
+            };
+            Login.prototype.setToken = function (token) {
+                this.Application.setCookie("sprd_auth_token", token, 0);
+                this._token = token;
+            };
+            Login.prototype.getToken = function () {
+                return this._token;
+            };
+            Login.prototype.hasToken = function () {
+                if (this._token === "") {
+                    return false;
+                }
+                return true;
+            };
+            Login.prototype.setAuthenticated = function (authenticated) {
+                this._authenticated = authenticated;
+                if (authenticated) {
+                    this.authenticatedSignal.dispatch();
+                }
+                else {
+                    this.unauthenticatedSignal.dispatch();
+                }
+            };
+            Login.prototype.isAuthenticated = function () {
+                return this._authenticated;
+            };
+            Login.prototype.addErrorHandler = function (handler) {
+                this.errorHandler.push(handler);
+            };
+            Login.prototype.Login = function (userName, password) {
+                this.RH.GetLoginReveived.addOnce(this._getServeurLogin, this);
+                var request = new Services.UsersClass.LoginRequest();
+                request.username = userName;
+                request.password = password;
+                this.RH.Login(request);
+            };
+            Login.prototype.Logout = function () {
+                this.Application.removeCookie("sprd_auth_token");
+                window.location = "/";
+            };
+            Login.prototype.CheckUserSessionId = function () {
+                if (this.hasToken()) {
+                    this.RH.GetSessionReveived.addOnce(this._getServeurSession, this);
+                    this.RH.Session(this.getToken());
+                }
+            };
+            Login.prototype._getServeurSession = function (response) {
+                if (response.success === false) {
+                    this.Logout();
+                }
+                else {
+                    this.setUser(response.user);
+                }
+            };
+            Login.prototype._getServeurLogin = function (response) {
+                if (response.success === false) {
+                    this.sendError("Login ou mot de passe incorrect");
+                }
+                else {
+                    this.Application.setCookie(response.cookie.name, response.cookie.value, response.cookie.time);
+                    this.setUser(response.user);
+                }
+            };
+            Login.prototype.setUser = function (user) {
+                this.setAuthenticated(true);
+                this.user = user;
+            };
+            Login.prototype.getUser = function () {
+                return this.user;
+            };
+            Login.prototype.sendError = function (message) {
+                for (var i = 0, l = this.errorHandler.length; i < l; i++) {
+                    this.errorHandler[i](message);
+                }
+            };
+            Login.Name = "LoginService";
+            Login.$inject = [
+                'Server',
+                Services.UsersRequestHandler.Name
+            ];
+            return Login;
+        })();
+        Services.Login = Login;
+        JudoShirt.Init.Application.JudoShirtApp.service(Login.Name, Login);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));
 

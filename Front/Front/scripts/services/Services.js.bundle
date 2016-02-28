@@ -23,5 +23,7 @@
 
 	  <file>/scripts/services/Users/UsersClass.js</file>
 	  <file>/scripts/services/Users/UsersRequestHandler.js</file>
+
+	  <file>/scripts/services/LoginService.js</file>
   </files>
 </bundle>

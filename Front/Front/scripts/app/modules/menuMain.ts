@@ -46,5 +46,5 @@ module JudoShirt {
 
 		public controller = C_MenuMain;
 	}
-	JudoShirtApp.JudoShirtApp.directive(MenuMain.Name, JudoShirtApp.Application.GetDirectiveFactory<MenuMain>(MenuMain));
+	JudoShirt.Init.Application.JudoShirtApp.directive(MenuMain.Name, JudoShirtApp.Application.GetDirectiveFactory<MenuMain>(MenuMain));
 }

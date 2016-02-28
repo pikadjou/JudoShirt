@@ -67,5 +67,5 @@ var JudoShirt;
         return PromotionList;
     })();
     JudoShirt.PromotionList = PromotionList;
-    JudoShirt.JudoShirtApp.JudoShirtApp.directive(PromotionList.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionList));
+    JudoShirt.Init.Application.JudoShirtApp.directive(PromotionList.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionList));
 })(JudoShirt || (JudoShirt = {}));

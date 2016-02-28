@@ -34,6 +34,6 @@ module JudoShirt {
 			
 		}
 	}
-	JudoShirtApp.JudoShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
+	JudoShirt.Init.Application.JudoShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
 
 }

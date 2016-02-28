@@ -13,5 +13,5 @@ var JudoShirt;
         return PageBasket;
     })();
     JudoShirt.PageBasket = PageBasket;
-    JudoShirt.JudoShirtApp.JudoShirtApp.controller(PageBasket.Name, PageBasket);
+    JudoShirt.Init.Application.JudoShirtApp.controller(PageBasket.Name, PageBasket);
 })(JudoShirt || (JudoShirt = {}));

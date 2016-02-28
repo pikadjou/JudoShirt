@@ -38,6 +38,7 @@
 				url = url + this.urlExtension;
 
 				console.log("PACKET_SEND : url : " + url);
+
 				this.$http.get(url).
 					then((response: any) => {
 						this.onPacketReceived(response.data);
@@ -48,6 +49,7 @@
 
 				url = url + this.urlExtension;
 				console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+
 				this.$http.post(url, request.Content).
 					then((response: any) => {
 						this.onPacketReceived(response.data);
@@ -57,81 +59,6 @@
 			}
 
 			return request.Id;
-		}
-
-		public loginRequest(request: LoginRequest) {
-
-			var url = request.Url;
-			console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
-			//this.xdr(url, "POST", request.Data,
-			//	function (response) {
-			//		this.onPacketReceived(response.data);
-			//	}, function (response) {
-			//		console.log(response);
-			//	});
-			document.cookie =
-			'cookie1=test1; path=/'
-
-			$.ajax({
-				url: url,
-				type: 'POST',
-				data: request.Data,
-				dataType: 'xml',
-				headers: { 'Access-Control-Allow-Origin': '*' },
-				crossDomain: true,
-
-				success: function (code_html, statut) {
-					console.log(code_html);
-				},
-
-				error: function (resultat, statut, erreur) {
-					console.log(resultat);
-				}
-
-			});
-		}
-
-		public xdr(url, method, data, callback, errback) {
-			var req;
-
-			if (XMLHttpRequest) {
-				req = new XMLHttpRequest();
-
-				if ('withCredentials' in req) {
-					req.open(method, url, true);
-					
-					req.setRequestHeader('Content-Type', 'application/xml');
-					req.setRequestHeader('Access-Control-Allow-Origin', '*');
-					req.setRequestHeader('Access-Control-Allow-Methods', 'POST, PUT, OPTIONS');
-
-
-					req.withCredentials = true;
-
-					req.onerror = errback;
-					req.onreadystatechange = function () {
-						if (req.readyState === 4) {
-							if (req.status >= 200 && req.status < 400) {
-								callback(req.responseText);
-							} else {
-								errback(new Error('Response returned with non-OK status'));
-							}
-						}
-					};
-					req.send(data);
-				}
-			}
-			//else if (XDomainRequest) {
-			//	req = new XDomainRequest();
-			//	req.open(method, url);
-			//	req.onerror = errback;
-			//	req.onload = function () {
-			//		callback(req.responseText);
-			//	};
-			//	req.send(data);
-			//}
-			else {
-				errback(new Error('CORS not supported'));
-			}
 		}
 		private onPacketReceived(response: Request): void {
 			
@@ -144,7 +71,7 @@
 			
 		}
 	}
-	JudoShirtApp.JudoShirtApp.service("Server", Server);
+	JudoShirt.Init.Application.JudoShirtApp.service("Server", Server);
 
 	export class Request {
 		public Type: string;
@@ -161,15 +88,6 @@
 			this.Controller = controller;
 			this.View = view;
 			this.Content = content;
-		}
-	}
-	export class LoginRequest {
-		public Url: string;
-		public Data: string;
-
-		constructor(url: string, data: any) {
-			this.Url = url;
-			this.Data = data;
 		}
 	}
 }

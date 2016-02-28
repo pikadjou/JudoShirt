@@ -28,6 +28,6 @@ var JudoShirt;
             return Header;
         })();
         Container.Header = Header;
-        JudoShirt.JudoShirtApp.JudoShirtApp.directive(Header.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Header));
+        JudoShirt.Init.Application.JudoShirtApp.directive(Header.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Header));
     })(Container = JudoShirt.Container || (JudoShirt.Container = {}));
 })(JudoShirt || (JudoShirt = {}));

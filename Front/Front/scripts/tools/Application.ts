@@ -3,6 +3,8 @@
 
 	export class Application {
 
+		public static JudoShirtApp: angular.IModule = angular.module('JudoShirt', ['ngRoute']);
+
 		private static uniqueInstance: Application;
 
 		public static getInstance(): Application {
@@ -12,6 +14,8 @@
 			return this.uniqueInstance;
 		}
 
+		constructor() {
+		}
 		public GetDirectiveFactory<T extends ng.IDirective>(classType: Function): ng.IDirectiveFactory {
 			var factory = (...args: any[]): T => {
 				var directive = <any>classType;
@@ -100,6 +104,45 @@
 
 			}, 100, config, intervalId);
 		}
+
+		private _cookieDomain = "." + location.host;
+		public setCookie(cName: string, cValue: string, expirationDays: number, path = '/'): void {
+			var today = new Date();
+
+			if (expirationDays === 0) {
+				expirationDays = 365;
+			}
+			var validity = new Date(today.setDate(today.getDate() + expirationDays));
+			document.cookie = cName + "=" + cValue + "; expires=" + validity.toUTCString() + "; path=" + path + "; domain=" + this._cookieDomain;
+		}
+
+		/**
+		 * Get cookie value
+		 * @method getCookie
+		 * @param cName {string} The cookie name
+		 * @returns {string} The cookie valie
+		 **/
+		public getCookie(cName: string): string {
+
+			var cookies = document.cookie.split(';');
+			var cValue = '';
+
+			for (var i = 0; i < cookies.length; i++) {
+				var c = cookies[i];
+
+				while (c.charAt(0) == ' ')
+					c = c.substr(1, c.length);
+
+				if (c.indexOf(cName) == 0)
+					cValue = c.substring((cName + '=').length, c.length);
+			}
+
+			return cValue;
+		}
+
+		public removeCookie(cName: string) {
+			this.setCookie(cName, "", -1);
+		}
 	}
 }
 var translationArray = new Array();
@@ -126,6 +169,9 @@ translationArray['month-11'] = 'Décembre';
 var CoreLib: any = {}; 
 CoreLib.timestampToDate = function (date, dateFormat: string = 'DD-MM-YY'): string {
 
+	if (!date) {
+		return;
+	}
 	if (typeof date === 'string'){
 		date = new Date(date);
 	}

@@ -71,5 +71,5 @@ module JudoShirt {
 
 		public controller = C_PromotionEntity;
 	}
-	JudoShirtApp.JudoShirtApp.directive(PromotionEntity.Name, JudoShirtApp.Application.GetDirectiveFactory<PromotionEntity>(PromotionEntity));
+	JudoShirt.Init.Application.JudoShirtApp.directive(PromotionEntity.Name, JudoShirtApp.Application.GetDirectiveFactory<PromotionEntity>(PromotionEntity));
 }

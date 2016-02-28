@@ -34,6 +34,6 @@ var JudoShirt;
             return CategoriesRequestHandler;
         })();
         Services.CategoriesRequestHandler = CategoriesRequestHandler;
-        JudoShirt.JudoShirtApp.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
+        JudoShirt.Init.Application.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
     })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
 })(JudoShirt || (JudoShirt = {}));

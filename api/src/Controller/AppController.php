@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  * Application Controller
@@ -37,6 +38,11 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+        
+       //  $this->viewBuilder()->layout('empty');
+        if(Configure::read('debug')){
+            $this->render('index');  
+        }
     }
     
     public function setJson($content){

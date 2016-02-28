@@ -33,5 +33,5 @@ module JudoShirt {
 
 		public controller = C_LangSelector;
 	}
-	JudoShirtApp.JudoShirtApp.directive(LangSelector.Name, JudoShirtApp.Application.GetDirectiveFactory<LangSelector>(LangSelector));
+	JudoShirt.Init.Application.JudoShirtApp.directive(LangSelector.Name, JudoShirtApp.Application.GetDirectiveFactory<LangSelector>(LangSelector));
 }
