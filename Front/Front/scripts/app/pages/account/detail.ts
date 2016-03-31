@@ -1,5 +1,5 @@
 
-module JudoShirt {
+module MartialShirt {
 	'use strict';
 
 	/**
@@ -27,5 +27,5 @@ module JudoShirt {
 			$scope.vm = this;
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.controller(PageDetail.Name, PageDetail);
+	MartialShirt.Init.Application.MartialShirtApp.controller(PageDetail.Name, PageDetail);
 }

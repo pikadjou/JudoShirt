@@ -1,7 +1,7 @@
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Designer extends JudoShirt.Init.AbstractModule {
+	export class C_Designer extends MartialShirt.Init.AbstractModule {
 
 		public customid: number = 0;
 		public url = "";
@@ -48,5 +48,5 @@ module JudoShirt {
 
 		public controller = C_Designer;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Designer.Name, JudoShirtApp.Application.GetDirectiveFactory<Designer>(Designer));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Designer.Name, MartialShirtApp.Application.GetDirectiveFactory<Designer>(Designer));
 }

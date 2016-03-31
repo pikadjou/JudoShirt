@@ -1,8 +1,8 @@
 
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Print extends JudoShirt.Init.AbstractModule {
+	export class C_Print extends MartialShirt.Init.AbstractModule {
 		
 		public printList: Services.Entity.Print[] = [];
 
@@ -47,5 +47,5 @@ module JudoShirt {
 
 		public controller = C_Print;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Print.Name, JudoShirtApp.Application.GetDirectiveFactory<Print>(Print));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Print.Name, MartialShirtApp.Application.GetDirectiveFactory<Print>(Print));
 }

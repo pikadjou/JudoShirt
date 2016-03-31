@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageContact = (function () {
         function PageContact($scope) {
@@ -12,6 +12,6 @@ var JudoShirt;
         ];
         return PageContact;
     })();
-    JudoShirt.PageContact = PageContact;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageContact.Name, PageContact);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageContact = PageContact;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageContact.Name, PageContact);
+})(MartialShirt || (MartialShirt = {}));

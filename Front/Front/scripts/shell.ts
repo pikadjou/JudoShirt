@@ -1,24 +1,17 @@
 /// <reference path='_all.ts' />
 
 /**
- * The main JudoShirt app module.
+ * The main MartialShirt app module.
  *
  * @type {angular.Module}
  */
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class Config {
-		public static Maintenance = false; 
+	export class MartialShirtApp {
 
-		public static subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
-		public static orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
-		public static detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
-	}
-	export class JudoShirtApp {
-
-		//static JudoShirtApp: angular.IModule = JudoShirt.Init.Application.JudoShirtApp;
-		static Application = JudoShirt.Init.Application.getInstance();
+		//static MartialShirtApp: angular.IModule = MartialShirt.Init.Application.MartialShirtApp;
+		static Application = MartialShirt.Init.Application.getInstance();
 
 		static init() {
 
@@ -32,10 +25,10 @@ module JudoShirt {
 				}
 			}
 
-			var injector = angular.injector(['ng', 'JudoShirt']);
+			var injector = angular.injector(['ng', 'MartialShirt']);
 			var LoginService = injector.get('LoginService');
 
-			JudoShirt.Init.Application.JudoShirtApp.config([
+			MartialShirt.Init.Application.MartialShirtApp.config([
 				<any>'$routeProvider',
 				<any>'$locationProvider',
 				<any>'$httpProvider',
@@ -127,5 +120,5 @@ module JudoShirt {
 		}
 	}
 
-	JudoShirtApp.init();
+	MartialShirtApp.init();
 }

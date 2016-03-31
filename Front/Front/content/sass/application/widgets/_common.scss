@@ -23,8 +23,11 @@
 				margin: 2px;
 			}
 			.article__content{
+				.design{
+					text-align: center;
+				}
 				.category{
-					display: block;
+					display: inline-block;
 					text-align: right;
 
 					font-size: rem-calc(12);

@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -10,13 +10,13 @@ var JudoShirt;
                 this.addEvents();
             }
             UsersRequestHandler.prototype.Login = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("POST", "Login", this.controller, "Login", request));
+                return this.server.request(new MartialShirt.Services.Request("POST", "Login", this.controller, "Login", request));
             };
             UsersRequestHandler.prototype.Session = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
+                return this.server.request(new MartialShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
             };
             UsersRequestHandler.prototype.GetDetails = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
+                return this.server.request(new MartialShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
             };
             UsersRequestHandler.prototype.addEvents = function () {
                 this.GetLoginMethodesReveived = new signals.Signal();
@@ -55,6 +55,6 @@ var JudoShirt;
             return UsersRequestHandler;
         })();
         Services.UsersRequestHandler = UsersRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

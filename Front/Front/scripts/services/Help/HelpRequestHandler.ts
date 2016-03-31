@@ -1,5 +1,5 @@
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     /**
@@ -13,13 +13,13 @@ module JudoShirt.Services {
 		public SendContactReceived: Signal;
 		public controller = "help";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public SendContact(request: Services.HelpClass.SendContactRequest): string {
-			return this.server.request(new JudoShirt.Services.Request("POST", "SendContactRequest", this.controller, "contact", request));
+			return this.server.request(new MartialShirt.Services.Request("POST", "SendContactRequest", this.controller, "contact", request));
 		}
 
 		private addEvents(): void {
@@ -43,5 +43,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
 }

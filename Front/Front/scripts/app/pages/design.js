@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageDesign = (function () {
         function PageDesign($scope, $routeParams) {
@@ -15,6 +15,6 @@ var JudoShirt;
         ];
         return PageDesign;
     })();
-    JudoShirt.PageDesign = PageDesign;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageDesign.Name, PageDesign);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageDesign = PageDesign;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageDesign.Name, PageDesign);
+})(MartialShirt || (MartialShirt = {}));

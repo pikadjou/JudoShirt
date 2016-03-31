@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../typing/signal.d.ts" />
-module JudoShirt.Init {
+module MartialShirt.Init {
     'use strict';
 	export class Signals {
 		/********************************************/

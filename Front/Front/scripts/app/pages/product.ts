@@ -1,5 +1,5 @@
 
-module JudoShirt {
+module MartialShirt {
 	'use strict';
 
 	/**
@@ -7,7 +7,7 @@ module JudoShirt {
 	 * - retrieves and persists the model via the todoStorage service
 	 * - exposes the model to the template and provides event handlers
 	 */
-	export class PageProduct extends JudoShirt.Init.AbstractModule{
+	export class PageProduct extends MartialShirt.Init.AbstractModule{
 		public static Name = "PageProduct";
 		
 		public id: number = 0;
@@ -31,5 +31,5 @@ module JudoShirt {
 			this.id = $routeParams.id || 0;
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.controller(PageProduct.Name, PageProduct);
+	MartialShirt.Init.Application.MartialShirtApp.controller(PageProduct.Name, PageProduct);
 }

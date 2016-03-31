@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Basket = (function () {
         function C_Basket($scope, $sce) {
@@ -26,7 +26,7 @@ var JudoShirt;
         ];
         return C_Basket;
     })();
-    JudoShirt.C_Basket = C_Basket;
+    MartialShirt.C_Basket = C_Basket;
     var Basket = (function () {
         function Basket() {
             this.templateUrl = "/scripts/app/modules/basket.html";
@@ -41,6 +41,6 @@ var JudoShirt;
         Basket.$inject = [];
         return Basket;
     })();
-    JudoShirt.Basket = Basket;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Basket.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Basket));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Basket = Basket;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Basket.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Basket));
+})(MartialShirt || (MartialShirt = {}));

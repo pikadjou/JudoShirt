@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -9,7 +9,7 @@ var JudoShirt;
                 this.RH = RH;
                 this.authenticatedSignal = new signals.Signal();
                 this.unauthenticatedSignal = new signals.Signal();
-                this.Application = JudoShirt.Init.Application.getInstance();
+                this.Application = MartialShirt.Init.Application.getInstance();
                 this._token = "";
                 this._authenticated = false;
                 this.user = null;
@@ -109,6 +109,6 @@ var JudoShirt;
             return Login;
         })();
         Services.Login = Login;
-        JudoShirt.Init.Application.JudoShirtApp.service(Login.Name, Login);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(Login.Name, Login);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

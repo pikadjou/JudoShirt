@@ -1,8 +1,8 @@
-﻿module JudoShirt {
+﻿module MartialShirt {
     'use strict';
 
 	
-	export class C_WidgetAccount extends JudoShirt.Init.AbstractModule {
+	export class C_WidgetAccount extends MartialShirt.Init.AbstractModule {
 		
 		public baseId: string = 'accountShop';
 		public methodesList = [];
@@ -32,7 +32,7 @@
 				baseId: this.baseId
 			};
 			//set shop
-			JudoShirtApp.Application.addShopConfiguration(config, true);
+			MartialShirtApp.Application.addShopConfiguration(config, true);
 
 			this._login.addErrorHandler(this.errorLogin);
 		}
@@ -56,7 +56,7 @@
 				baseId: this.baseId
 			};
 			//set shop
-			JudoShirtApp.Application.addShopConfiguration(config, true);
+			MartialShirtApp.Application.addShopConfiguration(config, true);
 		}
 		public submit() {
 			var valide = true;
@@ -106,5 +106,5 @@
 
 		public controller = C_WidgetAccount ;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(WidgetAccount.Name, JudoShirtApp.Application.GetDirectiveFactory<WidgetAccount>(WidgetAccount));
+	MartialShirt.Init.Application.MartialShirtApp.directive(WidgetAccount.Name, MartialShirtApp.Application.GetDirectiveFactory<WidgetAccount>(WidgetAccount));
 }

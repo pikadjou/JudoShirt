@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageCategory = (function () {
         function PageCategory($scope, $routeParams) {
@@ -15,6 +15,6 @@ var JudoShirt;
         ];
         return PageCategory;
     })();
-    JudoShirt.PageCategory = PageCategory;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageCategory.Name, PageCategory);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageCategory = PageCategory;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageCategory.Name, PageCategory);
+})(MartialShirt || (MartialShirt = {}));

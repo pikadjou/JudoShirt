@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageBasket = (function () {
         function PageBasket($scope) {
@@ -12,6 +12,6 @@ var JudoShirt;
         ];
         return PageBasket;
     })();
-    JudoShirt.PageBasket = PageBasket;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageBasket.Name, PageBasket);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageBasket = PageBasket;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageBasket.Name, PageBasket);
+})(MartialShirt || (MartialShirt = {}));

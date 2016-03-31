@@ -1,21 +1,21 @@
 ﻿<div class="article__widget">
-	<h5 class="article__title">
+	<h4 class="article__title">
 		<a href="/design/{{vm.design.shopId}}">
 			{{vm.design.name}}
 		</a>
-	</h5>
+	</h4>
 	<div class="article__content">
 		<div class="row collapse">
-			<div class="small-6 columns">
+			<div class="small-8 columns design">
 				<a href="/design/{{vm.design.shopId}}">
 					<img ng-src="{{vm.design.thumbnail}}" />
 				</a>
 			</div>
-			<div class="small-6 columns">
+			<div class="small-12 columns">
 				<span class="category" ng-repeat="category in vm.design.categories">
 					<a href="/category/{{category.id}}">
 						{{category.name}}
-						<i class="fa fa-chevron-right"></i>
+						<i class="">|</i>
 					</a>
 				</span>
 			</div>

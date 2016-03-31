@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageSubscription = (function () {
         function PageSubscription($scope, $sce) {
@@ -14,6 +14,6 @@ var JudoShirt;
         ];
         return PageSubscription;
     })();
-    JudoShirt.PageSubscription = PageSubscription;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageSubscription.Name, PageSubscription);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageSubscription = PageSubscription;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageSubscription.Name, PageSubscription);
+})(MartialShirt || (MartialShirt = {}));

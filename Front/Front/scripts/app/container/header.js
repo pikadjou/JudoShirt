@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Container;
     (function (Container) {
         'use strict';
@@ -28,6 +28,6 @@ var JudoShirt;
             return Header;
         })();
         Container.Header = Header;
-        JudoShirt.Init.Application.JudoShirtApp.directive(Header.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Header));
-    })(Container = JudoShirt.Container || (JudoShirt.Container = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.directive(Header.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Header));
+    })(Container = MartialShirt.Container || (MartialShirt.Container = {}));
+})(MartialShirt || (MartialShirt = {}));

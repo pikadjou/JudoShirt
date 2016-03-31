@@ -1,12 +1,12 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
         var Server = (function () {
             function Server($http) {
                 this.$http = $http;
-                this.urlApi = "http://judoshirt-api.mangelavie.org";
+                this.urlApi = MartialShirt.Config.UrlApi;
                 this.urlExtension = ".json";
                 this.packetReceived = new signals.Signal();
             }
@@ -55,11 +55,11 @@ var JudoShirt;
             return Server;
         })();
         Services.Server = Server;
-        JudoShirt.Init.Application.JudoShirtApp.service("Server", Server);
+        MartialShirt.Init.Application.MartialShirtApp.service("Server", Server);
         var Request = (function () {
             function Request(type, identifier, controller, view, content) {
                 this.Type = type;
-                this.Id = JudoShirt.Init.Application.NewGuid();
+                this.Id = MartialShirt.Init.Application.NewGuid();
                 this.Identifier = identifier;
                 this.Controller = controller;
                 this.View = view;
@@ -68,5 +68,5 @@ var JudoShirt;
             return Request;
         })();
         Services.Request = Request;
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

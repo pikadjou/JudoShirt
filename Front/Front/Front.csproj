@@ -949,6 +949,7 @@
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
     <TypeScriptCompile Include="scripts\tools\Signals.ts" />
     <TypeScriptCompile Include="scripts\_all.ts" />
+    <TypeScriptCompile Include="config.ts" />
     <TypeScriptCompile Include="typing\angular-route.d.ts" />
     <TypeScriptCompile Include="typing\angular.d.ts" />
     <TypeScriptCompile Include="typing\jquery.d.ts" />

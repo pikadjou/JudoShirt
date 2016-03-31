@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_PromotionEntity = (function (_super) {
         __extends(C_PromotionEntity, _super);
@@ -39,7 +39,7 @@ var JudoShirt;
             };
             this.init($scope);
             this.RH.GetPromotionReceived.add(this.onPacketRecieved, this);
-            var request = new JudoShirt.Services.PromotionsClass.GetPromotionRequest();
+            var request = new MartialShirt.Services.PromotionsClass.GetPromotionRequest();
             request.slug = this.promotionslug;
             this.RH.GetPromotion(request);
         }
@@ -49,11 +49,11 @@ var JudoShirt;
         C_PromotionEntity.$inject = [
             '$scope',
             '$location',
-            JudoShirt.Services.PromotionsRequestHandler.Name
+            MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_PromotionEntity;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_PromotionEntity = C_PromotionEntity;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_PromotionEntity = C_PromotionEntity;
     var PromotionEntity = (function () {
         function PromotionEntity() {
             this.templateUrl = "/scripts/app/modules/promotions/entity.html";
@@ -68,6 +68,6 @@ var JudoShirt;
         PromotionEntity.$inject = [];
         return PromotionEntity;
     })();
-    JudoShirt.PromotionEntity = PromotionEntity;
-    JudoShirt.Init.Application.JudoShirtApp.directive(PromotionEntity.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionEntity));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PromotionEntity = PromotionEntity;
+    MartialShirt.Init.Application.MartialShirtApp.directive(PromotionEntity.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionEntity));
+})(MartialShirt || (MartialShirt = {}));

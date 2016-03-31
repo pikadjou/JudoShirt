@@ -1,6 +1,6 @@
 ﻿///#source 1 1 /scripts/services/Categories/CategoriesRequestHandler.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -11,7 +11,7 @@ var JudoShirt;
                 this.addEvents();
             }
             CategoriesRequestHandler.prototype.GetCategories = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
             };
             CategoriesRequestHandler.prototype.addEvents = function () {
                 this.GetCategoriesReceived = new signals.Signal();
@@ -35,14 +35,14 @@ var JudoShirt;
             return CategoriesRequestHandler;
         })();
         Services.CategoriesRequestHandler = CategoriesRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Designs/DesignsRequestHandler.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -54,23 +54,23 @@ var JudoShirt;
             }
             DesignsRequestHandler.prototype.GetDesign = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
             };
             DesignsRequestHandler.prototype.GetDesigns = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
             };
             DesignsRequestHandler.prototype.GetTopDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));
             };
             DesignsRequestHandler.prototype.GetNewDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getNewDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getNewDesigns", request));
             };
             DesignsRequestHandler.prototype.GetPromoDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getPromoDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getPromoDesigns", request));
             };
             DesignsRequestHandler.prototype.GetFeaturedDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
             };
             DesignsRequestHandler.prototype.addEvents = function () {
                 this.GetDesignReceived = new signals.Signal();
@@ -119,14 +119,14 @@ var JudoShirt;
             return DesignsRequestHandler;
         })();
         Services.DesignsRequestHandler = DesignsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Products/ProductsRequestHandler.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -138,11 +138,11 @@ var JudoShirt;
             }
             ProductsRequestHandler.prototype.GetProducts = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
             };
             ProductsRequestHandler.prototype.GetProduct = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
             };
             ProductsRequestHandler.prototype.addEvents = function () {
                 this.GetProductsReceived = new signals.Signal();
@@ -171,14 +171,14 @@ var JudoShirt;
             return ProductsRequestHandler;
         })();
         Services.ProductsRequestHandler = ProductsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Prints/PrintsRequestHandler.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -190,7 +190,7 @@ var JudoShirt;
             }
             PrintsRequestHandler.prototype.GetPrints = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetPrints", this.controller, "getPrints", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetPrints", this.controller, "getPrints", request));
             };
             PrintsRequestHandler.prototype.addEvents = function () {
                 this.GetPrintsReceived = new signals.Signal();
@@ -214,13 +214,13 @@ var JudoShirt;
             return PrintsRequestHandler;
         })();
         Services.PrintsRequestHandler = PrintsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Promotions/PromotionsClass.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         var PromotionsClass;
@@ -244,12 +244,12 @@ var JudoShirt;
             })();
             PromotionsClass.GetPromotionResponse = GetPromotionResponse;
         })(PromotionsClass = Services.PromotionsClass || (Services.PromotionsClass = {}));
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Promotions/PromotionsRequestHandler.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -260,15 +260,15 @@ var JudoShirt;
                 this.addEvents();
             }
             PromotionsRequestHandler.prototype.GetPromotionsActive = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
             };
             PromotionsRequestHandler.prototype.GetSlide = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
             };
             PromotionsRequestHandler.prototype.GetPromotion = function (request) {
                 var array = [];
                 array.push(request.slug);
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
             };
             PromotionsRequestHandler.prototype.addEvents = function () {
                 this.GetPromotionsActiveReceived = new signals.Signal();
@@ -297,13 +297,13 @@ var JudoShirt;
             return PromotionsRequestHandler;
         })();
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Help/HelpClass.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         var HelpClass;
@@ -315,12 +315,12 @@ var JudoShirt;
             })();
             HelpClass.SendContactRequest = SendContactRequest;
         })(HelpClass = Services.HelpClass || (Services.HelpClass = {}));
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Help/HelpRequestHandler.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -331,7 +331,7 @@ var JudoShirt;
                 this.addEvents();
             }
             HelpRequestHandler.prototype.SendContact = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("POST", "SendContactRequest", this.controller, "contact", request));
+                return this.server.request(new MartialShirt.Services.Request("POST", "SendContactRequest", this.controller, "contact", request));
             };
             HelpRequestHandler.prototype.addEvents = function () {
                 this.SendContactReceived = new signals.Signal();
@@ -355,13 +355,13 @@ var JudoShirt;
             return HelpRequestHandler;
         })();
         Services.HelpRequestHandler = HelpRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Users/UsersClass.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         var UsersClass;
@@ -385,12 +385,12 @@ var JudoShirt;
             })();
             UsersClass.LoginRequest = LoginRequest;
         })(UsersClass = Services.UsersClass || (Services.UsersClass = {}));
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Users/UsersRequestHandler.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -401,13 +401,13 @@ var JudoShirt;
                 this.addEvents();
             }
             UsersRequestHandler.prototype.Login = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("POST", "Login", this.controller, "Login", request));
+                return this.server.request(new MartialShirt.Services.Request("POST", "Login", this.controller, "Login", request));
             };
             UsersRequestHandler.prototype.Session = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
+                return this.server.request(new MartialShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
             };
             UsersRequestHandler.prototype.GetDetails = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
+                return this.server.request(new MartialShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
             };
             UsersRequestHandler.prototype.addEvents = function () {
                 this.GetLoginMethodesReveived = new signals.Signal();
@@ -446,13 +446,13 @@ var JudoShirt;
             return UsersRequestHandler;
         })();
         Services.UsersRequestHandler = UsersRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/LoginService.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -462,7 +462,7 @@ var JudoShirt;
                 this.RH = RH;
                 this.authenticatedSignal = new signals.Signal();
                 this.unauthenticatedSignal = new signals.Signal();
-                this.Application = JudoShirt.Init.Application.getInstance();
+                this.Application = MartialShirt.Init.Application.getInstance();
                 this._token = "";
                 this._authenticated = false;
                 this.user = null;
@@ -562,7 +562,7 @@ var JudoShirt;
             return Login;
         })();
         Services.Login = Login;
-        JudoShirt.Init.Application.JudoShirtApp.service(Login.Name, Login);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(Login.Name, Login);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
 

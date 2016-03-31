@@ -1,9 +1,9 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Product extends JudoShirt.Init.AbstractModule {
+	export class C_Product extends MartialShirt.Init.AbstractModule {
 		
 		public productid: number = 0;
 		public product: Services.Entity.Product = null;
@@ -33,7 +33,7 @@ module JudoShirt {
 			var config = {
 				baseId: 'productShop'
 			};
-			JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
+			MartialShirtApp.Application.addShopConfiguration(config, false, true, true);
 		}
 
 		public onPacketRecieved(response: any) {
@@ -56,5 +56,5 @@ module JudoShirt {
 
 		public controller = C_Product;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Product.Name, JudoShirtApp.Application.GetDirectiveFactory<Product>(Product));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Product.Name, MartialShirtApp.Application.GetDirectiveFactory<Product>(Product));
 }

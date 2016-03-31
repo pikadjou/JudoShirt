@@ -1,5 +1,5 @@
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     /**
@@ -23,7 +23,7 @@ module JudoShirt.Services {
 		public authenticatedSignal = new signals.Signal();
 		public unauthenticatedSignal = new signals.Signal();
 
-		public Application = JudoShirt.Init.Application.getInstance();
+		public Application = MartialShirt.Init.Application.getInstance();
 		
 		private _token: string = "";
 		private _authenticated: boolean = false;
@@ -32,7 +32,7 @@ module JudoShirt.Services {
 		public errorHandler = [];
 
 		constructor(
-			private server: JudoShirt.Services.Server,
+			private server: MartialShirt.Services.Server,
 			private RH: Services.UsersRequestHandler
 			) {
 			Login.uniqueInstance = this;
@@ -129,5 +129,5 @@ module JudoShirt.Services {
 			}
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.service(Login.Name, Login);
+	MartialShirt.Init.Application.MartialShirtApp.service(Login.Name, Login);
 }

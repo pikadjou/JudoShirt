@@ -1,5 +1,5 @@
 
-module JudoShirt {
+module MartialShirt {
 	'use strict';
 
 	/**
@@ -7,7 +7,7 @@ module JudoShirt {
 	 * - retrieves and persists the model via the todoStorage service
 	 * - exposes the model to the template and provides event handlers
 	 */
-	export class PageCustom extends JudoShirt.Init.AbstractModule{
+	export class PageCustom extends MartialShirt.Init.AbstractModule{
 		public static Name = "PageCustom";
 		// $inject annotation.
 		// It provides $injector with information about dependencies to be injected into constructor
@@ -32,5 +32,5 @@ module JudoShirt {
 			this.id = $routeParams.id || 0;
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.controller(PageCustom.Name, PageCustom);
+	MartialShirt.Init.Application.MartialShirtApp.controller(PageCustom.Name, PageCustom);
 }

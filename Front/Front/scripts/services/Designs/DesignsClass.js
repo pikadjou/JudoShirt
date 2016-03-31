@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         var DesignsClass;
@@ -11,5 +11,5 @@ var JudoShirt;
             })();
             DesignsClass.GetDesignsResponse = GetDesignsResponse;
         })(DesignsClass = Services.DesignsClass || (Services.DesignsClass = {}));
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

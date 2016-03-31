@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -10,7 +10,7 @@ var JudoShirt;
                 this.addEvents();
             }
             HelpRequestHandler.prototype.SendContact = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("POST", "SendContactRequest", this.controller, "contact", request));
+                return this.server.request(new MartialShirt.Services.Request("POST", "SendContactRequest", this.controller, "contact", request));
             };
             HelpRequestHandler.prototype.addEvents = function () {
                 this.SendContactReceived = new signals.Signal();
@@ -34,6 +34,6 @@ var JudoShirt;
             return HelpRequestHandler;
         })();
         Services.HelpRequestHandler = HelpRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

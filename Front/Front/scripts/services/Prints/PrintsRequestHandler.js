@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -12,7 +12,7 @@ var JudoShirt;
             }
             PrintsRequestHandler.prototype.GetPrints = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetPrints", this.controller, "getPrints", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetPrints", this.controller, "getPrints", request));
             };
             PrintsRequestHandler.prototype.addEvents = function () {
                 this.GetPrintsReceived = new signals.Signal();
@@ -36,6 +36,6 @@ var JudoShirt;
             return PrintsRequestHandler;
         })();
         Services.PrintsRequestHandler = PrintsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

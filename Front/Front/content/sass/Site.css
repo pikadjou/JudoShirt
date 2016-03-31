@@ -3291,8 +3291,12 @@ iframe {
   margin: 2px;
 }
 
+.widget__container .widget__content .article__widget .article__content .design {
+  text-align: center;
+}
+
 .widget__container .widget__content .article__widget .article__content .category {
-  display: block;
+  display: inline-block;
   text-align: right;
   font-size: 0.75rem;
 }

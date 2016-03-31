@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Init;
     (function (Init) {
         'use strict';
@@ -64,12 +64,12 @@ var JudoShirt;
                         element.attr("id", "shop");
                         if (config.changeBasketCount) {
                             $(element).on('DOMSubtreeModified', "#basketCountText", function () {
-                                JudoShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
+                                MartialShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
                             });
                         }
                         if (config.changeWishCount) {
                             $(element).on('DOMSubtreeModified', "#wishlistCountText", function () {
-                                JudoShirt.Init.Signals.getInstance().changeWishCount.dispatch();
+                                MartialShirt.Init.Signals.getInstance().changeWishCount.dispatch();
                             });
                         }
                         if (config.light === true) {
@@ -110,12 +110,12 @@ var JudoShirt;
             Application.prototype.removeCookie = function (cName) {
                 this.setCookie(cName, "", -1);
             };
-            Application.JudoShirtApp = angular.module('JudoShirt', ['ngRoute']);
+            Application.MartialShirtApp = angular.module('MartialShirt', ['ngRoute']);
             return Application;
         })();
         Init.Application = Application;
-    })(Init = JudoShirt.Init || (JudoShirt.Init = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
+})(MartialShirt || (MartialShirt = {}));
 var translationArray = new Array();
 translationArray['day-of-week-0'] = 'Dimanche';
 translationArray['day-of-week-1'] = 'Lundi';

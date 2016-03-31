@@ -1,5 +1,5 @@
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     /**
@@ -15,21 +15,21 @@ module JudoShirt.Services {
 
 		public controller = "promotions";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public GetPromotionsActive(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
 		}
 		public GetSlide(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
 		}
 		public GetPromotion(request: Services.PromotionsClass.GetPromotionRequest): string {
 			var array = [];
 			array.push(request.slug);
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
 		}
 
 		private addEvents(): void {
@@ -58,5 +58,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
 }

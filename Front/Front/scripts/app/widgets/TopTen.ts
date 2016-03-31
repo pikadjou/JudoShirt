@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
 	export class C_WidgetTopTen {
@@ -44,5 +44,5 @@ module JudoShirt {
 
 		public controller = C_WidgetTopTen;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(WidgetTopTen.Name, JudoShirtApp.Application.GetDirectiveFactory<WidgetTopTen>(WidgetTopTen));
+	MartialShirt.Init.Application.MartialShirtApp.directive(WidgetTopTen.Name, MartialShirtApp.Application.GetDirectiveFactory<WidgetTopTen>(WidgetTopTen));
 }

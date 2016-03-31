@@ -1,13 +1,13 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Init;
     (function (Init) {
         'use strict';
         var AbstractModule = (function () {
             function AbstractModule() {
-                this._signal = JudoShirt.Init.Signals.getInstance();
-                this._application = JudoShirt.Init.Application.getInstance();
-                this._login = JudoShirt.Services.Login.getInstance();
+                this._signal = MartialShirt.Init.Signals.getInstance();
+                this._application = MartialShirt.Init.Application.getInstance();
+                this._login = MartialShirt.Services.Login.getInstance();
                 this.CoreLib = CoreLib;
                 this.isAuthenticated = false;
                 if (this._login.isAuthenticated()) {
@@ -33,5 +33,5 @@ var JudoShirt;
             return AbstractModule;
         })();
         Init.AbstractModule = AbstractModule;
-    })(Init = JudoShirt.Init || (JudoShirt.Init = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
+})(MartialShirt || (MartialShirt = {}));

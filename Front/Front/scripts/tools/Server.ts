@@ -1,4 +1,4 @@
-﻿module JudoShirt.Services {
+﻿module MartialShirt.Services {
 	'use strict';
 
 	export class Server {
@@ -16,7 +16,7 @@
 			return this.uniqueInstance;
 		}
 
-		public urlApi = "http://judoshirt-api.mangelavie.org";
+		public urlApi = Config.UrlApi;
 		public urlExtension = ".json";
 		/* signals */
 		public packetReceived: Signal = new signals.Signal();
@@ -71,7 +71,7 @@
 			
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.service("Server", Server);
+	MartialShirt.Init.Application.MartialShirtApp.service("Server", Server);
 
 	export class Request {
 		public Type: string;
@@ -83,7 +83,7 @@
 
 		constructor(type: string, identifier: string, controller: string, view: string, content: any) {
 			this.Type = type;
-			this.Id = JudoShirt.Init.Application.NewGuid();
+			this.Id = MartialShirt.Init.Application.NewGuid();
 			this.Identifier = identifier;
 			this.Controller = controller;
 			this.View = view;

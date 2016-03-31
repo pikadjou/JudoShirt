@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt.Container {
+module MartialShirt.Container {
     'use strict';
 
 	export class C_Header {
@@ -33,5 +33,5 @@ module JudoShirt.Container {
 
 		public controller = C_Header;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Header.Name, JudoShirtApp.Application.GetDirectiveFactory<Header>(Header));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Header.Name, MartialShirtApp.Application.GetDirectiveFactory<Header>(Header));
 }

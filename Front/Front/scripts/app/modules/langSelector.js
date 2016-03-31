@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_LangSelector = (function () {
         function C_LangSelector($scope) {
@@ -9,11 +9,11 @@ var JudoShirt;
         }
         C_LangSelector.$inject = [
             '$scope',
-            JudoShirt.Services.CategoriesRequestHandler.Name
+            MartialShirt.Services.CategoriesRequestHandler.Name
         ];
         return C_LangSelector;
     })();
-    JudoShirt.C_LangSelector = C_LangSelector;
+    MartialShirt.C_LangSelector = C_LangSelector;
     var LangSelector = (function () {
         function LangSelector() {
             this.templateUrl = "/scripts/app/modules/langSelector.html";
@@ -26,6 +26,6 @@ var JudoShirt;
         LangSelector.$inject = [];
         return LangSelector;
     })();
-    JudoShirt.LangSelector = LangSelector;
-    JudoShirt.Init.Application.JudoShirtApp.directive(LangSelector.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(LangSelector));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.LangSelector = LangSelector;
+    MartialShirt.Init.Application.MartialShirtApp.directive(LangSelector.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(LangSelector));
+})(MartialShirt || (MartialShirt = {}));

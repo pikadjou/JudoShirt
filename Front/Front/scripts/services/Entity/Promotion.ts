@@ -1,4 +1,4 @@
-﻿module JudoShirt.Services.Entity {
+﻿module MartialShirt.Services.Entity {
 	export class Promotion {
 		public id: number;
 		public name: string;

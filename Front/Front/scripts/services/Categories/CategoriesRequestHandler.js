@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -10,7 +10,7 @@ var JudoShirt;
                 this.addEvents();
             }
             CategoriesRequestHandler.prototype.GetCategories = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
             };
             CategoriesRequestHandler.prototype.addEvents = function () {
                 this.GetCategoriesReceived = new signals.Signal();
@@ -34,6 +34,6 @@ var JudoShirt;
             return CategoriesRequestHandler;
         })();
         Services.CategoriesRequestHandler = CategoriesRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

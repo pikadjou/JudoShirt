@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
 	export class C_LangSelector {
@@ -33,5 +33,5 @@ module JudoShirt {
 
 		public controller = C_LangSelector;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(LangSelector.Name, JudoShirtApp.Application.GetDirectiveFactory<LangSelector>(LangSelector));
+	MartialShirt.Init.Application.MartialShirtApp.directive(LangSelector.Name, MartialShirtApp.Application.GetDirectiveFactory<LangSelector>(LangSelector));
 }

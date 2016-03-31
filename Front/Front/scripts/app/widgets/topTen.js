@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetTopTen = (function () {
         function C_WidgetTopTen($scope, RH) {
@@ -16,11 +16,11 @@ var JudoShirt;
         };
         C_WidgetTopTen.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_WidgetTopTen;
     })();
-    JudoShirt.C_WidgetTopTen = C_WidgetTopTen;
+    MartialShirt.C_WidgetTopTen = C_WidgetTopTen;
     var WidgetTopTen = (function () {
         function WidgetTopTen() {
             this.templateUrl = "/scripts/app/widgets/topTen.html";
@@ -33,6 +33,6 @@ var JudoShirt;
         WidgetTopTen.$inject = [];
         return WidgetTopTen;
     })();
-    JudoShirt.WidgetTopTen = WidgetTopTen;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetTopTen.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetTopTen));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetTopTen = WidgetTopTen;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetTopTen.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetTopTen));
+})(MartialShirt || (MartialShirt = {}));

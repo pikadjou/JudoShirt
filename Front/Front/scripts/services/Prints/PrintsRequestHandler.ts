@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     export class PrintsRequestHandler {
@@ -12,13 +12,13 @@ module JudoShirt.Services {
 
 		public controller = "prints";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public GetPrints(request: any = []): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetPrints", this.controller, "getPrints", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetPrints", this.controller, "getPrints", request));
 		}
 
 		private addEvents(): void {
@@ -41,5 +41,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
 }

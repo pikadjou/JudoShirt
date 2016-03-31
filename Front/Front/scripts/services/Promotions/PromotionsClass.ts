@@ -1,4 +1,4 @@
-﻿module JudoShirt.Services.PromotionsClass {
+﻿module MartialShirt.Services.PromotionsClass {
     export class GetPromotionsActiveResponse {
 		public promotions : Entity.Promotion[];
 		

@@ -1,5 +1,5 @@
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     /**
@@ -17,21 +17,21 @@ module JudoShirt.Services {
 
 		public controller = "users";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public Login(request: UsersClass.LoginRequest) {
-			return this.server.request(new JudoShirt.Services.Request("POST", "Login", this.controller, "Login", request));
+			return this.server.request(new MartialShirt.Services.Request("POST", "Login", this.controller, "Login", request));
 		}
 
 		public Session(request: string) {
-			return this.server.request(new JudoShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
+			return this.server.request(new MartialShirt.Services.Request("GET", "Session", this.controller, "Session", [request]));
 		}
 
 		public GetDetails(request: string) {
-			return this.server.request(new JudoShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
+			return this.server.request(new MartialShirt.Services.Request("GET", "Details", this.controller, "Details", [request]));
 		}
 
 		private addEvents(): void {
@@ -69,5 +69,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
 }

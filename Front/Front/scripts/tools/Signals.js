@@ -1,6 +1,6 @@
 /// <reference path="../../typing/signal.d.ts" />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Init;
     (function (Init) {
         'use strict';
@@ -19,5 +19,5 @@ var JudoShirt;
             return Signals;
         })();
         Init.Signals = Signals;
-    })(Init = JudoShirt.Init || (JudoShirt.Init = {}));
-})(JudoShirt || (JudoShirt = {}));
+    })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
+})(MartialShirt || (MartialShirt = {}));

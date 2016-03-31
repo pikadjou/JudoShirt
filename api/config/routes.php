@@ -54,6 +54,7 @@ Router::scope('/', function ($routes) {
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
+    
     /**
      * Connect catchall routes for all controllers.
      *

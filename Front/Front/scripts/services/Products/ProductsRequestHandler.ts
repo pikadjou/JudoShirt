@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     export class ProductsRequestHandler {
@@ -13,16 +13,16 @@ module JudoShirt.Services {
 
 		public controller = "products";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public GetProducts(request: any = []): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
 		}
 		public GetProduct(request: any = []): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
 		}
 
 		private addEvents(): void {
@@ -50,5 +50,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
 }

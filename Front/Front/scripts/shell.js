@@ -1,31 +1,21 @@
 /// <reference path='_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
-    var Config = (function () {
-        function Config() {
+    var MartialShirtApp = (function () {
+        function MartialShirtApp() {
         }
-        Config.Maintenance = false;
-        Config.subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
-        Config.orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
-        Config.detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
-        return Config;
-    })();
-    JudoShirt.Config = Config;
-    var JudoShirtApp = (function () {
-        function JudoShirtApp() {
-        }
-        JudoShirtApp.init = function () {
-            if (Config.Maintenance) {
+        MartialShirtApp.init = function () {
+            if (MartialShirt.Config.Maintenance) {
                 var indexMaintenance = window.location.href.indexOf("/maintenance");
                 if (indexMaintenance === -1) {
                     window.location.href = '/maintenance.html';
                     return;
                 }
             }
-            var injector = angular.injector(['ng', 'JudoShirt']);
+            var injector = angular.injector(['ng', 'MartialShirt']);
             var LoginService = injector.get('LoginService');
-            JudoShirt.Init.Application.JudoShirtApp.config([
+            MartialShirt.Init.Application.MartialShirtApp.config([
                 '$routeProvider',
                 '$locationProvider',
                 '$httpProvider',
@@ -85,9 +75,9 @@ var JudoShirt;
                 }
             ]);
         };
-        JudoShirtApp.Application = JudoShirt.Init.Application.getInstance();
-        return JudoShirtApp;
+        MartialShirtApp.Application = MartialShirt.Init.Application.getInstance();
+        return MartialShirtApp;
     })();
-    JudoShirt.JudoShirtApp = JudoShirtApp;
-    JudoShirtApp.init();
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.MartialShirtApp = MartialShirtApp;
+    MartialShirtApp.init();
+})(MartialShirt || (MartialShirt = {}));

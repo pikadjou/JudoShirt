@@ -1,4 +1,4 @@
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
 	export class C_TemplateArticleWidget {
@@ -37,5 +37,5 @@ module JudoShirt {
 
 		public controller = C_TemplateArticleWidget;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(TemplateArticleWidget.Name, JudoShirtApp.Application.GetDirectiveFactory<TemplateArticleWidget>(TemplateArticleWidget));
+	MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticleWidget.Name, MartialShirtApp.Application.GetDirectiveFactory<TemplateArticleWidget>(TemplateArticleWidget));
 }

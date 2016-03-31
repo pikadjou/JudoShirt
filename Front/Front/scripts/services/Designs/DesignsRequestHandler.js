@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -12,23 +12,23 @@ var JudoShirt;
             }
             DesignsRequestHandler.prototype.GetDesign = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
             };
             DesignsRequestHandler.prototype.GetDesigns = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
             };
             DesignsRequestHandler.prototype.GetTopDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));
             };
             DesignsRequestHandler.prototype.GetNewDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getNewDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getNewDesigns", request));
             };
             DesignsRequestHandler.prototype.GetPromoDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getPromoDesigns", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getPromoDesigns", request));
             };
             DesignsRequestHandler.prototype.GetFeaturedDesigns = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
             };
             DesignsRequestHandler.prototype.addEvents = function () {
                 this.GetDesignReceived = new signals.Signal();
@@ -77,6 +77,6 @@ var JudoShirt;
             return DesignsRequestHandler;
         })();
         Services.DesignsRequestHandler = DesignsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

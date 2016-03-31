@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Order = (function (_super) {
         __extends(C_Order, _super);
@@ -15,7 +15,7 @@ var JudoShirt;
             this.$scope = $scope;
             this.$sce = $sce;
             this.trustSrc = function (url) {
-                return _this.$sce.trustAsResourceUrl(JudoShirt.Config.orderLink);
+                return _this.$sce.trustAsResourceUrl(MartialShirt.Config.orderLink);
             };
             this.init($scope);
         }
@@ -30,8 +30,8 @@ var JudoShirt;
             '$sce'
         ];
         return C_Order;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Order = C_Order;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Order = C_Order;
     var Order = (function () {
         function Order() {
             this.templateUrl = "/scripts/app/modules/account/order.html";
@@ -44,6 +44,6 @@ var JudoShirt;
         Order.$inject = [];
         return Order;
     })();
-    JudoShirt.Order = Order;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Order.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Order));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Order = Order;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Order.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Order));
+})(MartialShirt || (MartialShirt = {}));

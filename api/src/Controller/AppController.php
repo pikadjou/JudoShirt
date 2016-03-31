@@ -39,12 +39,18 @@ class AppController extends Controller
     {
         parent::initialize();
         
-       //  $this->viewBuilder()->layout('empty');
+       // $this->viewBuilder()->layout('empty');
         if(Configure::read('debug')){
             $this->render('index');  
         }
     }
     
+    function beforeFilter() {
+        if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
+            $this->layout = 'admin';
+        }
+    }
+
     public function setJson($content){
         
         if($content === null){

@@ -1,5 +1,5 @@
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     /**
@@ -13,13 +13,13 @@ module JudoShirt.Services {
 		public GetCategoriesReceived: Signal;
 		public controller = "categories";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public GetCategories(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
 		}
 
 		private addEvents(): void {
@@ -43,5 +43,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
 }

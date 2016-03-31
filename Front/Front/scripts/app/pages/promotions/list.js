@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PagePromotionList = (function (_super) {
         __extends(PagePromotionList, _super);
@@ -21,7 +21,7 @@ var JudoShirt;
             '$routeParams'
         ];
         return PagePromotionList;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.PagePromotionList = PagePromotionList;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PagePromotionList.Name, PagePromotionList);
-})(JudoShirt || (JudoShirt = {}));
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.PagePromotionList = PagePromotionList;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PagePromotionList.Name, PagePromotionList);
+})(MartialShirt || (MartialShirt = {}));

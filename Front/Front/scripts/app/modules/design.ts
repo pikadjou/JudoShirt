@@ -1,7 +1,7 @@
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Design extends JudoShirt.Init.AbstractModule {
+	export class C_Design extends MartialShirt.Init.AbstractModule {
 		
 		public designid: number = 0;
 		public design: Services.Entity.Design = null;
@@ -137,5 +137,5 @@ module JudoShirt {
 
 		public controller = C_Design;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Design.Name, JudoShirtApp.Application.GetDirectiveFactory<Design>(Design));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Design.Name, MartialShirtApp.Application.GetDirectiveFactory<Design>(Design));
 }

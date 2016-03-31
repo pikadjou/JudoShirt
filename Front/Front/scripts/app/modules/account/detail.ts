@@ -1,7 +1,7 @@
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Detail extends JudoShirt.Init.AbstractModule {
+	export class C_Detail extends MartialShirt.Init.AbstractModule {
 		
 
 		public static $inject = [
@@ -60,5 +60,5 @@ module JudoShirt {
 
 		public controller = C_Detail;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Detail.Name, JudoShirtApp.Application.GetDirectiveFactory<Detail>(Detail));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Detail.Name, MartialShirtApp.Application.GetDirectiveFactory<Detail>(Detail));
 }

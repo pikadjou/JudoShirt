@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetAccount = (function (_super) {
         __extends(C_WidgetAccount, _super);
@@ -24,7 +24,7 @@ var JudoShirt;
                 var config = {
                     baseId: _this.baseId
                 };
-                JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
+                MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
             };
             this.errorLogin = function (message) {
                 _this._loader = false;
@@ -40,7 +40,7 @@ var JudoShirt;
             var config = {
                 baseId: this.baseId
             };
-            JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
+            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
             this._login.addErrorHandler(this.errorLogin);
         }
         C_WidgetAccount.prototype.Authenticated = function () {
@@ -77,8 +77,8 @@ var JudoShirt;
             '$scope'
         ];
         return C_WidgetAccount;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_WidgetAccount = C_WidgetAccount;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_WidgetAccount = C_WidgetAccount;
     var WidgetAccount = (function () {
         function WidgetAccount() {
             this.templateUrl = "/scripts/app/widgets/account.html";
@@ -91,6 +91,6 @@ var JudoShirt;
         WidgetAccount.$inject = [];
         return WidgetAccount;
     })();
-    JudoShirt.WidgetAccount = WidgetAccount;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetAccount.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetAccount));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetAccount = WidgetAccount;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetAccount.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetAccount));
+})(MartialShirt || (MartialShirt = {}));

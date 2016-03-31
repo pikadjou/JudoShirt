@@ -1,7 +1,7 @@
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Contact extends JudoShirt.Init.AbstractModule {
+	export class C_Contact extends MartialShirt.Init.AbstractModule {
 		
 		public form = { name: "", nickname: "", mail: "", message: "" };
 
@@ -54,5 +54,5 @@ module JudoShirt {
 
 		public controller = C_Contact;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Contact.Name, JudoShirtApp.Application.GetDirectiveFactory<Contact>(Contact));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Contact.Name, MartialShirtApp.Application.GetDirectiveFactory<Contact>(Contact));
 }

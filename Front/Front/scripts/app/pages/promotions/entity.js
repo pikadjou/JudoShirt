@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PagePromotionEntity = (function (_super) {
         __extends(PagePromotionEntity, _super);
@@ -23,7 +23,7 @@ var JudoShirt;
             '$routeParams'
         ];
         return PagePromotionEntity;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.PagePromotionEntity = PagePromotionEntity;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
-})(JudoShirt || (JudoShirt = {}));
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.PagePromotionEntity = PagePromotionEntity;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
+})(MartialShirt || (MartialShirt = {}));

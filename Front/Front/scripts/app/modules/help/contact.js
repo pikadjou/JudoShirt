@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Contact = (function (_super) {
         __extends(C_Contact, _super);
@@ -18,7 +18,7 @@ var JudoShirt;
             this.code = 0;
             this.message = "";
             this.submit = function () {
-                var request = new JudoShirt.Services.HelpClass.SendContactRequest();
+                var request = new MartialShirt.Services.HelpClass.SendContactRequest();
                 request.name = _this.form.name;
                 request.nickname = _this.form.nickname;
                 request.mail = _this.form.mail;
@@ -35,11 +35,11 @@ var JudoShirt;
         };
         C_Contact.$inject = [
             '$scope',
-            JudoShirt.Services.HelpRequestHandler.Name
+            MartialShirt.Services.HelpRequestHandler.Name
         ];
         return C_Contact;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Contact = C_Contact;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Contact = C_Contact;
     var Contact = (function () {
         function Contact() {
             this.templateUrl = "/scripts/app/modules/help/contact.html";
@@ -52,6 +52,6 @@ var JudoShirt;
         Contact.$inject = [];
         return Contact;
     })();
-    JudoShirt.Contact = Contact;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Contact.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Contact));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Contact = Contact;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Contact.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Contact));
+})(MartialShirt || (MartialShirt = {}));

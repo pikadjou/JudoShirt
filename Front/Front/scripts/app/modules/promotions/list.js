@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_PromotionList = (function (_super) {
         __extends(C_PromotionList, _super);
@@ -49,11 +49,11 @@ var JudoShirt;
         C_PromotionList.$inject = [
             '$scope',
             '$location',
-            JudoShirt.Services.PromotionsRequestHandler.Name
+            MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_PromotionList;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_PromotionList = C_PromotionList;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_PromotionList = C_PromotionList;
     var PromotionList = (function () {
         function PromotionList() {
             this.templateUrl = "/scripts/app/modules/promotions/list.html";
@@ -66,6 +66,6 @@ var JudoShirt;
         PromotionList.$inject = [];
         return PromotionList;
     })();
-    JudoShirt.PromotionList = PromotionList;
-    JudoShirt.Init.Application.JudoShirtApp.directive(PromotionList.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionList));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PromotionList = PromotionList;
+    MartialShirt.Init.Application.MartialShirtApp.directive(PromotionList.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionList));
+})(MartialShirt || (MartialShirt = {}));

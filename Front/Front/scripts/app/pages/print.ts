@@ -1,5 +1,5 @@
 
-module JudoShirt {
+module MartialShirt {
 	'use strict';
 
 	/**
@@ -30,5 +30,5 @@ module JudoShirt {
 
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.controller(PagePrint.Name, PagePrint);
+	MartialShirt.Init.Application.MartialShirtApp.controller(PagePrint.Name, PagePrint);
 }

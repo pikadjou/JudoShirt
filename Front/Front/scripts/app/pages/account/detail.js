@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageDetail = (function () {
         function PageDetail($scope) {
@@ -12,6 +12,6 @@ var JudoShirt;
         ];
         return PageDetail;
     })();
-    JudoShirt.PageDetail = PageDetail;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageDetail.Name, PageDetail);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageDetail = PageDetail;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageDetail.Name, PageDetail);
+})(MartialShirt || (MartialShirt = {}));

@@ -2,7 +2,7 @@
 
 
 
-module JudoShirt.Services {
+module MartialShirt.Services {
     'use strict';
 
     export class DesignsRequestHandler {
@@ -19,28 +19,28 @@ module JudoShirt.Services {
 
 		public controller = "designs";
 		constructor(
-			private server: JudoShirt.Services.Server
+			private server: MartialShirt.Services.Server
 			) {
 			this.addEvents();
 		}
 
 		public GetDesign(request: any = []): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetDesign", this.controller, "getDesign", request));
 		}
 		public GetDesigns(request: any = []): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getDesigns", request));
 		}
 		public GetTopDesigns(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getTopDesigns", request));
 		}
 		public GetNewDesigns(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getNewDesigns", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getNewDesigns", request));
 		}
 		public GetPromoDesigns(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getPromoDesigns", request));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getPromoDesigns", request));
 		}
 		public GetFeaturedDesigns(request: any): string {
-			return this.server.request(new JudoShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetDesigns", this.controller, "getFeaturedDesigns", []));
 		}
 
 		private addEvents(): void {
@@ -88,5 +88,5 @@ module JudoShirt.Services {
 			}
 		}
     }
-	JudoShirt.Init.Application.JudoShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
+	MartialShirt.Init.Application.MartialShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
 }

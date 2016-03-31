@@ -1,5 +1,5 @@
 
-module JudoShirt {
+module MartialShirt {
 	'use strict';
 
 	/**
@@ -31,5 +31,5 @@ module JudoShirt {
 			$scope.vm.id = $routeParams.id || 0;
 		}
 	}
-	JudoShirt.Init.Application.JudoShirtApp.controller(PageDesign.Name, PageDesign);
+	MartialShirt.Init.Application.MartialShirtApp.controller(PageDesign.Name, PageDesign);
 }

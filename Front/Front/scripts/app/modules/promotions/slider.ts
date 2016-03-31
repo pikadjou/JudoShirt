@@ -1,9 +1,9 @@
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_Slider extends JudoShirt.Init.AbstractModule{
+	export class C_Slider extends MartialShirt.Init.AbstractModule{
 
-		public promotions: JudoShirt.Services.Entity.Promotion[] = [];
+		public promotions: MartialShirt.Services.Entity.Promotion[] = [];
 
 		public static $inject = [
 			'$scope',
@@ -25,7 +25,7 @@ module JudoShirt {
 			this.RH.GetSlide([]);
 		}
 
-		public onPacketRecieved(response: JudoShirt.Services.PromotionsClass.GetPromotionsActiveResponse) {
+		public onPacketRecieved(response: MartialShirt.Services.PromotionsClass.GetPromotionsActiveResponse) {
 			this.promotions = response.promotions;
 
 			setTimeout(function () {
@@ -77,5 +77,5 @@ module JudoShirt {
 
 		public controller = C_Slider;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(Slider.Name, JudoShirtApp.Application.GetDirectiveFactory<Slider>(Slider));
+	MartialShirt.Init.Application.MartialShirtApp.directive(Slider.Name, MartialShirtApp.Application.GetDirectiveFactory<Slider>(Slider));
 }

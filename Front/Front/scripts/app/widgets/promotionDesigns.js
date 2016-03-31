@@ -1,6 +1,6 @@
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetPromotionDesigns = (function () {
         function C_WidgetPromotionDesigns($scope, RH) {
@@ -16,11 +16,11 @@ var JudoShirt;
         };
         C_WidgetPromotionDesigns.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_WidgetPromotionDesigns;
     })();
-    JudoShirt.C_WidgetPromotionDesigns = C_WidgetPromotionDesigns;
+    MartialShirt.C_WidgetPromotionDesigns = C_WidgetPromotionDesigns;
     var WidgetPromotionDesigns = (function () {
         function WidgetPromotionDesigns() {
             this.templateUrl = "/scripts/app/widgets/promotionDesigns.html";
@@ -33,6 +33,6 @@ var JudoShirt;
         WidgetPromotionDesigns.$inject = [];
         return WidgetPromotionDesigns;
     })();
-    JudoShirt.WidgetPromotionDesigns = WidgetPromotionDesigns;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetPromotionDesigns.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetPromotionDesigns));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetPromotionDesigns = WidgetPromotionDesigns;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetPromotionDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetPromotionDesigns));
+})(MartialShirt || (MartialShirt = {}));

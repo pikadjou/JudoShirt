@@ -1,9 +1,9 @@
-﻿module JudoShirt.Init {
+﻿module MartialShirt.Init {
     'use strict';
 
 	export class Application {
 
-		public static JudoShirtApp: angular.IModule = angular.module('JudoShirt', ['ngRoute']);
+		public static MartialShirtApp: angular.IModule = angular.module('MartialShirt', ['ngRoute']);
 
 		private static uniqueInstance: Application;
 
@@ -77,13 +77,13 @@
 
 					if (config.changeBasketCount) {
 						$(element).on('DOMSubtreeModified', "#basketCountText", function () {
-							JudoShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
+							MartialShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
 						});
 					}
 
 					if (config.changeWishCount) {
 						$(element).on('DOMSubtreeModified', "#wishlistCountText", function () {
-							JudoShirt.Init.Signals.getInstance().changeWishCount.dispatch();
+							MartialShirt.Init.Signals.getInstance().changeWishCount.dispatch();
 						});
 					}
 

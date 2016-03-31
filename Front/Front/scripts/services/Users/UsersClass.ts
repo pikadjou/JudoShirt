@@ -1,4 +1,4 @@
-﻿module JudoShirt.Services.UsersClass {
+﻿module MartialShirt.Services.UsersClass {
 
 	export class User {
 		public name: string;

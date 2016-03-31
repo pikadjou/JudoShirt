@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Subscription = (function (_super) {
         __extends(C_Subscription, _super);
@@ -15,7 +15,7 @@ var JudoShirt;
             this.$scope = $scope;
             this.$sce = $sce;
             this.trustSrc = function (url) {
-                return _this.$sce.trustAsResourceUrl(JudoShirt.Config.subscriptionLink);
+                return _this.$sce.trustAsResourceUrl(MartialShirt.Config.subscriptionLink);
             };
             this.init($scope);
         }
@@ -30,8 +30,8 @@ var JudoShirt;
             '$sce'
         ];
         return C_Subscription;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Subscription = C_Subscription;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Subscription = C_Subscription;
     var Subscription = (function () {
         function Subscription() {
             this.templateUrl = "/scripts/app/modules/account/subscription.html";
@@ -46,6 +46,6 @@ var JudoShirt;
         Subscription.$inject = [];
         return Subscription;
     })();
-    JudoShirt.Subscription = Subscription;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Subscription.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Subscription));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Subscription = Subscription;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Subscription.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Subscription));
+})(MartialShirt || (MartialShirt = {}));

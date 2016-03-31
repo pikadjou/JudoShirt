@@ -1,7 +1,7 @@
 ﻿///#source 1 1 /scripts/app/container/header.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Container;
     (function (Container) {
         'use strict';
@@ -29,14 +29,14 @@ var JudoShirt;
             return Header;
         })();
         Container.Header = Header;
-        JudoShirt.Init.Application.JudoShirtApp.directive(Header.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Header));
-    })(Container = JudoShirt.Container || (JudoShirt.Container = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.directive(Header.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Header));
+    })(Container = MartialShirt.Container || (MartialShirt.Container = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/container/footer.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Container;
     (function (Container) {
         'use strict';
@@ -64,9 +64,9 @@ var JudoShirt;
             return Footer;
         })();
         Container.Footer = Footer;
-        JudoShirt.Init.Application.JudoShirtApp.directive(Footer.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Footer));
-    })(Container = JudoShirt.Container || (JudoShirt.Container = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.directive(Footer.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Footer));
+    })(Container = MartialShirt.Container || (MartialShirt.Container = {}));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/menuMain.js
 /// <reference path='../../_all.ts' />
@@ -76,8 +76,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_MenuMain = (function (_super) {
         __extends(C_MenuMain, _super);
@@ -97,11 +97,11 @@ var JudoShirt;
         };
         C_MenuMain.$inject = [
             '$scope',
-            JudoShirt.Services.CategoriesRequestHandler.Name
+            MartialShirt.Services.CategoriesRequestHandler.Name
         ];
         return C_MenuMain;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_MenuMain = C_MenuMain;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_MenuMain = C_MenuMain;
     var MenuMain = (function () {
         function MenuMain() {
             this.templateUrl = "/scripts/app/modules/menuMain.html";
@@ -114,14 +114,14 @@ var JudoShirt;
         MenuMain.$inject = [];
         return MenuMain;
     })();
-    JudoShirt.MenuMain = MenuMain;
-    JudoShirt.Init.Application.JudoShirtApp.directive(MenuMain.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(MenuMain));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.MenuMain = MenuMain;
+    MartialShirt.Init.Application.MartialShirtApp.directive(MenuMain.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(MenuMain));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/featuredDesigns.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_FeaturedDesigns = (function () {
         function C_FeaturedDesigns($scope, RH) {
@@ -137,11 +137,11 @@ var JudoShirt;
         };
         C_FeaturedDesigns.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_FeaturedDesigns;
     })();
-    JudoShirt.C_FeaturedDesigns = C_FeaturedDesigns;
+    MartialShirt.C_FeaturedDesigns = C_FeaturedDesigns;
     var FeaturedDesigns = (function () {
         function FeaturedDesigns() {
             this.templateUrl = "/scripts/app/modules/featuredDesigns.html";
@@ -154,14 +154,14 @@ var JudoShirt;
         FeaturedDesigns.$inject = [];
         return FeaturedDesigns;
     })();
-    JudoShirt.FeaturedDesigns = FeaturedDesigns;
-    JudoShirt.Init.Application.JudoShirtApp.directive(FeaturedDesigns.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(FeaturedDesigns));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.FeaturedDesigns = FeaturedDesigns;
+    MartialShirt.Init.Application.MartialShirtApp.directive(FeaturedDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(FeaturedDesigns));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/categoryDesigns.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_CategoryDesigns = (function () {
         function C_CategoryDesigns($scope, RH) {
@@ -177,11 +177,11 @@ var JudoShirt;
         };
         C_CategoryDesigns.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_CategoryDesigns;
     })();
-    JudoShirt.C_CategoryDesigns = C_CategoryDesigns;
+    MartialShirt.C_CategoryDesigns = C_CategoryDesigns;
     var CategoryDesigns = (function () {
         function CategoryDesigns() {
             this.templateUrl = "/scripts/app/modules/categoryDesigns.html";
@@ -196,14 +196,14 @@ var JudoShirt;
         CategoryDesigns.$inject = [];
         return CategoryDesigns;
     })();
-    JudoShirt.CategoryDesigns = CategoryDesigns;
-    JudoShirt.Init.Application.JudoShirtApp.directive(CategoryDesigns.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(CategoryDesigns));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.CategoryDesigns = CategoryDesigns;
+    MartialShirt.Init.Application.MartialShirtApp.directive(CategoryDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(CategoryDesigns));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/langSelector.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_LangSelector = (function () {
         function C_LangSelector($scope) {
@@ -212,11 +212,11 @@ var JudoShirt;
         }
         C_LangSelector.$inject = [
             '$scope',
-            JudoShirt.Services.CategoriesRequestHandler.Name
+            MartialShirt.Services.CategoriesRequestHandler.Name
         ];
         return C_LangSelector;
     })();
-    JudoShirt.C_LangSelector = C_LangSelector;
+    MartialShirt.C_LangSelector = C_LangSelector;
     var LangSelector = (function () {
         function LangSelector() {
             this.templateUrl = "/scripts/app/modules/langSelector.html";
@@ -229,9 +229,9 @@ var JudoShirt;
         LangSelector.$inject = [];
         return LangSelector;
     })();
-    JudoShirt.LangSelector = LangSelector;
-    JudoShirt.Init.Application.JudoShirtApp.directive(LangSelector.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(LangSelector));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.LangSelector = LangSelector;
+    MartialShirt.Init.Application.MartialShirtApp.directive(LangSelector.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(LangSelector));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/design.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -240,8 +240,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Design = (function (_super) {
         __extends(C_Design, _super);
@@ -338,11 +338,11 @@ var JudoShirt;
         };
         C_Design.$inject = [
             '$scope',
-            JudoShirt.Services.ProductsRequestHandler.Name
+            MartialShirt.Services.ProductsRequestHandler.Name
         ];
         return C_Design;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Design = C_Design;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Design = C_Design;
     var Design = (function () {
         function Design() {
             this.templateUrl = "/scripts/app/modules/design.html";
@@ -357,9 +357,9 @@ var JudoShirt;
         Design.$inject = [];
         return Design;
     })();
-    JudoShirt.Design = Design;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Design.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Design));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Design = Design;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Design.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Design));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/product.js
 /// <reference path='../../_all.ts' />
@@ -369,8 +369,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Product = (function (_super) {
         __extends(C_Product, _super);
@@ -392,18 +392,18 @@ var JudoShirt;
             var config = {
                 baseId: 'productShop'
             };
-            JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, false, true, true);
+            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, false, true, true);
         }
         C_Product.prototype.onPacketRecieved = function (response) {
             this.product = response.product;
         };
         C_Product.$inject = [
             '$scope',
-            JudoShirt.Services.ProductsRequestHandler.Name
+            MartialShirt.Services.ProductsRequestHandler.Name
         ];
         return C_Product;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Product = C_Product;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Product = C_Product;
     var Product = (function () {
         function Product() {
             this.templateUrl = "/scripts/app/modules/product.html";
@@ -418,14 +418,14 @@ var JudoShirt;
         Product.$inject = [];
         return Product;
     })();
-    JudoShirt.Product = Product;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Product.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Product));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Product = Product;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Product.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Product));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/basket.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Basket = (function () {
         function C_Basket($scope, $sce) {
@@ -451,7 +451,7 @@ var JudoShirt;
         ];
         return C_Basket;
     })();
-    JudoShirt.C_Basket = C_Basket;
+    MartialShirt.C_Basket = C_Basket;
     var Basket = (function () {
         function Basket() {
             this.templateUrl = "/scripts/app/modules/basket.html";
@@ -466,9 +466,9 @@ var JudoShirt;
         Basket.$inject = [];
         return Basket;
     })();
-    JudoShirt.Basket = Basket;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Basket.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Basket));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Basket = Basket;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Basket.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Basket));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/print.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -477,8 +477,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Print = (function (_super) {
         __extends(C_Print, _super);
@@ -499,11 +499,11 @@ var JudoShirt;
         };
         C_Print.$inject = [
             '$scope',
-            JudoShirt.Services.PrintsRequestHandler.Name
+            MartialShirt.Services.PrintsRequestHandler.Name
         ];
         return C_Print;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Print = C_Print;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Print = C_Print;
     var Print = (function () {
         function Print() {
             this.templateUrl = "/scripts/app/modules/print.html";
@@ -516,9 +516,9 @@ var JudoShirt;
         Print.$inject = [];
         return Print;
     })();
-    JudoShirt.Print = Print;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Print.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Print));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Print = Print;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Print.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Print));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/promotions/slider.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -527,8 +527,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Slider = (function (_super) {
         __extends(C_Slider, _super);
@@ -578,11 +578,11 @@ var JudoShirt;
         C_Slider.$inject = [
             '$scope',
             '$location',
-            JudoShirt.Services.PromotionsRequestHandler.Name
+            MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_Slider;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Slider = C_Slider;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Slider = C_Slider;
     var Slider = (function () {
         function Slider() {
             this.templateUrl = "/scripts/app/modules/promotions/slider.html";
@@ -595,9 +595,9 @@ var JudoShirt;
         Slider.$inject = [];
         return Slider;
     })();
-    JudoShirt.Slider = Slider;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Slider.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Slider));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Slider = Slider;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Slider.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Slider));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/promotions/list.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -606,8 +606,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_PromotionList = (function (_super) {
         __extends(C_PromotionList, _super);
@@ -651,11 +651,11 @@ var JudoShirt;
         C_PromotionList.$inject = [
             '$scope',
             '$location',
-            JudoShirt.Services.PromotionsRequestHandler.Name
+            MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_PromotionList;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_PromotionList = C_PromotionList;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_PromotionList = C_PromotionList;
     var PromotionList = (function () {
         function PromotionList() {
             this.templateUrl = "/scripts/app/modules/promotions/list.html";
@@ -668,9 +668,9 @@ var JudoShirt;
         PromotionList.$inject = [];
         return PromotionList;
     })();
-    JudoShirt.PromotionList = PromotionList;
-    JudoShirt.Init.Application.JudoShirtApp.directive(PromotionList.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionList));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PromotionList = PromotionList;
+    MartialShirt.Init.Application.MartialShirtApp.directive(PromotionList.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionList));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/promotions/entity.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -679,8 +679,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_PromotionEntity = (function (_super) {
         __extends(C_PromotionEntity, _super);
@@ -714,7 +714,7 @@ var JudoShirt;
             };
             this.init($scope);
             this.RH.GetPromotionReceived.add(this.onPacketRecieved, this);
-            var request = new JudoShirt.Services.PromotionsClass.GetPromotionRequest();
+            var request = new MartialShirt.Services.PromotionsClass.GetPromotionRequest();
             request.slug = this.promotionslug;
             this.RH.GetPromotion(request);
         }
@@ -724,11 +724,11 @@ var JudoShirt;
         C_PromotionEntity.$inject = [
             '$scope',
             '$location',
-            JudoShirt.Services.PromotionsRequestHandler.Name
+            MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_PromotionEntity;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_PromotionEntity = C_PromotionEntity;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_PromotionEntity = C_PromotionEntity;
     var PromotionEntity = (function () {
         function PromotionEntity() {
             this.templateUrl = "/scripts/app/modules/promotions/entity.html";
@@ -743,9 +743,9 @@ var JudoShirt;
         PromotionEntity.$inject = [];
         return PromotionEntity;
     })();
-    JudoShirt.PromotionEntity = PromotionEntity;
-    JudoShirt.Init.Application.JudoShirtApp.directive(PromotionEntity.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(PromotionEntity));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PromotionEntity = PromotionEntity;
+    MartialShirt.Init.Application.MartialShirtApp.directive(PromotionEntity.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionEntity));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/account/order.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -754,8 +754,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Order = (function (_super) {
         __extends(C_Order, _super);
@@ -765,7 +765,7 @@ var JudoShirt;
             this.$scope = $scope;
             this.$sce = $sce;
             this.trustSrc = function (url) {
-                return _this.$sce.trustAsResourceUrl(JudoShirt.Config.orderLink);
+                return _this.$sce.trustAsResourceUrl(MartialShirt.Config.orderLink);
             };
             this.init($scope);
         }
@@ -780,8 +780,8 @@ var JudoShirt;
             '$sce'
         ];
         return C_Order;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Order = C_Order;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Order = C_Order;
     var Order = (function () {
         function Order() {
             this.templateUrl = "/scripts/app/modules/account/order.html";
@@ -794,9 +794,9 @@ var JudoShirt;
         Order.$inject = [];
         return Order;
     })();
-    JudoShirt.Order = Order;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Order.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Order));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Order = Order;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Order.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Order));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/account/detail.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -805,8 +805,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Detail = (function (_super) {
         __extends(C_Detail, _super);
@@ -817,7 +817,7 @@ var JudoShirt;
             this.$sce = $sce;
             this.RH = RH;
             this.trustSrc = function (url) {
-                return _this.$sce.trustAsResourceUrl(JudoShirt.Config.detailsLink);
+                return _this.$sce.trustAsResourceUrl(MartialShirt.Config.detailsLink);
             };
             this.init($scope);
             this.RH.GetDetailsReveived.add(this.onPacketRecieved, this);
@@ -838,11 +838,11 @@ var JudoShirt;
         C_Detail.$inject = [
             '$scope',
             '$sce',
-            JudoShirt.Services.UsersRequestHandler.Name
+            MartialShirt.Services.UsersRequestHandler.Name
         ];
         return C_Detail;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Detail = C_Detail;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Detail = C_Detail;
     var Detail = (function () {
         function Detail() {
             this.templateUrl = "/scripts/app/modules/account/detail.html";
@@ -855,9 +855,9 @@ var JudoShirt;
         Detail.$inject = [];
         return Detail;
     })();
-    JudoShirt.Detail = Detail;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Detail.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Detail));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Detail = Detail;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Detail.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Detail));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/account/subscription.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -866,8 +866,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Subscription = (function (_super) {
         __extends(C_Subscription, _super);
@@ -877,7 +877,7 @@ var JudoShirt;
             this.$scope = $scope;
             this.$sce = $sce;
             this.trustSrc = function (url) {
-                return _this.$sce.trustAsResourceUrl(JudoShirt.Config.subscriptionLink);
+                return _this.$sce.trustAsResourceUrl(MartialShirt.Config.subscriptionLink);
             };
             this.init($scope);
         }
@@ -892,8 +892,8 @@ var JudoShirt;
             '$sce'
         ];
         return C_Subscription;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Subscription = C_Subscription;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Subscription = C_Subscription;
     var Subscription = (function () {
         function Subscription() {
             this.templateUrl = "/scripts/app/modules/account/subscription.html";
@@ -908,9 +908,9 @@ var JudoShirt;
         Subscription.$inject = [];
         return Subscription;
     })();
-    JudoShirt.Subscription = Subscription;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Subscription.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Subscription));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Subscription = Subscription;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Subscription.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Subscription));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/custom/designer.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -919,8 +919,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Designer = (function (_super) {
         __extends(C_Designer, _super);
@@ -946,8 +946,8 @@ var JudoShirt;
             '$sce'
         ];
         return C_Designer;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Designer = C_Designer;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Designer = C_Designer;
     var Designer = (function () {
         function Designer() {
             this.templateUrl = "/scripts/app/modules/custom/designer.html";
@@ -962,9 +962,9 @@ var JudoShirt;
         Designer.$inject = [];
         return Designer;
     })();
-    JudoShirt.Designer = Designer;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Designer.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Designer));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Designer = Designer;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Designer.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Designer));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/help/contact.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -973,8 +973,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Contact = (function (_super) {
         __extends(C_Contact, _super);
@@ -987,7 +987,7 @@ var JudoShirt;
             this.code = 0;
             this.message = "";
             this.submit = function () {
-                var request = new JudoShirt.Services.HelpClass.SendContactRequest();
+                var request = new MartialShirt.Services.HelpClass.SendContactRequest();
                 request.name = _this.form.name;
                 request.nickname = _this.form.nickname;
                 request.mail = _this.form.mail;
@@ -1004,11 +1004,11 @@ var JudoShirt;
         };
         C_Contact.$inject = [
             '$scope',
-            JudoShirt.Services.HelpRequestHandler.Name
+            MartialShirt.Services.HelpRequestHandler.Name
         ];
         return C_Contact;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Contact = C_Contact;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Contact = C_Contact;
     var Contact = (function () {
         function Contact() {
             this.templateUrl = "/scripts/app/modules/help/contact.html";
@@ -1021,13 +1021,13 @@ var JudoShirt;
         Contact.$inject = [];
         return Contact;
     })();
-    JudoShirt.Contact = Contact;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Contact.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Contact));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Contact = Contact;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Contact.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Contact));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/home.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageHome = (function () {
         function PageHome($scope) {
@@ -1040,13 +1040,13 @@ var JudoShirt;
         ];
         return PageHome;
     })();
-    JudoShirt.PageHome = PageHome;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageHome.Name, PageHome);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageHome = PageHome;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageHome.Name, PageHome);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/category.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageCategory = (function () {
         function PageCategory($scope, $routeParams) {
@@ -1062,9 +1062,9 @@ var JudoShirt;
         ];
         return PageCategory;
     })();
-    JudoShirt.PageCategory = PageCategory;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageCategory.Name, PageCategory);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageCategory = PageCategory;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageCategory.Name, PageCategory);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/product.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -1073,8 +1073,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageProduct = (function (_super) {
         __extends(PageProduct, _super);
@@ -1092,14 +1092,14 @@ var JudoShirt;
             '$routeParams'
         ];
         return PageProduct;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.PageProduct = PageProduct;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageProduct.Name, PageProduct);
-})(JudoShirt || (JudoShirt = {}));
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.PageProduct = PageProduct;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageProduct.Name, PageProduct);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/design.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageDesign = (function () {
         function PageDesign($scope, $routeParams) {
@@ -1115,13 +1115,13 @@ var JudoShirt;
         ];
         return PageDesign;
     })();
-    JudoShirt.PageDesign = PageDesign;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageDesign.Name, PageDesign);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageDesign = PageDesign;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageDesign.Name, PageDesign);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/basket.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageBasket = (function () {
         function PageBasket($scope) {
@@ -1134,13 +1134,13 @@ var JudoShirt;
         ];
         return PageBasket;
     })();
-    JudoShirt.PageBasket = PageBasket;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageBasket.Name, PageBasket);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageBasket = PageBasket;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageBasket.Name, PageBasket);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/print.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PagePrint = (function () {
         function PagePrint($scope, $routeParams) {
@@ -1155,13 +1155,13 @@ var JudoShirt;
         ];
         return PagePrint;
     })();
-    JudoShirt.PagePrint = PagePrint;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PagePrint.Name, PagePrint);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PagePrint = PagePrint;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PagePrint.Name, PagePrint);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/help/contact.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageContact = (function () {
         function PageContact($scope) {
@@ -1174,9 +1174,9 @@ var JudoShirt;
         ];
         return PageContact;
     })();
-    JudoShirt.PageContact = PageContact;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageContact.Name, PageContact);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageContact = PageContact;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageContact.Name, PageContact);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/promotions/list.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -1185,8 +1185,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PagePromotionList = (function (_super) {
         __extends(PagePromotionList, _super);
@@ -1202,10 +1202,10 @@ var JudoShirt;
             '$routeParams'
         ];
         return PagePromotionList;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.PagePromotionList = PagePromotionList;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PagePromotionList.Name, PagePromotionList);
-})(JudoShirt || (JudoShirt = {}));
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.PagePromotionList = PagePromotionList;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PagePromotionList.Name, PagePromotionList);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/promotions/entity.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -1214,8 +1214,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PagePromotionEntity = (function (_super) {
         __extends(PagePromotionEntity, _super);
@@ -1233,14 +1233,14 @@ var JudoShirt;
             '$routeParams'
         ];
         return PagePromotionEntity;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.PagePromotionEntity = PagePromotionEntity;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
-})(JudoShirt || (JudoShirt = {}));
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.PagePromotionEntity = PagePromotionEntity;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PagePromotionEntity.Name, PagePromotionEntity);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/account/order.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageOrder = (function () {
         function PageOrder($scope) {
@@ -1253,13 +1253,13 @@ var JudoShirt;
         ];
         return PageOrder;
     })();
-    JudoShirt.PageOrder = PageOrder;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageOrder.Name, PageOrder);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageOrder = PageOrder;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageOrder.Name, PageOrder);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/account/detail.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageDetail = (function () {
         function PageDetail($scope) {
@@ -1272,13 +1272,13 @@ var JudoShirt;
         ];
         return PageDetail;
     })();
-    JudoShirt.PageDetail = PageDetail;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageDetail.Name, PageDetail);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageDetail = PageDetail;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageDetail.Name, PageDetail);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/account/subscription.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageSubscription = (function () {
         function PageSubscription($scope, $sce) {
@@ -1293,9 +1293,9 @@ var JudoShirt;
         ];
         return PageSubscription;
     })();
-    JudoShirt.PageSubscription = PageSubscription;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageSubscription.Name, PageSubscription);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageSubscription = PageSubscription;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageSubscription.Name, PageSubscription);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/pages/custom/custom.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -1304,8 +1304,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageCustom = (function (_super) {
         __extends(PageCustom, _super);
@@ -1323,15 +1323,15 @@ var JudoShirt;
             '$routeParams'
         ];
         return PageCustom;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.PageCustom = PageCustom;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageCustom.Name, PageCustom);
-})(JudoShirt || (JudoShirt = {}));
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.PageCustom = PageCustom;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageCustom.Name, PageCustom);
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/widgets/topTen.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetTopTen = (function () {
         function C_WidgetTopTen($scope, RH) {
@@ -1347,11 +1347,11 @@ var JudoShirt;
         };
         C_WidgetTopTen.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_WidgetTopTen;
     })();
-    JudoShirt.C_WidgetTopTen = C_WidgetTopTen;
+    MartialShirt.C_WidgetTopTen = C_WidgetTopTen;
     var WidgetTopTen = (function () {
         function WidgetTopTen() {
             this.templateUrl = "/scripts/app/widgets/topTen.html";
@@ -1364,14 +1364,14 @@ var JudoShirt;
         WidgetTopTen.$inject = [];
         return WidgetTopTen;
     })();
-    JudoShirt.WidgetTopTen = WidgetTopTen;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetTopTen.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetTopTen));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetTopTen = WidgetTopTen;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetTopTen.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetTopTen));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/widgets/new.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetNew = (function () {
         function C_WidgetNew($scope, RH) {
@@ -1387,11 +1387,11 @@ var JudoShirt;
         };
         C_WidgetNew.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_WidgetNew;
     })();
-    JudoShirt.C_WidgetNew = C_WidgetNew;
+    MartialShirt.C_WidgetNew = C_WidgetNew;
     var WidgetNew = (function () {
         function WidgetNew() {
             this.templateUrl = "/scripts/app/widgets/new.html";
@@ -1404,14 +1404,14 @@ var JudoShirt;
         WidgetNew.$inject = [];
         return WidgetNew;
     })();
-    JudoShirt.WidgetNew = WidgetNew;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetNew.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetNew));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetNew = WidgetNew;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetNew.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetNew));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/widgets/promotionDesigns.js
 /// <reference path='../../_all.ts' />
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetPromotionDesigns = (function () {
         function C_WidgetPromotionDesigns($scope, RH) {
@@ -1427,11 +1427,11 @@ var JudoShirt;
         };
         C_WidgetPromotionDesigns.$inject = [
             '$scope',
-            JudoShirt.Services.DesignsRequestHandler.Name
+            MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_WidgetPromotionDesigns;
     })();
-    JudoShirt.C_WidgetPromotionDesigns = C_WidgetPromotionDesigns;
+    MartialShirt.C_WidgetPromotionDesigns = C_WidgetPromotionDesigns;
     var WidgetPromotionDesigns = (function () {
         function WidgetPromotionDesigns() {
             this.templateUrl = "/scripts/app/widgets/promotionDesigns.html";
@@ -1444,9 +1444,9 @@ var JudoShirt;
         WidgetPromotionDesigns.$inject = [];
         return WidgetPromotionDesigns;
     })();
-    JudoShirt.WidgetPromotionDesigns = WidgetPromotionDesigns;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetPromotionDesigns.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetPromotionDesigns));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetPromotionDesigns = WidgetPromotionDesigns;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetPromotionDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetPromotionDesigns));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/widgets/account.js
 var __extends = (this && this.__extends) || function (d, b) {
@@ -1455,8 +1455,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_WidgetAccount = (function (_super) {
         __extends(C_WidgetAccount, _super);
@@ -1475,7 +1475,7 @@ var JudoShirt;
                 var config = {
                     baseId: _this.baseId
                 };
-                JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
+                MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
             };
             this.errorLogin = function (message) {
                 _this._loader = false;
@@ -1491,7 +1491,7 @@ var JudoShirt;
             var config = {
                 baseId: this.baseId
             };
-            JudoShirt.JudoShirtApp.Application.addShopConfiguration(config, true);
+            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
             this._login.addErrorHandler(this.errorLogin);
         }
         C_WidgetAccount.prototype.Authenticated = function () {
@@ -1528,8 +1528,8 @@ var JudoShirt;
             '$scope'
         ];
         return C_WidgetAccount;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_WidgetAccount = C_WidgetAccount;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_WidgetAccount = C_WidgetAccount;
     var WidgetAccount = (function () {
         function WidgetAccount() {
             this.templateUrl = "/scripts/app/widgets/account.html";
@@ -1542,13 +1542,13 @@ var JudoShirt;
         WidgetAccount.$inject = [];
         return WidgetAccount;
     })();
-    JudoShirt.WidgetAccount = WidgetAccount;
-    JudoShirt.Init.Application.JudoShirtApp.directive(WidgetAccount.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(WidgetAccount));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.WidgetAccount = WidgetAccount;
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetAccount.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetAccount));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/templates/article.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_TemplateArticle = (function () {
         function C_TemplateArticle($scope) {
@@ -1565,7 +1565,7 @@ var JudoShirt;
         ];
         return C_TemplateArticle;
     })();
-    JudoShirt.C_TemplateArticle = C_TemplateArticle;
+    MartialShirt.C_TemplateArticle = C_TemplateArticle;
     var TemplateArticle = (function () {
         function TemplateArticle() {
             this.templateUrl = "/scripts/app/templates/article.html";
@@ -1580,13 +1580,13 @@ var JudoShirt;
         TemplateArticle.$inject = [];
         return TemplateArticle;
     })();
-    JudoShirt.TemplateArticle = TemplateArticle;
-    JudoShirt.Init.Application.JudoShirtApp.directive(TemplateArticle.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticle));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.TemplateArticle = TemplateArticle;
+    MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticle.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateArticle));
+})(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/templates/articleWidget.js
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_TemplateArticleWidget = (function () {
         function C_TemplateArticleWidget($scope) {
@@ -1603,7 +1603,7 @@ var JudoShirt;
         ];
         return C_TemplateArticleWidget;
     })();
-    JudoShirt.C_TemplateArticleWidget = C_TemplateArticleWidget;
+    MartialShirt.C_TemplateArticleWidget = C_TemplateArticleWidget;
     var TemplateArticleWidget = (function () {
         function TemplateArticleWidget() {
             this.templateUrl = "/scripts/app/templates/articleWidget.html";
@@ -1618,7 +1618,7 @@ var JudoShirt;
         TemplateArticleWidget.$inject = [];
         return TemplateArticleWidget;
     })();
-    JudoShirt.TemplateArticleWidget = TemplateArticleWidget;
-    JudoShirt.Init.Application.JudoShirtApp.directive(TemplateArticleWidget.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.TemplateArticleWidget = TemplateArticleWidget;
+    MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticleWidget.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
+})(MartialShirt || (MartialShirt = {}));
 

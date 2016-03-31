@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
@@ -10,15 +10,15 @@ var JudoShirt;
                 this.addEvents();
             }
             PromotionsRequestHandler.prototype.GetPromotionsActive = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetActive", this.controller, "getActive", []));
             };
             PromotionsRequestHandler.prototype.GetSlide = function (request) {
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetActive", this.controller, "getSlide", []));
             };
             PromotionsRequestHandler.prototype.GetPromotion = function (request) {
                 var array = [];
                 array.push(request.slug);
-                return this.server.request(new JudoShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
             };
             PromotionsRequestHandler.prototype.addEvents = function () {
                 this.GetPromotionsActiveReceived = new signals.Signal();
@@ -47,6 +47,6 @@ var JudoShirt;
             return PromotionsRequestHandler;
         })();
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
-        JudoShirt.Init.Application.JudoShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
-    })(Services = JudoShirt.Services || (JudoShirt.Services = {}));
-})(JudoShirt || (JudoShirt = {}));
+        MartialShirt.Init.Application.MartialShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));

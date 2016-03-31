@@ -4,8 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_Print = (function (_super) {
         __extends(C_Print, _super);
@@ -26,11 +26,11 @@ var JudoShirt;
         };
         C_Print.$inject = [
             '$scope',
-            JudoShirt.Services.PrintsRequestHandler.Name
+            MartialShirt.Services.PrintsRequestHandler.Name
         ];
         return C_Print;
-    })(JudoShirt.Init.AbstractModule);
-    JudoShirt.C_Print = C_Print;
+    })(MartialShirt.Init.AbstractModule);
+    MartialShirt.C_Print = C_Print;
     var Print = (function () {
         function Print() {
             this.templateUrl = "/scripts/app/modules/print.html";
@@ -43,6 +43,6 @@ var JudoShirt;
         Print.$inject = [];
         return Print;
     })();
-    JudoShirt.Print = Print;
-    JudoShirt.Init.Application.JudoShirtApp.directive(Print.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(Print));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.Print = Print;
+    MartialShirt.Init.Application.MartialShirtApp.directive(Print.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Print));
+})(MartialShirt || (MartialShirt = {}));

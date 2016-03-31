@@ -1,9 +1,9 @@
 /// <reference path='../../_all.ts' />
 
-module JudoShirt {
+module MartialShirt {
     'use strict';
 
-	export class C_MenuMain extends JudoShirt.Init.AbstractModule{
+	export class C_MenuMain extends MartialShirt.Init.AbstractModule{
 		
 		public categories: Services.Entity.Category[] = [];
 		public cssClass: string = "";
@@ -46,5 +46,5 @@ module JudoShirt {
 
 		public controller = C_MenuMain;
 	}
-	JudoShirt.Init.Application.JudoShirtApp.directive(MenuMain.Name, JudoShirtApp.Application.GetDirectiveFactory<MenuMain>(MenuMain));
+	MartialShirt.Init.Application.MartialShirtApp.directive(MenuMain.Name, MartialShirtApp.Application.GetDirectiveFactory<MenuMain>(MenuMain));
 }

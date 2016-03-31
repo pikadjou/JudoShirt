@@ -1,11 +1,11 @@
-﻿module JudoShirt.Init {
+﻿module MartialShirt.Init {
     'use strict';
 
 	export class AbstractModule {
 
-		public _signal = JudoShirt.Init.Signals.getInstance();
-		public _application = JudoShirt.Init.Application.getInstance();
-		public _login = JudoShirt.Services.Login.getInstance();
+		public _signal = MartialShirt.Init.Signals.getInstance();
+		public _application = MartialShirt.Init.Application.getInstance();
+		public _login = MartialShirt.Services.Login.getInstance();
 		public CoreLib = CoreLib;
 
 		public isAuthenticated = false;

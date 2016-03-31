@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var C_TemplateArticleWidget = (function () {
         function C_TemplateArticleWidget($scope) {
@@ -16,7 +16,7 @@ var JudoShirt;
         ];
         return C_TemplateArticleWidget;
     })();
-    JudoShirt.C_TemplateArticleWidget = C_TemplateArticleWidget;
+    MartialShirt.C_TemplateArticleWidget = C_TemplateArticleWidget;
     var TemplateArticleWidget = (function () {
         function TemplateArticleWidget() {
             this.templateUrl = "/scripts/app/templates/articleWidget.html";
@@ -31,6 +31,6 @@ var JudoShirt;
         TemplateArticleWidget.$inject = [];
         return TemplateArticleWidget;
     })();
-    JudoShirt.TemplateArticleWidget = TemplateArticleWidget;
-    JudoShirt.Init.Application.JudoShirtApp.directive(TemplateArticleWidget.Name, JudoShirt.JudoShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.TemplateArticleWidget = TemplateArticleWidget;
+    MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticleWidget.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
+})(MartialShirt || (MartialShirt = {}));

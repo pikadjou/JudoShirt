@@ -1,5 +1,5 @@
-var JudoShirt;
-(function (JudoShirt) {
+var MartialShirt;
+(function (MartialShirt) {
     'use strict';
     var PageOrder = (function () {
         function PageOrder($scope) {
@@ -12,6 +12,6 @@ var JudoShirt;
         ];
         return PageOrder;
     })();
-    JudoShirt.PageOrder = PageOrder;
-    JudoShirt.Init.Application.JudoShirtApp.controller(PageOrder.Name, PageOrder);
-})(JudoShirt || (JudoShirt = {}));
+    MartialShirt.PageOrder = PageOrder;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageOrder.Name, PageOrder);
+})(MartialShirt || (MartialShirt = {}));
