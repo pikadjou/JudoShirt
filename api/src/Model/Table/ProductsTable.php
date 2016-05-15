@@ -40,7 +40,7 @@ class ProductsTable extends Table
         $this->table('products');
         $this->primaryKey('id');
         $this->belongsTo('Designs', [
-            'foreignKey' => 'category_id'
+            'foreignKey' => 'design_id'
         ]);
         $this->belongsToMany('Types', [
             'foreignKey' => 'product_id',
@@ -54,57 +54,18 @@ class ProductsTable extends Table
         $this->_productsTypesModel = TableRegistry::get('ProductsTypes');
     }
     
+    public function getOneNoCache($id){
+        return $this->find()->where(["Products.id" => $id])->limit(1);
+    }
     public function getByShopIdNoCache($id){
-        return $this->find()->where(["shopId" => $id])->limit(1);
+        return $this->find()->where(["Products.shopId" => $id])->limit(1);
     }
     
-    //not used
-    public function getByShopId($id){
-        
-        $product = $this->getByShopIdNoCache($id)->first();       
-        $lastUpdate = $product->lastUpdate;
-        
-        $date = new \DateTime();
-        $actualTime = $date->getTimestamp();
-        
-        $date->sub(new \DateInterval('PT' . 60 . 'M'));
-        $cacheTime = $date->getTimestamp();
-        
-        if($lastUpdate === null || $lastUpdate < $cacheTime){
-            $url = $this->_spreadshirt->_urlShop . "/articles/$id";
-
-            $response = $this->_spreadshirt->getRequest($url) ;
-            $response = simplexml_load_string($response);
-
-            $link_product = (string)$response->product->attributes('xlink', true);
-            //debug($link_product);
-
-            $link_product_type = (string)$response->product->productType->attributes('xlink', true);           
-            
-            $response_product_type = $this->_spreadshirt->getRequest($link_product_type);
-            $response_product_type = simplexml_load_string($response_product_type);
-            
-           // debug($response_product_type->appearances);
-            foreach($response_product_type->appearances->appearance as $appearance){
-                //debug($appearance);
-                $color = $this->_colorsModel->newEntity();
-                $color->shopId = (int)$appearance->attributes('id');
-                $color->color = (string)$appearance->colors->color;
-                $color->thumbnail = (string)$appearance->resources->resource->attributes('xlink', true);
-                
-                //debug($color);
-            }
-           // debug($response_product_type);
-        }
-            
-        
-        return $this->find()->where(["shopId" => $id])->limit(1);
-    }
     
     public function findByDesign($design)
     {
         //debug($design);
-        $id = $design->shopId;
+        $id = $design->id;
         $lastUpdate = $design->lastProductsUpdate;
         
         $date = new \DateTime();
@@ -115,15 +76,15 @@ class ProductsTable extends Table
         
 //        debug($lastUpdate);
 //        debug($cacheTime);
-        $lastUpdate = null;
+        //$lastUpdate = null;
                 
         if($lastUpdate === null || $lastUpdate < $cacheTime){
             
-            $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($id)";
+            $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($design->shopId)";
  
             $response = $this->_spreadshirt->getRequest($url) ;
             $response = simplexml_load_string($response);
-            debug($response);
+            //debug($response);
             if($response->article){
                 foreach ($response->article as $article){
                     $articleId = (string)$article->attributes()->id;
@@ -134,7 +95,7 @@ class ProductsTable extends Table
                         $product = $this->newEntity();
                     }
 
-                    debug($article->product);
+                   // debug($article->product);
                     $product->shopId = $articleId;
                     $product->design_id = $id;
                     $product->name = (string)$article->name;
@@ -162,6 +123,7 @@ class ProductsTable extends Table
         
         return $products;
     }
+    
     public function addTypesToProduct($product, $url){
         
         $response = $this->_spreadshirt->getRequest($url) ;
@@ -196,4 +158,11 @@ class ProductsTable extends Table
             'Types'
         ]);
     }
+    public function addDesign($query){
+        
+        $query->contain([
+            'Designs'
+        ]);
+    }
+    
 }

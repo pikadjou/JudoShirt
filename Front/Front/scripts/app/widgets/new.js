@@ -1,4 +1,3 @@
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
@@ -19,7 +18,7 @@ var MartialShirt;
             MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_WidgetNew;
-    })();
+    }());
     MartialShirt.C_WidgetNew = C_WidgetNew;
     var WidgetNew = (function () {
         function WidgetNew() {
@@ -32,7 +31,7 @@ var MartialShirt;
         WidgetNew.Name = "WidgetNew".toLocaleLowerCase();
         WidgetNew.$inject = [];
         return WidgetNew;
-    })();
+    }());
     MartialShirt.WidgetNew = WidgetNew;
     MartialShirt.Init.Application.MartialShirtApp.directive(WidgetNew.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetNew));
 })(MartialShirt || (MartialShirt = {}));

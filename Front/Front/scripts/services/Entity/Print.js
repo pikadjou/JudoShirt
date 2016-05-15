@@ -8,7 +8,7 @@ var MartialShirt;
                 function Print() {
                 }
                 return Print;
-            })();
+            }());
             Entity.Print = Print;
         })(Entity = Services.Entity || (Services.Entity = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

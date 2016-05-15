@@ -13,6 +13,7 @@ class Product
     public $idCustomShop = 0;
     
     public $types = [];
+    public $design = null;
     
     function __construct($product){
         if($product === null){
@@ -28,6 +29,10 @@ class Product
         
         for($i = 0, $l = count($product->types); $i < $l; $i++){
             $this->types[] = new \App\Services\Entity\Type($product->types[$i]);
+        }
+        
+        if($product->design){
+             $this->design = new \App\Services\Entity\Design($product->design);
         }
     }
 }

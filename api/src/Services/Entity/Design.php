@@ -16,6 +16,7 @@ class Design
     public $tags = [];
     
     function __construct($design){
+        
         $this->id = $design->id;
         $this->name = $design->name;
         $this->content = $design->content;

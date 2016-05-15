@@ -15,7 +15,7 @@ var MartialShirt;
             '$scope'
         ];
         return C_TemplateArticleWidget;
-    })();
+    }());
     MartialShirt.C_TemplateArticleWidget = C_TemplateArticleWidget;
     var TemplateArticleWidget = (function () {
         function TemplateArticleWidget() {
@@ -30,7 +30,7 @@ var MartialShirt;
         TemplateArticleWidget.Name = "TemplateArticleWidget".toLocaleLowerCase();
         TemplateArticleWidget.$inject = [];
         return TemplateArticleWidget;
-    })();
+    }());
     MartialShirt.TemplateArticleWidget = TemplateArticleWidget;
     MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticleWidget.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateArticleWidget));
 })(MartialShirt || (MartialShirt = {}));

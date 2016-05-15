@@ -11,7 +11,7 @@ var MartialShirt;
             '$scope'
         ];
         return PageBasket;
-    })();
+    }());
     MartialShirt.PageBasket = PageBasket;
     MartialShirt.Init.Application.MartialShirtApp.controller(PageBasket.Name, PageBasket);
 })(MartialShirt || (MartialShirt = {}));

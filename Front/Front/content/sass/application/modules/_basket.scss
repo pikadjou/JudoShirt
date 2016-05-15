@@ -1,0 +1,91 @@
+﻿.basket__container{
+	.basket__content{
+		width: 750px;
+		position: absolute;
+		right: 0;
+		z-index: 10;
+
+		border: 5px solid $blue-color;
+		background-color: $white-color;
+
+		.articles{
+			
+			padding: 15px;
+
+			height: 400px;
+			overflow-y:scroll;
+			overflow-x: hidden;
+			.article{
+				text-align: center;
+				margin-top: 5px;
+				padding-bottom: 5px;
+
+				border-bottom: 1px solid $blue-color;
+				.description{
+					font-weight: bold;
+				}
+				.size{
+					font-size: rem-calc(12);
+				}
+				.quantity{
+					input{
+						width: 60%;
+						text-align: right;
+					}
+				}
+				.delete{
+					margin-top: 3px;
+					padding: 10px;
+				}
+				.price{
+					font-weight: bold;
+				}
+			}
+
+			.summary{
+				margin-top: 5px;
+				font-size: rem-calc(18);
+
+				.value{
+					text-align: right;
+				}
+				.total{
+					padding-top: 3px;
+
+					border-top: 1px dashed $blue-color;
+					font-weight: bold;
+					.ttc{
+						font-weight: normal;
+						font-size: rem-calc(14);
+					}
+				}
+			}
+		}
+		.bottom{
+			border-top: 1px $blue-color solid;
+			padding: 15px;
+
+			.continue{
+					font-size: rem-calc(14);
+			}
+			.delivery{
+				text-align: right;
+				padding: 3px;
+			}
+			.payement{
+				padding: 3px;
+				text-align: right;
+				.price{
+					font-size: rem-calc(18);
+					font-weight: bold;
+				}
+				.extra{
+					line-height: 10px;
+					font-size: rem-calc(12);
+				}
+			}
+		}
+		
+		
+	}
+}

@@ -37,10 +37,10 @@ var MartialShirt;
                 if (light === void 0) { light = false; }
                 if (changeBasketCount === void 0) { changeBasketCount = false; }
                 if (changeWishCount === void 0) { changeWishCount = false; }
-                config.shopName = 'mangelavie',
-                    config.locale = 'fr_FR',
-                    config.prefix = '//shop.spreadshirt.fr',
-                    config.light = light;
+                config.shopName = MartialShirt.Config.spreadShirt.shopName;
+                config.locale = MartialShirt.Config.spreadShirt.locale;
+                config.prefix = MartialShirt.Config.spreadShirt.prefix;
+                config.light = light;
                 config.changeBasketCount = changeBasketCount;
                 config.changeWishCount = changeWishCount;
                 this._shopConfigurationList.push(config);
@@ -112,7 +112,7 @@ var MartialShirt;
             };
             Application.MartialShirtApp = angular.module('MartialShirt', ['ngRoute']);
             return Application;
-        })();
+        }());
         Init.Application = Application;
     })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
 })(MartialShirt || (MartialShirt = {}));

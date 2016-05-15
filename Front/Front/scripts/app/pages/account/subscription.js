@@ -13,7 +13,7 @@ var MartialShirt;
             '$sce'
         ];
         return PageSubscription;
-    })();
+    }());
     MartialShirt.PageSubscription = PageSubscription;
     MartialShirt.Init.Application.MartialShirtApp.controller(PageSubscription.Name, PageSubscription);
 })(MartialShirt || (MartialShirt = {}));

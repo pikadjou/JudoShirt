@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -40,30 +40,19 @@
     </Content>
     <Content Include="index.html" />
     <Content Include="lib\angular\angular-animate.js" />
-    <Content Include="lib\angular\angular-animate.min.js" />
     <Content Include="lib\angular\angular-aria.js" />
-    <Content Include="lib\angular\angular-aria.min.js" />
     <Content Include="lib\angular\angular-cookies.js" />
-    <Content Include="lib\angular\angular-cookies.min.js" />
     <Content Include="lib\angular\angular-csp.css" />
     <Content Include="lib\angular\angular-loader.js" />
-    <Content Include="lib\angular\angular-loader.min.js" />
     <Content Include="lib\angular\angular-message-format.js" />
-    <Content Include="lib\angular\angular-message-format.min.js" />
     <Content Include="lib\angular\angular-messages.js" />
-    <Content Include="lib\angular\angular-messages.min.js" />
     <Content Include="lib\angular\angular-mocks.js" />
     <Content Include="lib\angular\angular-resource.js" />
-    <Content Include="lib\angular\angular-resource.min.js" />
     <Content Include="lib\angular\angular-route.js" />
-    <Content Include="lib\angular\angular-route.min.js" />
     <Content Include="lib\angular\angular-sanitize.js" />
-    <Content Include="lib\angular\angular-sanitize.min.js" />
     <Content Include="lib\angular\angular-scenario.js" />
     <Content Include="lib\angular\angular-touch.js" />
-    <Content Include="lib\angular\angular-touch.min.js" />
     <Content Include="lib\angular\angular.js" />
-    <Content Include="lib\angular\angular.min.js" />
     <Content Include="lib\angular\i18n\angular-locale_aa-dj.js" />
     <Content Include="lib\angular\i18n\angular-locale_aa-er.js" />
     <Content Include="lib\angular\i18n\angular-locale_aa-et.js" />
@@ -831,6 +820,13 @@
     <Content Include="lib\foundation\vendor\modernizr.js" />
     <Content Include="lib\foundation\vendor\placeholder.js" />
     <Content Include="lib\jquery\iframe-autoresize.js" />
+    <Content Include="lib\jquery\jquery.js" />
+    <Content Include="lib\lib.js">
+      <DependentUpon>lib.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="lib\lib.min.js">
+      <DependentUpon>lib.js</DependentUpon>
+    </Content>
     <Content Include="lib\signals\signal.js" />
     <Content Include="maintenance.html" />
     <Content Include="scripts\app\App.js">
@@ -912,6 +908,10 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\BasketItem.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Basket.ts" />
     <TypeScriptCompile Include="scripts\services\LoginService.ts" />
     <TypeScriptCompile Include="scripts\services\Users\UsersClass.ts" />
     <TypeScriptCompile Include="scripts\services\Users\UsersRequestHandler.ts" />
@@ -921,7 +921,7 @@
     <TypeScriptCompile Include="scripts\services\Entity\Type.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsRequestHandler.ts" />
-    <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Baskets\BasketsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Designs\DesignsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Promotion.ts" />
@@ -932,6 +932,7 @@
     <TypeScriptCompile Include="scripts\services\Prints\PrintsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Products\ProductsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\AbstractModule.ts" />
+    <TypeScriptCompile Include="scripts\tools\Debug.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="scripts\services\Services.js">
       <DependentUpon>Services.js.bundle</DependentUpon>
@@ -939,36 +940,31 @@
     <Content Include="scripts\services\Services.min.js">
       <DependentUpon>Services.js</DependentUpon>
     </Content>
+    <Content Include="scripts\tools\tools.js">
+      <DependentUpon>tools.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="scripts\tools\tools.min.js">
+      <DependentUpon>tools.js</DependentUpon>
+    </Content>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="scripts\shell.ts" />
+    <TypeScriptCompile Include="scripts\app\shell.ts" />
     <TypeScriptCompile Include="scripts\app\pages\home.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menuMain.ts" />
-    <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Baskets\BasketsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
     <TypeScriptCompile Include="scripts\tools\Signals.ts" />
-    <TypeScriptCompile Include="scripts\_all.ts" />
     <TypeScriptCompile Include="config.ts" />
     <TypeScriptCompile Include="typing\angular-route.d.ts" />
     <TypeScriptCompile Include="typing\angular.d.ts" />
+    <TypeScriptCompile Include="typing\custom.d.ts" />
     <TypeScriptCompile Include="typing\jquery.d.ts" />
     <TypeScriptCompile Include="typing\signal.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="scripts\version.json" />
     <Content Include="scripts\errors.json" />
-    <Content Include="lib\angular\angular-touch.min.js.map" />
-    <Content Include="lib\angular\angular-sanitize.min.js.map" />
-    <Content Include="lib\angular\angular-route.min.js.map" />
-    <Content Include="lib\angular\angular-resource.min.js.map" />
-    <Content Include="lib\angular\angular-messages.min.js.map" />
-    <Content Include="lib\angular\angular-message-format.min.js.map" />
-    <Content Include="lib\angular\angular-loader.min.js.map" />
-    <Content Include="lib\angular\angular-cookies.min.js.map" />
-    <Content Include="lib\angular\angular-aria.min.js.map" />
-    <Content Include="lib\angular\angular-animate.min.js.map" />
-    <Content Include="lib\angular\angular.min.js.map" />
     <Content Include="packages.config" />
     <Content Include="content\sass\application\_master.scss" />
     <Content Include="content\sass\foundation\components\_accordion.scss" />
@@ -1050,6 +1046,15 @@
     <Content Include="content\sass\application\modules\_product.scss" />
     <Content Include="content\sass\application\modules\_print.scss" />
     <Content Include="content\sass\application\modules\_promotion.scss" />
+    <Content Include="lib\lib.js.bundle" />
+    <Content Include="lib\lib.min.js.map">
+      <DependentUpon>lib.min.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\tools\tools.js.bundle" />
+    <Content Include="scripts\tools\tools.min.js.map">
+      <DependentUpon>tools.min.js</DependentUpon>
+    </Content>
+    <Content Include="content\sass\application\modules\_basket.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

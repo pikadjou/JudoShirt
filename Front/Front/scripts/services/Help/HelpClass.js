@@ -8,7 +8,7 @@ var MartialShirt;
                 function SendContactRequest() {
                 }
                 return SendContactRequest;
-            })();
+            }());
             HelpClass.SendContactRequest = SendContactRequest;
         })(HelpClass = Services.HelpClass || (Services.HelpClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

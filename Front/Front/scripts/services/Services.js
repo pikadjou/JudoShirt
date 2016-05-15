@@ -33,14 +33,13 @@ var MartialShirt;
             CategoriesRequestHandler.$inject = ['Server'];
             CategoriesRequestHandler.Name = "CategoriesRequestHandler";
             return CategoriesRequestHandler;
-        })();
+        }());
         Services.CategoriesRequestHandler = CategoriesRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Designs/DesignsRequestHandler.js
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     var Services;
@@ -117,14 +116,13 @@ var MartialShirt;
             DesignsRequestHandler.$inject = ['Server'];
             DesignsRequestHandler.Name = "DesignsRequestHandler";
             return DesignsRequestHandler;
-        })();
+        }());
         Services.DesignsRequestHandler = DesignsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Products/ProductsRequestHandler.js
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     var Services;
@@ -169,14 +167,13 @@ var MartialShirt;
             ProductsRequestHandler.$inject = ['Server'];
             ProductsRequestHandler.Name = "ProductsRequestHandler";
             return ProductsRequestHandler;
-        })();
+        }());
         Services.ProductsRequestHandler = ProductsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/services/Prints/PrintsRequestHandler.js
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     var Services;
@@ -212,7 +209,7 @@ var MartialShirt;
             PrintsRequestHandler.$inject = ['Server'];
             PrintsRequestHandler.Name = "PrintsRequestHandler";
             return PrintsRequestHandler;
-        })();
+        }());
         Services.PrintsRequestHandler = PrintsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
@@ -229,19 +226,19 @@ var MartialShirt;
                 function GetPromotionsActiveResponse() {
                 }
                 return GetPromotionsActiveResponse;
-            })();
+            }());
             PromotionsClass.GetPromotionsActiveResponse = GetPromotionsActiveResponse;
             var GetPromotionRequest = (function () {
                 function GetPromotionRequest() {
                 }
                 return GetPromotionRequest;
-            })();
+            }());
             PromotionsClass.GetPromotionRequest = GetPromotionRequest;
             var GetPromotionResponse = (function () {
                 function GetPromotionResponse() {
                 }
                 return GetPromotionResponse;
-            })();
+            }());
             PromotionsClass.GetPromotionResponse = GetPromotionResponse;
         })(PromotionsClass = Services.PromotionsClass || (Services.PromotionsClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
@@ -295,7 +292,7 @@ var MartialShirt;
             PromotionsRequestHandler.$inject = ['Server'];
             PromotionsRequestHandler.Name = "PromotionsRequestHandler";
             return PromotionsRequestHandler;
-        })();
+        }());
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
@@ -312,7 +309,7 @@ var MartialShirt;
                 function SendContactRequest() {
                 }
                 return SendContactRequest;
-            })();
+            }());
             HelpClass.SendContactRequest = SendContactRequest;
         })(HelpClass = Services.HelpClass || (Services.HelpClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
@@ -353,7 +350,7 @@ var MartialShirt;
             HelpRequestHandler.$inject = ['Server'];
             HelpRequestHandler.Name = "HelpRequestHandler";
             return HelpRequestHandler;
-        })();
+        }());
         Services.HelpRequestHandler = HelpRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
@@ -370,19 +367,19 @@ var MartialShirt;
                 function User() {
                 }
                 return User;
-            })();
+            }());
             UsersClass.User = User;
             var GetLoginMetohesRecieved = (function () {
                 function GetLoginMetohesRecieved() {
                 }
                 return GetLoginMetohesRecieved;
-            })();
+            }());
             UsersClass.GetLoginMetohesRecieved = GetLoginMetohesRecieved;
             var LoginRequest = (function () {
                 function LoginRequest() {
                 }
                 return LoginRequest;
-            })();
+            }());
             UsersClass.LoginRequest = LoginRequest;
         })(UsersClass = Services.UsersClass || (Services.UsersClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
@@ -444,9 +441,73 @@ var MartialShirt;
             UsersRequestHandler.$inject = ['Server'];
             UsersRequestHandler.Name = "UsersRequestHandler";
             return UsersRequestHandler;
-        })();
+        }());
         Services.UsersRequestHandler = UsersRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/services/Baskets/BasketsClass.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        var BasketsClass;
+        (function (BasketsClass) {
+            var GetBasketRequest = (function () {
+                function GetBasketRequest() {
+                }
+                return GetBasketRequest;
+            }());
+            BasketsClass.GetBasketRequest = GetBasketRequest;
+            var GetBasketResponse = (function () {
+                function GetBasketResponse() {
+                }
+                return GetBasketResponse;
+            }());
+            BasketsClass.GetBasketResponse = GetBasketResponse;
+        })(BasketsClass = Services.BasketsClass || (Services.BasketsClass = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/services/Baskets/BasketsRequestHandler.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        'use strict';
+        var BasketsRequestHandler = (function () {
+            function BasketsRequestHandler(server) {
+                this.server = server;
+                this.controller = "baskets";
+                this.addEvents();
+            }
+            BasketsRequestHandler.prototype.GetBasket = function (request) {
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetBasket", this.controller, "getBasket", [request.id, request.token]));
+            };
+            BasketsRequestHandler.prototype.addEvents = function () {
+                this.GetBasketReceived = new signals.Signal();
+                this.server.packetReceived.add(this.onPacketReceived, this);
+            };
+            BasketsRequestHandler.prototype.onPacketReceived = function (response) {
+                if (!response || !response.Content)
+                    return;
+                var parsedResponse = null;
+                switch (response.Identifier) {
+                    case ("GetBasketResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetBasketReceived.dispatch(parsedResponse);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            BasketsRequestHandler.$inject = ['Server'];
+            BasketsRequestHandler.Name = "BasketsRequestHandler";
+            return BasketsRequestHandler;
+        }());
+        Services.BasketsRequestHandler = BasketsRequestHandler;
+        MartialShirt.Init.Application.MartialShirtApp.service(BasketsRequestHandler.Name, BasketsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
@@ -560,7 +621,7 @@ var MartialShirt;
                 Services.UsersRequestHandler.Name
             ];
             return Login;
-        })();
+        }());
         Services.Login = Login;
         MartialShirt.Init.Application.MartialShirtApp.service(Login.Name, Login);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

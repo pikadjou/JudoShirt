@@ -31,7 +31,7 @@ var MartialShirt;
                 this.isAuthenticated = false;
             };
             return AbstractModule;
-        })();
+        }());
         Init.AbstractModule = AbstractModule;
     })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
 })(MartialShirt || (MartialShirt = {}));

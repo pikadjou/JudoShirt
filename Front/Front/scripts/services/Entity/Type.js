@@ -9,7 +9,7 @@ var MartialShirt;
                     this.active = false;
                 }
                 return Type;
-            })();
+            }());
             Entity.Type = Type;
         })(Entity = Services.Entity || (Services.Entity = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

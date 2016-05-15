@@ -15,7 +15,8 @@ use Cake\Validation\Validator;
 class TypesTable extends Table
 {
 
-    private $_manualType = ["Homme", "Femme", "Mixte", "Enfant"];
+    private $_manualClotheType = ["Tee shirt", "Sweat-shirt", "Veste", "Débardeur", "Coque"];
+    private $_manualType = ["Homme", "Femme", "Unisexe", "Enfant"];
     /**
      * Initialize method
      *
@@ -65,6 +66,14 @@ class TypesTable extends Table
         $fullName = (string)$response->name;
         $name = $response->categoryName;
         
+        for($i = 0, $l = count($this->_manualClotheType); $i < $l; $i++){
+            if(stripos($name, $this->_manualClotheType[$i]) !== false){
+
+                $name = $this->_manualClotheType[$i];
+                break;
+            }
+        }
+        
         $types = [];
         
         $type = $this->getByName($name)->first();
@@ -91,10 +100,10 @@ class TypesTable extends Table
 
                 $types[] = $this->save($type);
 
-                $type = true;
+                $find = true;
             }
         }
-         if(!$type){
+         if(!$find){
                  
             $defaultName = "Autre";
 

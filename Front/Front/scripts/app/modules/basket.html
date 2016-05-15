@@ -1,9 +1,80 @@
-﻿<div class="Basket__container">
-	<h3 class="title">Panier - Commande</h3>
-	<div id="cashierShop"></div>
-	<!--<div id="iframe-container">
-		<iframe id="iframe" ng-src="{{vm.trustSrc(vm.url)}}" iframe-onload="{{vm.iframeresize()}}" style="width: 100%; height: 100%">
-			<span>Your browser does not support iframes.</span>
-		</iframe>
-	</div>-->
+﻿<div class="basket__container">
+	<span ng-click="vm.showHideBasket()">
+		<i class="fa fa-shopping-cart fa-4x"></i>
+		<span>{{vm.basket.basketItems.length}}</span>
+	</span>
+	<div class="basket__content" ng-if="vm.showBasket">
+
+		<div class="articles">
+			<div class="article" ng-repeat="basketItem in vm.basket.basketItems">
+				<div class="row collapse">
+					<div class="small-2 columns no-padding">
+						<img src="{{basketItem.pictureLink}}" alt="{{basketItem.description}}" />
+					</div>
+					<div class="small-5 columns">
+						<div class="description">{{basketItem.description}}</div>
+						<div class="appearance">{{basketItem.appearanceName}}</div>
+						<div class="size">{{basketItem.sizeName}}</div>
+					</div>
+					<div class="small-3 columns no-padding">
+						<div class="quantity">
+							<span ng-click="vm.addQuantity(basketItem, -1)"><i class="fa fa-minus" aria-hidden="true"></i></span>
+							<input type="number" ng-model="basketItem.quantity" ng-change="vm.update(basketItem)" />
+							<span ng-click="vm.addQuantity(basketItem, 1)"><i class="fa fa-plus" aria-hidden="true"></i></span>
+						</div>
+						<div class="button button-action delete"><i class="fa fa-trash" aria-hidden="true"></i> supprimer</div>
+					</div>
+					<div class="small-2 columns">
+						<div class="price">{{basketItem.price}} <i class="fa fa-eur" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+			<div class="summary">
+				<div class="row collapse subtotal">
+					<div class="small-10 columns text">
+						Sous-total:
+					</div>
+					<div class="small-2 columns value">
+						{{vm.basket.priceItems}} <i class="fa fa-eur" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="row collapse shipping">
+					<div class="small-10 columns text">
+						Frais de port:
+					</div>
+					<div class="small-2 columns value">
+						{{vm.basket.priceShipping}} <i class="fa fa-eur" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="row collapse total">
+					<div class="small-10 columns text">
+						Total
+						<span class="ttc">
+							ttc
+						</span>
+						:
+					</div>
+					<div class="small-2 columns value">
+						{{vm.basket.priceTotal}} <i class="fa fa-eur" aria-hidden="true"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bottom row collapse">
+			<div class="small-3 columns continue">
+				<button class="button button-action">Continuer mes achats</button>
+			</div>
+			<div class="small-3 columns delivery">
+				Livraison: 4 à 6 jours ouvrables
+			</div>
+			<div class="small-3 columns payement">
+				<div class="price">{{vm.basket.priceTotal}} <i class="fa fa-eur" aria-hidden="true"></i></div>
+				<div class="extra">ttc</div>
+				<div class="extra">livraison incluse</div>
+			</div>
+			<div class="small-3 columns order">
+				<button class="button button-player">Commander</button>
+			</div>
+		</div>
+	</div>
 </div>

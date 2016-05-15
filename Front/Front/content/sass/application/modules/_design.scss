@@ -12,6 +12,8 @@
 			border-bottom: 1px solid $light-gray-color;
 		}
 		.filter{
+			display: inline-block;
+			margin-top: 2px;
 			padding: 2px 2px 0px 2px;
 			a{
 				color: $black-color;

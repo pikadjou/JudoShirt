@@ -14,7 +14,7 @@ var MartialShirt;
             '$routeParams'
         ];
         return PageDesign;
-    })();
+    }());
     MartialShirt.PageDesign = PageDesign;
     MartialShirt.Init.Application.MartialShirtApp.controller(PageDesign.Name, PageDesign);
 })(MartialShirt || (MartialShirt = {}));

@@ -53,7 +53,7 @@ var MartialShirt;
             UsersRequestHandler.$inject = ['Server'];
             UsersRequestHandler.Name = "UsersRequestHandler";
             return UsersRequestHandler;
-        })();
+        }());
         Services.UsersRequestHandler = UsersRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(UsersRequestHandler.Name, UsersRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

@@ -1,5 +1,3 @@
-/// <reference path='../../_all.ts' />
-
 module MartialShirt.Services {
     'use strict';
 

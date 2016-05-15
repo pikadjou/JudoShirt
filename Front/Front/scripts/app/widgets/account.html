@@ -1,5 +1,5 @@
 ﻿<div class="row widget__account">
-	<div ng-if="vm.isAuthenticated" class="small-8 columns no-padding">
+	<div ng-if="vm.isAuthenticated" class="small-10 columns no-padding">
 		<div class="row collapse authenticated">
 			<div class="small-12 columns hello">
 				Bonjour, {{vm._login.user.name}} <i class="fa fa-smile-o"></i>
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	</div>
-	<div ng-if="!vm.isAuthenticated" class="small-8 columns no-padding">
+	<div ng-if="!vm.isAuthenticated" class="small-10 columns no-padding">
 		<div class="row collapse unauthenticated">
 			<div class="small-6 columns connection">
 				<a ng-click="vm._connectionPanelOpen = !vm._connectionPanelOpen" class="title">
@@ -67,8 +67,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="small-4 columns no-padding">
-		<div id="accountShop"></div>
+	<div class="small-2 columns no-padding">
+		<basket></basket>
 	</div>
 
 

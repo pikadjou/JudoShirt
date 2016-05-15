@@ -53,7 +53,7 @@ var MartialShirt;
             };
             Server.$inject = ['$http'];
             return Server;
-        })();
+        }());
         Services.Server = Server;
         MartialShirt.Init.Application.MartialShirtApp.service("Server", Server);
         var Request = (function () {
@@ -66,7 +66,7 @@ var MartialShirt;
                 this.Content = content;
             }
             return Request;
-        })();
+        }());
         Services.Request = Request;
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));

@@ -1,4 +1,3 @@
-/// <reference path="../../typing/signal.d.ts" />
 var MartialShirt;
 (function (MartialShirt) {
     var Init;
@@ -17,7 +16,7 @@ var MartialShirt;
                 return this.instance;
             };
             return Signals;
-        })();
+        }());
         Init.Signals = Signals;
     })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
 })(MartialShirt || (MartialShirt = {}));

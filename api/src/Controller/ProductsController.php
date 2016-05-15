@@ -19,14 +19,10 @@ class ProductsController extends AppController
          $this->loadModel("Designs");
 
     }
-    /**
-     * Index method
-     *
-     * @return void
-     */
+    
     public function getProducts($id)
     {
-        $query = $this->Designs->getByShopId($id);
+        $query = $this->Designs->getOne($id);
         $this->Designs->addCategories($query);
         $design = $query->first();
         
@@ -34,6 +30,7 @@ class ProductsController extends AppController
         
         $this->Products->addType($query);
         
+        //$query->cache('cache_key');
         $products = $query->toArray();
                
         $response = new ProductsRequestHandler\GetProductsResponse();
@@ -45,9 +42,10 @@ class ProductsController extends AppController
     public function getProduct($id = null)
     {
         
-        $query = $this->Products->getByShopIdNoCache($id);
+        $query = $this->Products->getOneNoCache($id);
+        $this->Products->addDesign($query);
         $product = $query->first();
-        
+        debug($product);
         $response = new ProductsRequestHandler\GetProductResponse();
         $response->init($product);
 

@@ -1,40 +1,82 @@
-/// <reference path='../../_all.ts' />
-
 module MartialShirt {
     'use strict';
 
-	export class C_Basket {
-		
-		public sce = null;
+	export class C_Basket extends MartialShirt.Init.AbstractModule {
 
+		public showBasket: boolean = false;
+		public basket : Services.Entity.Basket = null;
 		public static $inject = [
 			'$scope',
-			'$sce'
+			Services.BasketsRequestHandler.Name
 		];
 		constructor(
 			private $scope: any,
-			private $sce: any
+			private RH: Services.BasketsRequestHandler
 			) {
+			super();
 
-			this.sce = $sce;
-			$scope.vm = $scope;
+			this.init($scope);
 
-			$scope.vm.iframeresize = this.iframeresize;
-			$scope.vm.trustSrc = this.trustSrc;
+			this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
 
-			$scope.vm.url = "https://checkout.spreadshirt.fr/?basketId=902d9ece-503d-4460-b404-40e5a00ed0ad&shopId=688862#/spreadshirt";
-
+			if (!this._login.hasToken()) {
+				this.launchGetBasket();
+			}
 			
 		}
 
-		public iframeresize() {
+		public Authenticated() {
+			super.Authenticated();
+			this.launchGetBasket();
+		}
+		public Unauthenticated() {
+			super.Unauthenticated();
 
-			//var the_height = (<any>document.getElementById('iframe')).contentWindow.document.body.scrollHeight;
-			(<any>$('#iframe-container')).height(2000);
+			this.$scope.$apply();
 		}
 
-		public trustSrc = (url) => {
-			return this.sce.trustAsResourceUrl(url);
+		public launchGetBasket() {
+			var request = new Services.BasketsClass.GetBasketRequest();
+			request.id = "2788b7e1-1309-4697-82a8-ed4614ba8fbf";
+			request.token = this._login.getToken();
+
+			this.RH.GetBasket(request);
+		}
+		public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse) {
+			this.basket = response.basket;
+
+			//for (var i = 0, l = this.basket.basketItems.length; i < l; i++){
+
+			//	this.$scope.$watch(
+			//		() => { return this.basket.basketItems[i].quantity },
+			//		(newvval, oldval, scope) => {
+			//			console.log('hey, myVar has changed!');
+			//		}
+			//	);
+				
+			//}
+
+			//setTimeout(() => {
+			//	for (var i = 0, l = this.basket.basketItems.length; i < l; i++) {
+
+			//		this.basket.basketItems[i].quantity = 10;
+
+			//	}
+			//}, 1000);
+		}
+
+		public showHideBasket() {
+			this.showBasket = !this.showBasket;
+		}
+
+		public update(basketItem: Services.Entity.BasketItem) {
+			console.log("update");
+		}
+
+		public addQuantity(basketItem: Services.Entity.BasketItem, quantity: number) {
+			basketItem.quantity += quantity;
+
+			this.update(basketItem);
 		}
 	}
 
@@ -42,9 +84,7 @@ module MartialShirt {
 		public templateUrl = "/scripts/app/modules/basket.html";
 		public restrict = "E";
 		public replace = true;
-		public scope = {
-			designid: '@'
-		};
+		public scope = { };
 
 		public static Name = "Basket".toLocaleLowerCase();
 

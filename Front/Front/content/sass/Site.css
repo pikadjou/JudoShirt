@@ -3195,6 +3195,7 @@ label.error {
 
 body {
   background: #C5C6C8;
+  font-size: 1rem;
 }
 
 header {
@@ -3496,6 +3497,7 @@ iframe {
 
 .main-menu__container ul {
   margin: 0;
+  padding: 0;
   background-color: #5a616b;
   border-radius: 0 0 10px 10px;
   -webkit-border-radius: 0 0 10px 10px;
@@ -3627,6 +3629,8 @@ iframe {
 }
 
 .design__container .filters .filter {
+  display: inline-block;
+  margin-top: 2px;
   padding: 2px 2px 0px 2px;
 }
 
@@ -3718,6 +3722,100 @@ iframe {
   padding: 5px;
   color: black;
   background-color: #C5C6C8;
+}
+
+.basket__container .basket__content {
+  width: 750px;
+  position: absolute;
+  right: 0;
+  z-index: 10;
+  border: 5px solid #499bff;
+  background-color: white;
+}
+
+.basket__container .basket__content .articles {
+  padding: 15px;
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.basket__container .basket__content .articles .article {
+  text-align: center;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #499bff;
+}
+
+.basket__container .basket__content .articles .article .description {
+  font-weight: bold;
+}
+
+.basket__container .basket__content .articles .article .size {
+  font-size: 0.75rem;
+}
+
+.basket__container .basket__content .articles .article .quantity input {
+  width: 60%;
+  text-align: right;
+}
+
+.basket__container .basket__content .articles .article .delete {
+  margin-top: 3px;
+  padding: 10px;
+}
+
+.basket__container .basket__content .articles .article .price {
+  font-weight: bold;
+}
+
+.basket__container .basket__content .articles .summary {
+  margin-top: 5px;
+  font-size: 1.125rem;
+}
+
+.basket__container .basket__content .articles .summary .value {
+  text-align: right;
+}
+
+.basket__container .basket__content .articles .summary .total {
+  padding-top: 3px;
+  border-top: 1px dashed #499bff;
+  font-weight: bold;
+}
+
+.basket__container .basket__content .articles .summary .total .ttc {
+  font-weight: normal;
+  font-size: 0.875rem;
+}
+
+.basket__container .basket__content .bottom {
+  border-top: 1px #499bff solid;
+  padding: 15px;
+}
+
+.basket__container .basket__content .bottom .continue {
+  font-size: 0.875rem;
+}
+
+.basket__container .basket__content .bottom .delivery {
+  text-align: right;
+  padding: 3px;
+}
+
+.basket__container .basket__content .bottom .payement {
+  padding: 3px;
+  text-align: right;
+}
+
+.basket__container .basket__content .bottom .payement .price {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.basket__container .basket__content .bottom .payement .extra {
+  line-height: 10px;
+  font-size: 0.75rem;
 }
 
 .widget__account .unauthenticated, .widget__account .authenticated {

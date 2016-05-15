@@ -8,7 +8,7 @@ var MartialShirt;
                 function Design() {
                 }
                 return Design;
-            })();
+            }());
             Entity.Design = Design;
         })(Entity = Services.Entity || (Services.Entity = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

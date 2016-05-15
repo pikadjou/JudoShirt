@@ -47,9 +47,7 @@ module MartialShirt {
 					url = promotion.params;
 					window.location.href = url;
 					return;
-					break;
 				default: return;
-					break;
 			}
 
 			this.$location.path(url);

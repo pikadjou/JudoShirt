@@ -1,8 +1,8 @@
 ﻿.main-menu__container{
 	ul{
 		margin: 0;
+		padding: 0;
 
-		
 		background-color: $bg-panel-dark;
 		@include radius(0 0 10px 10px);
 		li{

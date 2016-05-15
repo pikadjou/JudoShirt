@@ -8,7 +8,7 @@ var MartialShirt;
                 function Tag() {
                 }
                 return Tag;
-            })();
+            }());
             Entity.Tag = Tag;
         })(Entity = Services.Entity || (Services.Entity = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

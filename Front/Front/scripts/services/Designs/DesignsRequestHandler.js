@@ -1,4 +1,3 @@
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     var Services;
@@ -75,7 +74,7 @@ var MartialShirt;
             DesignsRequestHandler.$inject = ['Server'];
             DesignsRequestHandler.Name = "DesignsRequestHandler";
             return DesignsRequestHandler;
-        })();
+        }());
         Services.DesignsRequestHandler = DesignsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(DesignsRequestHandler.Name, DesignsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

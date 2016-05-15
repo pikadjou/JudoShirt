@@ -14,7 +14,7 @@ var MartialShirt;
             '$routeParams'
         ];
         return PageCategory;
-    })();
+    }());
     MartialShirt.PageCategory = PageCategory;
     MartialShirt.Init.Application.MartialShirtApp.controller(PageCategory.Name, PageCategory);
 })(MartialShirt || (MartialShirt = {}));

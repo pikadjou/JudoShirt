@@ -40,9 +40,9 @@
 		public addShopConfiguration(config: any, light: boolean = false, changeBasketCount: boolean = false, changeWishCount : boolean = false) {
 
 
-			config.shopName = 'mangelavie',
-			config.locale = 'fr_FR',
-			config.prefix = '//shop.spreadshirt.fr',
+			config.shopName = Config.spreadShirt.shopName;
+			config.locale = Config.spreadShirt.locale;
+			config.prefix = Config.spreadShirt.prefix;
 
 			config.light = light;
 			config.changeBasketCount = changeBasketCount;

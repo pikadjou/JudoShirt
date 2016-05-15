@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var MartialShirt;
 (function (MartialShirt) {
@@ -29,7 +28,7 @@ var MartialShirt;
             MartialShirt.Services.PrintsRequestHandler.Name
         ];
         return C_Print;
-    })(MartialShirt.Init.AbstractModule);
+    }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_Print = C_Print;
     var Print = (function () {
         function Print() {
@@ -42,7 +41,7 @@ var MartialShirt;
         Print.Name = "Print".toLocaleLowerCase();
         Print.$inject = [];
         return Print;
-    })();
+    }());
     MartialShirt.Print = Print;
     MartialShirt.Init.Application.MartialShirtApp.directive(Print.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Print));
 })(MartialShirt || (MartialShirt = {}));

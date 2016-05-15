@@ -7,9 +7,12 @@
 		</span>
 	</h3>
 	<div class="module__content">
-		<a class="button back" href="/category/{{vm.mainCategory.id}}">
-			<i class="fa fa-chevron-left"></i>retour à la catégorie {{vm.mainCategory.name}}
-		</a>
+		<span ng-repeat="category in vm.mainCategories">
+			<a class="button back" href="/category/{{category.id}}">
+				<i class="fa fa-reply"></i>Catégorie {{category.name}}
+			</a>
+		</span>
+
 		<div class="filters">
 			<div class="group">
 				<span ng-repeat="type in vm.types | filter: { type: '1' }" class="filter"
@@ -34,7 +37,7 @@
 			<ul class="small-block-grid-4 article-list__container">
 				<li ng-repeat="product in vm.products" ng-if="vm.isActiveProduct(product)">
 					<div class="article__container">
-						<a href="/product/{{product.shopId}}#!-A{{product.shopId}}">
+						<a href="/product/{{product.id}}#!-A{{product.shopId}}">
 							<div class="row collapse">
 								<div class="small-12 columns">
 									<img ng-src="{{product.thumbnail}}" />

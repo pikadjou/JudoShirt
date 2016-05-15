@@ -107,7 +107,7 @@ var MartialShirt;
                 Services.UsersRequestHandler.Name
             ];
             return Login;
-        })();
+        }());
         Services.Login = Login;
         MartialShirt.Init.Application.MartialShirtApp.service(Login.Name, Login);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

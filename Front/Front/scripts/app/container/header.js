@@ -1,4 +1,3 @@
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     var Container;
@@ -13,7 +12,7 @@ var MartialShirt;
                 '$scope'
             ];
             return C_Header;
-        })();
+        }());
         Container.C_Header = C_Header;
         var Header = (function () {
             function Header() {
@@ -26,7 +25,7 @@ var MartialShirt;
             Header.Name = "headercontainer".toLocaleLowerCase();
             Header.$inject = [];
             return Header;
-        })();
+        }());
         Container.Header = Header;
         MartialShirt.Init.Application.MartialShirtApp.directive(Header.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Header));
     })(Container = MartialShirt.Container || (MartialShirt.Container = {}));

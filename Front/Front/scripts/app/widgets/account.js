@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var MartialShirt;
 (function (MartialShirt) {
@@ -20,11 +19,20 @@ var MartialShirt;
             this._loginForm = { pseudo: "", errorPseudo: "", password: "", errorPassword: "", errorServeur: "" };
             this._loader = false;
             this.ReloadShop = function () {
-                $("#" + _this.baseId).empty();
-                var config = {
-                    baseId: _this.baseId
-                };
-                MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
+                if (1 == 1) {
+                    return;
+                }
+                var intervalId = setInterval(function () {
+                    var element = $("#" + _this.baseId).first();
+                    if (element && element.length > 0) {
+                        element.empty();
+                        var config = {
+                            baseId: _this.baseId
+                        };
+                        MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
+                        clearInterval(intervalId);
+                    }
+                }, 100, intervalId);
             };
             this.errorLogin = function (message) {
                 _this._loader = false;
@@ -37,10 +45,7 @@ var MartialShirt;
             this.init($scope);
             this._signal.changeBasketCount.add(this.ReloadShop, this);
             this._signal.changeWishCount.add(this.ReloadShop, this);
-            var config = {
-                baseId: this.baseId
-            };
-            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
+            this.ReloadShop();
             this._login.addErrorHandler(this.errorLogin);
         }
         C_WidgetAccount.prototype.Authenticated = function () {
@@ -77,7 +82,7 @@ var MartialShirt;
             '$scope'
         ];
         return C_WidgetAccount;
-    })(MartialShirt.Init.AbstractModule);
+    }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_WidgetAccount = C_WidgetAccount;
     var WidgetAccount = (function () {
         function WidgetAccount() {
@@ -90,7 +95,7 @@ var MartialShirt;
         WidgetAccount.Name = "WidgetAccount".toLocaleLowerCase();
         WidgetAccount.$inject = [];
         return WidgetAccount;
-    })();
+    }());
     MartialShirt.WidgetAccount = WidgetAccount;
     MartialShirt.Init.Application.MartialShirtApp.directive(WidgetAccount.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetAccount));
 })(MartialShirt || (MartialShirt = {}));

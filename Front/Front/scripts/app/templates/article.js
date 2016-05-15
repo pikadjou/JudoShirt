@@ -15,7 +15,7 @@ var MartialShirt;
             '$scope'
         ];
         return C_TemplateArticle;
-    })();
+    }());
     MartialShirt.C_TemplateArticle = C_TemplateArticle;
     var TemplateArticle = (function () {
         function TemplateArticle() {
@@ -30,7 +30,7 @@ var MartialShirt;
         TemplateArticle.Name = "TemplateArticle".toLocaleLowerCase();
         TemplateArticle.$inject = [];
         return TemplateArticle;
-    })();
+    }());
     MartialShirt.TemplateArticle = TemplateArticle;
     MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticle.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateArticle));
 })(MartialShirt || (MartialShirt = {}));

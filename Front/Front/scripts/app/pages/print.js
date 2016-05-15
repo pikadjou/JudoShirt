@@ -13,7 +13,7 @@ var MartialShirt;
             '$routeParams'
         ];
         return PagePrint;
-    })();
+    }());
     MartialShirt.PagePrint = PagePrint;
     MartialShirt.Init.Application.MartialShirtApp.controller(PagePrint.Name, PagePrint);
 })(MartialShirt || (MartialShirt = {}));

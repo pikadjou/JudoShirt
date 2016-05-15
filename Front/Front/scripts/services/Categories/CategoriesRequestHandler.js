@@ -32,7 +32,7 @@ var MartialShirt;
             CategoriesRequestHandler.$inject = ['Server'];
             CategoriesRequestHandler.Name = "CategoriesRequestHandler";
             return CategoriesRequestHandler;
-        })();
+        }());
         Services.CategoriesRequestHandler = CategoriesRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(CategoriesRequestHandler.Name, CategoriesRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

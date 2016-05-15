@@ -1,21 +1,21 @@
-/// <reference path='../../_all.ts' />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
     var C_Product = (function (_super) {
         __extends(C_Product, _super);
-        function C_Product($scope, RH) {
+        function C_Product($scope, $location, RH) {
             _super.call(this);
             this.$scope = $scope;
+            this.$location = $location;
             this.RH = RH;
             this.productid = 0;
             this.product = null;
+            this.design = null;
             this.sce = null;
             this.init($scope);
             this.RH.GetProductReceived.add(this.onPacketRecieved, this);
@@ -32,13 +32,15 @@ var MartialShirt;
         }
         C_Product.prototype.onPacketRecieved = function (response) {
             this.product = response.product;
+            this.design = response.product.design;
         };
         C_Product.$inject = [
             '$scope',
+            '$location',
             MartialShirt.Services.ProductsRequestHandler.Name
         ];
         return C_Product;
-    })(MartialShirt.Init.AbstractModule);
+    }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_Product = C_Product;
     var Product = (function () {
         function Product() {
@@ -53,7 +55,7 @@ var MartialShirt;
         Product.Name = "Product".toLocaleLowerCase();
         Product.$inject = [];
         return Product;
-    })();
+    }());
     MartialShirt.Product = Product;
     MartialShirt.Init.Application.MartialShirtApp.directive(Product.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Product));
 })(MartialShirt || (MartialShirt = {}));

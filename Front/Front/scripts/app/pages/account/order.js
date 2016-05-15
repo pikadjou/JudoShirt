@@ -11,7 +11,7 @@ var MartialShirt;
             '$scope'
         ];
         return PageOrder;
-    })();
+    }());
     MartialShirt.PageOrder = PageOrder;
     MartialShirt.Init.Application.MartialShirtApp.controller(PageOrder.Name, PageOrder);
 })(MartialShirt || (MartialShirt = {}));

@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var MartialShirt;
 (function (MartialShirt) {
@@ -16,7 +15,7 @@ var MartialShirt;
             this.RH = RH;
             this.designid = 0;
             this.design = null;
-            this.mainCategory = null;
+            this.mainCategories = [];
             this.products = [];
             this.types = [];
             this.typeIds = [];
@@ -87,9 +86,7 @@ var MartialShirt;
             }
             for (var arrayC = this.design.categories, i = 0, l = arrayC.length, category = null; i < l; i++) {
                 category = arrayC[i];
-                if (category.parent) {
-                    this.mainCategory = category;
-                }
+                this.mainCategories.push(category);
             }
         };
         C_Design.prototype.addType = function (type) {
@@ -105,7 +102,7 @@ var MartialShirt;
             MartialShirt.Services.ProductsRequestHandler.Name
         ];
         return C_Design;
-    })(MartialShirt.Init.AbstractModule);
+    }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_Design = C_Design;
     var Design = (function () {
         function Design() {
@@ -120,7 +117,7 @@ var MartialShirt;
         Design.Name = "Designs".toLocaleLowerCase();
         Design.$inject = [];
         return Design;
-    })();
+    }());
     MartialShirt.Design = Design;
     MartialShirt.Init.Application.MartialShirtApp.directive(Design.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Design));
 })(MartialShirt || (MartialShirt = {}));

@@ -1,5 +1,3 @@
-/// <reference path='../../_all.ts' />
-
 module MartialShirt {
     'use strict';
 
@@ -7,14 +5,17 @@ module MartialShirt {
 		
 		public productid: number = 0;
 		public product: Services.Entity.Product = null;
+		public design: Services.Entity.Design = null;
 
 		public sce = null;
 		public static $inject = [
 			'$scope',
+			'$location',
 			Services.ProductsRequestHandler.Name
 		];
 		constructor(
 			private $scope: any,
+			private $location: any,
 			private RH: Services.ProductsRequestHandler
 			) {
 			super();
@@ -25,11 +26,14 @@ module MartialShirt {
 
 			this.RH.GetProduct([this.productid]);
 
+			
+
 			$scope.$on('$locationChangeStart', function (event, next, current) {
 				if (next.indexOf("#!") >= 0) {
 					event.preventDefault();
 				}				
 			});
+			
 			var config = {
 				baseId: 'productShop'
 			};
@@ -38,6 +42,13 @@ module MartialShirt {
 
 		public onPacketRecieved(response: any) {
 			this.product = response.product;
+			this.design = response.product.design;
+
+			//window.location.hash = "!" + this.product.shopId;
+			//this.$location.path(this.$location.path() + "#!" + this.product.shopId).replace().notify(false);
+			//this.$location.hash("!" + this.product.shopId).replace().notify(false);
+
+			
 		}
 	}
 

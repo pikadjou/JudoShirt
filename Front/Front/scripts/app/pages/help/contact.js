@@ -11,7 +11,7 @@ var MartialShirt;
             '$scope'
         ];
         return PageContact;
-    })();
+    }());
     MartialShirt.PageContact = PageContact;
     MartialShirt.Init.Application.MartialShirtApp.controller(PageContact.Name, PageContact);
 })(MartialShirt || (MartialShirt = {}));

@@ -16,7 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-
+use Cake\Event\Event;
 /**
  * Application Controller
  *
@@ -45,7 +45,7 @@ class AppController extends Controller
         }
     }
     
-    function beforeFilter() {
+    function beforeFilter(Event $event) {
         if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
             $this->layout = 'admin';
         }

@@ -32,7 +32,7 @@ var MartialShirt;
             HelpRequestHandler.$inject = ['Server'];
             HelpRequestHandler.Name = "HelpRequestHandler";
             return HelpRequestHandler;
-        })();
+        }());
         Services.HelpRequestHandler = HelpRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(HelpRequestHandler.Name, HelpRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

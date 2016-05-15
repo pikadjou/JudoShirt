@@ -5,7 +5,7 @@ module MartialShirt {
 		
 		public designid: number = 0;
 		public design: Services.Entity.Design = null;
-		public mainCategory: Services.Entity.Category = null;
+		public mainCategories: Services.Entity.Category[] = [];
 		public products: Services.Entity.Product[] = [];
 
 		public types: Services.Entity.Type[] = [];
@@ -49,9 +49,7 @@ module MartialShirt {
 			for (var arrayC = this.design.categories, i = 0, l = arrayC.length, category : Services.Entity.Category = null; i < l; i++) {
 				category = arrayC[i];
 
-				if (category.parent) {
-					this.mainCategory = category;
-				}
+				this.mainCategories.push(category);
 			}
 		}
 

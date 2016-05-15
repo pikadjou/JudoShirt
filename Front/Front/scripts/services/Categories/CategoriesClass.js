@@ -8,7 +8,7 @@ var MartialShirt;
                 function GetCategoriesResponse() {
                 }
                 return GetCategoriesResponse;
-            })();
+            }());
             CategoriesClass.GetCategoriesResponse = GetCategoriesResponse;
         })(CategoriesClass = Services.CategoriesClass || (Services.CategoriesClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));

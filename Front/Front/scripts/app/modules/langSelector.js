@@ -1,4 +1,3 @@
-/// <reference path='../../_all.ts' />
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
@@ -12,7 +11,7 @@ var MartialShirt;
             MartialShirt.Services.CategoriesRequestHandler.Name
         ];
         return C_LangSelector;
-    })();
+    }());
     MartialShirt.C_LangSelector = C_LangSelector;
     var LangSelector = (function () {
         function LangSelector() {
@@ -25,7 +24,7 @@ var MartialShirt;
         LangSelector.Name = "LangSelector".toLocaleLowerCase();
         LangSelector.$inject = [];
         return LangSelector;
-    })();
+    }());
     MartialShirt.LangSelector = LangSelector;
     MartialShirt.Init.Application.MartialShirtApp.directive(LangSelector.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(LangSelector));
 })(MartialShirt || (MartialShirt = {}));

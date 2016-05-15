@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var MartialShirt;
 (function (MartialShirt) {
@@ -30,10 +29,7 @@ var MartialShirt;
                         url = promotion.params;
                         window.location.href = url;
                         return;
-                        break;
-                    default:
-                        return;
-                        break;
+                    default: return;
                 }
                 _this.$location.path(url);
             };
@@ -52,7 +48,7 @@ var MartialShirt;
             MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_PromotionEntity;
-    })(MartialShirt.Init.AbstractModule);
+    }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_PromotionEntity = C_PromotionEntity;
     var PromotionEntity = (function () {
         function PromotionEntity() {
@@ -67,7 +63,7 @@ var MartialShirt;
         PromotionEntity.Name = "PromotionEntity".toLocaleLowerCase();
         PromotionEntity.$inject = [];
         return PromotionEntity;
-    })();
+    }());
     MartialShirt.PromotionEntity = PromotionEntity;
     MartialShirt.Init.Application.MartialShirtApp.directive(PromotionEntity.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionEntity));
 })(MartialShirt || (MartialShirt = {}));

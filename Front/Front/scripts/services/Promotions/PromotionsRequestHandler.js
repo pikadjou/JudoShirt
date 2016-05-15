@@ -45,7 +45,7 @@ var MartialShirt;
             PromotionsRequestHandler.$inject = ['Server'];
             PromotionsRequestHandler.Name = "PromotionsRequestHandler";
             return PromotionsRequestHandler;
-        })();
+        }());
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
