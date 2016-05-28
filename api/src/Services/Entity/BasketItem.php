@@ -20,6 +20,8 @@ class BasketItem
     public $pictureLink = "";
     public $link = "";
     
+    public $extraElement = "";
+    
     function __construct($item){
         if($item === null){
             return;
@@ -55,6 +57,7 @@ class BasketItem
                 $this->link = (string)$link->attributes('xlink', true);
             }
         }
+        $this->extraElement = $item->element->asXML();
         
     }
 }

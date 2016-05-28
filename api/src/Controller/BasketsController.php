@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Services\BasketsRequestHandler;
+use App\Services\HelpRequestHandler;
 
 class BasketsController extends AppController
 {
@@ -37,11 +38,47 @@ class BasketsController extends AppController
         $explode = explode("\r\n\r\n", $basket, 2);
         $basket = end($explode);
         $basket = simplexml_load_string($basket);
-
+//debug($basket);
         //traitement du basket
         $response = new BasketsRequestHandler\GetBasketResponse();
         $response->init($basket);
 
         parent::setJson($response);
+    }
+    
+    public function updateQuantity(){
+        $data = $this->request->data;
+
+        if($data){
+            $basketId = $data['basketId'];
+            $id = $data['id'];
+            $quantity = $data['quantity'];
+            $element = $data['element'];
+
+            if($quantity === 0){
+                $ok = $this->Baskets->deleteArticle($basketId, $id);
+            }else{
+                $ok = $this->Baskets->updateArticleQuantity($basketId, $id, $quantity, $element);
+            }
+            
+
+            $basket = $this->Baskets->getOne($basketId);
+            $explode = explode("\r\n\r\n", $basket, 2);
+            $basket = end($explode);
+            $basket = simplexml_load_string($basket);
+
+            //traitement du basket
+            $response = new BasketsRequestHandler\GetBasketResponse();
+            $response->init($basket);
+
+            parent::setJson($response);
+        }else{
+            
+            $response = new HelpRequestHandler\SendContactResponse();
+            $response->init(0, "test");
+
+            parent::setJson($response);
+        }
+        
     }
 }

@@ -86,7 +86,6 @@ var MartialShirt;
                 var intervalId = setInterval(function () {
                     var element = $("#sprd-main").first();
                     if (element && element.length > 0) {
-                        element.attr("id", "shop");
                         if (config.changeBasketCount) {
                             $(element).on('DOMSubtreeModified', "#basketCountText", function () {
                                 MartialShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
@@ -271,6 +270,16 @@ var MartialShirt;
                     url = url + this.urlExtension;
                     console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
                     this.$http.post(url, request.Content).
+                        then(function (response) {
+                        _this.onPacketReceived(response.data);
+                    }, function (response) {
+                        console.log(response);
+                    });
+                }
+                else if (request.Type.toLocaleUpperCase() === "PUT") {
+                    url = url + this.urlExtension;
+                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    this.$http.put(url, request.Content).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {

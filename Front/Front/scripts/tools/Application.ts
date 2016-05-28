@@ -73,7 +73,7 @@
 
 				if (element && element.length > 0) {
 					
-					element.attr("id", "shop");
+					//element.attr("id", "shop");
 
 					if (config.changeBasketCount) {
 						$(element).on('DOMSubtreeModified', "#basketCountText", function () {

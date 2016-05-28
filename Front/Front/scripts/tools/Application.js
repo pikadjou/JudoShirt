@@ -61,7 +61,6 @@ var MartialShirt;
                 var intervalId = setInterval(function () {
                     var element = $("#sprd-main").first();
                     if (element && element.length > 0) {
-                        element.attr("id", "shop");
                         if (config.changeBasketCount) {
                             $(element).on('DOMSubtreeModified', "#basketCountText", function () {
                                 MartialShirt.Init.Signals.getInstance().changeBasketCount.dispatch();

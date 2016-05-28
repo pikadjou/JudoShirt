@@ -21,6 +21,9 @@ module MartialShirt.Services {
 		public GetBasket(request: Services.BasketsClass.GetBasketRequest): string {
 			return this.server.request(new MartialShirt.Services.Request("GET", "GetBasket", this.controller, "getBasket", [request.id, request.token]));
 		}
+		public UpdateQuantity(request: Services.BasketsClass.UpdateQuantityRequest): string {
+			return this.server.request(new MartialShirt.Services.Request("POST", "UpdateQuantity", this.controller, "updateQuantity", request));
+		}
 
 		private addEvents(): void {
 			this.GetBasketReceived = new signals.Signal();

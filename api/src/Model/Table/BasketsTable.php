@@ -42,21 +42,30 @@ class BasketsTable extends Table
         $basket = $this->_spreadshirt->getRequest($url);
         return $basket;
     }
-    private function get_headers_from_curl_response($response)
-    {
-        $headers = array();
+    
+    public function updateArticleQuantity($basketId, $id, $quantity, $element){
+        
+        $url = $this->_spreadshirt->_host . "baskets/" . $basketId ."/items/". $id;
 
-        $header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
+        $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+                . '<basketItem xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net" xlink:href="http://api.spreadshirt.net/api/v1/baskets/'.$basketId.'/items/'.$id.'" '
+                . 'id="'.$id.'">'
+                . '<quantity>'.$quantity.'</quantity>'
+                . $element                
+                . '</basketItem>';
 
-        foreach (explode("\r\n", $header_text) as $i => $line)
-            if ($i === 0){
-                $headers['http_code'] = $line;
-            } else {
-                list ($key, $value) = explode(': ', $line);
+        debug($xml);
+        $reponse = $this->_spreadshirt->putRequest($url, $xml);
+        
+        return true;
+    }
+    
+    public function deleteArticle($basketId, $id){
+        
+        $url = $this->_spreadshirt->_host . "baskets/" . $basketId ."/items/". $id;
 
-                $headers[$key] = $value;
-            }
-
-        return $headers;
+        $reponse = $this->_spreadshirt->deleteRequest($url);
+        debug($reponse);
+        return true;
     }
 }

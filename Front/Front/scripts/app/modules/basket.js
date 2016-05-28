@@ -16,6 +16,7 @@ var MartialShirt;
             this.basket = null;
             this.init($scope);
             this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
+            this._signal.changeBasketCount.add(this.launchGetBasket, this);
             if (!this._login.hasToken()) {
                 this.launchGetBasket();
             }
@@ -23,10 +24,6 @@ var MartialShirt;
         C_Basket.prototype.Authenticated = function () {
             _super.prototype.Authenticated.call(this);
             this.launchGetBasket();
-        };
-        C_Basket.prototype.Unauthenticated = function () {
-            _super.prototype.Unauthenticated.call(this);
-            this.$scope.$apply();
         };
         C_Basket.prototype.launchGetBasket = function () {
             var request = new MartialShirt.Services.BasketsClass.GetBasketRequest();
@@ -40,11 +37,31 @@ var MartialShirt;
         C_Basket.prototype.showHideBasket = function () {
             this.showBasket = !this.showBasket;
         };
+        C_Basket.prototype.getNbItems = function () {
+            if (!this.basket || this.basket === null) {
+                return 0;
+            }
+            var nb = 0;
+            for (var i = 0, l = this.basket.basketItems.length; i < l; i++) {
+                nb += this.basket.basketItems[i].quantity;
+            }
+            return nb;
+        };
         C_Basket.prototype.update = function (basketItem) {
-            console.log("update");
+            var request = new MartialShirt.Services.BasketsClass.UpdateQuantityRequest();
+            request.basketId = this.basket.id;
+            request.id = basketItem.id;
+            request.quantity = basketItem.quantity;
+            request.element = basketItem.extraElement;
+            this.RH.UpdateQuantity(request);
         };
         C_Basket.prototype.addQuantity = function (basketItem, quantity) {
-            basketItem.quantity += quantity;
+            if (quantity === 0) {
+                basketItem.quantity = 0;
+            }
+            else {
+                basketItem.quantity += quantity;
+            }
             this.update(basketItem);
         };
         C_Basket.$inject = [

@@ -125,10 +125,13 @@ class ProductsTable extends Table
     }
     
     public function addTypesToProduct($product, $url){
-        
+        //debug($url);
         $response = $this->_spreadshirt->getRequest($url) ;
         $response = simplexml_load_string($response);
         
+        if(!$response){
+            return;            
+        }
         $product->name = (string)$response->name;
         
         $this->save($product);

@@ -23,7 +23,7 @@ var MartialShirt;
                         .when('/', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
                         .when('/category/:id', { templateUrl: '/scripts/app/pages/category.html', controller: 'PageCategory' })
                         .when('/design/:id', { templateUrl: '/scripts/app/pages/design.html', controller: 'PageDesign' })
-                        .when('/product/:id', {
+                        .when('/product/:id/:hash', {
                         templateUrl: '/scripts/app/pages/product.html',
                         controller: 'PageProduct',
                     })
@@ -70,7 +70,7 @@ var MartialShirt;
                     $locationProvider.html5Mode({
                         enabled: true,
                         requireBase: false
-                    }).hashPrefix('!');
+                    }).hashPrefix('#!');
                 }
             ]);
         };

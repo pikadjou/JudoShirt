@@ -43,6 +43,16 @@ var MartialShirt;
                         console.log(response);
                     });
                 }
+                else if (request.Type.toLocaleUpperCase() === "PUT") {
+                    url = url + this.urlExtension;
+                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    this.$http.put(url, request.Content).
+                        then(function (response) {
+                        _this.onPacketReceived(response.data);
+                    }, function (response) {
+                        console.log(response);
+                    });
+                }
                 return request.Id;
             };
             Server.prototype.onPacketReceived = function (response) {

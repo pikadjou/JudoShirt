@@ -30,7 +30,7 @@ module MartialShirt {
 						.when('/', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
 						.when('/category/:id', { templateUrl: '/scripts/app/pages/category.html', controller: 'PageCategory' })
 						.when('/design/:id', { templateUrl: '/scripts/app/pages/design.html', controller: 'PageDesign' })
-						.when('/product/:id',
+						.when('/product/:id/:hash',
 						{
 							templateUrl: '/scripts/app/pages/product.html',
 							controller: 'PageProduct',
@@ -98,13 +98,7 @@ module MartialShirt {
 					$locationProvider.html5Mode({
 						enabled: true,
 						requireBase: false
-					}).hashPrefix('!');
-
-					//$httpProvider.defaults.useXDomain = true;
-					//delete $httpProvider.defaults.headers.common['X-Requested-With'];
-					//$httpProvider.defaults.useXDomain = true;
-					//$httpProvider.defaults.headers.common = 'Content-Type: application/json';
-					//delete $httpProvider.defaults.headers.common['X-Requested-With'];
+					}).hashPrefix('#!');
 				}
 			]);
 

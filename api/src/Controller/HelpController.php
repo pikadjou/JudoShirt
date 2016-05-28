@@ -37,7 +37,7 @@ class HelpController extends AppController
                 ->send($request->message);
            
            $code = 0;
-           $message = "Merci, nous traitons votre demande dans le splus bref delais";
+           $message = "Merci, nous traitons votre demande dans les plus bref delais";
         } catch (Exception $e) {
             $code = 1;
            $message = "Aie une erreur c'est produite, si l'erreur persiste n'hésité pas a nous contact par mail directement: pikadjou[at]gmail.com";

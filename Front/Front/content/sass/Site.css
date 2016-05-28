@@ -3756,7 +3756,7 @@ iframe {
 }
 
 .basket__container .basket__content .articles .article .quantity input {
-  width: 60%;
+  margin: 0;
   text-align: right;
 }
 

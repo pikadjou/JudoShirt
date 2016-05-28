@@ -21,14 +21,14 @@ var MartialShirt;
             this.RH.GetProductReceived.add(this.onPacketRecieved, this);
             this.RH.GetProduct([this.productid]);
             $scope.$on('$locationChangeStart', function (event, next, current) {
-                if (next.indexOf("#!") >= 0) {
+                if (next.indexOf("#!") >= 0 && next.indexOf("?") === 0) {
                     event.preventDefault();
                 }
             });
             var config = {
                 baseId: 'productShop'
             };
-            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, false, true, true);
+            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, false, true, false);
         }
         C_Product.prototype.onPacketRecieved = function (response) {
             this.product = response.product;

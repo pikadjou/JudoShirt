@@ -37,7 +37,7 @@
 			<ul class="small-block-grid-4 article-list__container">
 				<li ng-repeat="product in vm.products" ng-if="vm.isActiveProduct(product)">
 					<div class="article__container">
-						<a href="/product/{{product.id}}#!-A{{product.shopId}}">
+						<a href="/product/{{product.id}}/{{product.shopId}}#!-A{{product.shopId}}">
 							<div class="row collapse">
 								<div class="small-12 columns">
 									<img ng-src="{{product.thumbnail}}" />

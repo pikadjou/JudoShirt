@@ -4,7 +4,7 @@ module MartialShirt {
 	export class C_Basket extends MartialShirt.Init.AbstractModule {
 
 		public showBasket: boolean = false;
-		public basket : Services.Entity.Basket = null;
+		public basket: Services.Entity.Basket = null;
 		public static $inject = [
 			'$scope',
 			Services.BasketsRequestHandler.Name
@@ -18,6 +18,7 @@ module MartialShirt {
 			this.init($scope);
 
 			this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
+			this._signal.changeBasketCount.add(this.launchGetBasket, this);
 
 			if (!this._login.hasToken()) {
 				this.launchGetBasket();
@@ -28,11 +29,6 @@ module MartialShirt {
 		public Authenticated() {
 			super.Authenticated();
 			this.launchGetBasket();
-		}
-		public Unauthenticated() {
-			super.Unauthenticated();
-
-			this.$scope.$apply();
 		}
 
 		public launchGetBasket() {
@@ -45,37 +41,42 @@ module MartialShirt {
 		public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse) {
 			this.basket = response.basket;
 
-			//for (var i = 0, l = this.basket.basketItems.length; i < l; i++){
-
-			//	this.$scope.$watch(
-			//		() => { return this.basket.basketItems[i].quantity },
-			//		(newvval, oldval, scope) => {
-			//			console.log('hey, myVar has changed!');
-			//		}
-			//	);
-				
-			//}
-
-			//setTimeout(() => {
-			//	for (var i = 0, l = this.basket.basketItems.length; i < l; i++) {
-
-			//		this.basket.basketItems[i].quantity = 10;
-
-			//	}
-			//}, 1000);
 		}
 
 		public showHideBasket() {
 			this.showBasket = !this.showBasket;
 		}
 
+		public getNbItems() : number {
+			if (!this.basket || this.basket === null) {
+				return 0;
+			}
+
+			var nb = 0;
+
+			for (var i = 0, l = this.basket.basketItems.length; i < l; i++) {
+				nb += this.basket.basketItems[i].quantity;
+			}
+			return nb;
+		}
 		public update(basketItem: Services.Entity.BasketItem) {
-			console.log("update");
+
+			var request = new Services.BasketsClass.UpdateQuantityRequest();
+			request.basketId = this.basket.id;
+			request.id = basketItem.id;
+			request.quantity = basketItem.quantity;
+			request.element = basketItem.extraElement;
+
+			this.RH.UpdateQuantity(request);
 		}
 
 		public addQuantity(basketItem: Services.Entity.BasketItem, quantity: number) {
-			basketItem.quantity += quantity;
 
+			if (quantity === 0) {
+				basketItem.quantity = 0;
+			} else {
+				basketItem.quantity += quantity;
+			}
 			this.update(basketItem);
 		}
 	}

@@ -29,24 +29,20 @@ module MartialShirt {
 			
 
 			$scope.$on('$locationChangeStart', function (event, next, current) {
-				if (next.indexOf("#!") >= 0) {
+				if (next.indexOf("#!") >= 0 && next.indexOf("?") === 0) {
 					event.preventDefault();
-				}				
+				}
 			});
 			
 			var config = {
 				baseId: 'productShop'
 			};
-			MartialShirtApp.Application.addShopConfiguration(config, false, true, true);
+			MartialShirtApp.Application.addShopConfiguration(config, false, true, false);
 		}
 
 		public onPacketRecieved(response: any) {
 			this.product = response.product;
 			this.design = response.product.design;
-
-			//window.location.hash = "!" + this.product.shopId;
-			//this.$location.path(this.$location.path() + "#!" + this.product.shopId).replace().notify(false);
-			//this.$location.hash("!" + this.product.shopId).replace().notify(false);
 
 			
 		}

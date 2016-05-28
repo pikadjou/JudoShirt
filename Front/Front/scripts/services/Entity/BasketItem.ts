@@ -15,5 +15,7 @@
 
 		public pictureLink: string;
 		public link: string;
+
+		public extraElement: string;
 	}
 } 
