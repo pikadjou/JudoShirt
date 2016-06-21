@@ -7,6 +7,7 @@ var MartialShirt;
             var Type = (function () {
                 function Type() {
                     this.active = false;
+                    this.disable = false;
                 }
                 return Type;
             }());

@@ -8,6 +8,8 @@
 		public _login = MartialShirt.Services.Login.getInstance();
 		public CoreLib = CoreLib;
 
+		public loader = false;
+
 		public isAuthenticated = false;
 		constructor() {
 

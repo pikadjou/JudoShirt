@@ -38,7 +38,7 @@ class DesignsTable extends Table
             'joinTable' => 'tags_designs'
         ]);
         
-        $this->hasMany('Products', [
+        $this->hasMany('Articles', [
             'foreignKey' => 'design_id',
             'dependent' => true,
         ]);

@@ -1,0 +1,15 @@
+﻿<div class="module__container article__container">
+	<h3 class="module__title">
+		{{ vm.article.name }}
+
+		<span ng-if="vm.article.idCustomShop" class="custom">
+			<a href="/designer/{{vm.article.idCustomShop}}">Personnaliser</a>
+		</span>
+	</h3>
+	<div class="module__content">
+		<a class="button back" href="/design/{{vm.design.id}}">
+			<i class="fa fa-reply"></i>retour aux articles
+		</a>
+		<div id="articleShop"></div>
+	</div>
+</div>

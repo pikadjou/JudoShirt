@@ -20,7 +20,7 @@
 		<file>/scripts/app/modules/categoryDesigns.js</file>
 		<file>/scripts/app/modules/langSelector.js</file>
 		<file>/scripts/app/modules/design.js</file>
-	    <file>/scripts/app/modules/product.js</file>
+		<file>/scripts/app/modules/article.js</file>
 		<file>/scripts/app/modules/basket.js</file>
 		<file>/scripts/app/modules/print.js</file>
 	  
@@ -28,17 +28,17 @@
 		<file>/scripts/app/modules/promotions/list.js</file>
 		<file>/scripts/app/modules/promotions/entity.js</file>
 
-	  <file>/scripts/app/modules/account/order.js</file>
-	  <file>/scripts/app/modules/account/detail.js</file>
-	  <file>/scripts/app/modules/account/subscription.js</file>
+		<file>/scripts/app/modules/account/order.js</file>
+		<file>/scripts/app/modules/account/detail.js</file>
+		<file>/scripts/app/modules/account/subscription.js</file>
 	  
-	  <file>/scripts/app/modules/custom/designer.js</file>
+		<file>/scripts/app/modules/custom/designer.js</file>
 	  
 		<file>/scripts/app/modules/help/contact.js</file>
 	  
 		<file>/scripts/app/pages/home.js</file>
 		<file>/scripts/app/pages/category.js</file>
-		<file>/scripts/app/pages/product.js</file>
+		<file>/scripts/app/pages/article.js</file>
 		<file>/scripts/app/pages/design.js</file>
 		<file>/scripts/app/pages/basket.js</file>
 		<file>/scripts/app/pages/print.js</file>
@@ -48,11 +48,11 @@
 		<file>/scripts/app/pages/promotions/list.js</file>
 		<file>/scripts/app/pages/promotions/entity.js</file>
 
-	  <file>/scripts/app/pages/account/order.js</file>
-	  <file>/scripts/app/pages/account/detail.js</file>
-	  <file>/scripts/app/pages/account/subscription.js</file>
+		<file>/scripts/app/pages/account/order.js</file>
+		<file>/scripts/app/pages/account/detail.js</file>
+		<file>/scripts/app/pages/account/subscription.js</file>
 	  
-	  <file>/scripts/app/pages/custom/custom.js</file>
+		<file>/scripts/app/pages/custom/custom.js</file>
 	  
 		<file>/scripts/app/widgets/topTen.js</file>
 		<file>/scripts/app/widgets/new.js</file>
@@ -60,6 +60,8 @@
 		<file>/scripts/app/widgets/account.js</file>
 	  
 		<file>/scripts/app/templates/article.js</file>
-	  <file>/scripts/app/templates/articleWidget.js</file>
+		<file>/scripts/app/templates/articleWidget.js</file>
+		<file>/scripts/app/templates/loader.js</file>
+
   </files>
 </bundle>

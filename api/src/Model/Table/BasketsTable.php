@@ -37,7 +37,7 @@ class BasketsTable extends Table
     }
     
     public function getOne($id){
-        $url = $this->_spreadshirt->_host . "baskets/" . $id;
+        $url = $this->_spreadshirt->_host . "baskets/" . $id . "?locale=fr_FR";
         
         $basket = $this->_spreadshirt->getRequest($url);
         return $basket;

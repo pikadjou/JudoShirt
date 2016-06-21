@@ -1,24 +1,37 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
-    var C_CategoryDesigns = (function () {
+    var C_CategoryDesigns = (function (_super) {
+        __extends(C_CategoryDesigns, _super);
         function C_CategoryDesigns($scope, RH) {
+            _super.call(this);
             this.$scope = $scope;
             this.RH = RH;
-            $scope.vm = $scope;
+            this.catid = 0;
+            this.init($scope);
             this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetDesigns([$scope.catid]);
+            this.launchService();
         }
+        C_CategoryDesigns.prototype.launchService = function () {
+            this.loader = true;
+            this.RH.GetDesigns([this.catid]);
+        };
         C_CategoryDesigns.prototype.onPacketRecieved = function (response) {
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
+            this.loader = false;
         };
         C_CategoryDesigns.$inject = [
             '$scope',
             MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_CategoryDesigns;
-    }());
+    }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_CategoryDesigns = C_CategoryDesigns;
     var CategoryDesigns = (function () {
         function CategoryDesigns() {

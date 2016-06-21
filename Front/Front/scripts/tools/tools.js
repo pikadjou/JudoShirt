@@ -203,6 +203,7 @@ var MartialShirt;
                 this._application = MartialShirt.Init.Application.getInstance();
                 this._login = MartialShirt.Services.Login.getInstance();
                 this.CoreLib = CoreLib;
+                this.loader = false;
                 this.isAuthenticated = false;
                 if (this._login.isAuthenticated()) {
                     this.Authenticated();

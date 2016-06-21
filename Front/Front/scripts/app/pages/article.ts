@@ -7,8 +7,8 @@ module MartialShirt {
 	 * - retrieves and persists the model via the todoStorage service
 	 * - exposes the model to the template and provides event handlers
 	 */
-	export class PageProduct extends MartialShirt.Init.AbstractModule{
-		public static Name = "PageProduct";
+	export class PageArticle extends MartialShirt.Init.AbstractModule{
+		public static Name = "PageArticle";
 		
 		public id: number = 0;
 
@@ -31,5 +31,5 @@ module MartialShirt {
 			this.id = $routeParams.id || 0;
 		}
 	}
-	MartialShirt.Init.Application.MartialShirtApp.controller(PageProduct.Name, PageProduct);
+	MartialShirt.Init.Application.MartialShirtApp.controller(PageArticle.Name, PageArticle);
 }

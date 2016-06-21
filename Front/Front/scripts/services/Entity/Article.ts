@@ -1,11 +1,11 @@
 ﻿module MartialShirt.Services.Entity {
-	export class Product {
+	export class Article {
 		public id: number;
 		public name: string;
 		public content: string;
 		public thumbnail: string;
 		public shopId: number;
-
+		public priority: number;
 		public types: Services.Entity.Type[];
 	}
 } 

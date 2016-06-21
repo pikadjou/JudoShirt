@@ -16,17 +16,12 @@ class ProductsController extends AppController
         parent::initialize();
         $this->loadComponent('RequestHandler');
         
-         $this->loadModel("Designs");
-
     }
     
     public function getProducts($id)
     {
-        $query = $this->Designs->getOne($id);
-        $this->Designs->addCategories($query);
-        $design = $query->first();
-        
-        $query = $this->Products->findByDesign($design);
+       
+        $query = $this->Products->findAll();
         
         $this->Products->addType($query);
         
@@ -52,4 +47,11 @@ class ProductsController extends AppController
         parent::setJson($response);
 
     }
+    
+    public function updateAllProducts(){
+        
+        $this->Products->updateAllProducts();
+    
+    }
+    
 }

@@ -6,9 +6,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
-    var PageProduct = (function (_super) {
-        __extends(PageProduct, _super);
-        function PageProduct($scope, $routeParams) {
+    var PageArticle = (function (_super) {
+        __extends(PageArticle, _super);
+        function PageArticle($scope, $routeParams) {
             _super.call(this);
             this.$scope = $scope;
             this.$routeParams = $routeParams;
@@ -16,13 +16,13 @@ var MartialShirt;
             this.init($scope);
             this.id = $routeParams.id || 0;
         }
-        PageProduct.Name = "PageProduct";
-        PageProduct.$inject = [
+        PageArticle.Name = "PageArticle";
+        PageArticle.$inject = [
             '$scope',
             '$routeParams'
         ];
-        return PageProduct;
+        return PageArticle;
     }(MartialShirt.Init.AbstractModule));
-    MartialShirt.PageProduct = PageProduct;
-    MartialShirt.Init.Application.MartialShirtApp.controller(PageProduct.Name, PageProduct);
+    MartialShirt.PageArticle = PageArticle;
+    MartialShirt.Init.Application.MartialShirtApp.controller(PageArticle.Name, PageArticle);
 })(MartialShirt || (MartialShirt = {}));

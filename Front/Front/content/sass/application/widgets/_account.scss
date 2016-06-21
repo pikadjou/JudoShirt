@@ -2,32 +2,10 @@
 	.unauthenticated, .authenticated{
 		text-align: center;
 	}
-
-	#accountShop{
-		.SprdHeader {
-			z-index: 20;
-		}
-		#header-html{
-			display: none !important;
-		}
-		#department-filter{
-			display: none !important;
-		}
-		#sprd-content{
-			display: none !important;
-		}
-		#footer-html{
-			display: none !important;
-		}
-		#footer{
-			display: none !important;
-		}
-
-		.navigation{
-			border: none;
-		}
+	.unauthenticated .button{
+		width: 100%;
 	}
-
+	
 	a{
 		color: $black-color;
 	}
@@ -37,33 +15,22 @@
 		font-size: rem-calc(25);
 	}
 
-	.subscribe{
-		.title{
-			color: $black-color;
-			background-color: $gray-color;
-			border: 1px solid $dark-gray-color;
-			padding: 10px;
-			display: block;
-			width: 80%;
-			margin: auto;
-		}
-	}
 	.my-account, .connection{
-		.title{
-			color: $black-color;
-			background-color: $yellow-color;
-			border: 1px solid $dark-yellow-color;
-			padding: 10px;
-			display: block;
-			margin: auto;
-		}
+		margin-bottom: 10px;
 	}
 	.my-account{
+		display: inline-block;
+		position: relative;
+		width: 100%;
+
 		.my-account-panel{
 			@include radius(0 0 5px 5px);
 		}
 		ul{
 			list-style: none;
+
+			margin: 0;
+			padding: 0;
 			li{
 				a{
 					display: block;
@@ -76,26 +43,25 @@
 		}
 	}
 	.connection-panel{
-		width: 250px;
 		left: 0;
 		form{
 			margin:0;
 		}
 	}
-}
 
-.account-panel{
-	position: absolute;
-	z-index: 10;
-	width: 100%;
+	.account-panel{
+		position: absolute;
+		z-index: 10;
+		width: 100%;
 
-	padding: 15px;
-	@include radius(5px);
+		padding: 15px;
+		@include radius(5px);
 
-	border: 1px solid $gray-color;
-	background-color: $light-gray-color;
+		border: 1px solid $gray-color;
+		background-color: $light-gray-color;
 
-	text-align: center;
+		text-align: center;
+	}
 }
 
 .subscription__container, .order__container, .detail__container{

@@ -5,13 +5,6 @@ var MartialShirt;
         function MartialShirtApp() {
         }
         MartialShirtApp.init = function () {
-            if (MartialShirt.Config.Maintenance) {
-                var indexMaintenance = window.location.href.indexOf("/maintenance");
-                if (indexMaintenance === -1) {
-                    window.location.href = '/maintenance.html';
-                    return;
-                }
-            }
             var injector = angular.injector(['ng', 'MartialShirt']);
             var LoginService = injector.get('LoginService');
             MartialShirt.Init.Application.MartialShirtApp.config([
@@ -23,9 +16,9 @@ var MartialShirt;
                         .when('/', { templateUrl: '/scripts/app/pages/home.html', controller: 'PageHome' })
                         .when('/category/:id', { templateUrl: '/scripts/app/pages/category.html', controller: 'PageCategory' })
                         .when('/design/:id', { templateUrl: '/scripts/app/pages/design.html', controller: 'PageDesign' })
-                        .when('/product/:id/:hash', {
-                        templateUrl: '/scripts/app/pages/product.html',
-                        controller: 'PageProduct',
+                        .when('/article/:id/:hash?', {
+                        templateUrl: '/scripts/app/pages/article.html',
+                        controller: 'PageArticle',
                     })
                         .when('/panier', {
                         templateUrl: '/scripts/app/pages/basket.html',
@@ -70,7 +63,7 @@ var MartialShirt;
                     $locationProvider.html5Mode({
                         enabled: true,
                         requireBase: false
-                    }).hashPrefix('#!');
+                    }).hashPrefix('!');
                 }
             ]);
         };

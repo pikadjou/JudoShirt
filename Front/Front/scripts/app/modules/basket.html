@@ -1,8 +1,8 @@
 ﻿<div class="basket__container">
-	<span ng-click="vm.showHideBasket()">
-		<i class="fa fa-shopping-cart fa-4x"></i>
-		<span>{{vm.getNbItems()}}</span>
-	</span>
+	<div class="basket__title" ng-click="vm.showHideBasket()">
+		<i class="fa fa-shopping-basket fa-4x"></i>
+		<div class="count">{{vm.getNbItems()}}</div>
+	</div>
 	<div class="basket__content" ng-if="vm.showBasket">
 
 		<div class="articles">
@@ -89,7 +89,7 @@
 				<div class="extra">livraison incluse</div>
 			</div>
 			<div class="small-3 columns order">
-				<a class="button button-player" href="{{vm.basket.checkoutLink}}" target="_blank">Commander</a>
+				<a class="button button-player" ng-class="{disabled: vm.getNbItems() === 0}" href="{{(vm.getNbItems() === 0) ? '#' : vm.basket.checkoutLink}}">Commander</a>
 			</div>
 		</div>
 	</div>

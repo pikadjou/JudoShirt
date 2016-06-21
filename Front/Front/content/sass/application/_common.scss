@@ -4,7 +4,6 @@
 $black-color: black;
 
 $dark-bleu-color: #28558B;
-
 $light-blue-color: #71B2FF;
 $blue-color: #499bff;
 
@@ -92,10 +91,27 @@ iframe{
 
 	margin: 0;
 }
+.button.button-player{
+	@include radius(5px);
+
+	background-color: $yellow-color;
+	color: $black-color;
+
+	margin: 0;
+
+	&.disabled{
+		background-color: $dark-yellow-color;
+		color: $dark-gray-color;
+	}
+}
 @mixin radius($radius) {
   border-radius: $radius;
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   -ms-border-radius: $radius;
   -o-border-radius: $radius;
+}
+
+.loader__container{
+	text-align: center;
 }

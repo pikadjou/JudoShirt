@@ -122,54 +122,54 @@ var MartialShirt;
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
-///#source 1 1 /scripts/services/Products/ProductsRequestHandler.js
+///#source 1 1 /scripts/services/Articles/ArticlesRequestHandler.js
 var MartialShirt;
 (function (MartialShirt) {
     var Services;
     (function (Services) {
         'use strict';
-        var ProductsRequestHandler = (function () {
-            function ProductsRequestHandler(server) {
+        var ArticlesRequestHandler = (function () {
+            function ArticlesRequestHandler(server) {
                 this.server = server;
-                this.controller = "products";
+                this.controller = "articles";
                 this.addEvents();
             }
-            ProductsRequestHandler.prototype.GetProducts = function (request) {
+            ArticlesRequestHandler.prototype.GetArticles = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new MartialShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetArticles", this.controller, "getArticles", request));
             };
-            ProductsRequestHandler.prototype.GetProduct = function (request) {
+            ArticlesRequestHandler.prototype.GetArticle = function (request) {
                 if (request === void 0) { request = []; }
-                return this.server.request(new MartialShirt.Services.Request("GET", "GetProduct", this.controller, "getProduct", request));
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetArticle", this.controller, "getArticle", request));
             };
-            ProductsRequestHandler.prototype.addEvents = function () {
-                this.GetProductsReceived = new signals.Signal();
-                this.GetProductReceived = new signals.Signal();
+            ArticlesRequestHandler.prototype.addEvents = function () {
+                this.GetArticlesReceived = new signals.Signal();
+                this.GetArticleReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
-            ProductsRequestHandler.prototype.onPacketReceived = function (response) {
+            ArticlesRequestHandler.prototype.onPacketReceived = function (response) {
                 if (!response || !response.Content)
                     return;
                 var parsedResponse = null;
                 switch (response.Identifier) {
-                    case ("GetProductsResponse"):
+                    case ("GetArticlesResponse"):
                         parsedResponse = (response.Content);
-                        this.GetProductsReceived.dispatch(parsedResponse);
+                        this.GetArticlesReceived.dispatch(parsedResponse);
                         break;
-                    case ("GetProductResponse"):
+                    case ("GetArticleResponse"):
                         parsedResponse = (response.Content);
-                        this.GetProductReceived.dispatch(parsedResponse);
+                        this.GetArticleReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;
                 }
             };
-            ProductsRequestHandler.$inject = ['Server'];
-            ProductsRequestHandler.Name = "ProductsRequestHandler";
-            return ProductsRequestHandler;
+            ArticlesRequestHandler.$inject = ['Server'];
+            ArticlesRequestHandler.Name = "ArticlesRequestHandler";
+            return ArticlesRequestHandler;
         }());
-        Services.ProductsRequestHandler = ProductsRequestHandler;
-        MartialShirt.Init.Application.MartialShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
+        Services.ArticlesRequestHandler = ArticlesRequestHandler;
+        MartialShirt.Init.Application.MartialShirtApp.service(ArticlesRequestHandler.Name, ArticlesRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 

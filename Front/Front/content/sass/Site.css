@@ -3265,6 +3265,22 @@ iframe {
   margin: 0;
 }
 
+.button.button-player {
+  border-radius: 5px;
+  background-color: #f0c14b;
+  color: black;
+  margin: 0;
+}
+
+.button.button-player.disabled {
+  background-color: #E0AA21;
+  color: #5a616b;
+}
+
+.loader__container {
+  text-align: center;
+}
+
 .widget__container {
   margin-bottom: 10px;
 }
@@ -3294,6 +3310,10 @@ iframe {
 
 .widget__container .widget__content .article__widget .article__content .design {
   text-align: center;
+}
+
+.widget__container .widget__content .article__widget .article__content .design img {
+  max-height: 100px;
 }
 
 .widget__container .widget__content .article__widget .article__content .category {
@@ -3651,6 +3671,15 @@ iframe {
   background-color: #28558B;
 }
 
+.design__container .filters .filter.disable a {
+  color: #5a616b;
+  background-color: #dddddd;
+}
+
+.design__container .filters .clear a {
+  color: #28558B;
+}
+
 .design__container .article__container .name {
   font-weight: normal;
   font-size: 0.875rem;
@@ -3665,15 +3694,15 @@ iframe {
   padding: 10px;
 }
 
-.product__container .custom {
+.article__container .custom {
   float: right;
 }
 
-.product__container .custom a {
+.article__container .custom a {
   color: black;
 }
 
-.product__container #productShop #sprd-header {
+.article__container #articleShop #sprd-header {
   display: none;
 }
 
@@ -3722,6 +3751,19 @@ iframe {
   padding: 5px;
   color: black;
   background-color: #C5C6C8;
+}
+
+.basket__container {
+  padding: 10px;
+  text-align: center;
+  border-left: 1px black dotted;
+}
+
+.basket__container .basket__title .count {
+  color: #499bff;
+  text-align: center;
+  font-size: 1.5625rem;
+  font-weight: bold;
 }
 
 .basket__container .basket__content {
@@ -3822,32 +3864,8 @@ iframe {
   text-align: center;
 }
 
-.widget__account #accountShop .SprdHeader {
-  z-index: 20;
-}
-
-.widget__account #accountShop #header-html {
-  display: none !important;
-}
-
-.widget__account #accountShop #department-filter {
-  display: none !important;
-}
-
-.widget__account #accountShop #sprd-content {
-  display: none !important;
-}
-
-.widget__account #accountShop #footer-html {
-  display: none !important;
-}
-
-.widget__account #accountShop #footer {
-  display: none !important;
-}
-
-.widget__account #accountShop .navigation {
-  border: none;
+.widget__account .unauthenticated .button {
+  width: 100%;
 }
 
 .widget__account a {
@@ -3859,23 +3877,14 @@ iframe {
   font-size: 1.5625rem;
 }
 
-.widget__account .subscribe .title {
-  color: black;
-  background-color: #C5C6C8;
-  border: 1px solid #5a616b;
-  padding: 10px;
-  display: block;
-  width: 80%;
-  margin: auto;
+.widget__account .my-account, .widget__account .connection {
+  margin-bottom: 10px;
 }
 
-.widget__account .my-account .title, .widget__account .connection .title {
-  color: black;
-  background-color: #f0c14b;
-  border: 1px solid #E0AA21;
-  padding: 10px;
-  display: block;
-  margin: auto;
+.widget__account .my-account {
+  display: inline-block;
+  position: relative;
+  width: 100%;
 }
 
 .widget__account .my-account .my-account-panel {
@@ -3888,6 +3897,8 @@ iframe {
 
 .widget__account .my-account ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .widget__account .my-account ul li a {
@@ -3900,7 +3911,6 @@ iframe {
 }
 
 .widget__account .connection-panel {
-  width: 250px;
   left: 0;
 }
 
@@ -3908,7 +3918,7 @@ iframe {
   margin: 0;
 }
 
-.account-panel {
+.widget__account .account-panel {
   position: absolute;
   z-index: 10;
   width: 100%;
@@ -3929,6 +3939,18 @@ iframe {
 
 .subscription__container #iframe, .order__container #iframe, .detail__container #iframe {
   height: 2000px;
+}
+
+.maintenance__container {
+  text-align: center;
+}
+
+.maintenance__container img {
+  height: 400px;
+}
+
+.maintenance__container a {
+  color: #499bff;
 }
 
 /*# sourceMappingURL=Site.css.map */

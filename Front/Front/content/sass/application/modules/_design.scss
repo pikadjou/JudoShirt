@@ -31,6 +31,17 @@
 					background-color: $dark-bleu-color;
 				}
 			}
+			&.disable{
+				a{
+					color: $dark-gray-color;
+					background-color: $light-gray-color;
+				}
+			}
+		}
+		.clear{
+			a{
+				color: $dark-bleu-color;
+			}
 		}
 	}
 

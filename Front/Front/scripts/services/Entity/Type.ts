@@ -8,6 +8,6 @@
 
 		//specific for front
 		public active: boolean = false;
-		
+		public disable: boolean = false;
 	}
 } 

@@ -16,7 +16,7 @@ var MartialShirt;
             this.basket = null;
             this.init($scope);
             this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
-            this._signal.changeBasketCount.add(this.launchGetBasket, this);
+            this._signal.changeBasketCount.add(this.launchDelayGetBasket, this);
             if (!this._login.hasToken()) {
                 this.launchGetBasket();
             }
@@ -24,6 +24,12 @@ var MartialShirt;
         C_Basket.prototype.Authenticated = function () {
             _super.prototype.Authenticated.call(this);
             this.launchGetBasket();
+        };
+        C_Basket.prototype.launchDelayGetBasket = function () {
+            var _this = this;
+            setTimeout(function () {
+                _this.launchGetBasket();
+            }, 10000);
         };
         C_Basket.prototype.launchGetBasket = function () {
             var request = new MartialShirt.Services.BasketsClass.GetBasketRequest();

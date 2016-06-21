@@ -25,6 +25,9 @@
 			.article__content{
 				.design{
 					text-align: center;
+					img{
+						max-height: 100px;
+					}
 				}
 				.category{
 					display: inline-block;

@@ -1,4 +1,18 @@
 ﻿.basket__container{
+	padding: 10px;
+	text-align: center;
+
+	border-left: 1px $black-color dotted;
+	.basket__title{
+		.count{
+			color: $blue-color;
+			text-align:center;
+
+			font-size: rem-calc(25);
+			font-weight : bold;
+		}
+	}
+	
 	.basket__content{
 		width: 750px;
 		position: absolute;

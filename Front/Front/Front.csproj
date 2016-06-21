@@ -18,6 +18,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="commit.txt" />
     <Content Include="content\css\Site.css" />
     <Content Include="content\img\americanexpress-logo.png" />
     <Content Include="content\img\background1.jpg" />
@@ -851,20 +852,20 @@
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\featuredDesigns.html" />
     <Content Include="scripts\app\modules\print.html" />
-    <Content Include="scripts\app\modules\product.html" />
+    <Content Include="scripts\app\modules\article.html" />
     <Content Include="scripts\app\pages\account\subscription.html" />
     <Content Include="scripts\app\pages\account\detail.html" />
     <Content Include="scripts\app\pages\account\order.html" />
     <Content Include="scripts\app\pages\custom\custom.html" />
-    <Content Include="scripts\app\pages\maintenance.html" />
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
     <Content Include="scripts\app\pages\basket.html" />
     <Content Include="scripts\app\pages\help\contact.html" />
     <Content Include="scripts\app\pages\print.html" />
-    <Content Include="scripts\app\pages\product.html" />
+    <Content Include="scripts\app\pages\article.html" />
     <Content Include="scripts\app\pages\promotions\entity.html" />
     <Content Include="scripts\app\pages\promotions\list.html" />
+    <Content Include="scripts\app\templates\loader.html" />
     <Content Include="scripts\app\templates\articleWidget.html" />
     <Content Include="scripts\app\templates\article.html" />
     <Content Include="scripts\app\widgets\account.html" />
@@ -873,6 +874,7 @@
     <Content Include="scripts\app\widgets\topTen.html" />
     <Content Include="scripts\app\modules\menuMain.html" />
     <Content Include="scripts\app\pages\home.html" />
+    <TypeScriptCompile Include="boot.ts" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\subscription.ts" />
@@ -889,7 +891,7 @@
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\featuredDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\modules\print.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\product.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\article.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\order.ts" />
@@ -899,9 +901,10 @@
     <TypeScriptCompile Include="scripts\app\pages\basket.ts" />
     <TypeScriptCompile Include="scripts\app\pages\help\contact.ts" />
     <TypeScriptCompile Include="scripts\app\pages\print.ts" />
-    <TypeScriptCompile Include="scripts\app\pages\product.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\article.ts" />
     <TypeScriptCompile Include="scripts\app\pages\promotions\entity.ts" />
     <TypeScriptCompile Include="scripts\app\pages\promotions\list.ts" />
+    <TypeScriptCompile Include="scripts\app\templates\loader.ts" />
     <TypeScriptCompile Include="scripts\app\templates\articleWidget.ts" />
     <TypeScriptCompile Include="scripts\app\templates\article.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\account.ts" />
@@ -910,6 +913,7 @@
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Article.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\BasketItem.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Basket.ts" />
     <TypeScriptCompile Include="scripts\services\LoginService.ts" />
@@ -917,7 +921,6 @@
     <TypeScriptCompile Include="scripts\services\Users\UsersRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Help\HelpClass.ts" />
     <TypeScriptCompile Include="scripts\services\Help\HelpRequestHandler.ts" />
-    <TypeScriptCompile Include="scripts\services\Entity\Product.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Type.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Promotions\PromotionsRequestHandler.ts" />
@@ -930,7 +933,7 @@
     <TypeScriptCompile Include="scripts\services\Entity\Design.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Tag.ts" />
     <TypeScriptCompile Include="scripts\services\Prints\PrintsRequestHandler.ts" />
-    <TypeScriptCompile Include="scripts\services\Products\ProductsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Articles\ArticlesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\AbstractModule.ts" />
     <TypeScriptCompile Include="scripts\tools\Debug.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
@@ -1043,7 +1046,7 @@
     <Content Include="content\sass\application\widgets\_common.scss" />
     <Content Include="content\sass\application\modules\_common.scss" />
     <Content Include="content\sass\application\modules\_design.scss" />
-    <Content Include="content\sass\application\modules\_product.scss" />
+    <Content Include="content\sass\application\modules\_article.scss" />
     <Content Include="content\sass\application\modules\_print.scss" />
     <Content Include="content\sass\application\modules\_promotion.scss" />
     <Content Include="lib\lib.js.bundle" />
@@ -1055,6 +1058,7 @@
       <DependentUpon>tools.min.js</DependentUpon>
     </Content>
     <Content Include="content\sass\application\modules\_basket.scss" />
+    <Content Include="content\sass\application\_maintenance.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

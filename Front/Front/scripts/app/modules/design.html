@@ -6,7 +6,8 @@
 			<a href="/designer/{{vm.design.idCustomShop}}">Personnaliser</a>
 		</span>
 	</h3>
-	<div class="module__content">
+	<templateloader ng-if="vm.loader"></templateloader>
+	<div class="module__content" ng-if="!vm.loader">
 		<span ng-repeat="category in vm.mainCategories">
 			<a class="button back" href="/category/{{category.id}}">
 				<i class="fa fa-reply"></i>Catégorie {{category.name}}
@@ -16,37 +17,43 @@
 		<div class="filters">
 			<div class="group">
 				<span ng-repeat="type in vm.types | filter: { type: '1' }" class="filter"
-					  ng-class="{'actif': type.active === true }">
+					  ng-class="{'actif': type.active === true, 'disable': type.disable === true }">
 					<a href="#" ng-click="vm.addRemoveType(type, 1)">
 						{{type.name}}
 					</a>
+				</span>
+				<span class="clear">
+					<a href="#" ng-click="vm.clearType(1)">enlever les filtres</a>
 				</span>
 			</div>
 
 			<div class="group">
 				<span ng-repeat="type in vm.types | filter: { type: '2' }" class="filter"
-					  ng-class="{'actif': type.active === true }">
+					  ng-class="{'actif': type.active === true, 'disable': type.disable === true }">
 					<a href="#" ng-click="vm.addRemoveType(type, 2)">
 						{{type.name}}
 					</a>
+				</span>
+				<span class="clear">
+					<a href="#" ng-click="vm.clearType(2)">enlever les filtres</a>
 				</span>
 			</div>
 		</div>
 
 		<div>
 			<ul class="small-block-grid-4 article-list__container">
-				<li ng-repeat="product in vm.products" ng-if="vm.isActiveProduct(product)">
+				<li ng-repeat="article in vm.visibleArticles">
 					<div class="article__container">
-						<a href="/product/{{product.id}}/{{product.shopId}}#!-A{{product.shopId}}">
+						<a href="/article/{{article.id}}/{{article.shopId}}#!-A{{article.shopId}}">
 							<div class="row collapse">
 								<div class="small-12 columns">
-									<img ng-src="{{product.thumbnail}}" />
+									<img ng-src="{{article.thumbnail}}" />
 								</div>
 								<div class="small-12 columns">
-									<span class="name">{{product.name}}</span>
+									<span class="name">{{article.name}}</span>
 								</div>
 								<div class="small-12 columns">
-									<span class="price">{{product.price}} <i class="fa fa-eur"></i></span>
+									<span class="price">{{article.price}} <i class="fa fa-eur"></i></span>
 								</div>
 								<div class="small-12 columns">
 									<button>Voir le produit</button>

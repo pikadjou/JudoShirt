@@ -4,12 +4,12 @@ var MartialShirt;
     (function (Services) {
         var Entity;
         (function (Entity) {
-            var Product = (function () {
-                function Product() {
+            var Article = (function () {
+                function Article() {
                 }
-                return Product;
+                return Article;
             }());
-            Entity.Product = Product;
+            Entity.Article = Article;
         })(Entity = Services.Entity || (Services.Entity = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));

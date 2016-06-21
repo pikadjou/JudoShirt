@@ -18,7 +18,7 @@ module MartialShirt {
 			this.init($scope);
 
 			this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
-			this._signal.changeBasketCount.add(this.launchGetBasket, this);
+			this._signal.changeBasketCount.add(this.launchDelayGetBasket, this);
 
 			if (!this._login.hasToken()) {
 				this.launchGetBasket();
@@ -31,6 +31,11 @@ module MartialShirt {
 			this.launchGetBasket();
 		}
 
+		public launchDelayGetBasket() {
+			setTimeout(() => {
+				this.launchGetBasket();
+			}, 10000);
+		}
 		public launchGetBasket() {
 			var request = new Services.BasketsClass.GetBasketRequest();
 			request.id = "2788b7e1-1309-4697-82a8-ed4614ba8fbf";

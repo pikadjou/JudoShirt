@@ -1,6 +1,7 @@
 ﻿<div class="module__container">
 	<h3 class="module__title">{{ vm.category.name }}</h3>
-	<div class="module__content">
+	<templateloader ng-if="vm.loader"></templateloader>
+	<div class="module__content" ng-if="!vm.loader">
 		<ul class="small-block-grid-3 article-list__container">
 			<li ng-repeat="design in vm.list">
 				<templatearticle design="design"></templatearticle>

@@ -1,9 +1,9 @@
 module MartialShirt {
     'use strict';
 
-	export class C_CategoryDesigns {
+	export class C_CategoryDesigns extends MartialShirt.Init.AbstractModule {
 		
-
+		public catid: number = 0;
 		public static $inject = [
 			'$scope',
 			Services.DesignsRequestHandler.Name
@@ -11,18 +11,26 @@ module MartialShirt {
 		constructor(
 			private $scope: any,
 			private RH: Services.DesignsRequestHandler
-			) {
-			$scope.vm = $scope;
+		) {
+
+			super();
+
+			this.init($scope);
 			this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
 
-			this.RH.GetDesigns([$scope.catid]);
-
+			this.launchService();
 		}
 
+		public launchService() {
+			this.loader = true;
+			this.RH.GetDesigns([this.catid]);
+
+		}
 		public onPacketRecieved(response: any) {
 			this.$scope.vm.category = response.category;
 			this.$scope.vm.list = response.designs;
 
+			this.loader = false;
 		}
 	}
 

@@ -15,7 +15,12 @@ use Cake\Validation\Validator;
 class TypesTable extends Table
 {
 
-    private $_manualClotheType = ["Tee shirt", "Sweat-shirt", "Veste", "Débardeur", "Coque"];
+    private $_manualClotheType = ["Tee shirt", "Sweat-shirt", "Veste", "Débardeur", "Coque", "Sac", "Casquette", "Mug", "Peluche"];
+    private $_manualClotheMatch = [
+        "T-shirt" => "Tee shirt",
+        "Bag" => "Sac",
+        "Nounours" => "Peluche"
+    ];
     private $_manualType = ["Homme", "Femme", "Unisexe", "Enfant"];
     /**
      * Initialize method
@@ -66,14 +71,30 @@ class TypesTable extends Table
         $fullName = (string)$response->name;
         $name = $response->categoryName;
         
+        $find = false;
         for($i = 0, $l = count($this->_manualClotheType); $i < $l; $i++){
             if(stripos($name, $this->_manualClotheType[$i]) !== false){
 
                 $name = $this->_manualClotheType[$i];
+                
+                $find = true;
                 break;
             }
         }
         
+        if($find === false){
+            
+            foreach ($this->_manualClotheMatch as $key => $value){
+                if(stripos($name, $key) !== false){
+
+                    $name = $value;
+
+                    $find = true;
+                    break;
+
+                }
+            }
+        }
         $types = [];
         
         $type = $this->getByName($name)->first();
@@ -86,6 +107,10 @@ class TypesTable extends Table
         
         $types[] = $this->save($type);
         
+        
+        /*
+         * Check Homme/Femme/mixte
+         */
         $find = false;
         for($i = 0, $l = count($this->_manualType); $i < $l; $i++){
             if(stripos($fullName, $this->_manualType[$i]) !== false){
@@ -101,6 +126,8 @@ class TypesTable extends Table
                 $types[] = $this->save($type);
 
                 $find = true;
+                
+                break;
             }
         }
          if(!$find){
@@ -117,6 +144,7 @@ class TypesTable extends Table
 
             $types[] = $this->save($type);
         }
+        
         return $types;
         
     }

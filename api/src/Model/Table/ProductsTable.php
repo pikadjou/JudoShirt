@@ -21,9 +21,7 @@ class ProductsTable extends Table
 {
     protected $_spreadshirt = null;
     
-    private $_desingsModel = null;
     private $_typesModel = null;
-    
     private $_productsTypesModel = null;
     /**
      * Initialize method
@@ -39,8 +37,9 @@ class ProductsTable extends Table
         
         $this->table('products');
         $this->primaryKey('id');
-        $this->belongsTo('Designs', [
-            'foreignKey' => 'design_id'
+        $this->hasMany('Articles', [
+            'foreignKey' => 'product_id',
+            'dependent' => true,
         ]);
         $this->belongsToMany('Types', [
             'foreignKey' => 'product_id',
@@ -49,93 +48,71 @@ class ProductsTable extends Table
         ]);
         
         $this->_spreadshirt = new SpreadShirt\HttpRequest();
-        $this->_desingsModel = TableRegistry::get('Designs');
         $this->_typesModel = TableRegistry::get('Types');
         $this->_productsTypesModel = TableRegistry::get('ProductsTypes');
     }
     
-    public function getOneNoCache($id){
+    public function getOne($id){
         return $this->find()->where(["Products.id" => $id])->limit(1);
     }
-    public function getByShopIdNoCache($id){
+    public function getOneByShopId($id){
         return $this->find()->where(["Products.shopId" => $id])->limit(1);
     }
     
-    
-    public function findByDesign($design)
+    public function updateProduct($id){
+         $url = $this->_spreadshirt->_urlShop . "/productTypes/".$id."?locale=fr_FR";
+
+        $response = $this->_spreadshirt->getRequest($url) ;
+        $response = simplexml_load_string($response);
+
+        $this->_doUpdateProduct($response);
+        
+        return $this->getOneByShopId($id);
+    }
+    public function updateAllProducts()
     {
-        //debug($design);
-        $id = $design->id;
-        $lastUpdate = $design->lastProductsUpdate;
-        
-        $date = new \DateTime();
-        $actualTime = $date->getTimestamp();
-        
-        $date->sub(new \DateInterval('PT' . 60 . 'M'));
-        $cacheTime = $date->getTimestamp();
-        
-//        debug($lastUpdate);
-//        debug($cacheTime);
-        //$lastUpdate = null;
-                
-        if($lastUpdate === null || $lastUpdate < $cacheTime){
             
-            $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($design->shopId)";
- 
-            $response = $this->_spreadshirt->getRequest($url) ;
-            $response = simplexml_load_string($response);
-            //debug($response);
-            if($response->article){
-                foreach ($response->article as $article){
-                    $articleId = (string)$article->attributes()->id;
-                    //debug($articleId);
-                    $product = $this->getByShopIdNoCache($articleId)->first();
+        $url = $this->_spreadshirt->_urlShop . "/productTypes?locale=fr_FR";
 
-                    if(!$product){
-                        $product = $this->newEntity();
-                    }
+        $response = $this->_spreadshirt->getRequest($url) ;
+        $response = simplexml_load_string($response);
+        //debug($response);
+        if($response->productType){
+            foreach ($response->productType as $product){
+                
+                $this->_doUpdateProduct($product);
 
-                   // debug($article->product);
-                    $product->shopId = $articleId;
-                    $product->design_id = $id;
-                    $product->name = (string)$article->name;
-                    $product->content = (string)$article->description;
-                    $product->price = (string)$article->price->vatIncluded;
-
-                    $product->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
-
-                    //debug($product);
-                    $this->save($product);
-
-                    $url = (string)$article->product->productType->attributes('xlink', true);
-                    $url .= "?locale=fr_FR";
-
-                    $this->addTypesToProduct($product, $url);
-
-                }
-
-                $design->lastProductsUpdate = $actualTime;
-                $this->_desingsModel->save($design);
             }
         }
         
-        $products = $this->find()->where(["design_id" => $id, "visible" => true])->order('priority');
-        
-        return $products;
+        return true;
     }
     
-    public function addTypesToProduct($product, $url){
-        //debug($url);
+    private function _doUpdateProduct($xmlProduct){
+        if(!$xmlProduct){
+            return;
+        }
+        $productShopId = (string)$xmlProduct->attributes()->id;
+
+        $productModel = $this->getOneByShopId($productShopId)->first();
+
+        if(!$productModel){
+            $productModel = $this->newEntity();
+        }
+
+        $productModel->shopId = $productShopId;
+        $productModel->name = (string)$xmlProduct->name;
+
+        $this->save($productModel);
+
+        $this->addTypesToProduct($productModel, $productShopId);
+    }
+    public function addTypesToProduct($product, $id){
+        
+        $url = $this->_spreadshirt->_urlShop . "/productTypes/".$id."?locale=fr_FR";
+
         $response = $this->_spreadshirt->getRequest($url) ;
         $response = simplexml_load_string($response);
-        
-        if(!$response){
-            return;            
-        }
-        $product->name = (string)$response->name;
-        
-        $this->save($product);
-        
         
         $types = $this->_typesModel->addTypesForProduct($response);
 
@@ -159,12 +136,6 @@ class ProductsTable extends Table
         
         $query->contain([
             'Types'
-        ]);
-    }
-    public function addDesign($query){
-        
-        $query->contain([
-            'Designs'
         ]);
     }
     
