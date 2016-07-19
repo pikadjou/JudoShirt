@@ -14,7 +14,6 @@ var MartialShirt;
                 this._authenticated = false;
                 this.user = null;
                 this.errorHandler = [];
-                Login.uniqueInstance = this;
                 this.RH.GetSessionReveived.addOnce(this._getServeurSession, this);
                 var session = this.Application.getCookie("sprd_auth_token");
                 if (session) {
@@ -23,8 +22,10 @@ var MartialShirt;
                 }
             }
             Login.getInstance = function () {
-                if (this.uniqueInstance == null)
-                    console.warn("Login is not set");
+                if (this.uniqueInstance == null) {
+                    var injector = angular.injector(['MartialShirt']);
+                    this.uniqueInstance = injector.get(Services.Login.Name);
+                }
                 return this.uniqueInstance;
             };
             Login.prototype.setToken = function (token) {

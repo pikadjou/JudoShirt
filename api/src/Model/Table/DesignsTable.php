@@ -56,8 +56,10 @@ class DesignsTable extends Table
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create');
             
+        
         $validator
             ->allowEmpty('name');
+        
             
         $validator
             ->allowEmpty('content');

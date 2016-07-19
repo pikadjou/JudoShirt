@@ -55,7 +55,9 @@ class ArticlesTable extends Table
     public function getByShopIdNoCache($id){
         return $this->find()->where(["Articles.shopId" => $id])->limit(1);
     }
-    
+    public function getAllByProductId($id){
+        return $this->find()->where(["Articles.product_id" => $id, "Articles.visible" => true]);
+    }
     
     public function findByDesign($design)
     {
@@ -66,7 +68,7 @@ class ArticlesTable extends Table
         $date = new \DateTime();
         $actualTime = $date->getTimestamp();
         
-        $date->sub(new \DateInterval('PT' . 60 . 'M'));
+        $date->sub(new \DateInterval('PT' . 12 . 'H'));
         $cacheTime = $date->getTimestamp();
         
 //        debug($lastUpdate);
@@ -95,21 +97,23 @@ class ArticlesTable extends Table
                     
                     //product id
                     $idProductShop = (string)$article->product->productType->attributes()->id;
-                    $product = $this->_productsModel->getOneByShopId($idProductShop)->first();
-
-                    if(!$product){
-                        $product = $this->_productsModel->updateProduct($idProductShop)->first();
-                    }
+                    $product = $this->_productsModel->updateProduct($idProductShop)->first();
+                    
                     $articleModel->product_id = $product->id;
                     
                     
                     $articleModel->name = (string)$article->name;
+
+                   
+                    $articleModel->slug = $design->name ." - ". $product->name;
+        
+                            
                     $articleModel->content = (string)$article->description;
                     $articleModel->price = (string)$article->price->vatIncluded;
 
                     $articleModel->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
 
-                    //debug($product);
+//                    debug($articleModel);
                     $this->save($articleModel);
 
                 }
@@ -119,7 +123,7 @@ class ArticlesTable extends Table
             }
         }
         
-        $articles = $this->find()->where(["design_id" => $id, "visible" => true]);
+        $articles = $this->find()->where(["design_id" => $id, "Articles.visible" => true]);
         
         return $articles;
     }

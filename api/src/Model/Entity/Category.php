@@ -18,5 +18,7 @@ class Category extends Entity
         'name' => true,
         'content' => true,
         'designs' => true,
+        'parent' => true,
+
     ];
 }

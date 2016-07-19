@@ -2,10 +2,13 @@
 
 namespace App\Services\Entity;
 
+use Cake\Utility\Inflector;
+
 class Article
 {
     public $id = 0;
     public $name = "";
+    public $url = "";
     public $content = "";
     public $price = "";
     public $thumbnail = "";
@@ -26,6 +29,9 @@ class Article
         if(!$this->name){
             $this->name = $article->product->name;
         }
+        
+        $this->url = $this->id ."/". Inflector::slug($article->slug);
+
         $this->content = $article->content;
         $this->price = $article->price;
         $this->thumbnail = $article->thumbnail;

@@ -1,7 +1,7 @@
 module MartialShirt {
     'use strict';
 
-	export class C_MenuMain extends MartialShirt.Init.AbstractModule{
+	export class C_MenuMain extends Init.AbstractModule{
 		
 		public categories: Services.Entity.Category[] = [];
 		public cssClass: string = "";

@@ -70,13 +70,11 @@ class TypesTable extends Table
                 
         $fullName = (string)$response->name;
         $name = $response->categoryName;
-        
         $find = false;
         for($i = 0, $l = count($this->_manualClotheType); $i < $l; $i++){
             if(stripos($name, $this->_manualClotheType[$i]) !== false){
 
                 $name = $this->_manualClotheType[$i];
-                
                 $find = true;
                 break;
             }
@@ -88,7 +86,6 @@ class TypesTable extends Table
                 if(stripos($name, $key) !== false){
 
                     $name = $value;
-
                     $find = true;
                     break;
 

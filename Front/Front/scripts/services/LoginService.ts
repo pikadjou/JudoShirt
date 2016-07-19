@@ -15,8 +15,10 @@ module MartialShirt.Services {
 
 		private static uniqueInstance: Login;
 		public static getInstance(): Login {
-			if (this.uniqueInstance == null)
-				console.warn("Login is not set");
+			if (this.uniqueInstance == null) {
+				var injector = angular.injector(['MartialShirt']);
+				this.uniqueInstance = <Login>injector.get(Services.Login.Name);
+			}
 
 			return this.uniqueInstance;
 		}
@@ -35,7 +37,6 @@ module MartialShirt.Services {
 			private server: MartialShirt.Services.Server,
 			private RH: Services.UsersRequestHandler
 			) {
-			Login.uniqueInstance = this;
 
 			this.RH.GetSessionReveived.addOnce(this._getServeurSession, this);
 			var session = this.Application.getCookie("sprd_auth_token");

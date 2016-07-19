@@ -1,7 +1,7 @@
 module MartialShirt {
     'use strict';
 
-	export class C_TemplateArticleWidget {
+	export class C_TemplateArticleWidget extends Init.AbstractModule {
 		
 		public vm: C_TemplateArticleWidget = this;
 		public design: Services.Entity.Design = null;
@@ -13,13 +13,12 @@ module MartialShirt {
 			private $scope: any
 			) {
 
-			$scope.vm = this.vm = $scope;
+			super();
+
+			this.init($scope);
 
 		}
 
-		public test(){
-			console.log("test");
-		}
 	}
 
 	export class TemplateArticleWidget implements ng.IDirective {

@@ -4,18 +4,60 @@
 	export class Application {
 
 		public static MartialShirtApp: angular.IModule = angular.module('MartialShirt', ['ngRoute']);
-
-		private static uniqueInstance: Application;
+		private static _uniqueInstance: Application;
 
 		public static getInstance(): Application {
-			if (this.uniqueInstance == null)
-				this.uniqueInstance = new Application();
+			if (this._uniqueInstance == null)
+				this._uniqueInstance = new Application();
 
-			return this.uniqueInstance;
+			return this._uniqueInstance;
 		}
 
-		constructor() {
+
+		
+		constructor() { }
+
+		/*
+		 * Routes CMS
+		 */
+		private _routes: Services.Entity.Cms[] = [];
+		public setRoutes(cmsList: Services.CmsClass.GetRoutesResponse) {
+			if (!cmsList) {
+				return;
+			}
+			this._routes = cmsList.pages || [];
 		}
+		public getRoutes(): Services.Entity.Cms[] {
+			return this._routes;
+		}
+		public getUrl(name: string) {
+			for (var array = this.getRoutes(), i = 0, l = array.length; i < l; i++) {
+				if (name === array[i].name) {
+					return this._parseUrl(array[i].url);
+				}
+			}
+		}
+		private _parseUrl(url: string) : string{
+
+			var ret = "";
+
+			var explode = url.split("/");
+			for (var i = 0, l = explode.length; i < l; i++) {
+				if (explode[i] === "") {
+					continue;
+				}
+				if (explode[i].indexOf(":") > -1) {
+					break;
+				}
+
+				ret = ret + "/" + explode[i];
+			}
+			if (ret === "") {
+				ret = "/";
+			}
+			return ret;
+		}
+
 		public GetDirectiveFactory<T extends ng.IDirective>(classType: Function): ng.IDirectiveFactory {
 			var factory = (...args: any[]): T => {
 				var directive = <any>classType;
@@ -24,6 +66,11 @@
 
 			factory.$inject = classType.$inject;
 			return factory;
+		}
+
+		public injectorClass(Name: string): Object {
+			var injector = angular.injector(['MartialShirt']);
+			return injector.get(Name);
 		}
 
 		public static NewGuid() {

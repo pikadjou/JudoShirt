@@ -2,21 +2,24 @@
 	<LangSelector></LangSelector>
 	<div class="row menu-top__container">
 		<div class="small-2 columns">
-			<a href="/">Home</a>
+			<a href="{{vm._application.getUrl('Home')}}">Home</a>
 		</div>
 		<div class="small-2 columns">
-			<a href="/print">Type d'impression</a>
+			<a href="{{vm._application.getUrl('Products')}}">Produits</a>
 		</div>
 		<div class="small-2 columns">
-			<a href="/promotions">Promotions</a>
+			<a href="{{vm._application.getUrl('Prints')}}">Type d'impression</a>
 		</div>
 		<div class="small-2 columns">
-			<a href="/contact">Contact</a>
+			<a href="{{vm._application.getUrl('Promotions')}}">Promotions</a>
+		</div>
+		<div class="small-2 columns">
+			<a href="{{vm._application.getUrl('Contact')}}">Contact</a>
 		</div>
 	</div>
 	<div class="row header-content_container">
 		<div class="small-4 columns logo">
-			<a href="/">
+			<a href="{{vm._application.getUrl('Home')}}">
 				<img src="/content/img/logo.jpg" />
 			</a>
 		</div>

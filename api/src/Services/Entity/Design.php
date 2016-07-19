@@ -2,10 +2,13 @@
 
 namespace App\Services\Entity;
 
+use Cake\Utility\Inflector;
+
 class Design
 {
-    public $id = 0;
+    public $id = "";
     public $name = "";
+    public $url = "";
     public $content = "";
     public $thumbnail = "";
     public $header = "";
@@ -17,8 +20,11 @@ class Design
     
     function __construct($design){
         
-        $this->id = $design->id;
+        $this->id = $design->id; //."-".Inflector::slug($design->name);
         $this->name = $design->name;
+        
+        $this->url = $this->id ."/". Inflector::slug($this->name);
+        
         $this->content = $design->content;
         $this->thumbnail = $design->thumbnail;
         $this->header = $design->header;

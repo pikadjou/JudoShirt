@@ -8,9 +8,10 @@ var MartialShirt;
     'use strict';
     var C_Basket = (function (_super) {
         __extends(C_Basket, _super);
-        function C_Basket($scope, RH) {
+        function C_Basket($scope, $location, RH) {
             _super.call(this);
             this.$scope = $scope;
+            this.$location = $location;
             this.RH = RH;
             this.showBasket = false;
             this.basket = null;
@@ -42,6 +43,12 @@ var MartialShirt;
         };
         C_Basket.prototype.showHideBasket = function () {
             this.showBasket = !this.showBasket;
+            if (this.showBasket === true) {
+                MartialShirt.Controller.GTM.getInstance().LocationChange("/basket");
+            }
+            else {
+                MartialShirt.Controller.GTM.getInstance().LocationChange(this.$location.path());
+            }
         };
         C_Basket.prototype.getNbItems = function () {
             if (!this.basket || this.basket === null) {
@@ -72,6 +79,7 @@ var MartialShirt;
         };
         C_Basket.$inject = [
             '$scope',
+            '$location',
             MartialShirt.Services.BasketsRequestHandler.Name
         ];
         return C_Basket;

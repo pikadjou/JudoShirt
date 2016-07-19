@@ -1,7 +1,7 @@
 module MartialShirt.Container {
     'use strict';
 
-	export class C_Footer {
+	export class C_Footer extends MartialShirt.Init.AbstractModule{
 		
 
 		public static $inject = [
@@ -10,7 +10,9 @@ module MartialShirt.Container {
 		constructor(
 			private $scope: any
 			) {
-			$scope.vm = $scope;
+			super();
+
+			this.init($scope);
 
 		}
 	}

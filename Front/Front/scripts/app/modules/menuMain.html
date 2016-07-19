@@ -2,10 +2,10 @@
 	<div class="row">
 		<ul ng-class="vm.cssClass">
 			<li ng-repeat="category in vm.categories">
-				<a href="#" ng-href="/category/{{category.id}}">{{category.name}}</a>
+				<a href="{{vm._application.getUrl('Category')}}/{{category.url}}">{{category.name}}</a>
 				<ul class="submenu">
 					<li ng-repeat="child in category.children">
-						<a href="#" ng-href="/category/{{child.id}}">{{child.name}}</a>
+						<a href="{{vm._application.getUrl('Category')}}/{{child.url}}">{{child.name}}</a>
 					</li>
 				</ul>
 			</li>

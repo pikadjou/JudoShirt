@@ -173,6 +173,56 @@ var MartialShirt;
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
+///#source 1 1 /scripts/services/Products/ProductsRequestHandler.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        'use strict';
+        var ProductsRequestHandler = (function () {
+            function ProductsRequestHandler(server) {
+                this.server = server;
+                this.controller = "products";
+                this.addEvents();
+            }
+            ProductsRequestHandler.prototype.GetProducts = function (request) {
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetProducts", this.controller, "getProducts", []));
+            };
+            ProductsRequestHandler.prototype.GetProduct = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetProducts", this.controller, "getProduct", request));
+            };
+            ProductsRequestHandler.prototype.addEvents = function () {
+                this.GetProductsReceived = new signals.Signal();
+                this.GetProductReceived = new signals.Signal();
+                this.server.packetReceived.add(this.onPacketReceived, this);
+            };
+            ProductsRequestHandler.prototype.onPacketReceived = function (response) {
+                if (!response || !response.Content)
+                    return;
+                var parsedResponse = null;
+                switch (response.Identifier) {
+                    case ("GetProductsResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetProductsReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetProductResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetProductReceived.dispatch(parsedResponse);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            ProductsRequestHandler.$inject = ['Server'];
+            ProductsRequestHandler.Name = "ProductsRequestHandler";
+            return ProductsRequestHandler;
+        }());
+        Services.ProductsRequestHandler = ProductsRequestHandler;
+        MartialShirt.Init.Application.MartialShirtApp.service(ProductsRequestHandler.Name, ProductsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
 ///#source 1 1 /scripts/services/Prints/PrintsRequestHandler.js
 var MartialShirt;
 (function (MartialShirt) {
@@ -212,6 +262,65 @@ var MartialShirt;
         }());
         Services.PrintsRequestHandler = PrintsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(PrintsRequestHandler.Name, PrintsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/services/Cms/CmsRequestHandler.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        'use strict';
+        var CmsRequestHandler = (function () {
+            function CmsRequestHandler(server) {
+                this.server = server;
+                this.controller = "cms";
+                this.addEvents();
+            }
+            CmsRequestHandler.prototype.GetRoutes = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetRoutes", this.controller, "getRoutes", request));
+            };
+            CmsRequestHandler.prototype.addEvents = function () {
+                this.GetRoutesReceived = new signals.Signal();
+                this.server.packetReceived.add(this.onPacketReceived, this);
+            };
+            CmsRequestHandler.prototype.onPacketReceived = function (response) {
+                if (!response || !response.Content)
+                    return;
+                var parsedResponse = null;
+                switch (response.Identifier) {
+                    case ("GetRoutesResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetRoutesReceived.dispatch(parsedResponse);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            CmsRequestHandler.$inject = ['Server'];
+            CmsRequestHandler.Name = "CmsRequestHandler";
+            return CmsRequestHandler;
+        }());
+        Services.CmsRequestHandler = CmsRequestHandler;
+        MartialShirt.Init.Application.MartialShirtApp.service(CmsRequestHandler.Name, CmsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/services/Cms/CmsClass.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        var CmsClass;
+        (function (CmsClass) {
+            var GetRoutesResponse = (function () {
+                function GetRoutesResponse() {
+                }
+                return GetRoutesResponse;
+            }());
+            CmsClass.GetRoutesResponse = GetRoutesResponse;
+        })(CmsClass = Services.CmsClass || (Services.CmsClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 
@@ -543,7 +652,6 @@ var MartialShirt;
                 this._authenticated = false;
                 this.user = null;
                 this.errorHandler = [];
-                Login.uniqueInstance = this;
                 this.RH.GetSessionReveived.addOnce(this._getServeurSession, this);
                 var session = this.Application.getCookie("sprd_auth_token");
                 if (session) {
@@ -552,8 +660,10 @@ var MartialShirt;
                 }
             }
             Login.getInstance = function () {
-                if (this.uniqueInstance == null)
-                    console.warn("Login is not set");
+                if (this.uniqueInstance == null) {
+                    var injector = angular.injector(['MartialShirt']);
+                    this.uniqueInstance = injector.get(Services.Login.Name);
+                }
                 return this.uniqueInstance;
             };
             Login.prototype.setToken = function (token) {

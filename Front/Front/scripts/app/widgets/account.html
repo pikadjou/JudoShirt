@@ -14,8 +14,8 @@
 					</a>
 					<div ng-if="vm._accountPanelOpen === true" class="my-account-panel account-panel">
 						<ul>
-							<li><a href="/account/order" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-shopping-cart"></i> Mes commandes</a></li>
-							<li><a href="/account/detail" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-user"></i> Mes details</a></li>
+							<li><a href="{{vm._application.getUrl('AccountOrder')}}" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-shopping-cart"></i> Mes commandes</a></li>
+							<li><a href="{{vm._application.getUrl('AccountDetail')}}" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-user"></i> Mes details</a></li>
 							<li><a ng-click="vm.logout()"><i class="fa fa-unlock"></i> Deconnection</a></li>
 						</ul>
 					</div>
@@ -66,7 +66,7 @@
 			</div>
 			<div class="row">
 				<div class="small-offset-5 small-6 columns subscribe">
-					<a href="/account/subscription" class="button button-action">
+					<a href="{{vm._application.getUrl('AccountSubscription')}}" class="button button-action">
 						Inscription
 					</a>
 				</div>

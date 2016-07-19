@@ -20,7 +20,7 @@ var MartialShirt;
                 head.appendChild(s);
             }
             var libs = ["//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js",
-                "//shop.spreadshirt.de/shopfiles/shopclient/shopclient.nocache.js"];
+            ];
             for (var i = 0, l = libs.length; i < l; i++) {
                 var s = document.createElement("script");
                 s.type = "text/JavaScript";
@@ -58,7 +58,20 @@ var MartialShirt;
                         return;
                     }
                 }
-                LauchApplication.Launch();
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", MartialShirt.Config.UrlApi + "cms/getRoutes.json");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status == 200) {
+                            window.routesResponse = JSON.parse(xhr.responseText).Content;
+                            LauchApplication.Launch();
+                        }
+                        else {
+                            alert('something else other than 200 was returned');
+                        }
+                    }
+                };
+                xhr.send();
             };
             var head = document.head || document.getElementsByTagName("head")[0];
             head.appendChild(s);

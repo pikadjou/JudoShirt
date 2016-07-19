@@ -4,20 +4,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * CategoriesDesign Entity.
+ * Tag Entity.
  */
-class ProductsColor extends Entity
+class Article extends Entity
 {
 
-    /**
+   /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
      * @var array
      */
     protected $_accessible = [
-        'product_id' => true,
-        'color_id' => true,
-        'product' => true,
-        'color' => true,
+        'name' => true,
+        'height' => true,
+        'width' => true,
+        'shop_id' => true
     ];
 }

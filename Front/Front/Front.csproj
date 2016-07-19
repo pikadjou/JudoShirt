@@ -40,6 +40,7 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <Content Include="index.html" />
+    <Content Include="lib\angulartics\angulartics.js" />
     <Content Include="lib\angular\angular-animate.js" />
     <Content Include="lib\angular\angular-aria.js" />
     <Content Include="lib\angular\angular-cookies.js" />
@@ -820,6 +821,7 @@
     <Content Include="lib\foundation\vendor\jquery.js" />
     <Content Include="lib\foundation\vendor\modernizr.js" />
     <Content Include="lib\foundation\vendor\placeholder.js" />
+    <Content Include="lib\angulartics\gtm.js" />
     <Content Include="lib\jquery\iframe-autoresize.js" />
     <Content Include="lib\jquery\jquery.js" />
     <Content Include="lib\lib.js">
@@ -843,6 +845,8 @@
     <Content Include="scripts\app\modules\account\order.html" />
     <Content Include="scripts\app\modules\custom\designer.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
+    <Content Include="scripts\app\modules\product\entity.html" />
+    <Content Include="scripts\app\modules\product\list.html" />
     <Content Include="scripts\app\modules\promotions\entity.html" />
     <Content Include="scripts\app\modules\promotions\list.html" />
     <Content Include="scripts\app\modules\promotions\slider.html" />
@@ -856,6 +860,8 @@
     <Content Include="scripts\app\pages\account\subscription.html" />
     <Content Include="scripts\app\pages\account\detail.html" />
     <Content Include="scripts\app\pages\account\order.html" />
+    <Content Include="scripts\app\pages\product\entity.html" />
+    <Content Include="scripts\app\pages\product\list.html" />
     <Content Include="scripts\app\pages\custom\custom.html" />
     <Content Include="scripts\app\pages\category.html" />
     <Content Include="scripts\app\pages\design.html" />
@@ -877,11 +883,14 @@
     <TypeScriptCompile Include="boot.ts" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
+    <TypeScriptCompile Include="scripts\app\controller\gtm.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\order.ts" />
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\product\entity.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\product\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\entity.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\slider.ts" />
@@ -895,6 +904,8 @@
     <TypeScriptCompile Include="scripts\app\pages\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\order.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\product\entity.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\product\list.ts" />
     <TypeScriptCompile Include="scripts\app\pages\category.ts" />
     <TypeScriptCompile Include="scripts\app\pages\custom\custom.ts" />
     <TypeScriptCompile Include="scripts\app\pages\design.ts" />
@@ -911,6 +922,12 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\services\Cms\CmsClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Cms\CmsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Cms.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Product.ts" />
+    <TypeScriptCompile Include="scripts\services\Products\ProductsClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Products\ProductsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesClass.ts" />
     <TypeScriptCompile Include="scripts\services\Categories\CategoriesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Article.ts" />
@@ -1027,7 +1044,9 @@
     <Content Include="scripts\app\App.min.js.map">
       <DependentUpon>App.min.js</DependentUpon>
     </Content>
-    <Content Include="scripts\services\Services.js.bundle" />
+    <Content Include="scripts\services\Services.js.bundle">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="scripts\services\Services.min.js.map">
       <DependentUpon>Services.min.js</DependentUpon>
     </Content>
@@ -1049,7 +1068,9 @@
     <Content Include="content\sass\application\modules\_article.scss" />
     <Content Include="content\sass\application\modules\_print.scss" />
     <Content Include="content\sass\application\modules\_promotion.scss" />
-    <Content Include="lib\lib.js.bundle" />
+    <Content Include="lib\lib.js.bundle">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="lib\lib.min.js.map">
       <DependentUpon>lib.min.js</DependentUpon>
     </Content>

@@ -7,10 +7,12 @@ module MartialShirt {
 		public basket: Services.Entity.Basket = null;
 		public static $inject = [
 			'$scope',
+			'$location',
 			Services.BasketsRequestHandler.Name
 		];
 		constructor(
-			private $scope: any,
+			private $scope: ng.IScope,
+			private $location: any,
 			private RH: Services.BasketsRequestHandler
 			) {
 			super();
@@ -50,6 +52,12 @@ module MartialShirt {
 
 		public showHideBasket() {
 			this.showBasket = !this.showBasket;
+
+			if (this.showBasket === true) {
+				Controller.GTM.getInstance().LocationChange("/basket");
+			} else {
+				Controller.GTM.getInstance().LocationChange(this.$location.path());
+			}
 		}
 
 		public getNbItems() : number {

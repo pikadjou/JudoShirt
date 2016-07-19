@@ -52,6 +52,13 @@ class ProductsTable extends Table
         $this->_productsTypesModel = TableRegistry::get('ProductsTypes');
     }
     
+    public function getAll(){
+        
+        $products = $this->find()->where(["Products.visible" => 1]);
+        
+        return $products;
+    
+    }
     public function getOne($id){
         return $this->find()->where(["Products.id" => $id])->limit(1);
     }
@@ -60,12 +67,8 @@ class ProductsTable extends Table
     }
     
     public function updateProduct($id){
-         $url = $this->_spreadshirt->_urlShop . "/productTypes/".$id."?locale=fr_FR";
-
-        $response = $this->_spreadshirt->getRequest($url) ;
-        $response = simplexml_load_string($response);
-
-        $this->_doUpdateProduct($response);
+        
+        $this->_doUpdateProduct($id);
         
         return $this->getOneByShopId($id);
     }
@@ -80,7 +83,8 @@ class ProductsTable extends Table
         if($response->productType){
             foreach ($response->productType as $product){
                 
-                $this->_doUpdateProduct($product);
+                $productShopId = (string)$product->attributes()->id;
+                $this->_doUpdateProduct($productShopId);
 
             }
         }
@@ -88,11 +92,14 @@ class ProductsTable extends Table
         return true;
     }
     
-    private function _doUpdateProduct($xmlProduct){
-        if(!$xmlProduct){
+    private function _doUpdateProduct($productShopId){
+        if(!$productShopId){
             return;
         }
-        $productShopId = (string)$xmlProduct->attributes()->id;
+        $url = $this->_spreadshirt->_urlShop . "/productTypes/".$productShopId."?locale=fr_FR";
+
+        $xmlProduct = $this->_spreadshirt->getRequest($url) ;
+        $xmlProduct = simplexml_load_string($xmlProduct);
 
         $productModel = $this->getOneByShopId($productShopId)->first();
 
@@ -102,17 +109,14 @@ class ProductsTable extends Table
 
         $productModel->shopId = $productShopId;
         $productModel->name = (string)$xmlProduct->name;
+        $productModel->content = (string)$xmlProduct->description;
 
+        $productModel->thumbnail = (string)$xmlProduct->resources->resource[0]->attributes('xlink', true);
         $this->save($productModel);
 
-        $this->addTypesToProduct($productModel, $productShopId);
+        $this->addTypesToProduct($xmlProduct, $productModel);
     }
-    public function addTypesToProduct($product, $id){
-        
-        $url = $this->_spreadshirt->_urlShop . "/productTypes/".$id."?locale=fr_FR";
-
-        $response = $this->_spreadshirt->getRequest($url) ;
-        $response = simplexml_load_string($response);
+    public function addTypesToProduct($response, $product){
         
         $types = $this->_typesModel->addTypesForProduct($response);
 

@@ -25,7 +25,7 @@
 			}
 
 			var libs = ["//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js",
-				"//shop.spreadshirt.de/shopfiles/shopclient/shopclient.nocache.js"];
+				/*"//shop.spreadshirt.de/shopfiles/shopclient/shopclient.nocache.js"*/];
 			for (var i = 0, l = libs.length; i < l; i++) {
 				// on cree la balise <script> dynamiquement
 				// via le DOM et createElement
@@ -72,30 +72,30 @@
 						return;
 					}
 				}
-				LauchApplication.Launch();
+
+				//Load route
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", Config.UrlApi + "cms/getRoutes.json");
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === XMLHttpRequest.DONE) {
+						if (xhr.status == 200) {
+							//ok
+							(<any>window).routesResponse = JSON.parse(xhr.responseText).Content;
+							LauchApplication.Launch();
+						} else {
+							alert('something else other than 200 was returned');
+						}
+					}
+				};
+
+				
+				xhr.send();
+				//LauchApplication.Launch();
+				
 			}
 			// puis on l�ins�re dans la balise <head> en haut de document
 			var head = document.head || document.getElementsByTagName("head")[0];
 			head.appendChild(s);
-
-
-
-			//var xhrObj = new XMLHttpRequest();
-			//xhrObj.onreadystatechange = () => {
-			//	if (xhttp.readyState == 4 && xhttp.status == 200) {
-			//		var se = document.createElement('script');
-			//		se.type = "text/javascript";
-			//		se.text = xhrObj.responseText;
-			//		document.getElementsByTagName('head')[0].appendChild(se);
-
-			//		Config.versionning = version;
-			//		LauchApplication.Launch();
-			//	}
-			//};
-			//// open and send asynchronous request
-			//var url = "/config.min.js?v=" + version;
-			//xhrObj.open('GET', url, true);
-			//xhrObj.send();
 		}
 	};
 	xhttp.open("GET", "/commit.txt", true);

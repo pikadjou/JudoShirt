@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Product
  * @property \Cake\ORM\Association\BelongsTo $Color
  */
-class ProductsColorsTable extends Table
+class ProductsPrintsTable extends Table
 {
 
     /**
@@ -24,14 +24,14 @@ class ProductsColorsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('products_colors');
+        $this->table('products_prints');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->belongsTo('Products', [
             'foreignKey' => 'product_id'
         ]);
-        $this->belongsTo('Colors', [
-            'foreignKey' => 'color_id'
+        $this->belongsTo('Prints', [
+            'foreignKey' => 'print_id'
         ]);
     }
 
@@ -44,8 +44,7 @@ class ProductsColorsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+            ->add('id', 'valid', ['rule' => 'numeric']);
 
         return $validator;
     }
@@ -59,8 +58,8 @@ class ProductsColorsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['color_id'], 'Products'));
-        $rules->add($rules->existsIn(['product_id'], 'Colors'));
+        $rules->add($rules->existsIn(['print_id'], 'Products'));
+        $rules->add($rules->existsIn(['product_id'], 'Prints'));
         return $rules;
     }
 }

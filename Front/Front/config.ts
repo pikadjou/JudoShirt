@@ -8,8 +8,10 @@
 	}
 	export class Config {
 		public static versionning: string = "000-000-000-000-000";
+		public static gtmKey: string = "GTM-TLJ6LQ";
 		public static Minification = false;
 		public static Maintenance = false;
+
 		public static UrlApi = "http://acceptance-api.martialshirt.com/";
 
 		public static subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";

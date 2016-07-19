@@ -1,9 +1,8 @@
 module MartialShirt {
     'use strict';
 
-	export class C_TemplateArticle {
+	export class C_TemplateArticle extends Init.AbstractModule{
 		
-		public vm: C_TemplateArticle = this;
 		public design: Services.Entity.Design = null;
 
 		public static $inject = [
@@ -12,14 +11,10 @@ module MartialShirt {
 		constructor(
 			private $scope: any
 			) {
+			super();
 
-			$scope.vm = this.vm = $scope;
+			this.init($scope);
 
-			//console.log(this.vm);
-		}
-
-		public test(){
-			console.log("test");
 		}
 	}
 

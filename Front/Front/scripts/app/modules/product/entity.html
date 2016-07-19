@@ -1,0 +1,35 @@
+﻿<div class="module__container products__container">
+	<h3 class="module__title">
+		{{vm.product.name}}
+	</h3>
+	<div class="module__content">
+		<a class="button back" href="{{vm._application.getUrl('Products')}}">
+			<i class="fa fa-reply"></i>retour aux produits
+		</a>
+		<div>
+			<ul class="small-block-grid-4 article-list__container">
+				<li ng-repeat="article in vm.articles">
+					<div class="article__container">
+						<a href="{{vm._application.getUrl('Article')}}/{{article.url}}">
+							<div class="row collapse">
+								<div class="small-12 columns">
+									<img ng-src="{{article.thumbnail}}" />
+								</div>
+								<div class="small-12 columns">
+									<span class="name">{{article.design.name}}</span>
+								</div>
+								<div class="small-12 columns">
+									<span class="price">{{article.price}} <i class="fa fa-eur"></i></span>
+								</div>
+								<div class="small-12 columns">
+									<button>Voir le produit</button>
+								</div>
+							</div>
+						</a>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+	</div>
+</div>

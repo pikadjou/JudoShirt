@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsToMany $Designs
  */
-class ColorsTable extends Table
+class Appearances extends Table
 {
 
     /**
@@ -23,13 +23,13 @@ class ColorsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('colors');
-        $this->displayField('color');
+        $this->table('appearances');
+        $this->displayField('name');
         $this->primaryKey('id');
         $this->belongsToMany('Products', [
             'foreignKey' => 'product_id',
-            'targetForeignKey' => 'color_id',
-            'joinTable' => 'products_colors'
+            'targetForeignKey' => 'appearance_id',
+            'joinTable' => 'products_appearances'
         ]);
     }
 

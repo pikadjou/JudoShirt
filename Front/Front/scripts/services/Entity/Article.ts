@@ -2,6 +2,7 @@
 	export class Article {
 		public id: number;
 		public name: string;
+		public url: string;
 		public content: string;
 		public thumbnail: string;
 		public shopId: number;

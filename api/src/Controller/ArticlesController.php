@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use Cake\Cache\Cache;
 use App\Controller\AppController;
 use App\Services\ArticlesRequestHandler;
 /**
@@ -22,6 +23,12 @@ class ArticlesController extends AppController
     
     public function getArticles($id)
     {
+        $key = "ArticlesController-getArticles-".$id;
+        //Cache::delete($key);
+        if (($response = Cache::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
         $query = $this->Designs->getOne($id);
         $this->Designs->addCategories($query);
         $design = $query->first();
@@ -30,18 +37,17 @@ class ArticlesController extends AppController
         
         $this->Articles->addProduct($query);
         
-        //$query->cache('cache_key');
         $articles = $query->toArray();
         
         $response = new ArticlesRequestHandler\GetArticlesResponse();
         $response->init($articles, $design);
 
+        Cache::write($key, $response);
         parent::setJson($response);
     }
     
     public function getArticle($id = null)
     {
-        
         $query = $this->Products->getOneNoCache($id);
         $this->Products->addDesign($query);
         $product = $query->first();

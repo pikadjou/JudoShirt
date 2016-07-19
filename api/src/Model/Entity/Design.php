@@ -24,5 +24,6 @@ class Design extends Entity
         'lastProductsUpdate' => true,
         'categories' => true,
         'tags' => true,
+        'priority' => true
     ];
 }

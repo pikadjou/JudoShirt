@@ -30,14 +30,48 @@ var MartialShirt;
         'use strict';
         var Application = (function () {
             function Application() {
+                this._routes = [];
                 this._activeInstance = false;
                 this._shopConfigurationList = [];
                 this._cookieDomain = "." + location.host;
             }
             Application.getInstance = function () {
-                if (this.uniqueInstance == null)
-                    this.uniqueInstance = new Application();
-                return this.uniqueInstance;
+                if (this._uniqueInstance == null)
+                    this._uniqueInstance = new Application();
+                return this._uniqueInstance;
+            };
+            Application.prototype.setRoutes = function (cmsList) {
+                if (!cmsList) {
+                    return;
+                }
+                this._routes = cmsList.pages || [];
+            };
+            Application.prototype.getRoutes = function () {
+                return this._routes;
+            };
+            Application.prototype.getUrl = function (name) {
+                for (var array = this.getRoutes(), i = 0, l = array.length; i < l; i++) {
+                    if (name === array[i].name) {
+                        return this._parseUrl(array[i].url);
+                    }
+                }
+            };
+            Application.prototype._parseUrl = function (url) {
+                var ret = "";
+                var explode = url.split("/");
+                for (var i = 0, l = explode.length; i < l; i++) {
+                    if (explode[i] === "") {
+                        continue;
+                    }
+                    if (explode[i].indexOf(":") > -1) {
+                        break;
+                    }
+                    ret = ret + "/" + explode[i];
+                }
+                if (ret === "") {
+                    ret = "/";
+                }
+                return ret;
             };
             Application.prototype.GetDirectiveFactory = function (classType) {
                 var factory = function () {
@@ -50,6 +84,10 @@ var MartialShirt;
                 };
                 factory.$inject = classType.$inject;
                 return factory;
+            };
+            Application.prototype.injectorClass = function (Name) {
+                var injector = angular.injector(['MartialShirt']);
+                return injector.get(Name);
             };
             Application.NewGuid = function () {
                 return (this.G() + this.G() + "-" + this.G() + "-" + this.G() + "-" +

@@ -3,13 +3,13 @@
 		{{vm.design.name}}
 
 		<span ng-if="vm.design.idCustomShop" class="custom">
-			<a href="/designer/{{vm.design.idCustomShop}}">Personnaliser</a>
+			<!--<a href="/designer/{{vm.design.idCustomShop}}">Personnaliser</a>-->
 		</span>
 	</h3>
 	<templateloader ng-if="vm.loader"></templateloader>
 	<div class="module__content" ng-if="!vm.loader">
 		<span ng-repeat="category in vm.mainCategories">
-			<a class="button back" href="/category/{{category.id}}">
+			<a class="button back" href="{{vm._application.getUrl('Category')}}/{{category.url}}">
 				<i class="fa fa-reply"></i>Catégorie {{category.name}}
 			</a>
 		</span>
@@ -44,7 +44,7 @@
 			<ul class="small-block-grid-4 article-list__container">
 				<li ng-repeat="article in vm.visibleArticles">
 					<div class="article__container">
-						<a href="/article/{{article.id}}/{{article.shopId}}#!-A{{article.shopId}}">
+						<a href="{{vm._application.getUrl('Article')}}/{{article.url}}">
 							<div class="row collapse">
 								<div class="small-12 columns">
 									<img ng-src="{{article.thumbnail}}" />

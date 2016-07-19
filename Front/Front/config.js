@@ -13,6 +13,7 @@ var MartialShirt;
         function Config() {
         }
         Config.versionning = "000-000-000-000-000";
+        Config.gtmKey = "GTM-TLJ6LQ";
         Config.Minification = false;
         Config.Maintenance = false;
         Config.UrlApi = "http://acceptance-api.martialshirt.com/";

@@ -49,6 +49,75 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?= $this->Flash->render() ?>
 
             <div class="row">
+                <div class="actions columns large-2 medium-3">
+                    <h3><?= __('Actions') ?></h3>
+                    <ul class="side-nav">
+                        <li>
+                            Articles
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Articles', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Articles', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Products
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Products', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Products', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Categories
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Categories', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Categories', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Designs
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Designs', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Designs', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Impressions
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'prints', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'prints', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Appearances
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Appearances', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Appearances', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Sizes
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Sizes', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Sizes', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Cms
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'cms', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'cms', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Configurations
+                            <ul>
+                                <li><?= $this->Html->link(__('List'), ['controller' => 'Configs', 'action' => 'index']) ?> </li>
+                                <li><?= $this->Html->link(__('New'), ['controller' => 'Configs', 'action' => 'add']) ?> </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
                 <?= $this->fetch('content') ?>
             </div>
         </div>

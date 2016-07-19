@@ -45,17 +45,4 @@
 		}
 	}
 
-	.article__container{
-		.name{
-			font-weight: normal;
-			font-size: rem-calc(14);
-		}
-		.price{
-			color: $blue-color;
-			font-weight: bold;
-		}
-		button{
-			padding: 10px;
-		}
-	}
 }

@@ -3368,7 +3368,12 @@ iframe {
 }
 
 .article__container .name {
-  font-size: 16px;
+  font-weight: normal;
+  font-size: 0.875rem;
+}
+
+.article__container .price {
+  color: #499bff;
   font-weight: bold;
 }
 
@@ -3378,6 +3383,7 @@ iframe {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  padding: 10px;
   background-color: #5a616b;
 }
 
@@ -3678,20 +3684,6 @@ iframe {
 
 .design__container .filters .clear a {
   color: #28558B;
-}
-
-.design__container .article__container .name {
-  font-weight: normal;
-  font-size: 0.875rem;
-}
-
-.design__container .article__container .price {
-  color: #499bff;
-  font-weight: bold;
-}
-
-.design__container .article__container button {
-  padding: 10px;
 }
 
 .article__container .custom {
