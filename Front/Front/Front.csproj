@@ -922,8 +922,12 @@
     <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
+    <TypeScriptCompile Include="scripts\app\models\PlayerStorage.ts" />
     <TypeScriptCompile Include="scripts\services\Cms\CmsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Cms\CmsRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\View.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Appearance.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Size.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Cms.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Product.ts" />
     <TypeScriptCompile Include="scripts\services\Products\ProductsClass.ts" />
@@ -1090,7 +1094,6 @@
   <ItemGroup>
     <Folder Include="content\sass\application\pages\" />
     <Folder Include="Properties\" />
-    <Folder Include="scripts\models\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

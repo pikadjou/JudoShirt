@@ -12,7 +12,7 @@ class GetArticleResponse extends \App\Services\RHBaseResponse
     }
     
     function init ($article) {
-        $this->article = new \App\Services\Entity\Product($article);
+        $this->article = new \App\Services\Entity\Article($article);
     }
 }
 

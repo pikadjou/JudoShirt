@@ -66,6 +66,8 @@ a.back{
 
 	font-size: rem-calc(12);
 	i{
+		position: relative;
+		color: $dark-gray-color;
 		padding: 5px;
 	}
 

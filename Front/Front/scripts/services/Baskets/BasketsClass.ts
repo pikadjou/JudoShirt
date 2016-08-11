@@ -9,6 +9,11 @@
 		public id: string;
 		public quantity: number;
 		public element: string;
+    }
+	export class AddArticleRequest {
+		public article: Services.Entity.Article;
+		public basketId: string;
+		public token: string;
 
     }
     export class GetBasketResponse {

@@ -18,22 +18,6 @@ var MartialShirt;
             this._accountPanelOpen = false;
             this._loginForm = { pseudo: "", errorPseudo: "", password: "", errorPassword: "", errorServeur: "" };
             this._loader = false;
-            this.ReloadShop = function () {
-                if (1 == 1) {
-                    return;
-                }
-                var intervalId = setInterval(function () {
-                    var element = $("#" + _this.baseId).first();
-                    if (element && element.length > 0) {
-                        element.empty();
-                        var config = {
-                            baseId: _this.baseId
-                        };
-                        MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
-                        clearInterval(intervalId);
-                    }
-                }, 100, intervalId);
-            };
             this.errorLogin = function (message) {
                 _this._loader = false;
                 _this._loginForm.errorServeur = message;
@@ -43,9 +27,6 @@ var MartialShirt;
                 _this._login.Logout();
             };
             this.init($scope);
-            this._signal.changeBasketCount.add(this.ReloadShop, this);
-            this._signal.changeWishCount.add(this.ReloadShop, this);
-            this.ReloadShop();
             this._login.addErrorHandler(this.errorLogin);
         }
         C_WidgetAccount.prototype.Authenticated = function () {

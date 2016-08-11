@@ -7,9 +7,77 @@
 		</span>
 	</h3>
 	<div class="module__content">
-		<a class="button back" href="/design/{{vm.design.id}}">
+		<a class="button back" href="{{vm._application.getUrl('Design')}}/{{vm.design.url}}">
 			<i class="fa fa-reply"></i>retour aux articles
 		</a>
-		<div id="articleShop"></div>
+
+		<div class="error" ng-if="vm.errorMessage !== ''">
+			<div class="alert label">
+				{{vm.errorMessage}}
+			</div>
+		</div>
+		<div class="row collapse information">
+			<div class="small-6 columns">
+				<img src="{{vm.getImageUrl(0, 0)}}" alt="{{vm.article.name}}" class="main" />
+
+				<div class="views">
+					<span ng-repeat="view in vm.views | orderBy: priority" class="view">
+						<a href="#" ng-click="vm.changeSelectedView(view)" ng-class="{'active' : vm.isDefaultView(view)}">
+							<img src="{{vm.getImageUrl(view.shopId, 0)}}" alt="{{view.name}}" />
+						</a>
+					</span>
+				</div>
+			</div>
+			<div class="small-6 columns">
+
+				<div class="short-content">
+					<p ng-bind-html="vm.renderHtml(vm.article.short)"></p>
+				</div>
+				<div class="price">
+					{{vm.article.price}} €
+					<div class="small">TTC</div>
+					<div class="small">
+						Hors frais de port
+					</div>
+				</div>
+				<div class="appearances">
+					<span ng-repeat="appearance in vm.appearances | orderBy: priority" class="appearance">
+						<a href="#" ng-click="vm.changeSelectedAppearance(appearance)" ng-class="{'active' : vm.isDefaultAppearance(appearance)}">
+							<i class="fa fa-check fa-2x" aria-hidden="true" ng-if="vm.isDefaultAppearance(appearance)"></i>
+							<img src="{{appearance.thumbnail}}" alt="{{appearance.name}}" />
+						</a>
+					</span>
+				</div>
+
+				<div class="sizes">
+					<span ng-repeat="size in vm.sizes | orderBy: priority" class="size">
+						<a href="#" ng-click="vm.changeSelectedSize(size)" class="button button-action" ng-class="{'active' : vm.isDefaultSize(size)}">
+							{{size.name}}
+						</a>
+					</span>
+				</div>
+
+				<div class="action">
+					<a class="button button-action" ng-click="vm.addToBasket()">
+						<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+						Ajouter au panier
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="small-6 columns">
+				<div class="content">
+					<p ng-bind-html="vm.renderHtml(vm.article.content)"></p>
+				</div>
+			</div>
+			<div class="small-6 columns">
+				<div class="size-information">
+					<img src="{{vm.article.sizeThumbnail}}"  />
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

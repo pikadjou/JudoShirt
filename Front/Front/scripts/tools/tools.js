@@ -6,8 +6,7 @@ var MartialShirt;
         'use strict';
         var Signals = (function () {
             function Signals() {
-                this.changeBasketCount = new signals.Signal();
-                this.changeWishCount = new signals.Signal();
+                this.askAddArticle = new signals.Signal();
             }
             Signals.getInstance = function () {
                 if (!this.instance) {
@@ -31,8 +30,6 @@ var MartialShirt;
         var Application = (function () {
             function Application() {
                 this._routes = [];
-                this._activeInstance = false;
-                this._shopConfigurationList = [];
                 this._cookieDomain = "." + location.host;
             }
             Application.getInstance = function () {
@@ -95,58 +92,6 @@ var MartialShirt;
             };
             Application.G = function () {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-            };
-            Application.prototype.addShopConfiguration = function (config, light, changeBasketCount, changeWishCount) {
-                if (light === void 0) { light = false; }
-                if (changeBasketCount === void 0) { changeBasketCount = false; }
-                if (changeWishCount === void 0) { changeWishCount = false; }
-                config.shopName = MartialShirt.Config.spreadShirt.shopName;
-                config.locale = MartialShirt.Config.spreadShirt.locale;
-                config.prefix = MartialShirt.Config.spreadShirt.prefix;
-                config.light = light;
-                config.changeBasketCount = changeBasketCount;
-                config.changeWishCount = changeWishCount;
-                this._shopConfigurationList.push(config);
-                if (this._activeInstance === false) {
-                    this._setFirstShopInstance();
-                }
-            };
-            Application.prototype._setFirstShopInstance = function () {
-                var _this = this;
-                var config = this._shopConfigurationList.pop();
-                if (!config) {
-                    this._activeInstance = false;
-                    return;
-                }
-                this._activeInstance = true;
-                window.spread_shop_config = config;
-                window.shopclient();
-                var intervalId = setInterval(function () {
-                    var element = $("#sprd-main").first();
-                    if (element && element.length > 0) {
-                        if (config.changeBasketCount) {
-                            $(element).on('DOMSubtreeModified', "#basketCountText", function () {
-                                MartialShirt.Init.Signals.getInstance().changeBasketCount.dispatch();
-                            });
-                        }
-                        if (config.changeWishCount) {
-                            $(element).on('DOMSubtreeModified', "#wishlistCountText", function () {
-                                MartialShirt.Init.Signals.getInstance().changeWishCount.dispatch();
-                            });
-                        }
-                        if (config.light === true) {
-                            setTimeout(function () {
-                                element.find("#header-html").remove();
-                                element.find("#department-filter").remove();
-                                element.find("#sprd-content").remove();
-                                element.find("#footer-html").remove();
-                                element.find("#footer").remove();
-                            }, 10000, element);
-                        }
-                        clearInterval(intervalId);
-                        _this._setFirstShopInstance();
-                    }
-                }, 100, config, intervalId);
             };
             Application.prototype.setCookie = function (cName, cValue, expirationDays, path) {
                 if (path === void 0) { path = '/'; }
@@ -237,12 +182,16 @@ var MartialShirt;
         'use strict';
         var AbstractModule = (function () {
             function AbstractModule() {
+                this._sce = null;
                 this._signal = MartialShirt.Init.Signals.getInstance();
                 this._application = MartialShirt.Init.Application.getInstance();
                 this._login = MartialShirt.Services.Login.getInstance();
                 this.CoreLib = CoreLib;
                 this.loader = false;
                 this.isAuthenticated = false;
+                this.renderHtml = function (html_code) {
+                    return this._sce.trustAsHtml(html_code);
+                };
                 if (this._login.isAuthenticated()) {
                     this.Authenticated();
                 }
@@ -262,6 +211,12 @@ var MartialShirt;
             };
             AbstractModule.prototype.Unauthenticated = function () {
                 this.isAuthenticated = false;
+            };
+            AbstractModule.prototype.iframeresize = function () {
+                setTimeout(function () {
+                    $('#iframe-container').height(800);
+                    $('#iframe-container').scrollTop(150);
+                }, 1000);
             };
             return AbstractModule;
         }());

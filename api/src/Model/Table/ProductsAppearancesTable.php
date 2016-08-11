@@ -58,8 +58,24 @@ class ProductsAppearancesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['appearance_id'], 'Products'));
-        $rules->add($rules->existsIn(['product_id'], 'Appearances'));
+        $rules->add($rules->existsIn(['product_id'], 'Products'));
+        $rules->add($rules->existsIn(['appearance_id'], 'Appearances'));
         return $rules;
+    }
+    
+    public function linkProductAndAppearanceId($productId, $appId){
+
+        $join = $this->find()->where(["product_id" => $productId, "appearance_id" => $appId])->limit(1)->first();
+        
+
+        if(!$join){
+            $join = $this->newEntity();
+            
+            $join->product_id = $productId;
+            $join->appearance_id = $appId;
+            
+            $this->save($join);
+
+        }
     }
 }

@@ -8,16 +8,4 @@ use Cake\ORM\Entity;
  */
 class CategoriesDesign extends Entity
 {
-
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        'category_id' => true,
-        'design_id' => true,
-        'category' => true,
-        'design' => true,
-    ];
 }

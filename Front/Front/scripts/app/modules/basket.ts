@@ -4,7 +4,10 @@ module MartialShirt {
 	export class C_Basket extends MartialShirt.Init.AbstractModule {
 
 		public showBasket: boolean = false;
+
+		public basketId: string = null;
 		public basket: Services.Entity.Basket = null;
+
 		public static $inject = [
 			'$scope',
 			'$location',
@@ -20,8 +23,10 @@ module MartialShirt {
 			this.init($scope);
 
 			this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
-			this._signal.changeBasketCount.add(this.launchDelayGetBasket, this);
 
+			this._signal.askAddArticle.add(this.addArticle, this);
+
+			this._fillBasketId();
 			if (!this._login.hasToken()) {
 				this.launchGetBasket();
 			}
@@ -33,20 +38,32 @@ module MartialShirt {
 			this.launchGetBasket();
 		}
 
-		public launchDelayGetBasket() {
-			setTimeout(() => {
-				this.launchGetBasket();
-			}, 10000);
-		}
 		public launchGetBasket() {
 			var request = new Services.BasketsClass.GetBasketRequest();
-			request.id = "2788b7e1-1309-4697-82a8-ed4614ba8fbf";
+			request.id = this.basketId;
 			request.token = this._login.getToken();
 
 			this.RH.GetBasket(request);
 		}
 		public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse) {
 			this.basket = response.basket;
+
+			this._setBasketID(this.basket.id);
+		}
+
+		private _fillBasketId() {
+			var basketId = Models.PlayerStorage.PlayerStorage.getInstance(Models.PlayerStorage.EStorageType.SESSION).getItem(Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
+
+			if (basketId) {
+				this._setBasketID(basketId);
+			}
+		}
+		private _setBasketID(basketId: string) {
+			if (!basketId) {
+				return;
+			}
+			this.basketId = basketId;
+			Models.PlayerStorage.PlayerStorage.getInstance(Models.PlayerStorage.EStorageType.SESSION).setItem(Models.PlayerStorage.PlayerStorageConst.BASKET_ID, basketId);
 
 		}
 
@@ -72,7 +89,31 @@ module MartialShirt {
 			}
 			return nb;
 		}
-		public update(basketItem: Services.Entity.BasketItem) {
+
+		public addArticle(article: Services.Entity.Article) {
+
+			var basketItem = this.getBasketItemByArticle(article);
+
+			if (basketItem) {
+				basketItem.quantity++;
+				this.updateBasketItem(basketItem);
+			} else {
+				this.createBasketItem(article);
+			}
+		}
+
+		public createBasketItem(article: Services.Entity.Article) {
+
+			var basketItem = this.getBasketItemByArticle(article);
+
+			var request = new Services.BasketsClass.AddArticleRequest();
+			request.article = article;
+			request.basketId = this.basket.id;
+			request.token = this._login.getToken();
+
+			this.RH.addArticle(request);
+		}
+		public updateBasketItem(basketItem: Services.Entity.BasketItem) {
 
 			var request = new Services.BasketsClass.UpdateQuantityRequest();
 			request.basketId = this.basket.id;
@@ -90,7 +131,28 @@ module MartialShirt {
 			} else {
 				basketItem.quantity += quantity;
 			}
-			this.update(basketItem);
+			this.updateBasketItem(basketItem);
+		}
+
+		public getBasketItemByArticle(article: Services.Entity.Article) : Services.Entity.BasketItem {
+
+			if (!this.basket || !this.basket.basketItems) {
+				return null;
+			}
+			for (var array = this.basket.basketItems, i = 0, l = array.length, basketItem : Services.Entity.BasketItem; i < l; i++) {
+				basketItem = array[i];
+				if (basketItem.articleId !== article.shopId) {
+					continue;
+				}
+
+				if (basketItem.size.shopId !== article.sizes[0].shopId) {
+					continue;
+				}
+				if (basketItem.appearance.shopId !== article.appearances[0].shopId) {
+					continue;
+				}
+				return basketItem;
+			}
 		}
 	}
 

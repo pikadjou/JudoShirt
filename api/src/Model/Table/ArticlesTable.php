@@ -8,6 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
 
+use Cake\Core\Configure;
 use App\Model\SpreadShirt;
 /**
  * Categories Model
@@ -20,11 +21,8 @@ require_once(ROOT . DS . 'vendor' . DS  . 'SpreadShirt' . DS . 'HttpRequest.php'
 class ArticlesTable extends Table
 {
     protected $_spreadshirt = null;
-    
-    private $_desingsModel = null;
-    private $_productsModel = null;
 //    
-//    private $_productsTypesModel = null;
+    private $_productsModel = null;
     /**
      * Initialize method
      *
@@ -49,6 +47,7 @@ class ArticlesTable extends Table
         $this->_productsModel = TableRegistry::get('Products');
     }
     
+    
     public function getOneNoCache($id){
         return $this->find()->where(["Articles.id" => $id])->limit(1);
     }
@@ -57,6 +56,72 @@ class ArticlesTable extends Table
     }
     public function getAllByProductId($id){
         return $this->find()->where(["Articles.product_id" => $id, "Articles.visible" => true]);
+    }
+    
+    
+    public function getOne($id){
+        
+        $article = $this->getOneNoCache($id)->first();
+       
+        if(!$article){
+            return;
+        }
+        $shopId = $article->shopId;
+        $lastUpdate = $article->lastUpdate;
+        
+        $date = new \DateTime();
+        $actualTime = $date->getTimestamp();
+        
+        $date->sub(new \DateInterval('PT' . 12 . 'H'));
+        $cacheTime = $date->getTimestamp();
+        
+//        debug($lastUpdate);
+//        debug($cacheTime);
+        if(Configure::read('CacheUpdateDB') === false){
+            $lastUpdate = null;
+        }
+                
+        if($lastUpdate === null || $lastUpdate < $cacheTime){
+            
+            $url = $this->_spreadshirt->_urlShop . "/articles/". $shopId;
+
+            $response = $this->_spreadshirt->getRequest($url);
+
+            $response = simplexml_load_string($response);
+            
+            if(!$response){
+                return;
+            }
+            
+           
+            //update product
+            $productId = (string)$response->product->productType->attributes()->id;
+            $this->_productsModel->updateProduct($productId);
+
+            
+            $extra = "view:".$response->product->defaultValues->defaultView->attributes()->id;
+            $extra .= "-appearance:".$response->product->appearance->attributes()->id;
+
+            $article->extra = $extra;
+            $article->lastUpdate = $actualTime;
+            
+            $this->save($article);
+            
+            
+        }
+        
+        $articles = $this->find()
+                ->where(["Articles.id" => $id, "Articles.visible" => true])
+                ->contain([
+                    "Designs",
+                    'Products' => [
+                        "Views",
+                        "Sizes",
+                        "Appearances"
+                    ]
+                ]);
+        
+        return $articles;
     }
     
     public function findByDesign($design)
@@ -73,10 +138,12 @@ class ArticlesTable extends Table
         
 //        debug($lastUpdate);
 //        debug($cacheTime);
-        //$lastUpdate = null;
-                
+        if(Configure::read('CacheUpdateDB') === false){
+            $lastUpdate = null;
+        }       
         if($lastUpdate === null || $lastUpdate < $cacheTime){
             
+            $this->_setDirty($id);
             $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($design->shopId)";
 
             $response = $this->_spreadshirt->getRequest($url) ;
@@ -90,7 +157,7 @@ class ArticlesTable extends Table
                     if(!$articleModel){
                         $articleModel = $this->newEntity();
                     }
-
+                    
                    // debug($article->product);
                     $articleModel->shopId = $articleId;
                     $articleModel->design_id = $id;
@@ -113,7 +180,7 @@ class ArticlesTable extends Table
 
                     $articleModel->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
 
-//                    debug($articleModel);
+                    $articleModel->dirty = false;
                     $this->save($articleModel);
 
                 }
@@ -121,6 +188,8 @@ class ArticlesTable extends Table
                 $design->lastProductsUpdate = $actualTime;
                 $this->_desingsModel->save($design);
             }
+            
+            $this->_deleteDirty();
         }
         
         $articles = $this->find()->where(["design_id" => $id, "Articles.visible" => true]);
@@ -142,4 +211,17 @@ class ArticlesTable extends Table
         ]);
     }
     
+    
+    private function _setDirty($designId){
+        
+        $this->updateAll(
+                ['dirty' => true], // champs
+                ['design_id' => $designId]); // conditions
+        
+    
+    }
+    
+    private function _deleteDirty(){
+        $this->deleteAll(['dirty' => true]);
+    }
 }

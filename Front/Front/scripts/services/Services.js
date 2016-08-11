@@ -575,6 +575,12 @@ var MartialShirt;
                 return UpdateQuantityRequest;
             }());
             BasketsClass.UpdateQuantityRequest = UpdateQuantityRequest;
+            var AddArticleRequest = (function () {
+                function AddArticleRequest() {
+                }
+                return AddArticleRequest;
+            }());
+            BasketsClass.AddArticleRequest = AddArticleRequest;
             var GetBasketResponse = (function () {
                 function GetBasketResponse() {
                 }
@@ -605,6 +611,9 @@ var MartialShirt;
             }
             BasketsRequestHandler.prototype.GetBasket = function (request) {
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetBasket", this.controller, "getBasket", [request.id, request.token]));
+            };
+            BasketsRequestHandler.prototype.addArticle = function (request) {
+                return this.server.request(new MartialShirt.Services.Request("POST", "AddArticle", this.controller, "addArticle", request));
             };
             BasketsRequestHandler.prototype.UpdateQuantity = function (request) {
                 return this.server.request(new MartialShirt.Services.Request("POST", "UpdateQuantity", this.controller, "updateQuantity", request));

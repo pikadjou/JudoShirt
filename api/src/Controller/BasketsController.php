@@ -81,4 +81,41 @@ class BasketsController extends AppController
         }
         
     }
+    
+    public function addArticle(){
+        $data = $this->request->data;
+
+        if($data){
+            $article = $data['article'];
+            $basketId = $data['basketId'];
+                    
+            $basket = $this->Baskets->getOne($basketId);
+            $explode = explode("\r\n\r\n", $basket, 2);
+            $basket = end($explode);
+            $basket = simplexml_load_string($basket);
+
+            $basketId = (string)$basket->attributes()->id;
+            
+            $ok = $this->Baskets->addArticle($basketId, $article);
+            
+            
+            //traitement du basket
+            $basket = $this->Baskets->getOne($basketId);
+            $explode = explode("\r\n\r\n", $basket, 2);
+            $basket = end($explode);
+            $basket = simplexml_load_string($basket);
+            
+            $response = new BasketsRequestHandler\GetBasketResponse();
+            $response->init($basket);
+
+            parent::setJson($response);
+        }else{
+            
+            $response = new HelpRequestHandler\SendContactResponse();
+            $response->init(0, "test");
+
+            parent::setJson($response);
+        }
+        
+    }
 }

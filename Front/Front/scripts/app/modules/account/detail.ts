@@ -19,28 +19,14 @@ module MartialShirt {
 
 			this.init($scope);
 			
-			this.RH.GetDetailsReveived.add(this.onPacketRecieved, this);
 
 			
 		}
 
 		public Authenticated() {
 			super.Authenticated();
-
-			//this.RH.GetDetails(this._login.getToken());
-		}
-		public onPacketRecieved(response: any) {
-			this.$scope.vm.category = response.category;
-			this.$scope.vm.designs = response.designs;
 		}
 
-		public iframeresize() {
-
-			setTimeout(function () {
-				(<any>$('#iframe-container')).height(800);
-				(<any>$('#iframe-container')).scrollTop(150);
-			}, 1000);
-		}
 		public trustSrc = (url) => {
 			return this.$sce.trustAsResourceUrl(Config.detailsLink);
 		}

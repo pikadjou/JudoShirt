@@ -29,7 +29,10 @@ class BasketsTable extends Table
     public function create($token){
         $url = $this->_spreadshirt->_host . "baskets";
 
-        $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><basket xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net"></basket>';
+        $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+                . '<basket xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net">'
+                .(($token) ? '<token>'.$token.'</token>' : '') 
+                . '</basket>';
 
         $basket = $this->_spreadshirt->postRequest($url, $xml);
         
@@ -42,7 +45,43 @@ class BasketsTable extends Table
         $basket = $this->_spreadshirt->getRequest($url);
         return $basket;
     }
+    public function getOneOrCreate($id, $token){
+        
+        if($id === null){
+            // creation du basket
+            $basket = $this->create($token);
+        }else{
+            //recuperation du basket
+            $basket = $this->getOne($id);
+            
+            if($basket === null){
+              $basket = $this->create($token);
+            }
+        }
+        return $basket;
+    }
     
+    public function addArticle($basketId, $article){
+        
+        $url = $this->_spreadshirt->_host . "baskets/" . $basketId ."/items";
+debug($url);
+        $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+                . '<basketItem xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net">'
+//                    . '<shop id="'.$this->_spreadshirt->_shopId.'" >'
+                    . '<quantity>1</quantity>'
+                    . '<element id="'.$article['shopId'].'" type="sprd:article" xlink:href="http://api.spreadshirt.net/v1/shops/'.$this->_spreadshirt->_shopId.'/articles/'.$article['shopId'].'">'
+                        . '<properties>'
+                            . '<property key="appearance">'.$article['appearances'][0]['shopId'].'</property>'
+                            . '<property key="size">'.$article['sizes'][0]['shopId'].'</property>'
+                        . '</properties>'
+                    . '</element>'              
+                . '</basketItem>';
+
+        debug($xml);
+        $reponse = $this->_spreadshirt->postRequest($url, $xml);
+        debug($reponse);
+        return true;
+    }
     public function updateArticleQuantity($basketId, $id, $quantity, $element){
         
         $url = $this->_spreadshirt->_host . "baskets/" . $basketId ."/items/". $id;

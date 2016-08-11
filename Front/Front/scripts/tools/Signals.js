@@ -5,8 +5,7 @@ var MartialShirt;
         'use strict';
         var Signals = (function () {
             function Signals() {
-                this.changeBasketCount = new signals.Signal();
-                this.changeWishCount = new signals.Signal();
+                this.askAddArticle = new signals.Signal();
             }
             Signals.getInstance = function () {
                 if (!this.instance) {

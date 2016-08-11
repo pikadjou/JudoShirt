@@ -1,8 +1,13 @@
-﻿<div class="detail__container module__container">
-	<h3 class="module__title">Inscription</h3>
+﻿<div class="detail__container module__container account__container">
+	<h3 class="module__title">
+		Mes details
+		<span class="custom">
+			<a href="{{vm.trustSrc()}}" target="_blank">Ouvrir dans un nouveau onglet</a>
+		</span>
+	</h3>
 	<div class="module__content">
-		<div>
-			Inscription chez notre partenaire spreadshirt
+		<div class="explanation">
+			Pour des questions de performances et de fiabilités les données personelles lié à votre compte son directement accesible via notre partenaire spreadshirt.
 		</div>
 		<div id="iframe-container">
 			<iframe id="iframe" ng-src="{{vm.trustSrc()}}" iframe-onload="{{vm.iframeresize()}}">

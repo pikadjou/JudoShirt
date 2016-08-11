@@ -9,14 +9,25 @@ class Article
     public $id = 0;
     public $name = "";
     public $url = "";
+        
+    public $short = "";
     public $content = "";
     public $price = "";
+    
     public $thumbnail = "";
+    public $sizeThumbnail = "";
+
+    public $extra = "";
     public $shopId = 0;
     public $idCustomShop = 0;
     public $priority = 0;
     
     public $types = [];
+    
+    public $sizes = [];
+    public $appearances = [];
+    public $views = [];
+    
     public $design = null;
     
     function __construct($article){
@@ -32,9 +43,20 @@ class Article
         
         $this->url = $this->id ."/". Inflector::slug($article->slug);
 
+        $this->short = $article->product->short;
         $this->content = $article->content;
+        if(!$this->content){
+            $this->content = $article->product->content;
+        }
+        
         $this->price = $article->price;
+        
         $this->thumbnail = $article->thumbnail;
+        
+        $this->sizeThumbnail = $article->product->sizeThumbnail;
+
+        $this->extra = $article->extra;
+
         $this->shopId = $article->shopId;
         $this->idCustomShop = $article->idCustomShop;
         
@@ -45,6 +67,16 @@ class Article
         
         for($i = 0, $l = count($article->product->types); $i < $l; $i++){
             $this->types[] = new \App\Services\Entity\Type($article->product->types[$i]);
+        }
+         
+        for($i = 0, $l = count($article->product->sizes); $i < $l; $i++){
+            $this->sizes[] = new \App\Services\Entity\Size($article->product->sizes[$i]);
+        }
+        for($i = 0, $l = count($article->product->appearances); $i < $l; $i++){
+            $this->appearances[] = new \App\Services\Entity\Appearance($article->product->appearances[$i]);
+        }
+        for($i = 0, $l = count($article->product->views); $i < $l; $i++){
+            $this->views[] = new \App\Services\Entity\View($article->product->views[$i]);
         }
         
         if($article->design){

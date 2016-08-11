@@ -544,46 +544,139 @@ var MartialShirt;
     'use strict';
     var C_Article = (function (_super) {
         __extends(C_Article, _super);
-        function C_Article($scope, $location, RH) {
+        function C_Article($scope, $sce, RH) {
             _super.call(this);
             this.$scope = $scope;
-            this.$location = $location;
+            this.$sce = $sce;
             this.RH = RH;
+            this.prefixImage = "";
             this.articleid = 0;
             this.article = null;
             this.design = null;
+            this.sizes = null;
+            this.SelectedSize = null;
+            this.appearances = null;
+            this.SelectedAppearance = null;
+            this.views = null;
+            this.SelectedView = null;
+            this.errorMessage = "";
             this.sce = null;
+            this._sce = $sce;
             this.init($scope);
             this.RH.GetArticleReceived.add(this.onPacketRecieved, this);
             this.RH.GetArticle([this.articleid]);
-            this.$scope.$on('$locationChangeStart', function (event, next, current) {
-                console.log("Rewrite:next" + next);
-                console.log("Rewrite:current" + current);
-                if (current.indexOf("?") >= 0) {
-                    var explode = current.split("?");
-                    $location.path(explode[0]);
-                    console.log("Rewite:" + explode[0]);
-                    return;
-                }
-                if (next.indexOf("#!") >= 0) {
-                    console.log("Rewite:preventDefault");
-                    event.preventDefault();
-                    return;
-                }
-                console.log("Rewite:nothing");
-            });
-            var config = {
-                baseId: 'articleShop'
-            };
-            MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, false, true, false);
         }
         C_Article.prototype.onPacketRecieved = function (response) {
             this.article = response.article;
             this.design = response.article.design;
+            this.sizes = response.article.sizes;
+            this.appearances = response.article.appearances;
+            this.views = response.article.views;
+            this._setDefaultValues();
+        };
+        C_Article.prototype._setDefaultValues = function () {
+            var imagePath = this.article.thumbnail;
+            var explode = imagePath.split('/');
+            for (var i = 0, l = explode.length; i < l; i++) {
+                if (explode[i] === "views") {
+                    break;
+                }
+                this.prefixImage += explode[i] + "/";
+            }
+            if (this.article.extra) {
+                var explode = this.article.extra.split("-");
+                for (var i = 0, l = explode.length, value = null; i < l; i++) {
+                    value = explode[i].split(":");
+                    switch (value[0]) {
+                        case "view":
+                            this.SelectedView = this._getViewByShopId(value[1]);
+                            break;
+                        case "appearance":
+                            this.SelectedAppearance = this._getAppearanceByShopId(value[1]);
+                            break;
+                    }
+                }
+            }
+        };
+        C_Article.prototype._getViewByShopId = function (shopId) {
+            for (var i = 0, l = this.views.length; i < l; i++) {
+                if (this.views[i].shopId == shopId) {
+                    return this.views[i];
+                }
+            }
+            return null;
+        };
+        C_Article.prototype._getAppearanceByShopId = function (shopId) {
+            for (var i = 0, l = this.appearances.length; i < l; i++) {
+                if (this.appearances[i].shopId == shopId) {
+                    return this.appearances[i];
+                }
+            }
+            return null;
+        };
+        C_Article.prototype.changeSelectedView = function (view) {
+            this.SelectedView = view;
+        };
+        C_Article.prototype.changeSelectedAppearance = function (appearance) {
+            this.SelectedAppearance = appearance;
+        };
+        C_Article.prototype.changeSelectedSize = function (size) {
+            this.SelectedSize = size;
+        };
+        C_Article.prototype.isDefaultSize = function (size) {
+            if (!this.SelectedSize) {
+                return false;
+            }
+            if (this.SelectedSize === size) {
+                return true;
+            }
+            return false;
+        };
+        C_Article.prototype.isDefaultAppearance = function (appearance) {
+            if (!this.SelectedAppearance) {
+                return false;
+            }
+            if (this.SelectedAppearance === appearance) {
+                return true;
+            }
+            return false;
+        };
+        C_Article.prototype.isDefaultView = function (view) {
+            if (!this.SelectedView) {
+                return false;
+            }
+            if (this.SelectedView === view) {
+                return true;
+            }
+            return false;
+        };
+        C_Article.prototype.getImageUrl = function (view, appearance) {
+            if (view === 0) {
+                view = (this.SelectedView !== null) ? this.SelectedView.shopId : 0;
+            }
+            if (appearance === 0) {
+                appearance = (this.SelectedAppearance !== null) ? this.SelectedAppearance.shopId : 0;
+            }
+            return this.prefixImage + "views/" + view + ",appearanceId=" + appearance + ",width=500,height=500";
+        };
+        C_Article.prototype.addToBasket = function () {
+            if (!this.SelectedSize) {
+                this.errorMessage = "Merci de selectionner une taille pour votre produit";
+                return;
+            }
+            if (!this.SelectedAppearance) {
+                this.errorMessage = "Merci de selectionner une couleur pour votre produit";
+                return;
+            }
+            var article = this.article;
+            article.sizes = [this.SelectedSize];
+            article.appearances = [this.SelectedAppearance];
+            this._signal.askAddArticle.dispatch(article);
+            this.errorMessage = "";
         };
         C_Article.$inject = [
             '$scope',
-            '$location',
+            '$sce',
             MartialShirt.Services.ArticlesRequestHandler.Name
         ];
         return C_Article;
@@ -624,10 +717,12 @@ var MartialShirt;
             this.$location = $location;
             this.RH = RH;
             this.showBasket = false;
+            this.basketId = null;
             this.basket = null;
             this.init($scope);
             this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
-            this._signal.changeBasketCount.add(this.launchDelayGetBasket, this);
+            this._signal.askAddArticle.add(this.addArticle, this);
+            this._fillBasketId();
             if (!this._login.hasToken()) {
                 this.launchGetBasket();
             }
@@ -636,20 +731,28 @@ var MartialShirt;
             _super.prototype.Authenticated.call(this);
             this.launchGetBasket();
         };
-        C_Basket.prototype.launchDelayGetBasket = function () {
-            var _this = this;
-            setTimeout(function () {
-                _this.launchGetBasket();
-            }, 10000);
-        };
         C_Basket.prototype.launchGetBasket = function () {
             var request = new MartialShirt.Services.BasketsClass.GetBasketRequest();
-            request.id = "2788b7e1-1309-4697-82a8-ed4614ba8fbf";
+            request.id = this.basketId;
             request.token = this._login.getToken();
             this.RH.GetBasket(request);
         };
         C_Basket.prototype.onPacketRecieved = function (response) {
             this.basket = response.basket;
+            this._setBasketID(this.basket.id);
+        };
+        C_Basket.prototype._fillBasketId = function () {
+            var basketId = MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).getItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
+            if (basketId) {
+                this._setBasketID(basketId);
+            }
+        };
+        C_Basket.prototype._setBasketID = function (basketId) {
+            if (!basketId) {
+                return;
+            }
+            this.basketId = basketId;
+            MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).setItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID, basketId);
         };
         C_Basket.prototype.showHideBasket = function () {
             this.showBasket = !this.showBasket;
@@ -670,7 +773,25 @@ var MartialShirt;
             }
             return nb;
         };
-        C_Basket.prototype.update = function (basketItem) {
+        C_Basket.prototype.addArticle = function (article) {
+            var basketItem = this.getBasketItemByArticle(article);
+            if (basketItem) {
+                basketItem.quantity++;
+                this.updateBasketItem(basketItem);
+            }
+            else {
+                this.createBasketItem(article);
+            }
+        };
+        C_Basket.prototype.createBasketItem = function (article) {
+            var basketItem = this.getBasketItemByArticle(article);
+            var request = new MartialShirt.Services.BasketsClass.AddArticleRequest();
+            request.article = article;
+            request.basketId = this.basket.id;
+            request.token = this._login.getToken();
+            this.RH.addArticle(request);
+        };
+        C_Basket.prototype.updateBasketItem = function (basketItem) {
             var request = new MartialShirt.Services.BasketsClass.UpdateQuantityRequest();
             request.basketId = this.basket.id;
             request.id = basketItem.id;
@@ -685,7 +806,25 @@ var MartialShirt;
             else {
                 basketItem.quantity += quantity;
             }
-            this.update(basketItem);
+            this.updateBasketItem(basketItem);
+        };
+        C_Basket.prototype.getBasketItemByArticle = function (article) {
+            if (!this.basket || !this.basket.basketItems) {
+                return null;
+            }
+            for (var array = this.basket.basketItems, i = 0, l = array.length, basketItem; i < l; i++) {
+                basketItem = array[i];
+                if (basketItem.articleId !== article.shopId) {
+                    continue;
+                }
+                if (basketItem.size.shopId !== article.sizes[0].shopId) {
+                    continue;
+                }
+                if (basketItem.appearance.shopId !== article.appearances[0].shopId) {
+                    continue;
+                }
+                return basketItem;
+            }
         };
         C_Basket.$inject = [
             '$scope',
@@ -1046,20 +1185,9 @@ var MartialShirt;
                 return _this.$sce.trustAsResourceUrl(MartialShirt.Config.detailsLink);
             };
             this.init($scope);
-            this.RH.GetDetailsReveived.add(this.onPacketRecieved, this);
         }
         C_Detail.prototype.Authenticated = function () {
             _super.prototype.Authenticated.call(this);
-        };
-        C_Detail.prototype.onPacketRecieved = function (response) {
-            this.$scope.vm.category = response.category;
-            this.$scope.vm.designs = response.designs;
-        };
-        C_Detail.prototype.iframeresize = function () {
-            setTimeout(function () {
-                $('#iframe-container').height(800);
-                $('#iframe-container').scrollTop(150);
-            }, 1000);
         };
         C_Detail.$inject = [
             '$scope',
@@ -1843,22 +1971,6 @@ var MartialShirt;
             this._accountPanelOpen = false;
             this._loginForm = { pseudo: "", errorPseudo: "", password: "", errorPassword: "", errorServeur: "" };
             this._loader = false;
-            this.ReloadShop = function () {
-                if (1 == 1) {
-                    return;
-                }
-                var intervalId = setInterval(function () {
-                    var element = $("#" + _this.baseId).first();
-                    if (element && element.length > 0) {
-                        element.empty();
-                        var config = {
-                            baseId: _this.baseId
-                        };
-                        MartialShirt.MartialShirtApp.Application.addShopConfiguration(config, true);
-                        clearInterval(intervalId);
-                    }
-                }, 100, intervalId);
-            };
             this.errorLogin = function (message) {
                 _this._loader = false;
                 _this._loginForm.errorServeur = message;
@@ -1868,9 +1980,6 @@ var MartialShirt;
                 _this._login.Logout();
             };
             this.init($scope);
-            this._signal.changeBasketCount.add(this.ReloadShop, this);
-            this._signal.changeWishCount.add(this.ReloadShop, this);
-            this.ReloadShop();
             this._login.addErrorHandler(this.errorLogin);
         }
         C_WidgetAccount.prototype.Authenticated = function () {
@@ -2044,5 +2153,102 @@ var MartialShirt;
     }());
     MartialShirt.TemplateLoader = TemplateLoader;
     MartialShirt.Init.Application.MartialShirtApp.directive(TemplateLoader.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateLoader));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/models/PlayerStorage.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Models;
+    (function (Models) {
+        var PlayerStorage;
+        (function (PlayerStorage_1) {
+            'use strict';
+            (function (EStorageType) {
+                EStorageType[EStorageType["SESSION"] = 0] = "SESSION";
+                EStorageType[EStorageType["LOCAL"] = 1] = "LOCAL";
+                EStorageType[EStorageType["CUSTOM"] = 2] = "CUSTOM";
+            })(PlayerStorage_1.EStorageType || (PlayerStorage_1.EStorageType = {}));
+            var EStorageType = PlayerStorage_1.EStorageType;
+            var PlayerStorageConst = (function () {
+                function PlayerStorageConst() {
+                }
+                PlayerStorageConst.BASKET_ID = "BasketID";
+                return PlayerStorageConst;
+            }());
+            PlayerStorage_1.PlayerStorageConst = PlayerStorageConst;
+            var PlayerStorage = (function () {
+                function PlayerStorage(type, customStorage) {
+                    if (type === void 0) { type = EStorageType.SESSION; }
+                    if (customStorage === void 0) { customStorage = sessionStorage; }
+                    this._storageFunction = sessionStorage;
+                    this._type = EStorageType.SESSION;
+                    this._useCookie = false;
+                    try {
+                        switch (type) {
+                            case EStorageType.SESSION:
+                                this._storageFunction = sessionStorage;
+                                break;
+                            case EStorageType.LOCAL:
+                                this._storageFunction = localStorage;
+                                break;
+                            case EStorageType.CUSTOM:
+                                this._storageFunction = customStorage;
+                                break;
+                        }
+                    }
+                    catch (e) {
+                        this._useCookie = true;
+                    }
+                    if (!this._useCookie) {
+                        try {
+                            this.setItem("StorageActive", true);
+                        }
+                        catch (e) {
+                            this._useCookie = true;
+                        }
+                    }
+                }
+                PlayerStorage.getInstance = function (type, customStorage) {
+                    if (type === void 0) { type = EStorageType.SESSION; }
+                    if (customStorage === void 0) { customStorage = sessionStorage; }
+                    if (type == EStorageType.CUSTOM) {
+                        return new PlayerStorage(type, customStorage);
+                    }
+                    if (!this.instances[type]) {
+                        this.instances[type] = new PlayerStorage(type);
+                    }
+                    return this.instances[type];
+                };
+                PlayerStorage.prototype.setItem = function (key, item) {
+                    if (this._useCookie) {
+                        MartialShirt.Init.Application.getInstance().setCookie(key, JSON.stringify(item), 365);
+                        return;
+                    }
+                    this._storageFunction.setItem(key, JSON.stringify(item));
+                };
+                PlayerStorage.prototype.getItem = function (key) {
+                    var retour;
+                    if (this._useCookie)
+                        retour = MartialShirt.Init.Application.getInstance().getCookie(key);
+                    else
+                        retour = this._storageFunction.getItem(key);
+                    try {
+                        return JSON.parse(retour);
+                    }
+                    catch (e) {
+                        return retour;
+                    }
+                };
+                PlayerStorage.prototype.getLength = function () {
+                    return this._storageFunction.length;
+                };
+                PlayerStorage.Constants = PlayerStorageConst;
+                PlayerStorage.StorageType = EStorageType;
+                PlayerStorage.instances = new Array();
+                return PlayerStorage;
+            }());
+            PlayerStorage_1.PlayerStorage = PlayerStorage;
+        })(PlayerStorage = Models.PlayerStorage || (Models.PlayerStorage = {}));
+    })(Models = MartialShirt.Models || (MartialShirt.Models = {}));
 })(MartialShirt || (MartialShirt = {}));
 

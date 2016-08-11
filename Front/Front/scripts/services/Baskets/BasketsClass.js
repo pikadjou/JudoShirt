@@ -16,6 +16,12 @@ var MartialShirt;
                 return UpdateQuantityRequest;
             }());
             BasketsClass.UpdateQuantityRequest = UpdateQuantityRequest;
+            var AddArticleRequest = (function () {
+                function AddArticleRequest() {
+                }
+                return AddArticleRequest;
+            }());
+            BasketsClass.AddArticleRequest = AddArticleRequest;
             var GetBasketResponse = (function () {
                 function GetBasketResponse() {
                 }

@@ -14,10 +14,12 @@ var MartialShirt;
             this.$location = $location;
             this.RH = RH;
             this.showBasket = false;
+            this.basketId = null;
             this.basket = null;
             this.init($scope);
             this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
-            this._signal.changeBasketCount.add(this.launchDelayGetBasket, this);
+            this._signal.askAddArticle.add(this.addArticle, this);
+            this._fillBasketId();
             if (!this._login.hasToken()) {
                 this.launchGetBasket();
             }
@@ -26,20 +28,28 @@ var MartialShirt;
             _super.prototype.Authenticated.call(this);
             this.launchGetBasket();
         };
-        C_Basket.prototype.launchDelayGetBasket = function () {
-            var _this = this;
-            setTimeout(function () {
-                _this.launchGetBasket();
-            }, 10000);
-        };
         C_Basket.prototype.launchGetBasket = function () {
             var request = new MartialShirt.Services.BasketsClass.GetBasketRequest();
-            request.id = "2788b7e1-1309-4697-82a8-ed4614ba8fbf";
+            request.id = this.basketId;
             request.token = this._login.getToken();
             this.RH.GetBasket(request);
         };
         C_Basket.prototype.onPacketRecieved = function (response) {
             this.basket = response.basket;
+            this._setBasketID(this.basket.id);
+        };
+        C_Basket.prototype._fillBasketId = function () {
+            var basketId = MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).getItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
+            if (basketId) {
+                this._setBasketID(basketId);
+            }
+        };
+        C_Basket.prototype._setBasketID = function (basketId) {
+            if (!basketId) {
+                return;
+            }
+            this.basketId = basketId;
+            MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).setItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID, basketId);
         };
         C_Basket.prototype.showHideBasket = function () {
             this.showBasket = !this.showBasket;
@@ -60,7 +70,25 @@ var MartialShirt;
             }
             return nb;
         };
-        C_Basket.prototype.update = function (basketItem) {
+        C_Basket.prototype.addArticle = function (article) {
+            var basketItem = this.getBasketItemByArticle(article);
+            if (basketItem) {
+                basketItem.quantity++;
+                this.updateBasketItem(basketItem);
+            }
+            else {
+                this.createBasketItem(article);
+            }
+        };
+        C_Basket.prototype.createBasketItem = function (article) {
+            var basketItem = this.getBasketItemByArticle(article);
+            var request = new MartialShirt.Services.BasketsClass.AddArticleRequest();
+            request.article = article;
+            request.basketId = this.basket.id;
+            request.token = this._login.getToken();
+            this.RH.addArticle(request);
+        };
+        C_Basket.prototype.updateBasketItem = function (basketItem) {
             var request = new MartialShirt.Services.BasketsClass.UpdateQuantityRequest();
             request.basketId = this.basket.id;
             request.id = basketItem.id;
@@ -75,7 +103,25 @@ var MartialShirt;
             else {
                 basketItem.quantity += quantity;
             }
-            this.update(basketItem);
+            this.updateBasketItem(basketItem);
+        };
+        C_Basket.prototype.getBasketItemByArticle = function (article) {
+            if (!this.basket || !this.basket.basketItems) {
+                return null;
+            }
+            for (var array = this.basket.basketItems, i = 0, l = array.length, basketItem; i < l; i++) {
+                basketItem = array[i];
+                if (basketItem.articleId !== article.shopId) {
+                    continue;
+                }
+                if (basketItem.size.shopId !== article.sizes[0].shopId) {
+                    continue;
+                }
+                if (basketItem.appearance.shopId !== article.appearances[0].shopId) {
+                    continue;
+                }
+                return basketItem;
+            }
         };
         C_Basket.$inject = [
             '$scope',

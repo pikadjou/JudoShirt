@@ -7,9 +7,108 @@
 		}
 	}
 
-	#articleShop{
-		#sprd-header{
-			display: none;
+	.information{
+		a{
+			position: relative;
+			i{
+				position: absolute;
+				color: $blue-color;
+			}
 		}
+	}
+	
+
+	img.main{
+		width: 100%;
+		height: auto;
+	}
+	.error{
+		.alert{
+			display: block;
+
+			font-size : rem-calc(18);
+		}
+	}
+	.views{
+		.view{
+			display: inline-block;
+			padding: 2px;
+			width: 20%;
+
+			a{
+				display: block;
+				width: 100%;
+
+				border: 1px solid $light-gray-color;
+
+				&.active{
+					border: 2px solid $blue-color;
+				}
+			}
+		}
+	}
+
+	.price{
+		font-weight: bold;
+		font-size: rem-calc(20);
+
+		.small{
+			font-size: rem-calc(10);
+		}
+	}
+	.appearances{
+		a{
+			display: block;
+			width: 100%;
+
+			border: 1px solid $light-gray-color;
+
+			&.active{
+				border: 2px solid $blue-color;
+			}
+		}
+		img{
+			display: block;
+			height: auto;
+			width: 100%;
+		}
+		.appearance{
+			padding: 2px;
+
+			height: 40px;
+			width: 40px;
+
+			display: inline-block;
+		}
+	}
+	.sizes{
+		.size{
+			padding: 2px;
+			display: inline-block;
+			a{
+				min-width: 40px;
+				padding: 10px;
+				&.active{
+					background-color: $blue-color;
+				}
+			}
+		}
+	}
+	
+	.action{
+		padding-top: 15px;
+		text-align: center;
+
+		a{
+			i{
+				color: $white-color;
+				position: relative;
+			}
+		}
+	}
+
+	.content{
+		color: $gray-color;
+		font-size: rem-calc(15);
 	}
 }

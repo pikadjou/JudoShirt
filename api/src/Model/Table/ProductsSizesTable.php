@@ -58,8 +58,25 @@ class ProductsSizesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['size_id'], 'Products'));
-        $rules->add($rules->existsIn(['product_id'], 'Sizes'));
+        $rules->add($rules->existsIn(['product_id'], 'Products'));
+        $rules->add($rules->existsIn(['size_id'], 'Sizes'));
         return $rules;
+    }
+    
+    public function linkProductAndSizeId($productId, $sizeId){
+
+        $join = $this->find()->where(["product_id" => $productId, "size_id" => $sizeId])->limit(1)->first();
+        
+
+        if(!$join){
+            debug($join);
+            $join = $this->newEntity();
+            
+            $join->product_id = $productId;
+            $join->size_id = $sizeId;
+            
+            debug($this->save($join));
+
+        }
     }
 }

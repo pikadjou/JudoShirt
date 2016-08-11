@@ -3,10 +3,25 @@
 	.module__title{
 		margin: 0;
 		padding: 10px;
+		.custom{
+			float: right;
+			font-size: rem-calc(14);
+			a{
+				color: $light-gray-color;
+
+				&:hover{
+					color: $dark-gray-color;
+				}
+			}
+			
+			
+		}
 	}
 	.module__content{
 		padding: 5px;
 	}
+
+
 }
 
 .article-list__container{
@@ -24,28 +39,41 @@
 			
 		}
 	}
+	.article__container{
+		margin: 5px;
+		border: 1px solid $light-gray-color;
+		text-align: center;
+		img{
+			padding: 10px;
+
+			height: 150px;
+		}
+		.name{
+			font-weight: normal;
+			font-size: rem-calc(14);
+		}
+		.price{
+			color: $blue-color;
+			font-weight: bold;
+		}
+		button{
+			@include radius(5px);
+			padding: 10px;
+			background-color: $dark-gray-color;
+		}
+	}
 }
 
-.article__container{
-	margin: 5px;
-	border: 1px solid $light-gray-color;
-	text-align: center;
-	img{
-		padding: 10px;
-
-		height: 150px;
-	}
-	.name{
-		font-weight: normal;
+.account__container{
+	.explanation{
+		color: $gray-color;
 		font-size: rem-calc(14);
+		text-align: center;
 	}
-	.price{
-		color: $blue-color;
-		font-weight: bold;
+	#iframe-container{
+		overflow: hidden;
 	}
-	button{
-		@include radius(5px);
-		padding: 10px;
-		background-color: $dark-gray-color;
+	#iframe{
+		height: 1000px;
 	}
 }

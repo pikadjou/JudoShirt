@@ -1,18 +1,19 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Color;
+use App\Model\Entity\Appearance;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 /**
  * Categories Model
  *
  * @property \Cake\ORM\Association\BelongsToMany $Designs
  */
-class Appearances extends Table
+class AppearancesTable extends Table
 {
 
     /**
@@ -43,15 +44,46 @@ class Appearances extends Table
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id');
             
         $validator
             ->allowEmpty('name');
             
-        $validator
-            ->allowEmpty('content');
 
         return $validator;
     }
+    public function getByShopId($shopId){
+        return $this->find()->where(["shopId" => $shopId])->limit(1);
+    }
+
+    public function addAppearancesForProduct($response){
     
+        if(!$response->appearances){
+            return;            
+        }
+        
+        $return = [];
+        foreach ($response->appearances->appearance as $appearance){
+
+            $shopId = (string)$appearance->attributes()->id;
+            
+            $appearanceModel = $this->getByShopId($shopId)->first();
+
+            if(!$appearanceModel){
+               $appearanceModel = $this->newEntity();
+            }
+            
+            $appearanceModel->name = (string)$appearance->name;
+            $appearanceModel->color = (string)$appearance->colors->color;
+            $appearanceModel->thumbnail = (string)$appearance->resources->resource->attributes('xlink', true);
+
+            
+            $appearanceModel->shopId = $shopId;
+
+            $this->save($appearanceModel);
+            $return[] = $appearanceModel;
+        }
+    
+        return $return;
+    }
 }

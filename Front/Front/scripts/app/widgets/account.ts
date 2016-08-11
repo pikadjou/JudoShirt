@@ -24,11 +24,6 @@
 			super();
 
 			this.init($scope);
-			
-			this._signal.changeBasketCount.add(this.ReloadShop, this);
-			this._signal.changeWishCount.add(this.ReloadShop, this);
-			
-			this.ReloadShop();
 
 			this._login.addErrorHandler(this.errorLogin);
 		}
@@ -45,30 +40,6 @@
 			this.$scope.$apply();
 		}
 
-		public ReloadShop = () => {
-
-			if (1 == 1) {
-				return;
-			}
-			var intervalId = setInterval(() => {
-				var element = $("#" + this.baseId).first();
-
-				if (element && element.length > 0) {
-					element.empty();
-
-					var config = {
-						baseId: this.baseId
-					};
-					//set shop
-					MartialShirtApp.Application.addShopConfiguration(config, true);
-
-					clearInterval(intervalId);
-				}
-
-			}, 100, intervalId);
-
-			
-		}
 		public submit() {
 			var valide = true;
 			if (this._loginForm.pseudo === "") {

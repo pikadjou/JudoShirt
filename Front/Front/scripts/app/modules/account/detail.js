@@ -18,20 +18,9 @@ var MartialShirt;
                 return _this.$sce.trustAsResourceUrl(MartialShirt.Config.detailsLink);
             };
             this.init($scope);
-            this.RH.GetDetailsReveived.add(this.onPacketRecieved, this);
         }
         C_Detail.prototype.Authenticated = function () {
             _super.prototype.Authenticated.call(this);
-        };
-        C_Detail.prototype.onPacketRecieved = function (response) {
-            this.$scope.vm.category = response.category;
-            this.$scope.vm.designs = response.designs;
-        };
-        C_Detail.prototype.iframeresize = function () {
-            setTimeout(function () {
-                $('#iframe-container').height(800);
-                $('#iframe-container').scrollTop(150);
-            }, 1000);
         };
         C_Detail.$inject = [
             '$scope',

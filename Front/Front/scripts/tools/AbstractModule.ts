@@ -3,6 +3,7 @@
 
 	export class AbstractModule {
 
+		public _sce = null;
 		public _signal = MartialShirt.Init.Signals.getInstance();
 		public _application = MartialShirt.Init.Application.getInstance();
 		public _login = MartialShirt.Services.Login.getInstance();
@@ -36,6 +37,24 @@
 		}
 		public Unauthenticated() {
 			this.isAuthenticated = false;
+		}
+
+		public renderHtml = function (html_code) {
+			return this._sce.trustAsHtml(html_code);
+		}
+
+		public iframeresize() {
+
+			setTimeout(function () {
+				(<any>$('#iframe-container')).height(800);
+				(<any>$('#iframe-container')).scrollTop(150);
+
+				//$("#iframe-container").scroll(function () {
+				//	console.log($('#iframe-container').offset());
+				//	console.log($('#iframe').offset());
+
+				//});
+			}, 1000);
 		}
 	}
 }

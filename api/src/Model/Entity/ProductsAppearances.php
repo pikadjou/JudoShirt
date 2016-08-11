@@ -8,16 +8,5 @@ use Cake\ORM\Entity;
  */
 class ProductsAppearances extends Entity
 {
-
-    /**
-     * Fields that can be mass assigned using newEntity() or patchEntity().
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        'product_id' => true,
-        'color_id' => true,
-        'product' => true,
-        'color' => true,
-    ];
+    
 }

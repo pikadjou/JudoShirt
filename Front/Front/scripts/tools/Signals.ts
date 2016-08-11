@@ -2,13 +2,8 @@
 module MartialShirt.Init {
     'use strict';
 	export class Signals {
-		/********************************************/
-		/*                  Common                 */
-		/******************************************/
 
-		// A deposit transaction has been completed
-		public changeBasketCount: Signal = new signals.Signal(); 
-		public changeWishCount: Signal = new signals.Signal();
+		public askAddArticle: Signal = new signals.Signal();
 
 		private static instance: Signals;
 		public static getInstance(): Signals {

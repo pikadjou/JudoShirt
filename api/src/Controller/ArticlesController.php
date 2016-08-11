@@ -48,13 +48,19 @@ class ArticlesController extends AppController
     
     public function getArticle($id = null)
     {
-        $query = $this->Products->getOneNoCache($id);
-        $this->Products->addDesign($query);
-        $product = $query->first();
-        debug($product);
+        $key = "ArticlesController-getArticle-".$id;
+        Cache::delete($key);
+        if (($response = Cache::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+        $query = $this->Articles->getOne($id);
+        $article = $query->first();
+        
         $response = new ArticlesRequestHandler\GetArticleResponse();
-        $response->init($product);
+        $response->init($article);
 
+        Cache::write($key, $response);
         parent::setJson($response);
 
     }

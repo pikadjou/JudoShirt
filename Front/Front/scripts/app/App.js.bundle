@@ -75,7 +75,7 @@
 		<file>/scripts/app/templates/articleWidget.js</file>
 		<file>/scripts/app/templates/loader.js</file>
 
-	  
+	  <file>/scripts/app/models/PlayerStorage.js</file>
 
   </files>
 </bundle>
