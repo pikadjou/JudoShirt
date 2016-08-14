@@ -14,7 +14,9 @@
  */
 namespace App\Controller\Admin;
 
-use App\Controller\AppController;
+use App\Controller\Admin\AdminAppController;
+use Migrations\Migrations;
+
 
 /**
  * Application Controller
@@ -24,17 +26,19 @@ use App\Controller\AppController;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class MigrationController extends AppController
+class MigrationController extends AdminAppController
 {
     
-     public function change()
+     public function index()
     {
-        $table = $this->table('products', ['id' => false, 'primary_key' => ['id']]);
-        $table
-              ->addColumn('id', 'uuid')
-              ->addColumn('name', 'string')
-              ->addColumn('description', 'text')
-              ->create();
+        $migrations = new Migrations();
+
+        // Will return an array of all migrations and their status
+        $status = $migrations->status();
+
+        // Will return true if success. If an error occurred, an exception will be thrown
+        $migrate = $migrations->migrate("schema");
+
     }
     
 }
