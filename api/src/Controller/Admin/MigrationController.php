@@ -14,7 +14,7 @@
  */
 namespace App\Controller\Admin;
 
-use App\Controller\Admin\AdminAppController;
+use App\Controller\AppController;
 use Migrations\Migrations;
 
 
@@ -26,7 +26,7 @@ use Migrations\Migrations;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class MigrationController extends AdminAppController
+class MigrationController extends AppController
 {
     
      public function index()

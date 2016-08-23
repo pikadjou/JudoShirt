@@ -24,6 +24,7 @@
 	  <file>/scripts/services/Cms/CmsRequestHandler.js</file>
 	  <file>/scripts/services/Cms/CmsClass.js</file>
 
+	  <file>/scripts/services/Shipping/ShippingRequestHandler.js</file>
 
 	  <file>/scripts/services/Promotions/PromotionsClass.js</file>
 		<file>/scripts/services/Promotions/PromotionsRequestHandler.js</file>

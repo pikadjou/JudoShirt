@@ -1,0 +1,16 @@
+﻿<div class="detail__container module__container checkout__container">
+	<h3 class="module__title">
+		Checkout
+		<span class="custom">
+			<a href="{{vm.trustSrc(vm.checkoutlink)}}" target="_blank">Ouvrir dans un nouveau onglet</a>
+		</span>
+	</h3>
+	<div class="module__content">
+		<div id="iframe-container">
+			<iframe id="iframe" ng-src="{{vm.trustSrc(vm.checkoutlink)}}" iframe-onload="{{vm.iframeresize()}}">
+				<span>Your browser does not support iframes.</span>
+			</iframe>
+		</div>
+	</div>
+
+</div>

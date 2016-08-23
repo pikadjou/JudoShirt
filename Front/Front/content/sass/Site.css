@@ -3450,17 +3450,17 @@ iframe {
   background-color: #5a616b;
 }
 
-.account__container .explanation {
+.account__container .explanation, .checkout__container .explanation {
   color: #C5C6C8;
   font-size: 0.875rem;
   text-align: center;
 }
 
-.account__container #iframe-container {
+.account__container #iframe-container, .checkout__container #iframe-container {
   overflow: hidden;
 }
 
-.account__container #iframe {
+.account__container #iframe, .checkout__container #iframe {
   height: 1000px;
 }
 
@@ -3918,6 +3918,21 @@ iframe {
   padding: 10px;
   text-align: center;
   border-left: 1px black dotted;
+}
+
+.basket__container .loader__container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 10;
+}
+
+.basket__container .loader__container img {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .basket__container .basket__title .count {

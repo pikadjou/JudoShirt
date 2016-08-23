@@ -13,6 +13,7 @@ class Basket
     public $priceTotal = 0;
     
     public $basketItems = [];
+    public $discounts = [];
     
     function __construct($basket){
         if($basket === null){
@@ -39,6 +40,13 @@ class Basket
         foreach ($basket->basketItems->basketItem as $basketItem){
             $this->basketItems[] = new BasketItem($basketItem);
         }
+        
+        if($basket->discounts->discount){
+            foreach ($basket->discounts->discount as $discount){
+                $this->discounts[] = new Discount($discount);
+            }
+        }
+        
     }
 }
 

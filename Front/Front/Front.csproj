@@ -843,8 +843,10 @@
     <Content Include="scripts\app\modules\account\subscription.html" />
     <Content Include="scripts\app\modules\account\detail.html" />
     <Content Include="scripts\app\modules\account\order.html" />
+    <Content Include="scripts\app\modules\basket\checkout.html" />
     <Content Include="scripts\app\modules\custom\designer.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
+    <Content Include="scripts\app\modules\shipping\list.html" />
     <Content Include="scripts\app\modules\product\entity.html" />
     <Content Include="scripts\app\modules\product\list.html" />
     <Content Include="scripts\app\modules\promotions\entity.html" />
@@ -860,6 +862,8 @@
     <Content Include="scripts\app\pages\account\subscription.html" />
     <Content Include="scripts\app\pages\account\detail.html" />
     <Content Include="scripts\app\pages\account\order.html" />
+    <Content Include="scripts\app\pages\basket\checkout.html" />
+    <Content Include="scripts\app\pages\shipping\list.html" />
     <Content Include="scripts\app\pages\product\entity.html" />
     <Content Include="scripts\app\pages\product\list.html" />
     <Content Include="scripts\app\pages\custom\custom.html" />
@@ -887,8 +891,10 @@
     <TypeScriptCompile Include="scripts\app\modules\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\order.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\basket\checkout.ts" />
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\shipping\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product\entity.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\entity.ts" />
@@ -904,6 +910,8 @@
     <TypeScriptCompile Include="scripts\app\pages\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\order.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\basket\checkout.ts" />
+    <TypeScriptCompile Include="scripts\app\pages\shipping\list.ts" />
     <TypeScriptCompile Include="scripts\app\pages\product\entity.ts" />
     <TypeScriptCompile Include="scripts\app\pages\product\list.ts" />
     <TypeScriptCompile Include="scripts\app\pages\category.ts" />
@@ -923,6 +931,12 @@
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
     <TypeScriptCompile Include="scripts\app\models\PlayerStorage.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Discounts.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\RangeCost.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\RegionCost.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Country.ts" />
+    <TypeScriptCompile Include="scripts\services\Shipping\ShippingClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Shipping\ShippingRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Cms\CmsClass.ts" />
     <TypeScriptCompile Include="scripts\services\Cms\CmsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\View.ts" />

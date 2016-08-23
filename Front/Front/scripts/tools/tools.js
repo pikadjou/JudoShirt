@@ -182,6 +182,7 @@ var MartialShirt;
         'use strict';
         var AbstractModule = (function () {
             function AbstractModule() {
+                var _this = this;
                 this._sce = null;
                 this._signal = MartialShirt.Init.Signals.getInstance();
                 this._application = MartialShirt.Init.Application.getInstance();
@@ -191,6 +192,9 @@ var MartialShirt;
                 this.isAuthenticated = false;
                 this.renderHtml = function (html_code) {
                     return this._sce.trustAsHtml(html_code);
+                };
+                this.trustSrc = function (url) {
+                    return _this._sce.trustAsResourceUrl(url);
                 };
                 if (this._login.isAuthenticated()) {
                     this.Authenticated();

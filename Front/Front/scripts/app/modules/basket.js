@@ -16,6 +16,7 @@ var MartialShirt;
             this.showBasket = false;
             this.basketId = null;
             this.basket = null;
+            this.loader = false;
             this.init($scope);
             this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
             this._signal.askAddArticle.add(this.addArticle, this);
@@ -32,11 +33,13 @@ var MartialShirt;
             var request = new MartialShirt.Services.BasketsClass.GetBasketRequest();
             request.id = this.basketId;
             request.token = this._login.getToken();
+            this.loader = true;
             this.RH.GetBasket(request);
         };
         C_Basket.prototype.onPacketRecieved = function (response) {
             this.basket = response.basket;
             this._setBasketID(this.basket.id);
+            this.loader = false;
         };
         C_Basket.prototype._fillBasketId = function () {
             var basketId = MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).getItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
@@ -86,6 +89,7 @@ var MartialShirt;
             request.article = article;
             request.basketId = this.basket.id;
             request.token = this._login.getToken();
+            this.loader = true;
             this.RH.addArticle(request);
         };
         C_Basket.prototype.updateBasketItem = function (basketItem) {
@@ -94,6 +98,7 @@ var MartialShirt;
             request.id = basketItem.id;
             request.quantity = basketItem.quantity;
             request.element = basketItem.extraElement;
+            this.loader = true;
             this.RH.UpdateQuantity(request);
         };
         C_Basket.prototype.addQuantity = function (basketItem, quantity) {

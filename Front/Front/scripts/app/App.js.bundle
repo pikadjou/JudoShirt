@@ -32,7 +32,10 @@
 		<file>/scripts/app/modules/promotions/list.js</file>
 		<file>/scripts/app/modules/promotions/entity.js</file>
 
-		<file>/scripts/app/modules/account/order.js</file>
+		<file>/scripts/app/modules/shipping/list.js</file>
+
+
+		 <file>/scripts/app/modules/account/order.js</file>
 		<file>/scripts/app/modules/account/detail.js</file>
 		<file>/scripts/app/modules/account/subscription.js</file>
 	  
@@ -43,9 +46,9 @@
 	  <file>/scripts/app/modules/product/list.js</file>
 	  <file>/scripts/app/modules/product/entity.js</file>
 
+	  <file>/scripts/app/modules/basket/checkout.js</file>
 	  
-	  
-	  <file>/scripts/app/pages/home.js</file>
+		<file>/scripts/app/pages/home.js</file>
 		<file>/scripts/app/pages/category.js</file>
 		<file>/scripts/app/pages/article.js</file>
 		<file>/scripts/app/pages/design.js</file>
@@ -54,10 +57,12 @@
 	  
 		<file>/scripts/app/pages/help/contact.js</file>
 
-	  <file>/scripts/app/pages/product/list.js</file>
-	  <file>/scripts/app/pages/product/entity.js</file>
+		<file>/scripts/app/pages/product/list.js</file>
+		<file>/scripts/app/pages/product/entity.js</file>
 
-	  <file>/scripts/app/pages/promotions/list.js</file>
+		<file>/scripts/app/pages/shipping/list.js</file>
+
+		<file>/scripts/app/pages/promotions/list.js</file>
 		<file>/scripts/app/pages/promotions/entity.js</file>
 
 		<file>/scripts/app/pages/account/order.js</file>
@@ -65,8 +70,12 @@
 		<file>/scripts/app/pages/account/subscription.js</file>
 	  
 		<file>/scripts/app/pages/custom/custom.js</file>
+
+	  <file>/scripts/app/pages/basket/checkout.js</file>
+
 	  
-		<file>/scripts/app/widgets/topTen.js</file>
+	  
+	  <file>/scripts/app/widgets/topTen.js</file>
 		<file>/scripts/app/widgets/new.js</file>
 		<file>/scripts/app/widgets/promotionDesigns.js</file>
 		<file>/scripts/app/widgets/account.js</file>

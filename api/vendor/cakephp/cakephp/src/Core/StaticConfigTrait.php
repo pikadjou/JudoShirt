@@ -16,13 +16,14 @@ namespace Cake\Core;
 
 use BadMethodCallException;
 use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * A trait that provides a set of static methods to manage configuration
  * for classes that provide an adapter facade or need to have sets of
  * configuration data registered and manipulated.
  *
- * Implementing objects are expected to declare a static `$_dsnClassMap` property.
+ * Implementing objects are expected to declare a static `$_config` property.
  */
 trait StaticConfigTrait
 {
@@ -71,18 +72,15 @@ trait StaticConfigTrait
      */
     public static function config($key, $config = null)
     {
-        if ($config === null) {
-            // Read config.
-            if (is_string($key)) {
-                return isset(static::$_config[$key]) ? static::$_config[$key] : null;
+        // Read config.
+        if ($config === null && is_string($key)) {
+            return isset(static::$_config[$key]) ? static::$_config[$key] : null;
+        }
+        if ($config === null && is_array($key)) {
+            foreach ($key as $name => $settings) {
+                static::config($name, $settings);
             }
-
-            if (is_array($key)) {
-                foreach ($key as $name => $settings) {
-                    static::config($name, $settings);
-                }
-                return;
-            }
+            return;
         }
 
         if (isset(static::$_config[$key])) {

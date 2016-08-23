@@ -42,6 +42,9 @@
 		public renderHtml = function (html_code) {
 			return this._sce.trustAsHtml(html_code);
 		}
+		public trustSrc = (url) => {
+			return this._sce.trustAsResourceUrl(url);
+		}
 
 		public iframeresize() {
 

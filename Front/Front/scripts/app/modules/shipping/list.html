@@ -1,0 +1,22 @@
+﻿<div class="module__container shipping__container">
+	<h3 class="module__title">
+		Prix des livraison
+	</h3>
+	<div class="module__content">
+		<div ng-repeat="country in vm.countries">
+			<div class="country">
+				<h4 class="country__title" ng-click="vm.openClose(country)">
+					{{country.name}}
+					<i class="fa fa-plus" ng-show="country.open"></i>
+					<i class="fa fa-minus" ng-show="!country.open"></i>
+				</h4>
+				<div class="country__content" ng-show="country.open">
+					<div ng-repeat="cost in country.regionCost.rangeCost">
+						de : {{cost.rangeDown}} à {{cost.rangeUp}}
+						cout : {{cost.price}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

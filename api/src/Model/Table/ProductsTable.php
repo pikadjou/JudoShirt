@@ -38,9 +38,6 @@ class ProductsTable extends Table
     
     public function initialize(array $config)
     {
-        
-        //App::uses('HttpRequest', 'Model');
-        
         $this->table('products');
         $this->primaryKey('id');
         $this->hasMany('Articles', [

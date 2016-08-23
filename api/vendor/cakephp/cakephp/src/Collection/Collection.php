@@ -19,6 +19,7 @@ use Cake\Collection\CollectionInterface;
 use Cake\Collection\CollectionTrait;
 use InvalidArgumentException;
 use IteratorIterator;
+use JsonSerializable;
 
 /**
  * A collection is an immutable list of elements with a handful of functions to

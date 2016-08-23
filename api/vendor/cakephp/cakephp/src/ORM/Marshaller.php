@@ -223,9 +223,6 @@ class Marshaller
         if ($assoc->type() === Association::MANY_TO_MANY) {
             return $marshaller->_belongsToMany($assoc, $value, (array)$options);
         }
-        if ($assoc->type() === Association::ONE_TO_MANY && array_key_exists('_ids', $value) && is_array($value['_ids'])) {
-            return $this->_loadAssociatedByIds($assoc, $value['_ids']);
-        }
         return $marshaller->many($value, (array)$options);
     }
 
@@ -269,7 +266,7 @@ class Marshaller
         $associated = isset($options['associated']) ? $options['associated'] : [];
         $hasIds = array_key_exists('_ids', $data);
         if ($hasIds && is_array($data['_ids'])) {
-            return $this->_loadAssociatedByIds($assoc, $data['_ids']);
+            return $this->_loadBelongsToMany($assoc, $data['_ids']);
         }
         if ($hasIds) {
             return [];
@@ -316,7 +313,7 @@ class Marshaller
      * @param array $ids The list of ids to load.
      * @return array An array of entities.
      */
-    protected function _loadAssociatedByIds($assoc, $ids)
+    protected function _loadBelongsToMany($assoc, $ids)
     {
         $target = $assoc->target();
         $primaryKey = (array)$target->primaryKey();
@@ -335,19 +332,6 @@ class Marshaller
         }
 
         return $target->find()->where($filter)->toArray();
-    }
-
-    /**
-     * Loads a list of belongs to many from ids.
-     *
-     * @param Association $assoc The association class for the belongsToMany association.
-     * @param array $ids The list of ids to load.
-     * @return array An array of entities.
-     * @deprecated Use _loadAssociatedByIds()
-     */
-    protected function _loadBelongsToMany($assoc, $ids)
-    {
-        return $this->_loadAssociatedByIds($assoc, $ids);
     }
 
     /**
@@ -573,7 +557,7 @@ class Marshaller
         $hasIds = array_key_exists('_ids', $value);
         $associated = isset($options['associated']) ? $options['associated'] : [];
         if ($hasIds && is_array($value['_ids'])) {
-            return $this->_loadAssociatedByIds($assoc, $value['_ids']);
+            return $this->_loadBelongsToMany($assoc, $value['_ids']);
         }
         if ($hasIds) {
             return [];

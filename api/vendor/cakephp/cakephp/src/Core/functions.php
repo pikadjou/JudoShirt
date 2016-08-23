@@ -131,12 +131,10 @@ if (!function_exists('pr')) {
      */
     function pr($var)
     {
-        if (!Configure::read('debug')) {
-            return;
+        if (Configure::read('debug')) {
+            $template = php_sapi_name() !== 'cli' ? '<pre class="pr">%s</pre>' : "\n%s\n\n";
+            printf($template, trim(print_r($var, true)));
         }
-
-        $template = PHP_SAPI !== 'cli' ? '<pre class="pr">%s</pre>' : "\n%s\n\n";
-        printf($template, trim(print_r($var, true)));
     }
 
 }
@@ -158,9 +156,11 @@ if (!function_exists('pj')) {
         if (!Configure::read('debug')) {
             return;
         }
-
-        $template = PHP_SAPI !== 'cli' ? '<pre class="pj">%s</pre>' : "\n%s\n\n";
-        printf($template, trim(json_encode($var, JSON_PRETTY_PRINT)));
+        if (php_sapi_name() === 'cli') {
+            printf("\n%s\n\n", trim(json_encode($var, JSON_PRETTY_PRINT)));
+        } elseif (Configure::read('debug')) {
+            printf('<pre class="pj">%s</pre>', trim(json_encode($var, JSON_PRETTY_PRINT)));
+        }
     }
 
 }

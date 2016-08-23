@@ -8,6 +8,7 @@ module MartialShirt {
 		public basketId: string = null;
 		public basket: Services.Entity.Basket = null;
 
+		public loader: boolean = false;
 		public static $inject = [
 			'$scope',
 			'$location',
@@ -43,12 +44,15 @@ module MartialShirt {
 			request.id = this.basketId;
 			request.token = this._login.getToken();
 
+			this.loader = true;
 			this.RH.GetBasket(request);
 		}
 		public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse) {
 			this.basket = response.basket;
 
 			this._setBasketID(this.basket.id);
+
+			this.loader = false;
 		}
 
 		private _fillBasketId() {
@@ -111,6 +115,7 @@ module MartialShirt {
 			request.basketId = this.basket.id;
 			request.token = this._login.getToken();
 
+			this.loader = true;
 			this.RH.addArticle(request);
 		}
 		public updateBasketItem(basketItem: Services.Entity.BasketItem) {
@@ -121,6 +126,7 @@ module MartialShirt {
 			request.quantity = basketItem.quantity;
 			request.element = basketItem.extraElement;
 
+			this.loader = true;
 			this.RH.UpdateQuantity(request);
 		}
 

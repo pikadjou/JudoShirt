@@ -12,5 +12,7 @@
 
 		public basketItems: Entity.BasketItem[];
 
+		public discounts: Entity.Discounts[];
+
 	}
 } 
