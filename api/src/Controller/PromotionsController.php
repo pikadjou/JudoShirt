@@ -43,13 +43,23 @@ class PromotionsController extends AppController
         parent::setJson($response);
     }
     
-     public function getPromotion($id){
+    public function getPromotion($id){
         
         $query = $this->Promotions->getOne($id);
         
         $promotion = $query->first();
         
         $response = new PromotionsRequestHandler\GetPromotionResponse();
+        $response->init($promotion);
+
+        parent::setJson($response);
+    }
+    
+    public function getBestPromotionCode(){
+        
+        $promotion = $this->Promotions->getBestByCode();
+        
+        $response = new PromotionsRequestHandler\GetBestPromotionResponse();
         $response->init($promotion);
 
         parent::setJson($response);

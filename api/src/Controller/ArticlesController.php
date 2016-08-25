@@ -1,7 +1,8 @@
 <?php
 namespace App\Controller;
 
-use Cake\Cache\Cache;
+use App\Model\Cache;
+
 use App\Controller\AppController;
 use App\Services\ArticlesRequestHandler;
 /**
@@ -9,6 +10,7 @@ use App\Services\ArticlesRequestHandler;
  *
  * @property \App\Model\Table\CategoriesTable $Categories
  */
+
 class ArticlesController extends AppController
 {
 
@@ -24,8 +26,7 @@ class ArticlesController extends AppController
     public function getArticles($id)
     {
         $key = "ArticlesController-getArticles-".$id;
-        //Cache::delete($key);
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -42,15 +43,14 @@ class ArticlesController extends AppController
         $response = new ArticlesRequestHandler\GetArticlesResponse();
         $response->init($articles, $design);
 
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
     
     public function getArticle($id = null)
     {
         $key = "ArticlesController-getArticle-".$id;
-        Cache::delete($key);
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -60,7 +60,7 @@ class ArticlesController extends AppController
         $response = new ArticlesRequestHandler\GetArticleResponse();
         $response->init($article);
 
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
 
     }

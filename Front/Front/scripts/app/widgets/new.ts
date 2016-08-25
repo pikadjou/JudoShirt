@@ -16,11 +16,25 @@ module MartialShirt {
 
 			this.RH.GetNewDesignsReceived.add(this.onPacketRecieved, this);
 
+			this.launchService();
+
+		}
+
+		public launchService() {
+
+			if (Init.Cache.getInstance().isKeyCached(Init.Cache.getInstance().KEY.DesignNew)) {
+				this.onPacketRecieved(Init.Cache.getInstance().getCache(Init.Cache.getInstance().KEY.DesignNew));
+				return;
+			}
+
 			this.RH.GetNewDesigns([5]);
+
 
 		}
 
 		public onPacketRecieved(response: any) {
+			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.DesignNew, response);
+
 			this.$scope.vm.category = response.category;
 			this.$scope.vm.designs = response.designs;
 		}

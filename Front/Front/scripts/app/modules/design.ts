@@ -33,11 +33,19 @@ module MartialShirt {
 
 		public launchService() {
 
+			
+			if (Init.Cache.getInstance().isKeyCached(Init.Cache.getInstance().KEY.Design + this.designid)){
+				this.onPacketRecieved(Init.Cache.getInstance().getCache(Init.Cache.getInstance().KEY.Design + this.designid));
+				return;
+			}
+
 			this.loader = true;
 			this.RH.GetArticles([this.designid]);
 
 		}
 		public onPacketRecieved(response: any) {
+
+			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.Design + this.designid, response);
 
 			this.articles = response.articles;
 			this.articles.sort((a: Services.Entity.Article, b: Services.Entity.Article): number => {

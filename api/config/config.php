@@ -1,7 +1,7 @@
 <?php
 return [
     "CacheUpdateDB" => false,
-    "CacheEnabled" => false
+    "CacheEnabled" => true
 ];
 
 ?>

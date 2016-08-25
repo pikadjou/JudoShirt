@@ -418,9 +418,13 @@ var MartialShirt;
                 array.push(request.slug);
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
             };
+            PromotionsRequestHandler.prototype.GetBestPromotion = function (request) {
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetBestPromotion", this.controller, "getBestPromotionCode", []));
+            };
             PromotionsRequestHandler.prototype.addEvents = function () {
                 this.GetPromotionsActiveReceived = new signals.Signal();
                 this.GetPromotionReceived = new signals.Signal();
+                this.GetBestPromotionReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             PromotionsRequestHandler.prototype.onPacketReceived = function (response) {
@@ -435,6 +439,10 @@ var MartialShirt;
                     case ("GetPromotionResponse"):
                         parsedResponse = (response.Content);
                         this.GetPromotionReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetBestPromotionResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetBestPromotionReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

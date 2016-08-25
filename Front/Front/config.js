@@ -21,6 +21,7 @@ var MartialShirt;
         Config.orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
         Config.detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
         Config.spreadShirt = SpreadShirtConfig;
+        Config.defaultCacheTime = 300;
         return Config;
     }());
     MartialShirt.Config = Config;

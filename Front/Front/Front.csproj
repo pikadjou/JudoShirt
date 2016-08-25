@@ -846,6 +846,7 @@
     <Content Include="scripts\app\modules\basket\checkout.html" />
     <Content Include="scripts\app\modules\custom\designer.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
+    <Content Include="scripts\app\modules\promotions\bestCode.html" />
     <Content Include="scripts\app\modules\shipping\list.html" />
     <Content Include="scripts\app\modules\product\entity.html" />
     <Content Include="scripts\app\modules\product\list.html" />
@@ -894,6 +895,7 @@
     <TypeScriptCompile Include="scripts\app\modules\basket\checkout.ts" />
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\promotions\bestCode.ts" />
     <TypeScriptCompile Include="scripts\app\modules\shipping\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product\entity.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product\list.ts" />
@@ -970,6 +972,7 @@
     <TypeScriptCompile Include="scripts\services\Prints\PrintsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Articles\ArticlesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\AbstractModule.ts" />
+    <TypeScriptCompile Include="scripts\tools\Cache.ts" />
     <TypeScriptCompile Include="scripts\tools\Debug.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="scripts\services\Services.js">

@@ -1,7 +1,8 @@
 <?php
 namespace App\Controller;
 
-use Cake\Cache\Cache;
+use App\Model\Cache;
+
 use App\Controller\AppController;
 use App\Services\ShippingRequestHandler;
 /**
@@ -22,8 +23,7 @@ class ShippingController extends AppController
     public function getShipping()
     {
         $key = "ShippingController-getShipping";
-        //Cache::delete($key);
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -32,8 +32,7 @@ class ShippingController extends AppController
         $response = new ShippingRequestHandler\GetShippingResponse();
         $response->init($countries);
 
-//        debug($response);
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
     

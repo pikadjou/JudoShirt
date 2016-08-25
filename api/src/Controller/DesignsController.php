@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use Cake\Cache\Cache;
+use App\Model\Cache;
 
 use App\Controller\AppController;
 use App\Services\DesignsRequestHandler;
@@ -54,8 +54,7 @@ class DesignsController extends AppController
     public function getDesigns($catId = null)
     {
         $key = "DesignsController-getDesigns-".$catId;
-        Cache::delete($key);
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -81,7 +80,7 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetDesignsResponse();
         $response->init($designs, $category);
         
-        Cache::write($key, $response);
+        Cache\CacheController($key, $response);
         parent::setJson($response);
     }
 
@@ -114,7 +113,7 @@ class DesignsController extends AppController
     public function getTopDesigns($limit = null, $tags = true)
     {
         $key = "DesignsController-getTopDesigns-".$limit."-".$tags;
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -137,17 +136,14 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetTopDesignsResponse();
         $response->init($designs, $category);
         
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
     
     public function getNewDesigns($limit = null, $tags = true)
     {
         $key = "DesignsController-getNewDesigns-".$limit."-".$tags;
-        
-        Cache::delete($key);
-
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -171,14 +167,14 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetNewDesignsResponse();
         $response->init($designs, $category);
         
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
     
     public function getPromoDesigns($limit = null, $tags = true)
     {
         $key = "DesignsController-getPromoDesigns-".$limit."-".$tags;
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -202,14 +198,14 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetPromotionDesignsResponse();
         $response->init($designs, $category);
         
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
     
     public function getFeaturedDesigns()
     {
         $key = "DesignsController-getFeaturedDesigns";
-        if (($response = Cache::read($key)) !== false) {
+        if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -225,7 +221,7 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetFeaturedDesignsResponse();
         $response->init($designs, $category);
         
-        Cache::write($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
 }

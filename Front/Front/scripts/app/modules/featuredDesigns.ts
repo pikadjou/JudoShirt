@@ -16,11 +16,21 @@ module MartialShirt {
 
 			this.RH.GetFeaturedDesignsReceived.add(this.onPacketRecieved, this);
 
+		}
+
+		public launchService() {
+
+			if (Init.Cache.getInstance().isKeyCached(Init.Cache.getInstance().KEY.DesignFeature)) {
+				this.onPacketRecieved(Init.Cache.getInstance().getCache(Init.Cache.getInstance().KEY.DesignFeature));
+				return;
+			}
 			this.RH.GetFeaturedDesigns([]);
 
 		}
-
 		public onPacketRecieved(response: any) {
+
+			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.DesignFeature, response);
+
 			this.$scope.vm.category = response.category;
 			this.$scope.vm.list = response.designs;
 

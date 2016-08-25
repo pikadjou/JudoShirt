@@ -31,8 +31,10 @@
 		<file>/scripts/app/modules/promotions/slider.js</file>
 		<file>/scripts/app/modules/promotions/list.js</file>
 		<file>/scripts/app/modules/promotions/entity.js</file>
+	  <file>/scripts/app/modules/promotions/bestCode.js</file>
 
-		<file>/scripts/app/modules/shipping/list.js</file>
+
+	  <file>/scripts/app/modules/shipping/list.js</file>
 
 
 		 <file>/scripts/app/modules/account/order.js</file>

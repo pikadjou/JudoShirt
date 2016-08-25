@@ -4,6 +4,10 @@ module MartialShirt {
 	export class C_CategoryDesigns extends MartialShirt.Init.AbstractModule {
 		
 		public catid: number = 0;
+		public category: Services.Entity.Category = null;
+
+		public list: Services.Entity.Design[] = [];
+
 		public static $inject = [
 			'$scope',
 			Services.DesignsRequestHandler.Name
@@ -22,13 +26,21 @@ module MartialShirt {
 		}
 
 		public launchService() {
+
+			if (Init.Cache.getInstance().isKeyCached(Init.Cache.getInstance().KEY.Category + this.catid)) {
+				this.onPacketRecieved(Init.Cache.getInstance().getCache(Init.Cache.getInstance().KEY.Category + this.catid));
+				return;
+			}
 			this.loader = true;
 			this.RH.GetDesigns([this.catid]);
 
 		}
 		public onPacketRecieved(response: any) {
-			this.$scope.vm.category = response.category;
-			this.$scope.vm.list = response.designs;
+
+			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.Category + this.catid, response);
+
+			this.category = response.category;
+			this.list = response.designs;
 
 			this.loader = false;
 		}

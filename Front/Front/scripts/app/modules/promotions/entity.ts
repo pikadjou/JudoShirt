@@ -33,8 +33,20 @@ module MartialShirt {
 			this.promotion = response.promotion;
 		}
 
-		public goToPromotion = (promotion : Services.Entity.Promotion) => {
+		public isPromotionLink = () => {
+			if (!this.promotion) {
+				return false;
+			}
 
+			if (this.promotion.type === "category" || this.promotion.type === "design") {
+				return true;
+			}
+
+			return false;
+		}
+		public goToPromotion = () => {
+
+			var promotion = this.promotion;
 			var url = "/";
 			switch (promotion.type) {
 				case "category":

@@ -19,6 +19,8 @@
 		public static detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
 
 		public static spreadShirt = SpreadShirtConfig;
+
+		public static defaultCacheTime = 300;
 	}
 	
 }

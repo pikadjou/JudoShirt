@@ -28,7 +28,8 @@
  
                             switch ($name){
                                 case "image":
-                                case "thumbnail": ?>
+                                case "thumbnail": 
+                                case "sizeThumbnail": ?>
                                     <img src="<?php echo $data->$name; ?>">
                                     <?php break;
                                 default: ?>

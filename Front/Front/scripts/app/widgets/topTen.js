@@ -7,9 +7,17 @@ var MartialShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetTopDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetTopDesigns([2]);
+            this.launchService();
         }
+        C_WidgetTopTen.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignTop)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignTop));
+                return;
+            }
+            this.RH.GetTopDesigns([3]);
+        };
         C_WidgetTopTen.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignTop, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
         };

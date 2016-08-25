@@ -13,17 +13,24 @@ var MartialShirt;
             this.$scope = $scope;
             this.RH = RH;
             this.catid = 0;
+            this.category = null;
+            this.list = [];
             this.init($scope);
             this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
             this.launchService();
         }
         C_CategoryDesigns.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid));
+                return;
+            }
             this.loader = true;
             this.RH.GetDesigns([this.catid]);
         };
         C_CategoryDesigns.prototype.onPacketRecieved = function (response) {
-            this.$scope.vm.category = response.category;
-            this.$scope.vm.list = response.designs;
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid, response);
+            this.category = response.category;
+            this.list = response.designs;
             this.loader = false;
         };
         C_CategoryDesigns.$inject = [

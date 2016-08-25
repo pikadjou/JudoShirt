@@ -15,5 +15,7 @@
     <file>/scripts/tools/Application.js</file>
     <file>/scripts/tools/AbstractModule.js</file>
     <file>/scripts/tools/Server.js</file>
+	<file>/scripts/tools/Cache.js</file>
+
   </files>
 </bundle>

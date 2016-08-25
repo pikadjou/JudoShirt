@@ -28,7 +28,7 @@ var MartialShirt;
                         url = promotion.params;
                         window.location.href = url;
                         return;
-                    default: return;
+                    default: url = _this._application.getUrl("Promotion") + "/" + promotion.id;
                 }
                 _this.$location.path(url);
             };

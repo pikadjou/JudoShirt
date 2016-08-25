@@ -15,6 +15,15 @@ var MartialShirt;
             this.$location = $location;
             this.RH = RH;
             this.promotions = [];
+            this.isPromotionLink = function (promotion) {
+                if (!promotion) {
+                    return false;
+                }
+                if (promotion.type === "category" || promotion.type === "design") {
+                    return true;
+                }
+                return false;
+            };
             this.goToPromotion = function (promotion) {
                 var url = "/";
                 switch (promotion.type) {

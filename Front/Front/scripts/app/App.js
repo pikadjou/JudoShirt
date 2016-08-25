@@ -222,9 +222,16 @@ var MartialShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetFeaturedDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetFeaturedDesigns([]);
         }
+        C_FeaturedDesigns.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature));
+                return;
+            }
+            this.RH.GetFeaturedDesigns([]);
+        };
         C_FeaturedDesigns.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
         };
@@ -267,17 +274,24 @@ var MartialShirt;
             this.$scope = $scope;
             this.RH = RH;
             this.catid = 0;
+            this.category = null;
+            this.list = [];
             this.init($scope);
             this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
             this.launchService();
         }
         C_CategoryDesigns.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid));
+                return;
+            }
             this.loader = true;
             this.RH.GetDesigns([this.catid]);
         };
         C_CategoryDesigns.prototype.onPacketRecieved = function (response) {
-            this.$scope.vm.category = response.category;
-            this.$scope.vm.list = response.designs;
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid, response);
+            this.category = response.category;
+            this.list = response.designs;
             this.loader = false;
         };
         C_CategoryDesigns.$inject = [
@@ -426,10 +440,15 @@ var MartialShirt;
             this.launchService();
         }
         C_Design.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.Design + this.designid)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.Design + this.designid));
+                return;
+            }
             this.loader = true;
             this.RH.GetArticles([this.designid]);
         };
         C_Design.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.Design + this.designid, response);
             this.articles = response.articles;
             this.articles.sort(function (a, b) {
                 return a.priority - b.priority;
@@ -935,7 +954,7 @@ var MartialShirt;
                         url = promotion.params;
                         window.location.href = url;
                         return;
-                    default: return;
+                    default: url = _this._application.getUrl("Promotion") + "/" + promotion.id;
                 }
                 _this.$location.path(url);
             };
@@ -997,6 +1016,15 @@ var MartialShirt;
             this.$location = $location;
             this.RH = RH;
             this.promotions = [];
+            this.isPromotionLink = function (promotion) {
+                if (!promotion) {
+                    return false;
+                }
+                if (promotion.type === "category" || promotion.type === "design") {
+                    return true;
+                }
+                return false;
+            };
             this.goToPromotion = function (promotion) {
                 var url = "/";
                 switch (promotion.type) {
@@ -1067,7 +1095,17 @@ var MartialShirt;
             this.RH = RH;
             this.promotionslug = 0;
             this.promotion = null;
-            this.goToPromotion = function (promotion) {
+            this.isPromotionLink = function () {
+                if (!_this.promotion) {
+                    return false;
+                }
+                if (_this.promotion.type === "category" || _this.promotion.type === "design") {
+                    return true;
+                }
+                return false;
+            };
+            this.goToPromotion = function () {
+                var promotion = _this.promotion;
                 var url = "/";
                 switch (promotion.type) {
                     case "category":
@@ -1117,6 +1155,54 @@ var MartialShirt;
     }());
     MartialShirt.PromotionEntity = PromotionEntity;
     MartialShirt.Init.Application.MartialShirtApp.directive(PromotionEntity.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionEntity));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/promotions/bestCode.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_PromotionBestCode = (function (_super) {
+        __extends(C_PromotionBestCode, _super);
+        function C_PromotionBestCode($scope, $location, RH) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.$location = $location;
+            this.RH = RH;
+            this.promotion = null;
+            this.init($scope);
+            this.RH.GetBestPromotionReceived.add(this.onPacketRecieved, this);
+            this.RH.GetBestPromotion([]);
+        }
+        C_PromotionBestCode.prototype.onPacketRecieved = function (response) {
+            this.promotion = response.promotion;
+        };
+        C_PromotionBestCode.$inject = [
+            '$scope',
+            '$location',
+            MartialShirt.Services.PromotionsRequestHandler.Name
+        ];
+        return C_PromotionBestCode;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_PromotionBestCode = C_PromotionBestCode;
+    var PromotionBestCode = (function () {
+        function PromotionBestCode() {
+            this.templateUrl = "/scripts/app/modules/promotions/bestCode.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_PromotionBestCode;
+        }
+        PromotionBestCode.Name = "PromotionBestCode".toLocaleLowerCase();
+        PromotionBestCode.$inject = [];
+        return PromotionBestCode;
+    }());
+    MartialShirt.PromotionBestCode = PromotionBestCode;
+    MartialShirt.Init.Application.MartialShirtApp.directive(PromotionBestCode.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(PromotionBestCode));
 })(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/shipping/list.js
@@ -2015,9 +2101,17 @@ var MartialShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetTopDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetTopDesigns([2]);
+            this.launchService();
         }
+        C_WidgetTopTen.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignTop)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignTop));
+                return;
+            }
+            this.RH.GetTopDesigns([3]);
+        };
         C_WidgetTopTen.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignTop, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
         };
@@ -2054,9 +2148,17 @@ var MartialShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetNewDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetNewDesigns([5]);
+            this.launchService();
         }
+        C_WidgetNew.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignNew)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignNew));
+                return;
+            }
+            this.RH.GetNewDesigns([5]);
+        };
         C_WidgetNew.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignNew, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.designs = response.designs;
         };
@@ -2093,9 +2195,17 @@ var MartialShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetPromoDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetPromoDesigns([5]);
+            this.launchService();
         }
+        C_WidgetPromotionDesigns.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion));
+                return;
+            }
+            this.RH.GetPromoDesigns([5]);
+        };
         C_WidgetPromotionDesigns.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
         };

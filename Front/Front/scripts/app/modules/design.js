@@ -86,10 +86,15 @@ var MartialShirt;
             this.launchService();
         }
         C_Design.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.Design + this.designid)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.Design + this.designid));
+                return;
+            }
             this.loader = true;
             this.RH.GetArticles([this.designid]);
         };
         C_Design.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.Design + this.designid, response);
             this.articles = response.articles;
             this.articles.sort(function (a, b) {
                 return a.priority - b.priority;

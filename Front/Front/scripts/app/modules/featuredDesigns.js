@@ -7,9 +7,16 @@ var MartialShirt;
             this.RH = RH;
             $scope.vm = $scope;
             this.RH.GetFeaturedDesignsReceived.add(this.onPacketRecieved, this);
-            this.RH.GetFeaturedDesigns([]);
         }
+        C_FeaturedDesigns.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature));
+                return;
+            }
+            this.RH.GetFeaturedDesigns([]);
+        };
         C_FeaturedDesigns.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
         };

@@ -25,6 +25,8 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
+require_once(ROOT . DS . 'plugins' . DS  . 'Cache' . DS . 'CacheController.php');
+
 class AppController extends Controller
 {
 

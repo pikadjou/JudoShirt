@@ -31,7 +31,7 @@
 				</div>
 				
 				<div class="link">
-					<a href="#" ng-click="vm.goToPromotion(promotion)">
+					<a href="#" ng-if="vm.isPromotionLink(promotion)" ng-click="vm.goToPromotion(promotion)">
 						Vers la promotion
 					</a>
 				</div>

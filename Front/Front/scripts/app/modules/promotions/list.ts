@@ -30,6 +30,17 @@ module MartialShirt {
 			
 		}
 
+		public isPromotionLink = (promotion: Services.Entity.Promotion) => {
+			if (!promotion) {
+				return false;
+			}
+
+			if (promotion.type === "category" || promotion.type === "design") {
+				return true;
+			}
+
+			return false;
+		}
 		public goToPromotion = (promotion : Services.Entity.Promotion) => {
 
 			var url = "/";

@@ -12,6 +12,8 @@ module MartialShirt.Services {
 
 		public GetPromotionsActiveReceived: Signal;
 		public GetPromotionReceived: Signal;
+		public GetBestPromotionReceived: Signal;
+
 
 		public controller = "promotions";
 		constructor(
@@ -31,10 +33,15 @@ module MartialShirt.Services {
 			array.push(request.slug);
 			return this.server.request(new MartialShirt.Services.Request("GET", "GetPromotion", this.controller, "getPromotion", array));
 		}
+		public GetBestPromotion(request: any): string {
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetBestPromotion", this.controller, "getBestPromotionCode", []));
+		}
 
 		private addEvents(): void {
 			this.GetPromotionsActiveReceived = new signals.Signal();
 			this.GetPromotionReceived = new signals.Signal();
+			this.GetBestPromotionReceived = new signals.Signal();
+
 
 			//this.server.packetReceived.add
 			this.server.packetReceived.add(this.onPacketReceived, this);
@@ -52,6 +59,10 @@ module MartialShirt.Services {
 				case ("GetPromotionResponse"):
 					parsedResponse = <any>(response.Content);
 					this.GetPromotionReceived.dispatch(parsedResponse);
+					break;
+				case ("GetBestPromotionResponse"):
+					parsedResponse = <any>(response.Content);
+					this.GetBestPromotionReceived.dispatch(parsedResponse);
 					break;
 				default:
 					break;

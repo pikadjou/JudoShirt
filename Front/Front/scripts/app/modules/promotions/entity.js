@@ -16,7 +16,17 @@ var MartialShirt;
             this.RH = RH;
             this.promotionslug = 0;
             this.promotion = null;
-            this.goToPromotion = function (promotion) {
+            this.isPromotionLink = function () {
+                if (!_this.promotion) {
+                    return false;
+                }
+                if (_this.promotion.type === "category" || _this.promotion.type === "design") {
+                    return true;
+                }
+                return false;
+            };
+            this.goToPromotion = function () {
+                var promotion = _this.promotion;
                 var url = "/";
                 switch (promotion.type) {
                     case "category":
