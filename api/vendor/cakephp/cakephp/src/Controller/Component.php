@@ -54,7 +54,7 @@ use Cake\Log\LogTrait;
  * is the subject of each event and can be fetched using Event::subject().
  *
  * @link http://book.cakephp.org/3.0/en/controllers/components.html
- * @see Controller::$components
+ * @see \Cake\Controller\Controller::$components
  */
 class Component implements EventListenerInterface
 {
@@ -68,6 +68,13 @@ class Component implements EventListenerInterface
      * @var \Cake\Network\Request
      */
     public $request;
+
+    /**
+     * Response object
+     *
+     * @var \Cake\Network\Response
+     */
+    public $response;
 
     /**
      * Component registry class used to lazy load components.
@@ -102,7 +109,7 @@ class Component implements EventListenerInterface
     /**
      * Constructor
      *
-     * @param ComponentRegistry $registry A ComponentRegistry this component can use to lazy load its components
+     * @param \Cake\Controller\ComponentRegistry $registry A ComponentRegistry this component can use to lazy load its components
      * @param array $config Array of configuration settings.
      */
     public function __construct(ComponentRegistry $registry, array $config = [])
@@ -110,7 +117,8 @@ class Component implements EventListenerInterface
         $this->_registry = $registry;
         $controller = $registry->getController();
         if ($controller) {
-            $this->request = $controller->request;
+            $this->request =& $controller->request;
+            $this->response =& $controller->response;
         }
 
         $this->config($config);
@@ -178,6 +186,22 @@ class Component implements EventListenerInterface
                 $events[$event] = $method;
             }
         }
+
         return $events;
+    }
+
+    /**
+     * Returns an array that can be used to describe the internal state of this
+     * object.
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'components' => $this->components,
+            'implementedEvents' => $this->implementedEvents(),
+            '_config' => $this->config(),
+        ];
     }
 }

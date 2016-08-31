@@ -17,6 +17,7 @@
 namespace Cake\Network\Session;
 
 use Cake\Cache\Cache;
+use InvalidArgumentException;
 use SessionHandlerInterface;
 
 /**
@@ -46,7 +47,7 @@ class CacheSession implements SessionHandlerInterface
     public function __construct(array $config = [])
     {
         if (empty($config['config'])) {
-            throw new \InvalidArgumentException('The cache configuration name to use is required');
+            throw new InvalidArgumentException('The cache configuration name to use is required');
         }
         $this->_options = $config;
     }
@@ -77,11 +78,17 @@ class CacheSession implements SessionHandlerInterface
      * Method used to read from a cache session.
      *
      * @param string $id The key of the value to read
-     * @return mixed The value of the key or false if it does not exist
+     * @return string The value of the key or empty if it does not exist
      */
     public function read($id)
     {
-        return Cache::read($id, $this->_options['config']);
+        $value = Cache::read($id, $this->_options['config']);
+
+        if (empty($value)) {
+            return '';
+        }
+
+        return $value;
     }
 
     /**
@@ -116,6 +123,7 @@ class CacheSession implements SessionHandlerInterface
     public function gc($maxlifetime)
     {
         Cache::gc($this->_options['config'], time() - $maxlifetime);
+
         return true;
     }
 }

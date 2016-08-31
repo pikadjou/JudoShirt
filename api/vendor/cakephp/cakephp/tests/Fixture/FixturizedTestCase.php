@@ -2,10 +2,10 @@
 namespace Cake\Test\Fixture;
 
 use Cake\TestSuite\TestCase;
+use Exception;
 
 /**
  * This class helps in testing the life-cycle of fixtures inside a CakeTestCase
- *
  */
 class FixturizedTestCase extends TestCase
 {
@@ -64,6 +64,6 @@ class FixturizedTestCase extends TestCase
      */
     public function testThrowException()
     {
-        throw new \Exception();
+        throw new Exception();
     }
 }

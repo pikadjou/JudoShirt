@@ -20,6 +20,7 @@ namespace Cake\Utility\Crypto;
  * This class is not intended to be used directly and should only
  * be used in the context of Cake\Utility\Security.
  *
+ * @deprecated 3.3.0 It is recommended to use {@see Cake\Utility\Crypto\OpenSsl} instead.
  * @internal
  */
 class Mcrypt
@@ -40,14 +41,16 @@ class Mcrypt
         $mode = MCRYPT_MODE_CBC;
         $ivSize = mcrypt_get_iv_size($algorithm, $mode);
 
-        $cryptKey = substr($key, 0, 32);
+        $cryptKey = mb_substr($key, 0, 32, '8bit');
 
         if ($operation === 'encrypt') {
             $iv = mcrypt_create_iv($ivSize, MCRYPT_DEV_URANDOM);
+
             return $iv . '$$' . mcrypt_encrypt($algorithm, $cryptKey, $text, $mode, $iv);
         }
-        $iv = substr($text, 0, $ivSize);
-        $text = substr($text, $ivSize + 2);
+        $iv = mb_substr($text, 0, $ivSize, '8bit');
+        $text = mb_substr($text, $ivSize + 2, null, '8bit');
+
         return rtrim(mcrypt_decrypt($algorithm, $cryptKey, $text, $mode, $iv), "\0");
     }
 
@@ -72,7 +75,7 @@ class Mcrypt
         $iv = mcrypt_create_iv($ivSize, MCRYPT_DEV_URANDOM);
 
         // Pad out plain to make it AES compatible.
-        $pad = ($ivSize - (strlen($plain) % $ivSize));
+        $pad = ($ivSize - (mb_strlen($plain, '8bit') % $ivSize));
         $plain .= str_repeat(chr($pad), $pad);
 
         return $iv . mcrypt_encrypt($algorithm, $key, $plain, $mode, $iv);
@@ -84,7 +87,7 @@ class Mcrypt
      * @param string $cipher The ciphertext to decrypt.
      * @param string $key The 256 bit/32 byte key to use as a cipher key.
      * @return string Decrypted data. Any trailing null bytes will be removed.
-     * @throws InvalidArgumentException On invalid data or key.
+     * @throws \InvalidArgumentException On invalid data or key.
      */
     public static function decrypt($cipher, $key)
     {
@@ -92,18 +95,20 @@ class Mcrypt
         $mode = MCRYPT_MODE_CBC;
         $ivSize = mcrypt_get_iv_size($algorithm, $mode);
 
-        $iv = substr($cipher, 0, $ivSize);
-        $cipher = substr($cipher, $ivSize);
+        $iv = mb_substr($cipher, 0, $ivSize, '8bit');
+        $cipher = mb_substr($cipher, $ivSize, null, '8bit');
         $plain = mcrypt_decrypt($algorithm, $key, $cipher, $mode, $iv);
 
         // Remove PKCS#7 padding or Null bytes
         // Newer values will be PKCS#7 padded, while old
         // mcrypt values will be null byte padded.
-        $padChar = substr($plain, -1);
+        $padChar = mb_substr($plain, -1, null, '8bit');
         if ($padChar === "\0") {
             return trim($plain, "\0");
         }
         $padLen = ord($padChar);
-        return substr($plain, 0, -$padLen);
+        $result = mb_substr($plain, 0, -$padLen, '8bit');
+
+        return $result === '' ? false : $result;
     }
 }

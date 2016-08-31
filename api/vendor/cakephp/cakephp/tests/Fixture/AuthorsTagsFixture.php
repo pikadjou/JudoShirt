@@ -1,6 +1,6 @@
 <?php
 /**
- * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
@@ -17,7 +17,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * AuthorsTags fixture
- *
  */
 class AuthorsTagsFixture extends TestFixture
 {

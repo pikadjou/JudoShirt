@@ -28,14 +28,7 @@ class PanelsController extends Controller
      *
      * @var array
      */
-    public $components = ['RequestHandler'];
-
-    /**
-     * Layout property.
-     *
-     * @var string
-     */
-    public $layout = 'DebugKit.panel';
+    public $components = ['RequestHandler', 'Cookie'];
 
     /**
      * Before filter handler.
@@ -49,6 +42,21 @@ class PanelsController extends Controller
         // TODO add config override.
         if (!Configure::read('debug')) {
             throw new NotFoundException();
+        }
+    }
+
+    /**
+     * Before render handler.
+     *
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     */
+    public function beforeRender(Event $event)
+    {
+        $builder = $this->viewBuilder();
+        if (!$builder->className()) {
+            $builder->layout('DebugKit.panel')
+                ->className('DebugKit.Ajax');
         }
     }
 
@@ -80,7 +88,10 @@ class PanelsController extends Controller
      */
     public function view($id = null)
     {
+        $this->Cookie->configKey('debugKit_sort', 'encryption', false);
+        $this->set('sort', $this->Cookie->read('debugKit_sort'));
         $panel = $this->Panels->get($id);
+
         $this->set('panel', $panel);
         $this->set(unserialize($panel->content));
     }

@@ -18,8 +18,8 @@ use Cake\Core\App;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\View\StringTemplate;
 use Cake\View\View;
-use Cake\View\Widget\WidgetInterface;
 use ReflectionClass;
+use RuntimeException;
 
 /**
  * A registry/factory for input widgets.
@@ -118,7 +118,7 @@ class WidgetRegistry
             if (gettype($object) === 'object' &&
                 !($object instanceof WidgetInterface)
             ) {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     'Widget objects must implement Cake\View\Widget\WidgetInterface.'
                 );
             }
@@ -135,18 +135,19 @@ class WidgetRegistry
      * the `_default` widget is undefined.
      *
      * @param string $name The widget name to get.
-     * @return WidgetInterface widget interface class.
+     * @return \Cake\View\Widget\WidgetInterface widget interface class.
      * @throws \RuntimeException when widget is undefined.
      */
     public function get($name)
     {
         if (!isset($this->_widgets[$name]) && empty($this->_widgets['_default'])) {
-            throw new \RuntimeException(sprintf('Unknown widget "%s"', $name));
+            throw new RuntimeException(sprintf('Unknown widget "%s"', $name));
         }
         if (!isset($this->_widgets[$name])) {
             $name = '_default';
         }
         $this->_widgets[$name] = $this->_resolveWidget($this->_widgets[$name]);
+
         return $this->_widgets[$name];
     }
 
@@ -164,7 +165,7 @@ class WidgetRegistry
      * Resolves a widget spec into an instance.
      *
      * @param mixed $widget The widget to get
-     * @return WidgetInterface
+     * @return \Cake\View\Widget\WidgetInterface
      * @throws \RuntimeException when class cannot be loaded or does not
      *   implement WidgetInterface.
      */
@@ -182,7 +183,7 @@ class WidgetRegistry
         $class = array_shift($widget);
         $className = App::className($class, 'View/Widget', 'Widget');
         if ($className === false || !class_exists($className)) {
-            throw new \RuntimeException(sprintf('Unable to locate widget class "%s"', $class));
+            throw new RuntimeException(sprintf('Unable to locate widget class "%s"', $class));
         }
         if ($type === 'array' && count($widget)) {
             $reflection = new ReflectionClass($className);
@@ -195,8 +196,9 @@ class WidgetRegistry
             $instance = new $className($this->_templates);
         }
         if (!($instance instanceof WidgetInterface)) {
-            throw new \RuntimeException(sprintf('"%s" does not implement the WidgetInterface', $className));
+            throw new RuntimeException(sprintf('"%s" does not implement the WidgetInterface', $className));
         }
+
         return $instance;
     }
 }

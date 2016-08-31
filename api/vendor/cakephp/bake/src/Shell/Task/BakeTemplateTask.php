@@ -56,7 +56,10 @@ class BakeTemplateTask extends Shell
         $theme = isset($this->params['theme']) ? $this->params['theme'] : '';
 
         $viewOptions = [
-            'helpers' => ['Bake.Bake'],
+            'helpers' => [
+                'Bake.Bake',
+                'Bake.DocBlock'
+            ],
             'theme' => $theme
         ];
         $view = new BakeView(new Request(), new Response(), null, $viewOptions);
@@ -86,6 +89,7 @@ class BakeTemplateTask extends Shell
             return $this->View->render($template);
         } catch (MissingTemplateException $e) {
             $this->_io->verbose(sprintf('No bake template found for "%s"', $template));
+
             return '';
         }
     }

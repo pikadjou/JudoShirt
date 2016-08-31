@@ -16,6 +16,8 @@ namespace Cake\Console;
 
 use Cake\Error\BaseErrorHandler;
 use Cake\Error\FatalErrorException;
+use Cake\Error\PHP7ErrorException;
+use Exception;
 
 /**
  * Error Handler for Cake console. Does simple printing of the
@@ -27,7 +29,7 @@ class ConsoleErrorHandler extends BaseErrorHandler
     /**
      * Standard error stream.
      *
-     * @var ConsoleOutput
+     * @var \Cake\Console\ConsoleOutput
      */
     protected $_stderr;
 
@@ -61,7 +63,7 @@ class ConsoleErrorHandler extends BaseErrorHandler
      * @throws \Exception When renderer class not found
      * @see http://php.net/manual/en/function.set-exception-handler.php
      */
-    public function handleException(\Exception $exception)
+    public function handleException(Exception $exception)
     {
         $this->_displayException($exception);
         $this->_logException($exception);
@@ -82,6 +84,11 @@ class ConsoleErrorHandler extends BaseErrorHandler
         if ($exception instanceof FatalErrorException) {
             $errorName = 'Fatal Error:';
         }
+
+        if ($exception instanceof PHP7ErrorException) {
+            $exception = $exception->getError();
+        }
+
         $message = sprintf(
             "<error>%s</error> %s in [%s, line %s]",
             $errorName,

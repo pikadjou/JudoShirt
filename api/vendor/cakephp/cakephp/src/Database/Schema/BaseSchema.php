@@ -15,7 +15,6 @@
 namespace Cake\Database\Schema;
 
 use Cake\Database\Driver;
-use Cake\Database\Schema\Table;
 
 /**
  * Base class for schema implementations.
@@ -86,7 +85,27 @@ abstract class BaseSchema
         if ($clause === 'NO ACTION') {
             return Table::ACTION_NO_ACTION;
         }
+
         return Table::ACTION_SET_NULL;
+    }
+
+    /**
+     * Convert foreign key constraints references to a valid
+     * stringified list
+     *
+     * @param string|array $references The referenced columns of a foreign key constraint statement
+     * @return string
+     */
+    protected function _convertConstraintColumns($references)
+    {
+        if (is_string($references)) {
+            return $this->_driver->quoteIdentifier($references);
+        }
+
+        return implode(', ', array_map(
+            [$this->_driver, 'quoteIdentifier'],
+            $references
+        ));
     }
 
     /**
@@ -101,6 +120,7 @@ abstract class BaseSchema
             'DROP TABLE %s',
             $this->_driver->quoteIdentifier($table->name())
         );
+
         return [$sql];
     }
 
@@ -211,6 +231,22 @@ abstract class BaseSchema
      * @return string SQL fragment.
      */
     abstract public function columnSql(Table $table, $name);
+
+    /**
+     * Generate the SQL queries needed to add foreign key constraints to the table
+     *
+     * @param \Cake\Database\Schema\Table $table The table instance the foreign key constraints are.
+     * @return array SQL fragment.
+     */
+    abstract public function addConstraintSql(Table $table);
+
+    /**
+     * Generate the SQL queries needed to drop foreign key constraints from the table
+     *
+     * @param \Cake\Database\Schema\Table $table The table instance the foreign key constraints are.
+     * @return array SQL fragment.
+     */
+    abstract public function dropConstraintSql(Table $table);
 
     /**
      * Generate the SQL fragments for defining table constraints.

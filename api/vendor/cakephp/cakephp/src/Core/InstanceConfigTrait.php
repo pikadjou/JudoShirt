@@ -16,7 +16,6 @@ namespace Cake\Core;
 
 use Cake\Core\Exception\Exception;
 use Cake\Utility\Hash;
-use InvalidArgumentException;
 
 /**
  * A trait for reading and writing instance config
@@ -45,27 +44,39 @@ trait InstanceConfigTrait
      *
      * Reading the whole config:
      *
-     * `$this->config();`
+     * ```
+     * $this->config();
+     * ```
      *
      * Reading a specific value:
      *
-     * `$this->config('key');`
+     * ```
+     * $this->config('key');
+     * ```
      *
      * Reading a nested value:
      *
-     * `$this->config('some.nested.key');`
+     * ```
+     * $this->config('some.nested.key');
+     * ```
      *
      * Setting a specific value:
      *
-     * `$this->config('key', $value);`
+     * ```
+     * $this->config('key', $value);
+     * ```
      *
      * Setting a nested value:
      *
-     * `$this->config('some.nested.key', $value);`
+     * ```
+     * $this->config('some.nested.key', $value);
+     * ```
      *
      * Updating multiple config settings at the same time:
      *
-     * `$this->config(['one' => 'value', 'another' => 'value']);`
+     * ```
+     * $this->config(['one' => 'value', 'another' => 'value']);
+     * ```
      *
      * @param string|array|null $key The key to get/set, or a complete array of configs.
      * @param mixed|null $value The value to set.
@@ -82,6 +93,7 @@ trait InstanceConfigTrait
 
         if (is_array($key) || func_num_args() >= 2) {
             $this->_configWrite($key, $value, $merge);
+
             return $this;
         }
 
@@ -94,15 +106,21 @@ trait InstanceConfigTrait
      *
      * Setting a specific value:
      *
-     * `$this->config('key', $value);`
+     * ```
+     * $this->config('key', $value);
+     * ```
      *
      * Setting a nested value:
      *
-     * `$this->config('some.nested.key', $value);`
+     * ```
+     * $this->config('some.nested.key', $value);
+     * ```
      *
      * Updating multiple config settings at the same time:
      *
-     * `$this->config(['one' => 'value', 'another' => 'value']);`
+     * ```
+     * $this->config(['one' => 'value', 'another' => 'value']);
+     * ```
      *
      * @param string|array $key The key to set, or a complete array of configs.
      * @param mixed|null $value The value to set.
@@ -116,6 +134,7 @@ trait InstanceConfigTrait
         }
 
         $this->_configWrite($key, $value, 'shallow');
+
         return $this;
     }
 
@@ -144,7 +163,6 @@ trait InstanceConfigTrait
             }
 
             $return = $return[$k];
-
         }
 
         return $return;
@@ -164,20 +182,18 @@ trait InstanceConfigTrait
     {
         if (is_string($key) && $value === null) {
             $this->_configDelete($key);
+
             return;
         }
 
         if ($merge) {
-            if (is_array($key)) {
-                $update = $key;
-            } else {
-                $update = [$key => $value];
-            }
+            $update = is_array($key) ? $key : [$key => $value];
             if ($merge === 'shallow') {
                 $this->_config = array_merge($this->_config, Hash::expand($update));
             } else {
                 $this->_config = Hash::merge($this->_config, Hash::expand($update));
             }
+
             return;
         }
 
@@ -185,11 +201,13 @@ trait InstanceConfigTrait
             foreach ($key as $k => $val) {
                 $this->_configWrite($k, $val);
             }
+
             return;
         }
 
         if (strpos($key, '.') === false) {
             $this->_config[$key] = $value;
+
             return;
         }
 
@@ -222,6 +240,7 @@ trait InstanceConfigTrait
     {
         if (strpos($key, '.') === false) {
             unset($this->_config[$key]);
+
             return;
         }
 
@@ -238,7 +257,7 @@ trait InstanceConfigTrait
                 break;
             }
 
-            if ($i === $length - 2) {
+            if ($i === $length - 1) {
                 unset($update[$k]);
                 break;
             }

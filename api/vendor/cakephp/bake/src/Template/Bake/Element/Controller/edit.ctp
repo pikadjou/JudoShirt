@@ -22,7 +22,7 @@ $compact = ["'" . $singularName . "'"];
      * Edit method
      *
      * @param string|null $id <%= $singularHumanName %> id.
-     * @return void Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
@@ -33,10 +33,11 @@ $compact = ["'" . $singularName . "'"];
         if ($this->request->is(['patch', 'post', 'put'])) {
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-                $this->Flash->success('The <%= strtolower($singularHumanName) %> has been saved.');
+                $this->Flash->success(__('The <%= strtolower($singularHumanName) %> has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The <%= strtolower($singularHumanName) %> could not be saved. Please, try again.');
+                $this->Flash->error(__('The <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'));
             }
         }
 <%

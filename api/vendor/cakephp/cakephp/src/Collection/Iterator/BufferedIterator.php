@@ -16,19 +16,20 @@ namespace Cake\Collection\Iterator;
 
 use Cake\Collection\Collection;
 use Countable;
+use Serializable;
 use SplDoublyLinkedList;
 
 /**
  * Creates an iterator from another iterator that will keep the results of the inner
  * iterator in memory, so that results don't have to be re-calculated.
  */
-class BufferedIterator extends Collection implements Countable
+class BufferedIterator extends Collection implements Countable, Serializable
 {
 
     /**
      * The in-memory cache containing results from previous iterators
      *
-     * @var callable
+     * @var \SplDoublyLinkedList
      */
     protected $_buffer;
 
@@ -110,6 +111,7 @@ class BufferedIterator extends Collection implements Countable
         if ($this->_index === 0 && !$this->_started) {
             $this->_started = true;
             parent::rewind();
+
             return;
         }
 
@@ -127,6 +129,7 @@ class BufferedIterator extends Collection implements Countable
             $current = $this->_buffer->offsetGet($this->_index);
             $this->_current = $current['value'];
             $this->_key = $current['key'];
+
             return true;
         }
 
@@ -142,6 +145,7 @@ class BufferedIterator extends Collection implements Countable
         }
 
         $this->_finished = !$valid;
+
         return $valid;
     }
 
@@ -175,5 +179,34 @@ class BufferedIterator extends Collection implements Countable
         }
 
         return $this->_buffer->count();
+    }
+
+    /**
+     * Returns a string representation of this object that can be used
+     * to reconstruct it
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        if (!$this->_finished) {
+            $this->count();
+        }
+
+        return serialize($this->_buffer);
+    }
+
+    /**
+     * Unserializes the passed string and rebuilds the BufferedIterator instance
+     *
+     * @param string $buffer The serialized buffer iterator
+     * @return void
+     */
+    public function unserialize($buffer)
+    {
+        $this->__construct([]);
+        $this->_buffer = unserialize($buffer);
+        $this->_started = true;
+        $this->_finished = true;
     }
 }

@@ -23,7 +23,6 @@ use SessionHandlerInterface;
 
 /**
  * DatabaseSession provides methods to be used with Session.
- *
  */
 class DatabaseSession implements SessionHandlerInterface
 {
@@ -51,11 +50,13 @@ class DatabaseSession implements SessionHandlerInterface
      */
     public function __construct(array $config = [])
     {
+        $tableLocator = isset($config['tableLocator']) ? $config['tableLocator'] : TableRegistry::locator();
+
         if (empty($config['model'])) {
-            $config = TableRegistry::exists('Sessions') ? [] : ['table' => 'sessions'];
-            $this->_table = TableRegistry::get('Sessions', $config);
+            $config = $tableLocator->exists('Sessions') ? [] : ['table' => 'sessions'];
+            $this->_table = $tableLocator->get('Sessions', $config);
         } else {
-            $this->_table = TableRegistry::get($config['model']);
+            $this->_table = $tableLocator->get($config['model']);
         }
 
         $this->_timeout = ini_get('session.gc_maxlifetime');
@@ -87,7 +88,7 @@ class DatabaseSession implements SessionHandlerInterface
      * Method used to read from a database session.
      *
      * @param int|string $id The key of the value to read
-     * @return mixed The value of the key or false if it does not exist
+     * @return string The value of the key or empty if it does not exist
      */
     public function read($id)
     {
@@ -99,10 +100,20 @@ class DatabaseSession implements SessionHandlerInterface
             ->first();
 
         if (empty($result)) {
-            return false;
+            return '';
         }
 
-        return $result['data'];
+        if (is_string($result['data'])) {
+            return $result['data'];
+        }
+
+        $session = stream_get_contents($result['data']);
+
+        if ($session === false) {
+            return '';
+        }
+        
+        return $session;
     }
 
     /**
@@ -121,10 +132,8 @@ class DatabaseSession implements SessionHandlerInterface
         $record = compact('data', 'expires');
         $record[$this->_table->primaryKey()] = $id;
         $result = $this->_table->save(new Entity($record));
-        if ($result) {
-            return $result->toArray();
-        }
-        return false;
+
+        return (bool)$result;
     }
 
     /**
@@ -135,7 +144,7 @@ class DatabaseSession implements SessionHandlerInterface
      */
     public function destroy($id)
     {
-        return $this->_table->delete(new Entity(
+        return (bool)$this->_table->delete(new Entity(
             [$this->_table->primaryKey() => $id],
             ['markNew' => false]
         ));
@@ -149,6 +158,8 @@ class DatabaseSession implements SessionHandlerInterface
      */
     public function gc($maxlifetime)
     {
-        return $this->_table->deleteAll(['expires <' => time() - $maxlifetime]);
+        $this->_table->deleteAll(['expires <' => time()]);
+
+        return true;
     }
 }

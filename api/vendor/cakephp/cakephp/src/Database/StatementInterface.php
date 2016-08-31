@@ -30,9 +30,11 @@ interface StatementInterface
      *
      * ### Examples:
      *
-     *  `$statement->bindValue(1, 'a title');`
-     *  `$statement->bindValue('active', true, 'boolean');`
-     *  `$statement->bindValue(5, new \DateTime(), 'date');`
+     * ```
+     * $statement->bindValue(1, 'a title');
+     * $statement->bindValue('active', true, 'boolean');
+     * $statement->bindValue(5, new \DateTime(), 'date');
+     * ```
      *
      * @param string|int $column name or param position to be bound
      * @param mixed $value The value to bind to variable in query
@@ -86,7 +88,7 @@ interface StatementInterface
      * that binding parameters from this method will not perform any custom type conversion
      * as it would normally happen when calling `bindValue`
      *
-     * @param array $params list of values to be bound to query
+     * @param array|null $params list of values to be bound to query
      * @return bool true on success, false otherwise
      */
     public function execute($params = null);
@@ -105,7 +107,7 @@ interface StatementInterface
      * ```
      *
      * @param string $type 'num' for positional columns, assoc for named columns
-     * @return mixed Result array containing columns and values or false if no results
+     * @return array|false Result array containing columns and values or false if no results
      * are left
      */
     public function fetch($type = 'num');

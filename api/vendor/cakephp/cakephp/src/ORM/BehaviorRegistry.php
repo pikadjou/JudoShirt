@@ -17,10 +17,9 @@ namespace Cake\ORM;
 use BadMethodCallException;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
-use Cake\Event\EventManagerTrait;
-use Cake\ORM\Behavior;
+use Cake\Event\EventDispatcherInterface;
+use Cake\Event\EventDispatcherTrait;
 use Cake\ORM\Exception\MissingBehaviorException;
-use Cake\ORM\Table;
 use LogicException;
 
 /**
@@ -29,10 +28,10 @@ use LogicException;
  *
  * This class also provides method for checking and dispatching behavior methods.
  */
-class BehaviorRegistry extends ObjectRegistry
+class BehaviorRegistry extends ObjectRegistry implements EventDispatcherInterface
 {
 
-    use EventManagerTrait;
+    use EventDispatcherTrait;
 
     /**
      * The table using this registry.
@@ -58,9 +57,22 @@ class BehaviorRegistry extends ObjectRegistry
     /**
      * Constructor
      *
-     * @param \Cake\ORM\Table $table The table this registry is attached to
+     * @param \Cake\ORM\Table|null $table The table this registry is attached to.
      */
-    public function __construct(Table $table)
+    public function __construct($table = null)
+    {
+        if ($table !== null) {
+            $this->setTable($table);
+        }
+    }
+
+    /**
+     * Attaches a table instance to this registry.
+     *
+     * @param \Cake\ORM\Table $table The table this registry is attached to.
+     * @return void
+     */
+    public function setTable(Table $table)
     {
         $this->_table = $table;
         $this->eventManager($table->eventManager());
@@ -80,6 +92,7 @@ class BehaviorRegistry extends ObjectRegistry
         if (!$result) {
             $result = App::className($class, 'ORM/Behavior', 'Behavior');
         }
+
         return $result;
     }
 
@@ -110,7 +123,7 @@ class BehaviorRegistry extends ObjectRegistry
      * @param string $class The classname that is missing.
      * @param string $alias The alias of the object.
      * @param array $config An array of config to use for the behavior.
-     * @return Behavior The constructed behavior class.
+     * @return \Cake\ORM\Behavior The constructed behavior class.
      */
     protected function _create($class, $alias, $config)
     {
@@ -122,6 +135,7 @@ class BehaviorRegistry extends ObjectRegistry
         $methods = $this->_getMethods($instance, $class, $alias);
         $this->_methodMap += $methods['methods'];
         $this->_finderMap += $methods['finders'];
+
         return $instance;
     }
 
@@ -186,6 +200,7 @@ class BehaviorRegistry extends ObjectRegistry
     public function hasMethod($method)
     {
         $method = strtolower($method);
+
         return isset($this->_methodMap[$method]);
     }
 
@@ -201,6 +216,7 @@ class BehaviorRegistry extends ObjectRegistry
     public function hasFinder($method)
     {
         $method = strtolower($method);
+
         return isset($this->_finderMap[$method]);
     }
 
@@ -217,6 +233,7 @@ class BehaviorRegistry extends ObjectRegistry
         $method = strtolower($method);
         if ($this->hasMethod($method) && $this->has($this->_methodMap[$method][0])) {
             list($behavior, $callMethod) = $this->_methodMap[$method];
+
             return call_user_func_array([$this->_loaded[$behavior], $callMethod], $args);
         }
 
@@ -239,6 +256,7 @@ class BehaviorRegistry extends ObjectRegistry
 
         if ($this->hasFinder($type) && $this->has($this->_finderMap[$type][0])) {
             list($behavior, $callMethod) = $this->_finderMap[$type];
+
             return call_user_func_array([$this->_loaded[$behavior], $callMethod], $args);
         }
 

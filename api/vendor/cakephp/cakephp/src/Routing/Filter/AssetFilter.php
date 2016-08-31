@@ -24,7 +24,6 @@ use Cake\Utility\Inflector;
 /**
  * Filters a request and tests whether it is a file in the webroot folder or not and
  * serves the file to the client if appropriate.
- *
  */
 class AssetFilter extends DispatcherFilter
 {
@@ -38,10 +37,31 @@ class AssetFilter extends DispatcherFilter
     protected $_priority = 9;
 
     /**
+     * The amount of time to cache the asset.
+     *
+     * @var string
+     */
+    protected $_cacheTime = '+1 day';
+
+    /**
+     *
+     * Constructor.
+     *
+     * @param array $config Array of config.
+     */
+    public function __construct($config = [])
+    {
+        if (!empty($config['cacheTime'])) {
+            $this->_cacheTime = $config['cacheTime'];
+        }
+        parent::__construct($config);
+    }
+
+    /**
      * Checks if a requested asset exists and sends it to the browser
      *
-     * @param \Cake\Event\Event $event containing the request and response object
-     * @return \Cake\Network\Response if the client is requesting a recognized asset, null otherwise
+     * @param \Cake\Event\Event $event Event containing the request and response object
+     * @return \Cake\Network\Response|null If the client is requesting a recognized asset, null otherwise
      * @throws \Cake\Network\Exception\NotFoundException When asset not found
      */
     public function beforeDispatch(Event $event)
@@ -67,8 +87,8 @@ class AssetFilter extends DispatcherFilter
 
         $pathSegments = explode('.', $url);
         $ext = array_pop($pathSegments);
-        $this->_deliverAsset($request, $response, $assetFile, $ext);
-        return $response;
+
+        return $this->_deliverAsset($request, $response, $assetFile, $ext);
     }
 
     /**
@@ -89,8 +109,9 @@ class AssetFilter extends DispatcherFilter
             $plugin = implode('/', $pluginPart);
             if ($plugin && Plugin::loaded($plugin)) {
                 $parts = array_slice($parts, $i + 1);
-                $fileFragment = implode(DS, $parts);
-                $pluginWebroot = Plugin::path($plugin) . 'webroot' . DS;
+                $fileFragment = implode(DIRECTORY_SEPARATOR, $parts);
+                $pluginWebroot = Plugin::path($plugin) . 'webroot' . DIRECTORY_SEPARATOR;
+
                 return $pluginWebroot . $fileFragment;
             }
         }
@@ -103,7 +124,7 @@ class AssetFilter extends DispatcherFilter
      * @param \Cake\Network\Response $response The response object to use.
      * @param string $assetFile Path to the asset file in the file system
      * @param string $ext The extension of the file to determine its mime type
-     * @return void
+     * @return \Cake\Network\Response The updated response.
      */
     protected function _deliverAsset(Request $request, Response $response, $assetFile, $ext)
     {
@@ -119,11 +140,9 @@ class AssetFilter extends DispatcherFilter
         if (!$compressionEnabled) {
             $response->header('Content-Length', filesize($assetFile));
         }
-        $response->cache(filemtime($assetFile));
-        $response->sendHeaders();
-        readfile($assetFile);
-        if ($compressionEnabled) {
-            ob_end_flush();
-        }
+        $response->cache(filemtime($assetFile), $this->_cacheTime);
+        $response->file($assetFile);
+
+        return $response;
     }
 }

@@ -14,6 +14,7 @@
  */
 namespace Cake\Controller;
 
+use Cake\Event\Event;
 use Cake\Routing\Router;
 
 /**
@@ -25,26 +26,23 @@ class ErrorController extends Controller
 {
 
     /**
-     * Constructor
+     * Initialization hook method.
      *
-     * @param \Cake\Network\Request|null $request Request instance.
-     * @param \Cake\Network\Response|null $response Response instance.
+     * @return void
      */
-    public function __construct($request = null, $response = null)
+    public function initialize()
     {
-        parent::__construct($request, $response);
-        if (count(Router::extensions()) &&
-            !isset($this->RequestHandler)
-        ) {
-            $this->loadComponent('RequestHandler');
-        }
-        $eventManager = $this->eventManager();
-        if (isset($this->Auth)) {
-            $eventManager->off($this->Auth);
-        }
-        if (isset($this->Security)) {
-            $eventManager->off($this->Security);
-        }
-        $this->viewPath = 'Error';
+        $this->loadComponent('RequestHandler');
+    }
+
+    /**
+     * beforeRender callback.
+     *
+     * @param \Cake\Event\Event $event Event.
+     * @return void
+     */
+    public function beforeRender(Event $event)
+    {
+        $this->viewBuilder()->templatePath('Error');
     }
 }

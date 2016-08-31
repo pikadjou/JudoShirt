@@ -15,6 +15,7 @@
 namespace Cake\Console;
 
 use Cake\Utility\Text;
+use SimpleXmlElement;
 
 /**
  * HelpFormatter formats help for console shells. Can format to either
@@ -43,9 +44,16 @@ class HelpFormatter
     protected $_maxOptions = 6;
 
     /**
+     * Option parser.
+     *
+     * @var \Cake\Console\ConsoleOptionParser
+     */
+    protected $_parser;
+
+    /**
      * Build the help formatter for an OptionParser
      *
-     * @param ConsoleOptionParser $parser The option parser help is being generated for.
+     * @param \Cake\Console\ConsoleOptionParser $parser The option parser help is being generated for.
      */
     public function __construct(ConsoleOptionParser $parser)
     {
@@ -76,7 +84,7 @@ class HelpFormatter
             $out[] = '';
             $max = $this->_getMaxLength($subcommands) + 2;
             foreach ($subcommands as $command) {
-                $out[] = Text::wrap($command->help($max), [
+                $out[] = Text::wrapBlock($command->help($max), [
                     'width' => $width,
                     'indent' => str_repeat(' ', $max),
                     'indentAt' => 1
@@ -93,7 +101,7 @@ class HelpFormatter
             $out[] = '<info>Options:</info>';
             $out[] = '';
             foreach ($options as $option) {
-                $out[] = Text::wrap($option->help($max), [
+                $out[] = Text::wrapBlock($option->help($max), [
                     'width' => $width,
                     'indent' => str_repeat(' ', $max),
                     'indentAt' => 1
@@ -108,7 +116,7 @@ class HelpFormatter
             $out[] = '<info>Arguments:</info>';
             $out[] = '';
             foreach ($arguments as $argument) {
-                $out[] = Text::wrap($argument->help($max), [
+                $out[] = Text::wrapBlock($argument->help($max), [
                     'width' => $width,
                     'indent' => str_repeat(' ', $max),
                     'indentAt' => 1
@@ -121,6 +129,7 @@ class HelpFormatter
             $out[] = Text::wrap($epilog, $width);
             $out[] = '';
         }
+
         return implode("\n", $out);
     }
 
@@ -154,6 +163,7 @@ class HelpFormatter
             $args = ['[arguments]'];
         }
         $usage = array_merge($usage, $args);
+
         return implode(' ', $usage);
     }
 
@@ -169,6 +179,7 @@ class HelpFormatter
         foreach ($collection as $item) {
             $max = (strlen($item->name()) > $max) ? strlen($item->name()) : $max;
         }
+
         return $max;
     }
 
@@ -181,7 +192,7 @@ class HelpFormatter
     public function xml($string = true)
     {
         $parser = $this->_parser;
-        $xml = new \SimpleXmlElement('<shell></shell>');
+        $xml = new SimpleXmlElement('<shell></shell>');
         $xml->addChild('command', $parser->command());
         $xml->addChild('description', $parser->description());
 
@@ -198,6 +209,7 @@ class HelpFormatter
         foreach ($parser->arguments() as $argument) {
             $argument->xml($arguments);
         }
+
         return $string ? $xml->asXml() : $xml;
     }
 }

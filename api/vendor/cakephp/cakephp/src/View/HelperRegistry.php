@@ -16,22 +16,22 @@ namespace Cake\View;
 
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
-use Cake\Event\EventManagerTrait;
-use Cake\View\View;
+use Cake\Event\EventDispatcherInterface;
+use Cake\Event\EventDispatcherTrait;
 
 /**
  * HelperRegistry is used as a registry for loaded helpers and handles loading
  * and constructing helper class objects.
  */
-class HelperRegistry extends ObjectRegistry
+class HelperRegistry extends ObjectRegistry implements EventDispatcherInterface
 {
 
-    use EventManagerTrait;
+    use EventDispatcherTrait;
 
     /**
      * View object to use when making helpers.
      *
-     * @var View
+     * @var \Cake\View\View
      */
     protected $_View;
 
@@ -67,6 +67,7 @@ class HelperRegistry extends ObjectRegistry
         } catch (Exception\MissingHelperException $exception) {
             if ($this->_View->plugin) {
                 $this->load($this->_View->plugin . '.' . $helper);
+
                 return true;
             }
         }
@@ -92,6 +93,7 @@ class HelperRegistry extends ObjectRegistry
         if (isset($this->$name)) {
             return $this->_loaded[$name];
         }
+
         return null;
     }
 
@@ -148,6 +150,7 @@ class HelperRegistry extends ObjectRegistry
         if ($enable) {
             $this->eventManager()->on($instance);
         }
+
         return $instance;
     }
 }

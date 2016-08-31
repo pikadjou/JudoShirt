@@ -14,7 +14,6 @@
         }
     },
     "require": {
-        "cakephp/core": "dev-master"
-    },
-    "minimum-stability": "beta"
+        "cakephp/core": "~3.0"
+    }
 }

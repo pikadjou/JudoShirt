@@ -77,6 +77,24 @@ class BakeTask extends Shell
     }
 
     /**
+     * Get the prefix name.
+     *
+     * Handles camelcasing each namespace in the prefix path.
+     *
+     * @return string The inflected prefix path.
+     */
+    protected function _getPrefix()
+    {
+        $prefix = $this->param('prefix');
+        if (!$prefix) {
+            return '';
+        }
+        $parts = explode('/', $prefix);
+
+        return implode('/', array_map([$this, '_camelize'], $parts));
+    }
+
+    /**
      * Gets the path for output. Checks the plugin property
      * and returns the correct path.
      *
@@ -88,6 +106,11 @@ class BakeTask extends Shell
         if (isset($this->plugin)) {
             $path = $this->_pluginPath($this->plugin) . 'src/' . $this->pathFragment;
         }
+        $prefix = $this->_getPrefix();
+        if ($prefix) {
+            $path .= $prefix . DS;
+        }
+
         return str_replace('/', DS, $path);
     }
 
@@ -102,7 +125,9 @@ class BakeTask extends Shell
         if (isset($this->params['plugin'])) {
             $this->plugin = $this->params['plugin'];
             if (strpos($this->plugin, '\\')) {
-                return $this->error('Invalid plugin namespace separator, please use / instead of \ for plugins.');
+                $this->abort('Invalid plugin namespace separator, please use / instead of \ for plugins.');
+
+                return;
             }
         }
         if (isset($this->params['connection'])) {
@@ -131,8 +156,9 @@ class BakeTask extends Shell
             $pipes
         );
         if (!is_resource($process)) {
-            $this->error('Could not start subprocess.');
-            return false;
+            $this->abort('Could not start subprocess.');
+
+            return;
         }
         fclose($pipes[0]);
 
@@ -143,7 +169,7 @@ class BakeTask extends Shell
         fclose($pipes[2]);
         $exit = proc_close($process);
 
-        if ($exit != 0) {
+        if ($exit !== 0) {
             throw new \RuntimeException($error);
         }
 
@@ -164,6 +190,7 @@ class BakeTask extends Shell
             list($plugin, $name) = pluginSplit($name);
             $this->plugin = $this->params['plugin'] = $plugin;
         }
+
         return $name;
     }
 

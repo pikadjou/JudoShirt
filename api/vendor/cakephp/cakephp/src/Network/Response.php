@@ -16,7 +16,10 @@ namespace Cake\Network;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
+use Cake\Log\Log;
 use Cake\Network\Exception\NotFoundException;
+use DateTime;
+use DateTimeZone;
 use InvalidArgumentException;
 
 /**
@@ -24,7 +27,6 @@ use InvalidArgumentException;
  *
  * By default controllers will use this class to render their response. If you are going to use
  * a custom response class it should subclass this object in order to ensure compatibility.
- *
  */
 class Response
 {
@@ -69,6 +71,9 @@ class Response
         415 => 'Unsupported Media Type',
         416 => 'Requested range not satisfiable',
         417 => 'Expectation Failed',
+        422 => 'Unprocessable Entity',
+        429 => 'Too Many Requests',
+        451 => 'Unavailable For Legal Reasons',
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         502 => 'Bad Gateway',
@@ -86,6 +91,8 @@ class Response
         'html' => ['text/html', '*/*'],
         'json' => 'application/json',
         'xml' => ['application/xml', 'text/xml'],
+        'xhtml' => ['application/xhtml+xml', 'application/xhtml', 'text/xhtml'],
+        'webp' => 'image/webp',
         'rss' => 'application/rss+xml',
         'ai' => 'application/postscript',
         'bcpio' => 'application/x-bcpio',
@@ -122,6 +129,7 @@ class Response
         'ips' => 'application/x-ipscript',
         'ipx' => 'application/x-ipix',
         'js' => 'application/javascript',
+        'jsonapi' => 'application/vnd.api+json',
         'latex' => 'application/x-latex',
         'lha' => 'application/octet-stream',
         'lsp' => 'application/x-lisp',
@@ -264,6 +272,7 @@ class Response
         'xbm' => 'image/x-xbitmap',
         'xpm' => 'image/x-xpixmap',
         'xwd' => 'image/x-xwindowdump',
+        'psd' => ['application/photoshop', 'application/psd', 'image/psd', 'image/x-photoshop', 'image/photoshop', 'zz-application/zz-winassoc-psd'],
         'ice' => 'x-conference/x-cooltalk',
         'iges' => 'model/iges',
         'igs' => 'model/iges',
@@ -278,7 +287,6 @@ class Response
         'javascript' => 'application/javascript',
         'form' => 'application/x-www-form-urlencoded',
         'file' => 'multipart/form-data',
-        'xhtml' => ['application/xhtml+xml', 'application/xhtml', 'text/xhtml'],
         'xhtml-mobile' => 'application/vnd.wap.xhtml+xml',
         'atom' => 'application/atom+xml',
         'amf' => 'application/x-amf',
@@ -287,7 +295,6 @@ class Response
         'wmlscript' => 'text/vnd.wap.wmlscript',
         'wbmp' => 'image/vnd.wap.wbmp',
         'woff' => 'application/x-font-woff',
-        'webp' => 'image/webp',
         'appcache' => 'text/cache-manifest',
         'manifest' => 'text/cache-manifest',
         'htc' => 'text/x-component',
@@ -322,7 +329,7 @@ class Response
      * Content type to send. This can be an 'extension' that will be transformed using the $_mimetypes array
      * or a complete mime-type
      *
-     * @var int
+     * @var string
      */
     protected $_contentType = 'text/html';
 
@@ -334,16 +341,16 @@ class Response
     protected $_headers = [];
 
     /**
-     * Buffer string for response message
+     * Buffer string or callable for response message
      *
-     * @var string
+     * @var string|callable
      */
     protected $_body = null;
 
     /**
      * File object for file to be read out as response
      *
-     * @var File
+     * @var \Cake\Filesystem\File
      */
     protected $_file = null;
 
@@ -440,7 +447,10 @@ class Response
      */
     public function sendHeaders()
     {
-        if (headers_sent()) {
+        $file = $line = null;
+        if (headers_sent($file, $line)) {
+            Log::warning("Headers already sent in {$file}:{$line}");
+
             return;
         }
 
@@ -538,11 +548,19 @@ class Response
     /**
      * Sends a content string to the client.
      *
-     * @param string $content string to send as response body
+     * If the content is a callable, it is invoked. The callable should either
+     * return a string or output content directly and have no return value.
+     *
+     * @param string|callable $content String to send as response body or callable
+     *  which returns/outputs content.
      * @return void
      */
     protected function _sendContent($content)
     {
+        if (!is_string($content) && is_callable($content)) {
+            $content = $content();
+        }
+
         echo $content;
     }
 
@@ -551,21 +569,35 @@ class Response
      * Returns the complete list of buffered headers
      *
      * ### Single header
-     * e.g `header('Location', 'http://example.com');`
+     * ```
+     * header('Location', 'http://example.com');
+     * ```
      *
      * ### Multiple headers
-     * e.g `header(['Location' => 'http://example.com', 'X-Extra' => 'My header']);`
+     * ```
+     * header(['Location' => 'http://example.com', 'X-Extra' => 'My header']);
+     * ```
      *
      * ### String header
-     * e.g `header('WWW-Authenticate: Negotiate');`
+     * ```
+     * header('WWW-Authenticate: Negotiate');
+     * ```
      *
      * ### Array of string headers
-     * e.g `header(['WWW-Authenticate: Negotiate', 'Content-type: application/pdf']);`
+     * ```
+     * header(['WWW-Authenticate: Negotiate', 'Content-type: application/pdf']);
+     * ```
      *
      * Multiple calls for setting the same header name will have the same effect as setting the header once
      * with the last value sent for it
-     *  e.g `header('WWW-Authenticate: Negotiate'); header('WWW-Authenticate: Not-Negotiate');`
-     * will have the same effect as only doing `header('WWW-Authenticate: Not-Negotiate');`
+     * ```
+     * header('WWW-Authenticate: Negotiate');
+     * header('WWW-Authenticate: Not-Negotiate');
+     * ```
+     * will have the same effect as only doing
+     * ```
+     * header('WWW-Authenticate: Not-Negotiate');
+     * ```
      *
      * @param string|array|null $header An array of header strings or a single header string
      *  - an associative array of "header name" => "header value" is also accepted
@@ -588,6 +620,7 @@ class Response
             }
             $this->_headers[$header] = is_array($value) ? array_map('trim', $value) : trim($value);
         }
+
         return $this->_headers;
     }
 
@@ -604,9 +637,11 @@ class Response
     {
         if ($url === null) {
             $headers = $this->header();
+
             return isset($headers['Location']) ? $headers['Location'] : null;
         }
         $this->header('Location', $url);
+
         return null;
     }
 
@@ -614,7 +649,7 @@ class Response
      * Buffers the response message to be sent
      * if $content is null the current buffer is returned
      *
-     * @param string|null $content the string message to be sent
+     * @param string|callable|null $content the string or callable message to be sent
      * @return string Current message buffer if $content param is passed as null
      */
     public function body($content = null)
@@ -622,6 +657,7 @@ class Response
         if ($content === null) {
             return $this->_body;
         }
+
         return $this->_body = $content;
     }
 
@@ -641,6 +677,7 @@ class Response
         if (!isset($this->_statusCodes[$code])) {
             throw new InvalidArgumentException('Unknown status code');
         }
+
         return $this->_status = $code;
     }
 
@@ -687,11 +724,13 @@ class Response
                 throw new InvalidArgumentException('Invalid status code');
             }
             $this->_statusCodes = $code + $this->_statusCodes;
+
             return true;
         }
         if (!isset($this->_statusCodes[$code])) {
             return null;
         }
+
         return [$code => $this->_statusCodes[$code]];
     }
 
@@ -703,19 +742,27 @@ class Response
      *
      * ### Setting the content type
      *
-     * e.g `type('jpg');`
+     * ```
+     * type('jpg');
+     * ```
      *
      * ### Returning the current content type
      *
-     * e.g `type();`
+     * ```
+     * type();
+     * ```
      *
      * ### Storing content type definitions
      *
-     * e.g `type(['keynote' => 'application/keynote', 'bat' => 'application/bat']);`
+     * ```
+     * type(['keynote' => 'application/keynote', 'bat' => 'application/bat']);
+     * ```
      *
      * ### Replacing a content type definition
      *
-     * e.g `type(['jpg' => 'text/plain']);`
+     * ```
+     * type(['jpg' => 'text/plain']);
+     * ```
      *
      * @param string|null $contentType Content type key.
      * @return mixed Current content type or false if supplied an invalid content type
@@ -729,6 +776,7 @@ class Response
             foreach ($contentType as $type => $definition) {
                 $this->_mimeTypes[$type] = $definition;
             }
+
             return $this->_contentType;
         }
         if (isset($this->_mimeTypes[$contentType])) {
@@ -738,6 +786,7 @@ class Response
         if (strpos($contentType, '/') === false) {
             return false;
         }
+
         return $this->_contentType = $contentType;
     }
 
@@ -754,6 +803,7 @@ class Response
         if (isset($this->_mimeTypes[$alias])) {
             return $this->_mimeTypes[$alias];
         }
+
         return false;
     }
 
@@ -763,7 +813,7 @@ class Response
      * e.g `mapType('application/pdf'); // returns 'pdf'`
      *
      * @param string|array $ctype Either a string content type to map, or an array of types.
-     * @return mixed Aliases for the types provided.
+     * @return string|array|null Aliases for the types provided.
      */
     public function mapType($ctype)
     {
@@ -776,6 +826,7 @@ class Response
                 return $alias;
             }
         }
+
         return null;
     }
 
@@ -791,6 +842,7 @@ class Response
         if ($charset === null) {
             return $this->_charset;
         }
+
         return $this->_charset = $charset;
     }
 
@@ -849,7 +901,8 @@ class Response
             if (!$public && !$private && !$noCache) {
                 return null;
             }
-            $sharable = $public || ! ($private || $noCache);
+            $sharable = $public || !($private || $noCache);
+
             return $sharable;
         }
         if ($public) {
@@ -864,6 +917,7 @@ class Response
         if (!$time) {
             $this->_setCacheControl();
         }
+
         return (bool)$public;
     }
 
@@ -885,6 +939,7 @@ class Response
         if (isset($this->_cacheDirectives['s-maxage'])) {
             return $this->_cacheDirectives['s-maxage'];
         }
+
         return null;
     }
 
@@ -906,6 +961,7 @@ class Response
         if (isset($this->_cacheDirectives['max-age'])) {
             return $this->_cacheDirectives['max-age'];
         }
+
         return null;
     }
 
@@ -930,6 +986,7 @@ class Response
             }
             $this->_setCacheControl();
         }
+
         return array_key_exists('must-revalidate', $this->_cacheDirectives);
     }
 
@@ -972,6 +1029,7 @@ class Response
         if (isset($this->_headers['Expires'])) {
             return $this->_headers['Expires'];
         }
+
         return null;
     }
 
@@ -997,6 +1055,7 @@ class Response
         if (isset($this->_headers['Last-Modified'])) {
             return $this->_headers['Last-Modified'];
         }
+
         return null;
     }
 
@@ -1044,6 +1103,7 @@ class Response
         if (isset($this->_headers['Vary'])) {
             return explode(', ', $this->_headers['Vary']);
         }
+
         return null;
     }
 
@@ -1076,6 +1136,7 @@ class Response
         if (isset($this->_headers['Etag'])) {
             return $this->_headers['Etag'];
         }
+
         return null;
     }
 
@@ -1088,14 +1149,15 @@ class Response
      */
     protected function _getUTCDate($time = null)
     {
-        if ($time instanceof \DateTime) {
+        if ($time instanceof DateTime) {
             $result = clone $time;
         } elseif (is_int($time)) {
-            $result = new \DateTime(date('Y-m-d H:i:s', $time));
+            $result = new DateTime(date('Y-m-d H:i:s', $time));
         } else {
-            $result = new \DateTime($time);
+            $result = new DateTime($time);
         }
-        $result->setTimeZone(new \DateTimeZone('UTC'));
+        $result->setTimeZone(new DateTimeZone('UTC'));
+
         return $result;
     }
 
@@ -1110,6 +1172,7 @@ class Response
         $compressionEnabled = ini_get("zlib.output_compression") !== '1' &&
             extension_loaded("zlib") &&
             (strpos(env('HTTP_ACCEPT_ENCODING'), 'gzip') !== false);
+
         return $compressionEnabled && ob_start('ob_gzhandler');
     }
 
@@ -1147,6 +1210,7 @@ class Response
         if ($protocol !== null) {
             $this->_protocol = $protocol;
         }
+
         return $this->_protocol;
     }
 
@@ -1165,6 +1229,7 @@ class Response
         if (isset($this->_headers['Content-Length'])) {
             return $this->_headers['Content-Length'];
         }
+
         return null;
     }
 
@@ -1199,17 +1264,23 @@ class Response
         if ($notModified) {
             $this->notModified();
         }
+
         return $notModified;
     }
 
     /**
      * String conversion. Fetches the response body as a string.
      * Does *not* send headers.
+     * If body is a callable, a blank string is returned.
      *
      * @return string
      */
     public function __toString()
     {
+        if (!is_string($this->_body) && is_callable($this->_body)) {
+            return '';
+        }
+
         return (string)$this->_body;
     }
 
@@ -1262,6 +1333,7 @@ class Response
             if (!isset($this->_cookies[$options])) {
                 return null;
             }
+
             return $this->_cookies[$options];
         }
 
@@ -1285,69 +1357,58 @@ class Response
      * This method allow multiple ways to setup the domains, see the examples
      *
      * ### Full URI
-     * e.g `cors($request, 'http://www.cakephp.org');`
+     * ```
+     * cors($request, 'http://www.cakephp.org');
+     * ```
      *
      * ### URI with wildcard
-     * e.g `cors($request, 'http://*.cakephp.org');`
+     * ```
+     * cors($request, 'http://*.cakephp.org');
+     * ```
      *
      * ### Ignoring the requested protocol
-     * e.g `cors($request, 'www.cakephp.org');`
+     * ```
+     * cors($request, 'www.cakephp.org');
+     * ```
      *
      * ### Any URI
-     * e.g `cors($request, '*');`
+     * ```
+     * cors($request, '*');
+     * ```
      *
      * ### Whitelist of URIs
-     * e.g `cors($request, ['http://www.cakephp.org', '*.google.com', 'https://myproject.github.io']);`
+     * ```
+     * cors($request, ['http://www.cakephp.org', '*.google.com', 'https://myproject.github.io']);
+     * ```
+     *
+     * *Note* The `$allowedDomains`, `$allowedMethods`, `$allowedHeaders` parameters are deprecated.
+     * Instead the builder object should be used.
      *
      * @param \Cake\Network\Request $request Request object
      * @param string|array $allowedDomains List of allowed domains, see method description for more details
      * @param string|array $allowedMethods List of HTTP verbs allowed
      * @param string|array $allowedHeaders List of HTTP headers allowed
-     * @return void
+     * @return \Cake\Network\CorsBuilder A builder object the provides a fluent interface for defining
+     *   additional CORS headers.
      */
-    public function cors(Request $request, $allowedDomains, $allowedMethods = [], $allowedHeaders = [])
+    public function cors(Request $request, $allowedDomains = [], $allowedMethods = [], $allowedHeaders = [])
     {
         $origin = $request->header('Origin');
+        $ssl = $request->is('ssl');
+        $builder = new CorsBuilder($this, $origin, $ssl);
         if (!$origin) {
-            return;
+            return $builder;
+        }
+        if (empty($allowedDomains) && empty($allowedMethods) && empty($allowedHeaders)) {
+            return $builder;
         }
 
-        $allowedDomains = $this->_normalizeCorsDomains((array)$allowedDomains, $request->is('ssl'));
-        foreach ($allowedDomains as $domain) {
-            if (!preg_match($domain['preg'], $origin)) {
-                continue;
-            }
-            $this->header('Access-Control-Allow-Origin', $domain['original'] === '*' ? '*' : $origin);
-            $allowedMethods && $this->header('Access-Control-Allow-Methods', implode(', ', (array)$allowedMethods));
-            $allowedHeaders && $this->header('Access-Control-Allow-Headers', implode(', ', (array)$allowedHeaders));
-            break;
-        }
-    }
+        $builder->allowOrigin($allowedDomains)
+            ->allowMethods((array)$allowedMethods)
+            ->allowHeaders((array)$allowedHeaders)
+            ->build();
 
-    /**
-     * Normalize the origin to regular expressions and put in an array format
-     *
-     * @param array $domains Domain names to normalize.
-     * @param bool $requestIsSSL Whether it's a SSL request.
-     * @return array
-     */
-    protected function _normalizeCorsDomains($domains, $requestIsSSL = false)
-    {
-        $result = [];
-        foreach ($domains as $domain) {
-            if ($domain === '*') {
-                $result[] = ['preg' => '@.@', 'original' => '*'];
-                continue;
-            }
-
-            $original = $preg = $domain;
-            if (strpos($domain, '://') === false) {
-                $preg = ($requestIsSSL ? 'https://' : 'http://') . $domain;
-            }
-            $preg = '@' . str_replace('*', '.*', $domain) . '@';
-            $result[] = compact('original', 'preg');
-        }
-        return $result;
+        return $builder;
     }
 
     /**
@@ -1374,7 +1435,7 @@ class Response
             'download' => null
         ];
 
-        if (strpos($path, '..') !== false) {
+        if (strpos($path, '../') !== false || strpos($path, '..\\') !== false) {
             throw new NotFoundException('The requested file contains `..` and will not be read.');
         }
 
@@ -1426,8 +1487,17 @@ class Response
             $this->header('Content-Length', $fileSize);
         }
 
-        $this->_clearBuffer();
         $this->_file = $file;
+    }
+
+    /**
+     * Get the current file if one exists.
+     *
+     * @return \Cake\Filesystem\File|null The file to use in the response or null
+     */
+    public function getFile()
+    {
+        return $this->_file;
     }
 
     /**
@@ -1436,17 +1506,22 @@ class Response
      * If an invalid range is requested a 416 Status code will be used
      * in the response.
      *
-     * @param File $file The file to set a range on.
+     * @param \Cake\Filesystem\File $file The file to set a range on.
      * @param string $httpRange The range to use.
      * @return void
      */
     protected function _fileRange($file, $httpRange)
     {
-        list(, $range) = explode('=', $httpRange);
-        list($start, $end) = explode('-', $range);
-
         $fileSize = $file->size();
         $lastByte = $fileSize - 1;
+        $start = 0;
+        $end = $lastByte;
+
+        preg_match('/^bytes\s*=\s*(\d+)?\s*-\s*(\d+)?$/', $httpRange, $matches);
+        if ($matches) {
+            $start = $matches[1];
+            $end = isset($matches[2]) ? $matches[2] : '';
+        }
 
         if ($start === '') {
             $start = $fileSize - $end;
@@ -1461,6 +1536,7 @@ class Response
             $this->header([
                 'Content-Range' => 'bytes 0-' . $lastByte . '/' . $fileSize
             ]);
+
             return;
         }
 
@@ -1476,13 +1552,15 @@ class Response
     /**
      * Reads out a file, and echos the content to the client.
      *
-     * @param File $file File object
+     * @param \Cake\Filesystem\File $file File object
      * @param array $range The range to read out of the file.
      * @return bool True is whole file is echoed successfully or false if client connection is lost in between
      */
     protected function _sendFile($file, $range)
     {
         $compress = $this->outputCompressed();
+        ob_implicit_flush(true);
+
         $file->open('rb');
 
         $end = $start = false;
@@ -1499,6 +1577,7 @@ class Response
         while (!feof($file->handle)) {
             if (!$this->_isActive()) {
                 $file->close();
+
                 return false;
             }
             $offset = $file->offset();
@@ -1509,11 +1588,9 @@ class Response
                 $bufferSize = $end - $offset + 1;
             }
             echo fread($file->handle, $bufferSize);
-            if (!$compress) {
-                $this->_flushBuffer();
-            }
         }
         $file->close();
+
         return true;
     }
 
@@ -1531,6 +1608,7 @@ class Response
      * Clears the contents of the topmost output buffer and discards them
      *
      * @return bool
+     * @deprecated 3.2.4 This function is not needed anymore
      */
     protected function _clearBuffer()
     {
@@ -1543,6 +1621,7 @@ class Response
      * Flushes the contents of the output buffer
      *
      * @return void
+     * @deprecated 3.2.4 This function is not needed anymore
      */
     protected function _flushBuffer()
     {

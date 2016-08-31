@@ -53,14 +53,22 @@ class BakeView extends View
             '?>' => "CakePHPBakeCloseTag>"
         ],
         'replacements' => [
-            '/\n[ \t]+<%- /' => "\n<% ",
-            '/-%>[ \t]+\n/' => "%>\n",
+            '/\n[ \t]+<%-( |$)/' => "\n<% ",
+            '/-%>/' => "?>",
             '/<%=(.*)\%>\n(.)/' => "<%=$1%>\n\n$2",
             '<%=' => '<?=',
             '<%' => '<?php',
             '%>' => '?>'
         ]
     ];
+
+    /**
+     * Path where bake's intermediary files are written.
+     * Defaults to `TMP . 'bake' . DS`.
+     *
+     * @var string
+     */
+    protected $_tmpLocation;
 
     /**
      * Upon construction, append the plugin's template paths to the paths to check
@@ -85,6 +93,11 @@ class BakeView extends View
         if (!in_array($bakeTemplates, $paths)) {
             $paths[] = $bakeTemplates;
             Configure::write('App.paths.templates', $paths);
+        }
+
+        $this->_tmpLocation = TMP . 'bake' . DS;
+        if (!file_exists($this->_tmpLocation)) {
+            mkdir($this->_tmpLocation);
         }
     }
 
@@ -111,11 +124,18 @@ class BakeView extends View
     public function render($view = null, $layout = null)
     {
         $viewFileName = $this->_getViewFileName($view);
+        $templateEventName = str_replace(
+            ['.ctp', DS],
+            ['', '.'],
+            explode('Template' . DS . 'Bake' . DS, $viewFileName)[1]
+        );
 
-        $this->_currentType = static::TYPE_VIEW;
+        $this->_currentType = static::TYPE_TEMPLATE;
         $this->dispatchEvent('View.beforeRender', [$viewFileName]);
+        $this->dispatchEvent('View.beforeRender.' . $templateEventName, [$viewFileName]);
         $this->Blocks->set('content', $this->_render($viewFileName));
         $this->dispatchEvent('View.afterRender', [$viewFileName]);
+        $this->dispatchEvent('View.afterRender.' . $templateEventName, [$viewFileName]);
 
         if ($layout === null) {
             $layout = $this->layout;
@@ -143,7 +163,8 @@ class BakeView extends View
      */
     public function dispatchEvent($name, $data = null, $subject = null)
     {
-        $name = str_replace('View.', 'Bake.', $name);
+        $name = preg_replace('/^View\./', 'Bake.', $name);
+
         return parent::dispatchEvent($name, $data, $subject);
     }
 
@@ -169,7 +190,7 @@ class BakeView extends View
             }
         }
 
-        $this->__viewFile = TMP . Inflector::slug(preg_replace('@.*Template[/\\\\]@', '', $viewFile)) . '.php';
+        $this->__viewFile = $this->_tmpLocation . Inflector::slug(preg_replace('@.*Template[/\\\\]@', '', $viewFile)) . '.php';
         file_put_contents($this->__viewFile, $viewString);
 
         unset($viewFile, $viewString, $replacements, $find, $replace);
@@ -181,6 +202,7 @@ class BakeView extends View
         $content = ob_get_clean();
 
         $unPhp = $this->config('phpTagReplacements');
+
         return str_replace(array_values($unPhp), array_keys($unPhp), $content);
     }
 
@@ -208,6 +230,7 @@ class BakeView extends View
         foreach ($paths as &$path) {
             $path .= 'Bake' . DS;
         }
+
         return $paths;
     }
 

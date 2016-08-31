@@ -14,10 +14,10 @@
  */
 namespace Cake\ORM;
 
-use Cake\ORM\Association;
-use Cake\ORM\AssociationsNormalizerTrait;
-use Cake\ORM\Entity;
-use Cake\ORM\Table;
+use ArrayIterator;
+use Cake\Datasource\EntityInterface;
+use InvalidArgumentException;
+use IteratorAggregate;
 
 /**
  * A container/collection for association classes.
@@ -25,7 +25,7 @@ use Cake\ORM\Table;
  * Contains methods for managing associations, and
  * ordering operations around saving and deleting.
  */
-class AssociationCollection
+class AssociationCollection implements IteratorAggregate
 {
 
     use AssociationsNormalizerTrait;
@@ -50,6 +50,7 @@ class AssociationCollection
     public function add($alias, Association $association)
     {
         list(, $alias) = pluginSplit($alias);
+
         return $this->_items[strtolower($alias)] = $association;
     }
 
@@ -65,6 +66,7 @@ class AssociationCollection
         if (isset($this->_items[$alias])) {
             return $this->_items[$alias];
         }
+
         return null;
     }
 
@@ -81,6 +83,7 @@ class AssociationCollection
                 return $assoc;
             }
         }
+
         return null;
     }
 
@@ -108,15 +111,20 @@ class AssociationCollection
     /**
      * Get an array of associations matching a specific type.
      *
-     * @param string $class The type of associations you want. For example 'BelongsTo'
+     * @param string|array $class The type of associations you want.
+     *   For example 'BelongsTo' or array like ['BelongsTo', 'HasOne']
      * @return array An array of Association objects.
      */
     public function type($class)
     {
+        $class = array_map('strtolower', (array)$class);
+
         $out = array_filter($this->_items, function ($assoc) use ($class) {
             list(, $name) = namespaceSplit(get_class($assoc));
-            return $class === $name;
+
+            return in_array(strtolower($name), $class, true);
         });
+
         return array_values($out);
     }
 
@@ -154,17 +162,18 @@ class AssociationCollection
      * is the owning side.
      *
      * @param \Cake\ORM\Table $table The table entity is for.
-     * @param \Cake\ORM\Entity $entity The entity to save associated data for.
+     * @param \Cake\Datasource\EntityInterface $entity The entity to save associated data for.
      * @param array $associations The list of associations to save parents from.
      *   associations not in this list will not be saved.
      * @param array $options The options for the save operation.
      * @return bool Success
      */
-    public function saveParents(Table $table, Entity $entity, $associations, array $options = [])
+    public function saveParents(Table $table, EntityInterface $entity, $associations, array $options = [])
     {
         if (empty($associations)) {
             return true;
         }
+
         return $this->_saveAssociations($table, $entity, $associations, $options, false);
     }
 
@@ -175,17 +184,18 @@ class AssociationCollection
      * is not the owning side.
      *
      * @param \Cake\ORM\Table $table The table entity is for.
-     * @param \Cake\ORM\Entity $entity The entity to save associated data for.
+     * @param \Cake\Datasource\EntityInterface $entity The entity to save associated data for.
      * @param array $associations The list of associations to save children from.
      *   associations not in this list will not be saved.
      * @param array $options The options for the save operation.
      * @return bool Success
      */
-    public function saveChildren(Table $table, Entity $entity, array $associations, array $options)
+    public function saveChildren(Table $table, EntityInterface $entity, array $associations, array $options)
     {
         if (empty($associations)) {
             return true;
         }
+
         return $this->_saveAssociations($table, $entity, $associations, $options, true);
     }
 
@@ -193,7 +203,7 @@ class AssociationCollection
      * Helper method for saving an association's data.
      *
      * @param \Cake\ORM\Table $table The table the save is currently operating on
-     * @param \Cake\ORM\Entity $entity The entity to save
+     * @param \Cake\Datasource\EntityInterface $entity The entity to save
      * @param array $associations Array of associations to save.
      * @param array $options Original options
      * @param bool $owningSide Compared with association classes'
@@ -216,7 +226,7 @@ class AssociationCollection
                     $alias,
                     $table->alias()
                 );
-                throw new \InvalidArgumentException($msg);
+                throw new InvalidArgumentException($msg);
             }
             if ($relation->isOwningSide($table) !== $owningSide) {
                 continue;
@@ -225,6 +235,7 @@ class AssociationCollection
                 return false;
             }
         }
+
         return true;
     }
 
@@ -232,7 +243,7 @@ class AssociationCollection
      * Helper method for saving an association's data.
      *
      * @param \Cake\ORM\Association $association The association object to save with.
-     * @param \Cake\ORM\Entity $entity The entity to save
+     * @param \Cake\Datasource\EntityInterface $entity The entity to save
      * @param array $nested Options for deeper associations
      * @param array $options Original options
      * @return bool Success
@@ -245,19 +256,29 @@ class AssociationCollection
         if (!empty($nested)) {
             $options = (array)$nested + $options;
         }
+
         return (bool)$association->saveAssociated($entity, $options);
     }
 
     /**
      * Cascade a delete across the various associations.
+     * Cascade first across associations for which cascadeCallbacks is true.
      *
-     * @param \Cake\ORM\Entity $entity The entity to delete associations for.
+     * @param \Cake\Datasource\EntityInterface $entity The entity to delete associations for.
      * @param array $options The options used in the delete operation.
      * @return void
      */
-    public function cascadeDelete(Entity $entity, array $options)
+    public function cascadeDelete(EntityInterface $entity, array $options)
     {
+        $noCascade = [];
         foreach ($this->_items as $assoc) {
+            if (!$assoc->cascadeCallbacks()) {
+                $noCascade[] = $assoc;
+                continue;
+            }
+            $assoc->cascadeDelete($entity, $options);
+        }
+        foreach ($noCascade as $assoc) {
             $assoc->cascadeDelete($entity, $options);
         }
     }
@@ -281,5 +302,15 @@ class AssociationCollection
         }
 
         return $this->_normalizeAssociations($keys);
+    }
+
+    /**
+     * Allow looping through the associations
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->_items);
     }
 }

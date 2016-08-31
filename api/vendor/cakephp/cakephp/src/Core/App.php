@@ -14,8 +14,6 @@
  */
 namespace Cake\Core;
 
-use Cake\Core\Plugin;
-
 /**
  * App is responsible for resource location, and path management.
  *
@@ -59,13 +57,8 @@ class App
         }
 
         list($plugin, $name) = pluginSplit($class);
-        if ($plugin) {
-            $base = $plugin;
-        } else {
-            $base = Configure::read('App.namespace');
-        }
+        $base = $plugin ?: Configure::read('App.namespace');
         $base = str_replace('/', '\\', rtrim($base, '\\'));
-
         $fullname = '\\' . str_replace('/', '\\', $type . '\\' . $name) . $suffix;
 
         if (static::_classExistsInBase($fullname, $base)) {
@@ -77,7 +70,72 @@ class App
         if (static::_classExistsInBase($fullname, 'Cake')) {
             return 'Cake' . $fullname;
         }
+
         return false;
+    }
+
+    /**
+     * Returns the plugin split name of a class
+     *
+     * Examples:
+     *
+     * ```
+     * App::shortName(
+     *     'SomeVendor\SomePlugin\Controller\Component\TestComponent',
+     *     'Controller/Component',
+     *     'Component'
+     * )
+     * ```
+     *
+     * Returns: SomeVendor/SomePlugin.Test
+     *
+     * ```
+     * App::shortName(
+     *     'SomeVendor\SomePlugin\Controller\Component\Subfolder\TestComponent',
+     *     'Controller/Component',
+     *     'Component'
+     * )
+     * ```
+     *
+     * Returns: SomeVendor/SomePlugin.Subfolder/Test
+     *
+     * ```
+     * App::shortName(
+     *     'Cake\Controller\Component\AuthComponent',
+     *     'Controller/Component',
+     *     'Component'
+     * )
+     * ```
+     *
+     * Returns: Auth
+     *
+     * @param string $class Class name
+     * @param string $type Type of class
+     * @param string $suffix Class name suffix
+     * @return string Plugin split name of class
+     */
+    public static function shortName($class, $type, $suffix = '')
+    {
+        $class = str_replace('\\', '/', $class);
+        $type = '/' . $type . '/';
+
+        $pos = strrpos($class, $type);
+        $pluginName = substr($class, 0, $pos);
+        $name = substr($class, $pos + strlen($type));
+
+        if ($suffix) {
+            $name = substr($name, 0, -strlen($suffix));
+        }
+
+        $nonPluginNamespaces = [
+            'Cake',
+            str_replace('\\', '/', Configure::read('App.namespace'))
+        ];
+        if (in_array($pluginName, $nonPluginNamespaces)) {
+            return $name;
+        }
+
+        return $pluginName . '.' . $name;
     }
 
     /**
@@ -99,17 +157,21 @@ class App
      *
      * Usage:
      *
-     * `App::path('Plugin');`
+     * ```
+     * App::path('Plugin');
+     * ```
      *
      * Will return the configured paths for plugins. This is a simpler way to access
      * the `App.paths.plugins` configure variable.
      *
-     * `App::path('Model/Datasource', 'MyPlugin');`
+     * ```
+     * App::path('Model/Datasource', 'MyPlugin');
+     * ```
      *
      * Will return the path for datasources under the 'MyPlugin' plugin.
      *
      * @param string $type type of path
-     * @param string $plugin name of plugin
+     * @param string|null $plugin name of plugin
      * @return array
      * @link http://book.cakephp.org/3.0/en/core-libraries/app.html#finding-paths-to-namespaces
      */
@@ -125,9 +187,10 @@ class App
             return (array)Configure::read('App.paths.templates');
         }
         if (!empty($plugin)) {
-            return [Plugin::classPath($plugin) . $type . DS];
+            return [Plugin::classPath($plugin) . $type . DIRECTORY_SEPARATOR];
         }
-        return [APP . $type . DS];
+
+        return [APP . $type . DIRECTORY_SEPARATOR];
     }
 
     /**
@@ -135,7 +198,9 @@ class App
      *
      * Usage:
      *
-     * `App::core('Cache/Engine');`
+     * ```
+     * App::core('Cache/Engine');
+     * ```
      *
      * Will return the full path to the cache engines package.
      *
@@ -144,6 +209,6 @@ class App
      */
     public static function core($type)
     {
-        return [CAKE . str_replace('/', DS, $type) . DS];
+        return [CAKE . str_replace('/', DIRECTORY_SEPARATOR, $type) . DIRECTORY_SEPARATOR];
     }
 }

@@ -17,12 +17,11 @@ use Cake\Core\Configure;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Network\Session;
-use Cake\Routing\DispatcherFactory;
-use Cake\Routing\Router;
 
 /**
  * Provides the requestAction() method for doing sub-requests
  *
+ * @deprecated 3.3.0 Use view cells instead.
  */
 trait RequestActionTrait
 {
@@ -63,7 +62,7 @@ trait RequestActionTrait
      *
      * ```
      * $vars = $this->requestAction('/articles/popular', [
-     *   'query' => ['page' = > 1],
+     *   'query' => ['page' => 1],
      *   'cookies' => ['remember_me' => 1],
      * ]);
      * ```
@@ -96,6 +95,7 @@ trait RequestActionTrait
      *    also be used to submit GET/POST data, and passed arguments.
      * @return mixed Boolean true or false on success/failure, or contents
      *    of rendered action if 'return' is set in $extra.
+     * @deprecated 3.3.0 You should refactor your code to use View Cells instead of this method.
      */
     public function requestAction($url, array $extra = [])
     {
@@ -118,14 +118,20 @@ trait RequestActionTrait
                 'url' => $url
             ];
         } elseif (is_array($url)) {
+            $defaultParams = ['plugin' => null, 'controller' => null, 'action' => null];
             $params = [
-                'params' => $url,
+                'params' => $url + $defaultParams,
                 'base' => false,
                 'url' => Router::reverse($url)
             ];
             if (empty($params['params']['pass'])) {
                 $params['params']['pass'] = [];
             }
+        }
+        $current = Router::getRequest();
+        if ($current) {
+            $params['base'] = $current->base;
+            $params['webroot'] = $current->webroot;
         }
 
         $params['post'] = $params['query'] = [];
@@ -134,6 +140,9 @@ trait RequestActionTrait
         }
         if (isset($extra['query'])) {
             $params['query'] = $extra['query'];
+        }
+        if (isset($extra['cookies'])) {
+            $params['cookies'] = $extra['cookies'];
         }
         if (isset($extra['environment'])) {
             $params['environment'] = $extra['environment'] + $_SERVER + $_ENV;
@@ -147,6 +156,7 @@ trait RequestActionTrait
         $dispatcher = DispatcherFactory::create();
         $result = $dispatcher->dispatch($request, new Response());
         Router::popRequest();
+
         return $result;
     }
 }

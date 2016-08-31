@@ -49,7 +49,8 @@ class AppController extends Controller
     
     function beforeFilter(Event $event) {
         if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
-            $this->layout = 'admin';
+            $this->viewBuilder()->layout('admin');
+//            $this->layout = 'admin';
         }
     }
 

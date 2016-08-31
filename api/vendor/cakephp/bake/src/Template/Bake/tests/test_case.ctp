@@ -42,6 +42,17 @@ class <%= $className %>Test extends IntegrationTestCase
 class <%= $className %>Test extends TestCase
 {
 <% endif; %>
+<% if (!empty($properties)): %>
+<% foreach ($properties as $propertyInfo): %>
+
+    /**
+     * <%= $propertyInfo['description'] %>
+     *
+     * @var <%= $propertyInfo['type'] %>
+     */
+    public $<%= $propertyInfo['name'] %><% if (isset($propertyInfo['value'])): %> = <%= $propertyInfo['value'] %><% endif; %>;
+<% endforeach; %>
+<% endif; %>
 <% if (!empty($fixtures)): %>
 
     /**
@@ -49,7 +60,7 @@ class <%= $className %>Test extends TestCase
      *
      * @var array
      */
-    public $fixtures = [<%= $this->Bake->stringifyList($fixtures) %>];
+    public $fixtures = [<%= $this->Bake->stringifyList(array_values($fixtures)) %>];
 <% endif; %>
 <% if (!empty($construction)): %>
 

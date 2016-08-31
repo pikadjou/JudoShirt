@@ -17,7 +17,7 @@ use Bake\Shell\Task\SimpleBakeTask;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Plugin;
 use Cake\Utility\Inflector;
-use Phinx\Util\Util;
+use Phinx\Migration\Util;
 
 /**
  * Task class for generating migration snapshot files.
@@ -45,7 +45,7 @@ abstract class SimpleMigrationTask extends SimpleBakeTask
     public function fileName($name)
     {
         $name = $this->getMigrationName($name);
-        return Util::getCurrentTimestamp() . '_' . Inflector::camelize($name) . '.php';
+        return Util::mapClassNameToFileName($name);
     }
 
     /**
@@ -74,22 +74,20 @@ abstract class SimpleMigrationTask extends SimpleBakeTask
      *
      * If the name is invalid, the task will exit
      *
-     * @param string|null $name Name for the generated migration
-     * @return string|null Name of the migration file or null if empty
+     * @param string $name Name for the generated migration
+     * @return string name of the migration file
      */
     protected function getMigrationName($name = null)
     {
         if (empty($name)) {
-            $this->error('Choose a migration name to bake in CamelCase format');
-            return null;
+            return $this->error('Choose a migration name to bake in CamelCase format');
         }
 
         $name = $this->_getName($name);
         $name = Inflector::camelize($name);
 
         if (!preg_match('/^[A-Z]{1}[a-zA-Z0-9]+$/', $name)) {
-            $this->error('The className is not correct. The className can only contain "A-Z" and "0-9".');
-            return null;
+            return $this->error('The className is not correct. The className can only contain "A-Z" and "0-9".');
         }
 
         return $name;
@@ -112,6 +110,7 @@ abstract class SimpleMigrationTask extends SimpleBakeTask
                 $bakeThemes[] = $plugin;
             }
         }
+
 
         $parser->description(
             'Bake migration class.'

@@ -14,21 +14,22 @@
  */
 namespace Cake\Database;
 
+use Cake\Core\App;
 use Cake\Database\Exception\MissingConnectionException;
 use Cake\Database\Exception\MissingDriverException;
 use Cake\Database\Exception\MissingExtensionException;
 use Cake\Database\Log\LoggedQuery;
 use Cake\Database\Log\LoggingStatement;
 use Cake\Database\Log\QueryLogger;
-use Cake\Database\Query;
 use Cake\Database\Schema\CachedCollection;
 use Cake\Database\Schema\Collection as SchemaCollection;
-use Cake\Database\ValueBinder;
+use Cake\Datasource\ConnectionInterface;
+use Exception;
 
 /**
  * Represents a connection with a database server.
  */
-class Connection
+class Connection implements ConnectionInterface
 {
 
     use TypeConverterTrait;
@@ -58,7 +59,7 @@ class Connection
     /**
      * Whether a transaction is active in this connection.
      *
-     * @var int
+     * @var bool
      */
     protected $_transactionStarted = false;
 
@@ -80,7 +81,7 @@ class Connection
     /**
      * Logger object instance.
      *
-     * @var QueryLogger
+     * @var \Cake\Database\Log\QueryLogger
      */
     protected $_logger = null;
 
@@ -122,9 +123,7 @@ class Connection
     }
 
     /**
-     * Get the configuration data used to create the connection.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function config()
     {
@@ -132,15 +131,14 @@ class Connection
     }
 
     /**
-     * Get the configuration name for this connection.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function configName()
     {
         if (empty($this->_config['name'])) {
             return '';
         }
+
         return $this->_config['name'];
     }
 
@@ -162,14 +160,16 @@ class Connection
             return $this->_driver;
         }
         if (is_string($driver)) {
-            if (!class_exists($driver)) {
+            $className = App::className($driver, 'Database/Driver');
+            if (!$className || !class_exists($className)) {
                 throw new MissingDriverException(['driver' => $driver]);
             }
-            $driver = new $driver($config);
+            $driver = new $className($config);
         }
         if (!$driver->enabled()) {
             throw new MissingExtensionException(['driver' => get_class($driver)]);
         }
+
         return $this->_driver = $driver;
     }
 
@@ -183,8 +183,9 @@ class Connection
     {
         try {
             $this->_driver->connect();
+
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new MissingConnectionException(['reason' => $e->getMessage()]);
         }
     }
@@ -237,13 +238,14 @@ class Connection
      */
     public function execute($query, array $params = [], array $types = [])
     {
-        if ($params) {
+        if (!empty($params)) {
             $statement = $this->prepare($query);
             $statement->bind($params, $types);
             $statement->execute();
         } else {
             $statement = $this->query($query);
         }
+
         return $statement;
     }
 
@@ -286,6 +288,7 @@ class Connection
     {
         $statement = $this->prepare($sql);
         $statement->execute();
+
         return $statement;
     }
 
@@ -325,7 +328,7 @@ class Connection
     /**
      * Executes an INSERT query on the specified table.
      *
-     * @param string $table the table to update values in
+     * @param string $table the table to insert values in
      * @param array $data values to be inserted
      * @param array $types list of associative array containing the types to be used for casting
      * @return \Cake\Database\StatementInterface
@@ -333,6 +336,7 @@ class Connection
     public function insert($table, array $data, array $types = [])
     {
         $columns = array_keys($data);
+
         return $this->newQuery()->insert($columns, $types)
             ->into($table)
             ->values($data)
@@ -342,7 +346,7 @@ class Connection
     /**
      * Executes an UPDATE statement on the specified table.
      *
-     * @param string $table the table to delete rows from
+     * @param string $table the table to update rows from
      * @param array $data values to be updated
      * @param array $conditions conditions to be set for update statement
      * @param array $types list of associative array containing the types to be used for casting
@@ -385,6 +389,7 @@ class Connection
             $this->_driver->beginTransaction();
             $this->_transactionLevel = 0;
             $this->_transactionStarted = true;
+
             return;
         }
 
@@ -410,6 +415,7 @@ class Connection
             if ($this->_logQueries) {
                 $this->log('COMMIT');
             }
+
             return $this->_driver->commitTransaction();
         }
         if ($this->useSavePoints()) {
@@ -417,6 +423,7 @@ class Connection
         }
 
         $this->_transactionLevel--;
+
         return true;
     }
 
@@ -439,12 +446,14 @@ class Connection
                 $this->log('ROLLBACK');
             }
             $this->_driver->rollbackTransaction();
+
             return true;
         }
 
         if ($useSavePoint) {
             $this->rollbackSavepoint($this->_transactionLevel--);
         }
+
         return true;
     }
 
@@ -532,13 +541,18 @@ class Connection
     }
 
     /**
-     * Executes a callable function inside a transaction, if any exception occurs
-     * while executing the passed callable, the transaction will be rolled back
-     * If the result of the callable function is ``false``, the transaction will
-     * also be rolled back. Otherwise the transaction is committed after executing
-     * the callback.
+     * Returns whether the driver supports adding or dropping constraints
+     * to already created tables.
      *
-     * The callback will receive the connection instance as its first argument.
+     * @return bool true if driver supports dynamic constraints
+     */
+    public function supportsDynamicConstraints()
+    {
+        return $this->_driver->supportsDynamicConstraints();
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * ### Example:
      *
@@ -547,11 +561,6 @@ class Connection
      *   $connection->newQuery()->delete('users')->execute();
      * });
      * ```
-     *
-     * @param callable $callback the code to be executed inside a transaction
-     * @return mixed result from the $callback function
-     * @throws \Exception Will re-throw any exception raised in $callback after
-     *   rolling back the transaction.
      */
     public function transactional(callable $callback)
     {
@@ -559,24 +568,53 @@ class Connection
 
         try {
             $result = $callback($this);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->rollback();
             throw $e;
         }
 
         if ($result === false) {
             $this->rollback();
+
             return false;
         }
 
         $this->commit();
+
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * ### Example:
+     *
+     * ```
+     * $connection->disableConstraints(function ($connection) {
+     *   $connection->newQuery()->delete('users')->execute();
+     * });
+     * ```
+     */
+    public function disableConstraints(callable $callback)
+    {
+        $this->disableForeignKeys();
+
+        try {
+            $result = $callback($this);
+        } catch (Exception $e) {
+            $this->enableForeignKeys();
+            throw $e;
+        }
+
+        $this->enableForeignKeys();
+
         return $result;
     }
 
     /**
      * Checks if a transaction is running.
      *
-     * @return bool True if a transaction is runnning else false.
+     * @return bool True if a transaction is running else false.
      */
     public function inTransaction()
     {
@@ -587,12 +625,13 @@ class Connection
      * Quotes value to be used safely in database query.
      *
      * @param mixed $value The value to quote.
-     * @param string $type Type to be used for determining kind of quoting to perform
-     * @return mixed quoted value
+     * @param string|null $type Type to be used for determining kind of quoting to perform
+     * @return string Quoted value
      */
     public function quote($value, $type = null)
     {
         list($value, $type) = $this->cast($value, $type);
+
         return $this->_driver->quote($value, $type);
     }
 
@@ -619,21 +658,6 @@ class Connection
     }
 
     /**
-     * Enables or disables query logging for this connection.
-     *
-     * @param bool $enable whether to turn logging on or disable it.
-     *   Use null to read current value.
-     * @return bool
-     */
-    public function logQueries($enable = null)
-    {
-        if ($enable === null) {
-            return $this->_logQueries;
-        }
-        $this->_logQueries = $enable;
-    }
-
-    /**
      * Enables or disables metadata caching for this connection
      *
      * Changing this setting will not modify existing schema collections objects.
@@ -649,11 +673,18 @@ class Connection
     }
 
     /**
-     * Sets the logger object instance. When called with no arguments
-     * it returns the currently setup logger instance.
-     *
-     * @param object $instance logger object instance
-     * @return object logger instance
+     * {@inheritDoc}
+     */
+    public function logQueries($enable = null)
+    {
+        if ($enable === null) {
+            return $this->_logQueries;
+        }
+        $this->_logQueries = $enable;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function logger($instance = null)
     {
@@ -661,6 +692,7 @@ class Connection
             if ($this->_logger === null) {
                 $this->_logger = new QueryLogger;
             }
+
             return $this->_logger;
         }
         $this->_logger = $instance;
@@ -690,6 +722,7 @@ class Connection
     {
         $log = new LoggingStatement($statement, $this->driver());
         $log->logger($this->logger());
+
         return $log;
     }
 
@@ -706,9 +739,7 @@ class Connection
             'username' => '*****',
             'host' => '*****',
             'database' => '*****',
-            'port' => '*****',
-            'prefix' => '*****',
-            'schema' => '*****'
+            'port' => '*****'
         ];
         $replace = array_intersect_key($secrets, $this->_config);
         $config = $replace + $this->_config;

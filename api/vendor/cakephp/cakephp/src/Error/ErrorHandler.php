@@ -17,7 +17,6 @@
 namespace Cake\Error;
 
 use Cake\Core\App;
-use Cake\Error\Debugger;
 use Exception;
 
 /**
@@ -75,11 +74,13 @@ use Exception;
  * You can control which errors are logged / displayed by ErrorHandler by setting `errorLevel`. Setting this
  * to one or a combination of a few of the E_* constants will only enable the specified errors:
  *
- * `$options['errorLevel'] = E_ALL & ~E_NOTICE;`
+ * ```
+ * $options['errorLevel'] = E_ALL & ~E_NOTICE;
+ * ```
  *
  * Would enable handling for all non Notice errors.
  *
- * @see ExceptionRenderer for more information on how to customize exception rendering.
+ * @see \Cake\Error\ExceptionRenderer for more information on how to customize exception rendering.
  */
 class ErrorHandler extends BaseErrorHandler
 {
@@ -180,6 +181,7 @@ class ErrorHandler extends BaseErrorHandler
     {
         if (is_string($response)) {
             echo $response;
+
             return;
         }
         $response->send();

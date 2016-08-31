@@ -11,8 +11,9 @@
  */
 namespace Migrations;
 
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
-use Migrations\Util\UtilTrait;
+use Cake\Utility\Inflector;
 use Phinx\Config\Config;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,21 +28,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 trait ConfigurationTrait
 {
 
-    use UtilTrait;
-
     /**
      * The configuration object that phinx uses for connecting to the database
      *
      * @var \Phinx\Config\Config
      */
     protected $configuration;
-
-    /**
-     * Connection name to be used for this request
-     *
-     * @var string
-     */
-    protected $connection;
 
     /**
      * The console input instance
@@ -63,63 +55,48 @@ trait ConfigurationTrait
             return $this->configuration;
         }
 
-        $migrationsPath = $this->getOperationsPath($this->input);
-        $seedsPath = $this->getOperationsPath($this->input, 'Seeds');
-        $plugin = $this->getPlugin($this->input);
-
-        if (!is_dir($migrationsPath)) {
-            mkdir($migrationsPath, 0777, true);
+        $folder = 'Migrations';
+        if ($this->input->getOption('source')) {
+            $folder = $this->input->getOption('source');
         }
 
-        if (!is_dir($seedsPath)) {
-            mkdir($seedsPath, 0777, true);
+        $dir = ROOT . DS . 'config' . DS . $folder;
+        $plugin = null;
+
+        if ($this->input->getOption('plugin')) {
+            $plugin = $this->input->getOption('plugin');
+            $dir = Plugin::path($plugin) . 'config' . DS . $folder;
         }
 
-        $phinxTable = $this->getPhinxTable($plugin);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $plugin = $plugin ? Inflector::underscore($plugin) . '_' : '';
+        $plugin = str_replace(['\\', '/', '.'], '_', $plugin);
 
         $connection = $this->getConnectionName($this->input);
 
-        $connectionConfig = ConnectionManager::config($connection);
-        $adapterName = $this->getAdapterName($connectionConfig['driver']);
-        $config = [
+        $config = ConnectionManager::config($connection);
+        return $this->configuration = new Config([
             'paths' => [
-                'migrations' => $migrationsPath,
-                'seeds' => $seedsPath,
+                'migrations' => $dir
             ],
             'environments' => [
-                'default_migration_table' => $phinxTable,
+                'default_migration_table' => $plugin . 'phinxlog',
                 'default_database' => 'default',
                 'default' => [
-                    'adapter' => $adapterName,
-                    'host' => isset($connectionConfig['host']) ? $connectionConfig['host'] : null,
-                    'user' => isset($connectionConfig['username']) ? $connectionConfig['username'] : null,
-                    'pass' => isset($connectionConfig['password']) ? $connectionConfig['password'] : null,
-                    'port' => isset($connectionConfig['port']) ? $connectionConfig['port'] : null,
-                    'name' => $connectionConfig['database'],
-                    'charset' => isset($connectionConfig['encoding']) ? $connectionConfig['encoding'] : null,
-                    'unix_socket' => isset($connectionConfig['unix_socket']) ? $connectionConfig['unix_socket'] : null,
+                    'adapter' => $this->getAdapterName($config['driver']),
+                    'host' => isset($config['host']) ? $config['host'] : null,
+                    'user' => isset($config['username']) ? $config['username'] : null,
+                    'pass' => isset($config['password']) ? $config['password'] : null,
+                    'port' => isset($config['port']) ? $config['port'] : null,
+                    'name' => $config['database'],
+                    'charset' => isset($config['encoding']) ? $config['encoding'] : null,
+                    'unix_socket' => isset($config['unix_socket']) ? $config['unix_socket'] : null,
                 ]
             ]
-        ];
-
-        if ($adapterName === 'pgsql') {
-            if (!empty($connectionConfig['schema'])) {
-                $config['environments']['default']['schema'] = $connectionConfig['schema'];
-            }
-        }
-
-        if ($adapterName === 'mysql') {
-            if (!empty($connectionConfig['ssl_key']) && !empty($connectionConfig['ssl_cert'])) {
-                $config['environments']['default']['mysql_attr_ssl_key'] = $connectionConfig['ssl_key'];
-                $config['environments']['default']['mysql_attr_ssl_cert'] = $connectionConfig['ssl_cert'];
-            }
-
-            if (!empty($connectionConfig['ssl_ca'])) {
-                $config['environments']['default']['mysql_attr_ssl_ca'] = $connectionConfig['ssl_ca'];
-            }
-        }
-
-        return $this->configuration = new Config($config);
+        ]);
     }
 
     /**
@@ -205,7 +182,6 @@ trait ConfigurationTrait
     {
         parent::bootstrap($input, $output);
         $name = $this->getConnectionName($input);
-        $this->connection = $name;
         ConnectionManager::alias($name, 'default');
         $connection = ConnectionManager::get($name);
 

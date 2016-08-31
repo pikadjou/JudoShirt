@@ -35,10 +35,10 @@ class MigrationController extends AppController
 
         // Will return an array of all migrations and their status
         $status = $migrations->status();
-
+        debug($status);
         // Will return true if success. If an error occurred, an exception will be thrown
-        $migrate = $migrations->migrate("schema");
-
+        $migrate = $migrations->migrate(['target' => "20160831175749"]);
+        debug($migrate);
     }
     
 }

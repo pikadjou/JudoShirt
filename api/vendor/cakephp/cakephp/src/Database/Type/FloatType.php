@@ -15,15 +15,35 @@
 namespace Cake\Database\Type;
 
 use Cake\Database\Driver;
+use Cake\Database\Type;
+use Cake\Database\TypeInterface;
 use PDO;
+use RuntimeException;
 
 /**
  * Float type converter.
  *
  * Use to convert float/decimal data between PHP and the database types.
  */
-class FloatType extends \Cake\Database\Type
+class FloatType extends Type implements TypeInterface
 {
+
+    /**
+     * Identifier name for this type
+     *
+     * @var string|null
+     */
+    protected $_name = null;
+
+    /**
+     * Constructor
+     *
+     * @param string|null $name The name identifying this type
+     */
+    public function __construct($name = null)
+    {
+        $this->_name = $name;
+    }
 
     /**
      * The class to use for representing number objects
@@ -44,7 +64,7 @@ class FloatType extends \Cake\Database\Type
      * Convert integer data into the database format.
      *
      * @param string|resource $value The value to convert.
-     * @param Driver $driver The driver instance to convert with.
+     * @param \Cake\Database\Driver $driver The driver instance to convert with.
      * @return string|resource
      */
     public function toDatabase($value, Driver $driver)
@@ -55,6 +75,7 @@ class FloatType extends \Cake\Database\Type
         if (is_array($value)) {
             return 1;
         }
+
         return floatval($value);
     }
 
@@ -62,7 +83,7 @@ class FloatType extends \Cake\Database\Type
      * Convert float values to PHP integers
      *
      * @param null|string|resource $value The value to convert.
-     * @param Driver $driver The driver instance to convert with.
+     * @param \Cake\Database\Driver $driver The driver instance to convert with.
      * @return resource
      * @throws \Cake\Core\Exception\Exception
      */
@@ -74,6 +95,7 @@ class FloatType extends \Cake\Database\Type
         if (is_array($value)) {
             return 1;
         }
+
         return floatval($value);
     }
 
@@ -81,7 +103,7 @@ class FloatType extends \Cake\Database\Type
      * Get the correct PDO binding type for integer data.
      *
      * @param mixed $value The value being bound.
-     * @param Driver $driver The driver.
+     * @param \Cake\Database\Driver $driver The driver.
      * @return int
      */
     public function toStatement($value, Driver $driver)
@@ -102,7 +124,8 @@ class FloatType extends \Cake\Database\Type
         }
         if (is_numeric($value)) {
             return (float)$value;
-        } elseif (is_string($value) && $this->_useLocaleParser) {
+        }
+        if (is_string($value) && $this->_useLocaleParser) {
             return $this->_parseValue($value);
         }
         if (is_array($value)) {
@@ -123,12 +146,14 @@ class FloatType extends \Cake\Database\Type
     {
         if ($enable === false) {
             $this->_useLocaleParser = $enable;
+
             return $this;
         }
         if (static::$numberClass === 'Cake\I18n\Number' ||
             is_subclass_of(static::$numberClass, 'Cake\I18n\Number')
         ) {
             $this->_useLocaleParser = $enable;
+
             return $this;
         }
         throw new RuntimeException(
@@ -146,6 +171,7 @@ class FloatType extends \Cake\Database\Type
     protected function _parseValue($value)
     {
         $class = static::$numberClass;
+
         return $class::parseFloat($value);
     }
 }

@@ -14,11 +14,16 @@
  */
 namespace Cake\Validation;
 
+use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+
 /**
  * ValidationSet object. Holds all validation rules for a field and exposes
  * methods to dynamically add or remove validation rules
  */
-class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
+class ValidationSet implements ArrayAccess, IteratorAggregate, Countable
 {
 
     /**
@@ -55,6 +60,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
         if ($validatePresent === null) {
             return $this->_validatePresent;
         }
+
         return $this->_validatePresent = $validatePresent;
     }
 
@@ -72,6 +78,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
         if ($allowEmpty === null) {
             return $this->_allowEmpty;
         }
+
         return $this->_allowEmpty = $allowEmpty;
     }
 
@@ -105,7 +112,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
      *
      * ```
      *      $set
-     *          ->add('notEmpty', ['rule' => 'notEmpty'])
+     *          ->add('notBlank', ['rule' => 'notBlank'])
      *          ->add('inRange', ['rule' => ['between', 4, 10])
      * ```
      *
@@ -119,6 +126,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
             $rule = new ValidationRule($rule);
         }
         $this->_rules[$name] = $rule;
+
         return $this;
     }
 
@@ -129,7 +137,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
      *
      * ```
      *      $set
-     *          ->remove('notEmpty')
+     *          ->remove('notBlank')
      *          ->remove('inRange')
      * ```
      *
@@ -139,6 +147,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
     public function remove($name)
     {
         unset($this->_rules[$name]);
+
         return $this;
     }
 
@@ -194,7 +203,7 @@ class ValidationSet implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->_rules);
+        return new ArrayIterator($this->_rules);
     }
 
     /**

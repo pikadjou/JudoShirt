@@ -14,8 +14,13 @@
  */
 %>
 <?php
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('<%= $plugin %>', function ($routes) {
-    $routes->fallbacks();
-});
+Router::plugin(
+    '<%= $plugin %>',
+    ['path' => '/<%= $routePath %>'],
+    function (RouteBuilder $routes) {
+        $routes->fallbacks('DashedRoute');
+    }
+);

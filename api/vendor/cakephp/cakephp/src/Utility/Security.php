@@ -20,7 +20,6 @@ use InvalidArgumentException;
 
 /**
  * Security Library contains utility methods related to security
- *
  */
 class Security
 {
@@ -46,16 +45,6 @@ class Security
      * @var object
      */
     protected static $_instance;
-
-    /**
-     * Generate authorization hash.
-     *
-     * @return string Hash
-     */
-    public static function generateAuthKey()
-    {
-        return Security::hash(Text::uuid());
-    }
 
     /**
      * Create a hash from string using given method.
@@ -92,7 +81,7 @@ class Security
      *
      * @param string $hash Method to use (sha1/sha256/md5 etc.)
      * @return void
-     * @see Security::hash()
+     * @see \Cake\Utility\Security::hash()
      */
     public static function setHash($hash)
     {
@@ -100,11 +89,70 @@ class Security
     }
 
     /**
+     * Get random bytes from a secure source.
+     *
+     * This method will fall back to an insecure source an trigger a warning
+     * if it cannot find a secure source of random data.
+     *
+     * @param int $length The number of bytes you want.
+     * @return string Random bytes in binary.
+     */
+    public static function randomBytes($length)
+    {
+        if (function_exists('random_bytes')) {
+            return random_bytes($length);
+        }
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            $bytes = openssl_random_pseudo_bytes($length, $strongSource);
+            if (!$strongSource) {
+                trigger_error(
+                    'openssl was unable to use a strong source of entropy. ' .
+                    'Consider updating your system libraries, or ensuring ' .
+                    'you have more available entropy.',
+                    E_USER_WARNING
+                );
+            }
+
+            return $bytes;
+        }
+        trigger_error(
+            'You do not have a safe source of random data available. ' .
+            'Install either the openssl extension, or paragonie/random_compat. ' .
+            'Falling back to an insecure random source.',
+            E_USER_WARNING
+        );
+
+        return static::insecureRandomBytes($length);
+    }
+
+    /**
+     * Like randomBytes() above, but not cryptographically secure.
+     *
+     * @param int $length The number of bytes you want.
+     * @return string Random bytes in binary.
+     * @see \Cake\Utility\Security::randomBytes()
+     */
+    public static function insecureRandomBytes($length)
+    {
+        $length *= 2;
+
+        $bytes = '';
+        $byteLength = 0;
+        while ($byteLength < $length) {
+            $bytes .= static::hash(Text::uuid() . uniqid(mt_rand(), true), 'sha512', true);
+            $byteLength = strlen($bytes);
+        }
+        $bytes = substr($bytes, 0, $length);
+
+        return pack('H*', $bytes);
+    }
+
+    /**
      * Get the crypto implementation based on the loaded extensions.
      *
      * You can use this method to forcibly decide between mcrypt/openssl/custom implementations.
      *
-     * @param object $instance The crypto instance to use.
+     * @param object|null $instance The crypto instance to use.
      * @return object Crypto instance.
      * @throws \InvalidArgumentException When no compatible crypto extension is available.
      */
@@ -146,10 +194,11 @@ class Security
         if (empty($operation) || !in_array($operation, ['encrypt', 'decrypt'])) {
             throw new InvalidArgumentException('You must specify the operation for Security::rijndael(), either encrypt or decrypt');
         }
-        if (strlen($key) < 32) {
+        if (mb_strlen($key, '8bit') < 32) {
             throw new InvalidArgumentException('You must use a key larger than 32 bytes for Security::rijndael()');
         }
         $crypto = static::engine();
+
         return $crypto->rijndael($text, $key, $operation);
     }
 
@@ -174,11 +223,12 @@ class Security
             $hmacSalt = static::$_salt;
         }
         // Generate the encryption and hmac key.
-        $key = substr(hash('sha256', $key . $hmacSalt), 0, 32);
+        $key = mb_substr(hash('sha256', $key . $hmacSalt), 0, 32, '8bit');
 
         $crypto = static::engine();
         $ciphertext = $crypto->encrypt($plain, $key);
         $hmac = hash_hmac('sha256', $ciphertext, $key);
+
         return $hmac . $ciphertext;
     }
 
@@ -192,7 +242,7 @@ class Security
      */
     protected static function _checkKey($key, $method)
     {
-        if (strlen($key) < 32) {
+        if (mb_strlen($key, '8bit') < 32) {
             throw new InvalidArgumentException(
                 sprintf('Invalid key for %s, key must be at least 256 bits (32 bytes) long.', $method)
             );
@@ -206,7 +256,7 @@ class Security
      * @param string $key The 256 bit/32 byte key to use as a cipher key.
      * @param string|null $hmacSalt The salt to use for the HMAC process. Leave null to use Security.salt.
      * @return string Decrypted data. Any trailing null bytes will be removed.
-     * @throws InvalidArgumentException On invalid data or key.
+     * @throws \InvalidArgumentException On invalid data or key.
      */
     public static function decrypt($cipher, $key, $hmacSalt = null)
     {
@@ -219,20 +269,47 @@ class Security
         }
 
         // Generate the encryption and hmac key.
-        $key = substr(hash('sha256', $key . $hmacSalt), 0, 32);
+        $key = mb_substr(hash('sha256', $key . $hmacSalt), 0, 32, '8bit');
 
         // Split out hmac for comparison
         $macSize = 64;
-        $hmac = substr($cipher, 0, $macSize);
-        $cipher = substr($cipher, $macSize);
+        $hmac = mb_substr($cipher, 0, $macSize, '8bit');
+        $cipher = mb_substr($cipher, $macSize, null, '8bit');
 
         $compareHmac = hash_hmac('sha256', $cipher, $key);
-        if ($hmac !== $compareHmac) {
+        if (!static::_constantEquals($hmac, $compareHmac)) {
             return false;
         }
 
         $crypto = static::engine();
+
         return $crypto->decrypt($cipher, $key);
+    }
+
+    /**
+     * A timing attack resistant comparison that prefers native PHP implementations.
+     *
+     * @param string $hmac The hmac from the ciphertext being decrypted.
+     * @param string $compare The comparison hmac.
+     * @return bool
+     * @see https://github.com/resonantcore/php-future/
+     */
+    protected static function _constantEquals($hmac, $compare)
+    {
+        if (function_exists('hash_equals')) {
+            return hash_equals($hmac, $compare);
+        }
+        $hashLength = mb_strlen($hmac, '8bit');
+        $compareLength = mb_strlen($compare, '8bit');
+        if ($hashLength !== $compareLength) {
+            return false;
+        }
+        $result = 0;
+        for ($i = 0; $i < $hashLength; $i++) {
+            $result |= (ord($hmac[$i]) ^ ord($compare[$i]));
+        }
+
+        return $result === 0;
     }
 
     /**
@@ -247,6 +324,7 @@ class Security
         if ($salt === null) {
             return static::$_salt;
         }
+
         return static::$_salt = (string)$salt;
     }
 }

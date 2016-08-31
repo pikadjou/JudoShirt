@@ -92,6 +92,10 @@ class SqlLogPanel extends DebugPanel
             $count += count($logger->queries());
             $time += $logger->totalTime();
         }
-        return "{$count} - $time ms";
+        if (!$count) {
+            return '0';
+        }
+
+        return "$count / $time ms";
     }
 }

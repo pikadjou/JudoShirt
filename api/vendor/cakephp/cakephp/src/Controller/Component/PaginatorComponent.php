@@ -15,9 +15,10 @@
 namespace Cake\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Datasource\QueryInterface;
+use Cake\Datasource\RepositoryInterface;
 use Cake\Network\Exception\NotFoundException;
-use Cake\ORM\Query;
-use Cake\ORM\Table;
+use Cake\Utility\Hash;
 
 /**
  * This component is used to handle automatic model data pagination. The primary way to use this
@@ -115,6 +116,8 @@ class PaginatorComponent extends Component
      * ];
      * ```
      *
+     * Passing an empty array as whitelist disallows sorting altogether.
+     *
      * ### Paginating with custom finders
      *
      * You can paginate with any find type defined on your table using the `finder` option.
@@ -139,14 +142,30 @@ class PaginatorComponent extends Component
      * $results = $paginator->paginate($query);
      * ```
      *
-     * @param \Cake\Datasource\RepositoryInterface|\Cake\ORM\Query $object The table or query to paginate.
+     * ### Scoping Request parameters
+     *
+     * By using request parameter scopes you can paginate multiple queries in the same controller action:
+     *
+     * ```
+     * $articles = $paginator->paginate($articlesQuery, ['scope' => 'articles']);
+     * $tags = $paginator->paginate($tagsQuery, ['scope' => 'tags']);
+     * ```
+     *
+     * Each of the above queries will use different query string parameter sets
+     * for pagination data. An example URL paginating both results would be:
+     *
+     * ```
+     * /dashboard?articles[page]=1&tags[page]=2
+     * ```
+     *
+     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\QueryInterface $object The table or query to paginate.
      * @param array $settings The settings/configuration used for pagination.
-     * @return array Query results
+     * @return \Cake\Datasource\ResultSetInterface Query results
      * @throws \Cake\Network\Exception\NotFoundException
      */
     public function paginate($object, array $settings = [])
     {
-        if ($object instanceof Query) {
+        if ($object instanceof QueryInterface) {
             $query = $object;
             $object = $query->repository();
         }
@@ -156,7 +175,7 @@ class PaginatorComponent extends Component
         $options = $this->validateSort($object, $options);
         $options = $this->checkLimit($options);
 
-        $options += ['page' => 1];
+        $options += ['page' => 1, 'scope' => null];
         $options['page'] = (int)$options['page'] < 1 ? 1 : (int)$options['page'];
         list($finder, $options) = $this->_extractFinder($options);
 
@@ -200,7 +219,8 @@ class PaginatorComponent extends Component
             'direction' => current($order),
             'limit' => $defaults['limit'] != $limit ? $limit : null,
             'sortDefault' => $sortDefault,
-            'directionDefault' => $directionDefault
+            'directionDefault' => $directionDefault,
+            'scope' => $options['scope'],
         ];
 
         if (!isset($request['paging'])) {
@@ -255,7 +275,13 @@ class PaginatorComponent extends Component
     {
         $defaults = $this->getDefaults($alias, $settings);
         $request = $this->_registry->getController()->request;
-        $request = array_intersect_key($request->query, array_flip($this->_config['whitelist']));
+        $scope = Hash::get($settings, 'scope', null);
+        $query = $request->query;
+        if ($scope) {
+            $query = Hash::get($request->query, $scope, []);
+        }
+        $request = array_intersect_key($query, array_flip($this->_config['whitelist']));
+
         return array_merge($defaults, $request);
     }
 
@@ -277,6 +303,7 @@ class PaginatorComponent extends Component
         ) {
             $defaults['maxLimit'] = $defaults['limit'];
         }
+
         return $defaults + $this->config();
     }
 
@@ -293,11 +320,11 @@ class PaginatorComponent extends Component
      * Any columns listed in the sort whitelist will be implicitly trusted. You can use this to sort
      * on synthetic columns, or columns added in custom find operations that may not exist in the schema.
      *
-     * @param Table $object The model being paginated.
+     * @param \Cake\Datasource\RepositoryInterface $object Repository object.
      * @param array $options The pagination options being used for this request.
      * @return array An array of options with sort + direction removed and replaced with order if possible.
      */
-    public function validateSort(Table $object, array $options)
+    public function validateSort(RepositoryInterface $object, array $options)
     {
         if (isset($options['sort'])) {
             $direction = null;
@@ -318,37 +345,61 @@ class PaginatorComponent extends Component
             return $options;
         }
 
-        if (!empty($options['sortWhitelist'])) {
+        $inWhitelist = false;
+        if (isset($options['sortWhitelist'])) {
             $field = key($options['order']);
             $inWhitelist = in_array($field, $options['sortWhitelist'], true);
             if (!$inWhitelist) {
                 $options['order'] = [];
-            }
-            return $options;
-        }
 
-        $tableAlias = $object->alias();
-        $order = [];
-
-        foreach ($options['order'] as $key => $value) {
-            $field = $key;
-            $alias = $tableAlias;
-            if (is_numeric($key)) {
-                $order[] = $value;
-            } else {
-                if (strpos($key, '.') !== false) {
-                    list($alias, $field) = explode('.', $key);
-                }
-                $correctAlias = ($tableAlias === $alias);
-
-                if ($correctAlias && $object->hasField($field)) {
-                    $order[$tableAlias . '.' . $field] = $value;
-                }
+                return $options;
             }
         }
-        $options['order'] = $order;
+
+        $options['order'] = $this->_prefix($object, $options['order'], $inWhitelist);
 
         return $options;
+    }
+
+    /**
+     * Prefixes the field with the table alias if possible.
+     *
+     * @param \Cake\Datasource\RepositoryInterface $object Repository object.
+     * @param array $order Order array.
+     * @param bool $whitelisted Whether or not the field was whitelisted
+     * @return array Final order array.
+     */
+    protected function _prefix(RepositoryInterface $object, $order, $whitelisted = false)
+    {
+        $tableAlias = $object->alias();
+        $tableOrder = [];
+        foreach ($order as $key => $value) {
+            if (is_numeric($key)) {
+                $tableOrder[] = $value;
+                continue;
+            }
+            $field = $key;
+            $alias = $tableAlias;
+
+            if (strpos($key, '.') !== false) {
+                list($alias, $field) = explode('.', $key);
+            }
+            $correctAlias = ($tableAlias === $alias);
+
+            if ($correctAlias && $whitelisted) {
+                // Disambiguate fields in schema. As id is quite common.
+                if ($object->hasField($field)) {
+                    $field = $alias . '.' . $field;
+                }
+                $tableOrder[$field] = $value;
+            } elseif ($correctAlias && $object->hasField($field)) {
+                $tableOrder[$tableAlias . '.' . $field] = $value;
+            } elseif (!$correctAlias && $whitelisted) {
+                $tableOrder[$alias . '.' . $field] = $value;
+            }
+        }
+
+        return $tableOrder;
     }
 
     /**
@@ -363,7 +414,8 @@ class PaginatorComponent extends Component
         if (empty($options['limit']) || $options['limit'] < 1) {
             $options['limit'] = 1;
         }
-        $options['limit'] = min($options['limit'], $options['maxLimit']);
+        $options['limit'] = max(min($options['limit'], $options['maxLimit']), 1);
+
         return $options;
     }
 }

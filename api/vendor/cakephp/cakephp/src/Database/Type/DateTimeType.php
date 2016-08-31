@@ -15,19 +15,29 @@
 namespace Cake\Database\Type;
 
 use Cake\Database\Driver;
+use Cake\Database\Type;
+use Cake\Database\TypeInterface;
+use DateTimeInterface;
+use Exception;
+use PDO;
+use RuntimeException;
 
 /**
  * Datetime type converter.
  *
  * Use to convert datetime instances to strings & back.
  */
-class DateTimeType extends \Cake\Database\Type
+class DateTimeType extends Type implements TypeInterface
 {
 
     /**
      * The class to use for representing date objects
      *
+     * This property can only be used before an instance of this type
+     * class is constructed. After that use `useMutable()` or `useImmutable()` instead.
+     *
      * @var string
+     * @deprecated Use DateTimeType::useMutable() or DateTimeType::useImmutable() instead.
      */
     public static $dateTimeClass = 'Cake\I18n\Time';
 
@@ -54,22 +64,41 @@ class DateTimeType extends \Cake\Database\Type
     protected $_localeFormat;
 
     /**
+     * An instance of the configured dateTimeClass, used to quickly generate
+     * new instances without calling the constructor.
+     *
+     * @var \DateTime
+     */
+    protected $_datetimeInstance;
+
+    /**
+     * The classname to use when creating objects.
+     *
+     * @var string
+     */
+    protected $_className;
+
+    /**
+     * Identifier name for this type
+     *
+     * @var string|null
+     */
+    protected $_name = null;
+
+    /**
      * {@inheritDoc}
      */
     public function __construct($name = null)
     {
-        parent::__construct($name);
-
-        if (!class_exists(static::$dateTimeClass)) {
-            static::$dateTimeClass = 'DateTime';
-        }
+        $this->_name = $name;
+        $this->_setClassName(static::$dateTimeClass, 'DateTime');
     }
 
     /**
      * Convert DateTime instance into strings.
      *
      * @param string|int|\DateTime $value The value to convert.
-     * @param Driver $driver The driver instance to convert with.
+     * @param \Cake\Database\Driver $driver The driver instance to convert with.
      * @return string
      */
     public function toDatabase($value, Driver $driver)
@@ -78,8 +107,10 @@ class DateTimeType extends \Cake\Database\Type
             return $value;
         }
         if (is_int($value)) {
-            $value = new static::$dateTimeClass('@' . $value);
+            $class = $this->_className;
+            $value = new $class('@' . $value);
         }
+
         return $value->format($this->_format);
     }
 
@@ -87,32 +118,37 @@ class DateTimeType extends \Cake\Database\Type
      * Convert strings into DateTime instances.
      *
      * @param string $value The value to convert.
-     * @param Driver $driver The driver instance to convert with.
-     * @return \Carbon\Carbon
+     * @param \Cake\Database\Driver $driver The driver instance to convert with.
+     * @return \Cake\I18n\Time|\DateTime
      */
     public function toPHP($value, Driver $driver)
     {
-        if ($value === null) {
+        if ($value === null || strpos($value, '0000-00-00') === 0) {
             return null;
         }
-        list($value) = explode('.', $value);
-        $class = static::$dateTimeClass;
-        return $class::createFromFormat($this->_format, $value);
+
+        if (strpos($value, '.') !== false) {
+            list($value) = explode('.', $value);
+        }
+
+        $instance = clone $this->_datetimeInstance;
+
+        return $instance->modify($value);
     }
 
     /**
      * Convert request data into a datetime object.
      *
      * @param mixed $value Request data
-     * @return \Carbon\Carbon
+     * @return \Cake\I18n\Time|\DateTime
      */
     public function marshal($value)
     {
-        if ($value instanceof \DateTime) {
+        if ($value instanceof DateTimeInterface) {
             return $value;
         }
 
-        $class = static::$dateTimeClass;
+        $class = $this->_className;
         try {
             $compare = $date = false;
             if ($value === '' || $value === null || $value === false || $value === true) {
@@ -131,7 +167,7 @@ class DateTimeType extends \Cake\Database\Type
             if ($date) {
                 return $date;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $value;
         }
 
@@ -147,6 +183,9 @@ class DateTimeType extends \Cake\Database\Type
             $format .= sprintf('%d-%02d-%02d', $value['year'], $value['month'], $value['day']);
         }
 
+        if (isset($value['meridian']) && (int)$value['hour'] === 12) {
+            $value['hour'] = 0;
+        }
         if (isset($value['meridian'])) {
             $value['hour'] = strtolower($value['meridian']) === 'am' ? $value['hour'] : $value['hour'] + 12;
         }
@@ -173,16 +212,16 @@ class DateTimeType extends \Cake\Database\Type
     {
         if ($enable === false) {
             $this->_useLocaleParser = $enable;
+
             return $this;
         }
-        if (static::$dateTimeClass === 'Cake\I18n\Time' ||
-            is_subclass_of(static::$dateTimeClass, 'Cake\I18n\Time')
-        ) {
+        if (method_exists($this->_className, 'parseDateTime')) {
             $this->_useLocaleParser = $enable;
+
             return $this;
         }
         throw new RuntimeException(
-            sprintf('Cannot use locale parsing with the %s class', static::$dateTimeClass)
+            sprintf('Cannot use locale parsing with the %s class', $this->_className)
         );
     }
 
@@ -198,11 +237,52 @@ class DateTimeType extends \Cake\Database\Type
     public function setLocaleFormat($format)
     {
         $this->_localeFormat = $format;
+
         return $this;
     }
 
     /**
-     * Converts a string into a DateTime object after parseing it using the locale
+     * Change the preferred class name to the FrozenTime implementation.
+     *
+     * @return $this
+     */
+    public function useImmutable()
+    {
+        $this->_setClassName('Cake\I18n\FrozenTime', 'DateTimeImmutable');
+
+        return $this;
+    }
+
+    /**
+     * Set the classname to use when building objects.
+     *
+     * @param string $class The classname to use.
+     * @param string $fallback The classname to use when the preferred class does not exist.
+     * @return void
+     */
+    protected function _setClassName($class, $fallback)
+    {
+        if (!class_exists($class)) {
+            $class = $fallback;
+        }
+        $this->_className = $class;
+        $this->_datetimeInstance = new $this->_className;
+    }
+
+    /**
+     * Change the preferred class name to the mutable Time implementation.
+     *
+     * @return $this
+     */
+    public function useMutable()
+    {
+        $this->_setClassName('Cake\I18n\Time', 'DateTime');
+
+        return $this;
+    }
+
+    /**
+     * Converts a string into a DateTime object after parsing it using the locale
      * aware parser with the specified format.
      *
      * @param string $value The value to parse and convert to an object.
@@ -210,7 +290,21 @@ class DateTimeType extends \Cake\Database\Type
      */
     protected function _parseValue($value)
     {
-        $class = static::$dateTimeClass;
+        $class = $this->_className;
+
         return $class::parseDateTime($value, $this->_localeFormat);
+    }
+
+    /**
+     * Casts given value to Statement equivalent
+     *
+     * @param mixed $value value to be converted to PDO statement
+     * @param \Cake\Database\Driver $driver object from which database preferences and configuration will be extracted
+     *
+     * @return mixed
+     */
+    public function toStatement($value, Driver $driver)
+    {
+        return PDO::PARAM_STR;
     }
 }

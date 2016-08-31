@@ -19,7 +19,7 @@ namespace Cake\Database\Type;
  *
  * Use to convert time instances to strings & back.
  */
-class TimeType extends \Cake\Database\Type\DateTimeType
+class TimeType extends DateTimeType
 {
 
     /**
@@ -34,7 +34,8 @@ class TimeType extends \Cake\Database\Type\DateTimeType
      */
     protected function _parseValue($value)
     {
-        $class = static::$dateTimeClass;
+        $class = $this->_className;
+
         return $class::parseTime($value, $this->_localeFormat);
     }
 }

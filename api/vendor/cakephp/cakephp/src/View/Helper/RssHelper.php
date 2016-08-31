@@ -20,6 +20,7 @@ use Cake\View\Helper;
 /**
  * RSS Helper class for easy output RSS structures.
  *
+ * @property UrlHelper $Url
  * @property TimeHelper $Time
  * @link http://book.cakephp.org/3.0/en/views/helpers/rss.html
  */
@@ -150,6 +151,7 @@ class RssHelper extends Helper
             }
             $elems .= $this->elem($elem, $attributes, $data);
         }
+
         return $this->elem('channel', $attrib, $elems . $content, !($content === null));
     }
 
@@ -174,6 +176,7 @@ class RssHelper extends Helper
         for ($i = 0; $i < $c; $i++) {
             $out .= $this->item([], $items[$i]);
         }
+
         return $out;
     }
 
@@ -217,7 +220,8 @@ class RssHelper extends Helper
                         }
                         $elements[$key] = implode('', $categories);
                         continue 2;
-                    } elseif (is_array($val) && isset($val['domain'])) {
+                    }
+                    if (is_array($val) && isset($val['domain'])) {
                         $attrib['domain'] = $val['domain'];
                     }
                     break;
@@ -264,6 +268,7 @@ class RssHelper extends Helper
         if (!empty($elements)) {
             $content = implode('', $elements);
         }
+
         return $this->elem('item', (array)$att, $content, !($content === null));
     }
 
@@ -272,7 +277,7 @@ class RssHelper extends Helper
      *
      * @param int|string|\DateTime $time UNIX timestamp or valid time string or DateTime object.
      * @return string An RSS-formatted timestamp
-     * @see TimeHelper::toRSS
+     * @see \Cake\View\Helper\TimeHelper::toRSS
      */
     public function time($time)
     {
@@ -284,7 +289,7 @@ class RssHelper extends Helper
      *
      * @param string $name The name of the XML element
      * @param array $attrib The attributes of the XML element
-     * @param string|array $content XML element content
+     * @param string|array|null $content XML element content
      * @param bool $endTag Whether the end tag of the element should be printed
      * @return string XML
      */
@@ -345,6 +350,7 @@ class RssHelper extends Helper
 
         $xml = $elem->saveXml();
         $xml = trim(substr($xml, strpos($xml, '?>') + 2));
+
         return $xml;
     }
 

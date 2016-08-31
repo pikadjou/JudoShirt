@@ -16,6 +16,7 @@ namespace Bake\Utility\Model;
 
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
+use Exception;
 
 /**
  * Utility class to filter Model Table associations
@@ -35,6 +36,7 @@ class AssociationFilter
     public function filterHasManyAssociationsAliases(Table $table, array $aliases)
     {
         $belongsToManyJunctionsAliases = $this->belongsToManyJunctionAliases($table);
+
         return array_values(array_diff($aliases, $belongsToManyJunctionsAliases));
     }
 
@@ -49,6 +51,7 @@ class AssociationFilter
         $extractor = function ($val) {
             return $val->junction()->alias();
         };
+
         return array_map($extractor, $table->associations()->type('BelongsToMany'));
     }
 
@@ -77,9 +80,10 @@ class AssociationFilter
                 $targetClass = get_class($target);
                 list(, $className) = namespaceSplit($targetClass);
 
+                $navLink = true;
                 $modelClass = get_class($model);
                 if ($modelClass !== 'Cake\ORM\Table' && $targetClass === $modelClass) {
-                    continue;
+                    $navLink = false;
                 }
 
                 $className = preg_replace('/(.*)Table$/', '\1', $className);
@@ -87,18 +91,24 @@ class AssociationFilter
                     $className = $alias;
                 }
 
-                $associations[$type][$assocName] = [
-                    'property' => $assoc->property(),
-                    'variable' => Inflector::variable($assocName),
-                    'primaryKey' => (array)$target->primaryKey(),
-                    'displayField' => $target->displayField(),
-                    'foreignKey' => $assoc->foreignKey(),
-                    'alias' => $alias,
-                    'controller' => $className,
-                    'fields' => $target->schema()->columns(),
-                ];
+                try {
+                    $associations[$type][$assocName] = [
+                        'property' => $assoc->property(),
+                        'variable' => Inflector::variable($assocName),
+                        'primaryKey' => (array)$target->primaryKey(),
+                        'displayField' => $target->displayField(),
+                        'foreignKey' => $assoc->foreignKey(),
+                        'alias' => $alias,
+                        'controller' => $className,
+                        'fields' => $target->schema()->columns(),
+                        'navLink' => $navLink,
+                    ];
+                } catch (Exception $e) {
+                    // Do nothing it could be a bogus association name.
+                }
             }
         }
+
         return $associations;
     }
 }

@@ -33,7 +33,7 @@ class BakeHelper extends Helper
      *
      * @param string $name the name of the property
      * @param array $value the array of values
-     * @param array $options extra options to be passed ot the element
+     * @param array $options extra options to be passed to the element
      * @return string
      */
     public function arrayProperty($name, array $value = [], array $options = [])
@@ -49,6 +49,7 @@ class BakeHelper extends Helper
             'name' => $name,
             'value' => $value
         ];
+
         return $this->_View->element('array_property', $options);
     }
 
@@ -62,7 +63,10 @@ class BakeHelper extends Helper
     public function stringifyList(array $list, array $options = [])
     {
         $options += [
-            'indent' => 2
+            'indent' => 2,
+            'tab' => '    ',
+            'trailingComma' => false,
+            'quotes' => true
         ];
 
         if (!$list) {
@@ -70,7 +74,9 @@ class BakeHelper extends Helper
         }
 
         foreach ($list as $k => &$v) {
-            $v = "'$v'";
+            if ($options['quotes']) {
+                $v = "'$v'";
+            }
             if (!is_numeric($k)) {
                 $v = "'$k' => $v";
             }
@@ -80,9 +86,13 @@ class BakeHelper extends Helper
         $join = ', ';
         if ($options['indent']) {
             $join = ',';
-            $start = "\n" . str_repeat("    ", $options['indent']);
+            $start = "\n" . str_repeat($options['tab'], $options['indent']);
             $join .= $start;
-            $end = "\n" . str_repeat("    ", $options['indent'] - 1);
+            $end = "\n" . str_repeat($options['tab'], $options['indent'] - 1);
+        }
+
+        if ($options['trailingComma']) {
+            $end = "," . $end;
         }
 
         return $start . implode($join, $list) . $end;
@@ -157,12 +167,14 @@ class BakeHelper extends Helper
      *
      * @param \Cake\ORM\Table $table Table
      * @param array $aliases array of aliases
+     * @return array
      */
     protected function _filterHasManyAssociationsAliases($table, $aliases)
     {
         if (is_null($this->_associationFilter)) {
             $this->_associationFilter = new AssociationFilter();
         }
+
         return $this->_associationFilter->filterHasManyAssociationsAliases($table, $aliases);
     }
 }

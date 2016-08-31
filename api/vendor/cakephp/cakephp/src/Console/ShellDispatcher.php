@@ -14,8 +14,8 @@
  */
 namespace Cake\Console;
 
-use Cake\Console\ConsoleIo;
 use Cake\Console\Exception\MissingShellException;
+use Cake\Console\Exception\StopException;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -80,11 +80,15 @@ class ShellDispatcher
      *
      * Aliasing a shell named ClassName:
      *
-     * `$this->alias('alias', 'ClassName');`
+     * ```
+     * $this->alias('alias', 'ClassName');
+     * ```
      *
      * Getting the original name for a given alias:
      *
-     * `$this->alias('alias');`
+     * ```
+     * $this->alias('alias');
+     * ```
      *
      * @param string $short The new short name for the shell.
      * @param string|null $original The original full name for the shell.
@@ -114,12 +118,14 @@ class ShellDispatcher
      * Run the dispatcher
      *
      * @param array $argv The argv from PHP
+     * @param array $extra Extra parameters
      * @return int The exit code of the shell process.
      */
-    public static function run($argv)
+    public static function run($argv, $extra = [])
     {
         $dispatcher = new ShellDispatcher($argv);
-        return $dispatcher->dispatch();
+
+        return $dispatcher->dispatch($extra);
     }
 
     /**
@@ -164,40 +170,61 @@ class ShellDispatcher
      * Converts a shell command result into an exit code. Null/True
      * are treated as success. All other return values are an error.
      *
+     * @param array $extra Extra parameters that you can manually pass to the Shell
+     * to be dispatched.
+     * Built-in extra parameter is :
+     * - `requested` : if used, will prevent the Shell welcome message to be displayed
      * @return int The cli command exit code. 0 is success.
      */
-    public function dispatch()
+    public function dispatch($extra = [])
     {
-        $result = $this->_dispatch();
+        try {
+            $result = $this->_dispatch($extra);
+        } catch (StopException $e) {
+            return $e->getCode();
+        }
         if ($result === null || $result === true) {
             return 0;
         }
+
         return 1;
     }
 
     /**
      * Dispatch a request.
      *
+     * @param array $extra Extra parameters that you can manually pass to the Shell
+     * to be dispatched.
+     * Built-in extra parameter is :
+     * - `requested` : if used, will prevent the Shell welcome message to be displayed
      * @return bool
      * @throws \Cake\Console\Exception\MissingShellMethodException
      */
-    protected function _dispatch()
+    protected function _dispatch($extra = [])
     {
         $shell = $this->shiftArgs();
 
         if (!$shell) {
             $this->help();
+
             return false;
         }
         if (in_array($shell, ['help', '--help', '-h'])) {
             $this->help();
+
+            return true;
+        }
+        if (in_array($shell, ['version', '--version'])) {
+            $this->version();
+
             return true;
         }
 
         $Shell = $this->findShell($shell);
 
         $Shell->initialize();
-        return $Shell->runCommand($this->args, true);
+
+        return $Shell->runCommand($this->args, true, $extra);
     }
 
     /**
@@ -297,6 +324,7 @@ class ShellDispatcher
         }
 
         $class = array_map('Cake\Utility\Inflector::camelize', explode('.', $shell));
+
         return implode('.', $class);
     }
 
@@ -312,6 +340,7 @@ class ShellDispatcher
         if (class_exists($class)) {
             return $class;
         }
+
         return false;
     }
 
@@ -327,6 +356,7 @@ class ShellDispatcher
         list($plugin) = pluginSplit($shortName);
         $instance = new $className();
         $instance->plugin = trim($plugin, '.');
+
         return $instance;
     }
 
@@ -348,6 +378,17 @@ class ShellDispatcher
     public function help()
     {
         $this->args = array_merge(['command_list'], $this->args);
+        $this->dispatch();
+    }
+
+    /**
+     * Prints the currently installed version of CakePHP. Performs an internal dispatch to the CommandList Shell
+     *
+     * @return void
+     */
+    public function version()
+    {
+        $this->args = array_merge(['command_list', '--version'], $this->args);
         $this->dispatch();
     }
 }

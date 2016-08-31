@@ -21,10 +21,16 @@ use Cake\Core\Exception\Exception;
  * Slots or blocks are combined with extending views and layouts to afford slots
  * of content that are present in a layout or parent view, but are defined by the child
  * view or elements used in the view.
- *
  */
 class ViewBlock
 {
+
+    /**
+     * Override content
+     *
+     * @var string
+     */
+    const OVERRIDE = 'override';
 
     /**
      * Append content
@@ -57,9 +63,8 @@ class ViewBlock
     /**
      * Should the currently captured content be discarded on ViewBlock::end()
      *
+     * @see \Cake\View\ViewBlock::end()
      * @var bool
-     * @see ViewBlock::end()
-     * @see ViewBlock::startIfEmpty()
      */
     protected $_discardActiveBufferOnEnd = false;
 
@@ -73,15 +78,18 @@ class ViewBlock
      * using View::get();
      *
      * @param string $name The name of the block to capture for.
+     * @param string $mode If ViewBlock::OVERRIDE existing content will be overridden by new content.
+     *   If ViewBlock::APPEND content will be appended to existing content.
+     *   If ViewBlock::PREPEND it will be prepended.
      * @throws \Cake\Core\Exception\Exception When starting a block twice
      * @return void
      */
-    public function start($name)
+    public function start($name, $mode = ViewBlock::OVERRIDE)
     {
-        if (in_array($name, $this->_active)) {
+        if (in_array($name, array_keys($this->_active))) {
             throw new Exception(sprintf("A view block with the name '%s' is already/still open.", $name));
         }
-        $this->_active[] = $name;
+        $this->_active[$name] = $mode;
         ob_start();
     }
 
@@ -89,19 +97,25 @@ class ViewBlock
      * End a capturing block. The compliment to ViewBlock::start()
      *
      * @return void
-     * @see ViewBlock::start()
+     * @see \Cake\View\ViewBlock::start()
      */
     public function end()
     {
         if ($this->_discardActiveBufferOnEnd) {
             $this->_discardActiveBufferOnEnd = false;
             ob_end_clean();
+
             return;
         }
         if (!empty($this->_active)) {
-            $active = end($this->_active);
+            $mode = end($this->_active);
+            $active = key($this->_active);
             $content = ob_get_clean();
-            $this->_blocks[$active] = $content;
+            if ($mode === ViewBlock::OVERRIDE) {
+                $this->_blocks[$active] = $content;
+            } else {
+                $this->concat($active, $content, $mode);
+            }
             array_pop($this->_active);
         }
     }
@@ -115,13 +129,20 @@ class ViewBlock
      * of the new capturing context will be added to the existing block context.
      *
      * @param string $name Name of the block
-     * @param mixed $value The content for the block
+     * @param mixed $value The content for the block. Value will be type cast
+     *   to string.
      * @param string $mode If ViewBlock::APPEND content will be appended to existing content.
      *   If ViewBlock::PREPEND it will be prepended.
      * @return void
      */
-    public function concat($name, $value, $mode = ViewBlock::APPEND)
+    public function concat($name, $value = null, $mode = ViewBlock::APPEND)
     {
+        if ($value === null) {
+            $this->start($name, $mode);
+
+            return;
+        }
+
         if (!isset($this->_blocks[$name])) {
             $this->_blocks[$name] = '';
         }
@@ -137,7 +158,8 @@ class ViewBlock
      * existing content.
      *
      * @param string $name Name of the block
-     * @param mixed $value The content for the block.
+     * @param mixed $value The content for the block. Value will be type cast
+     *   to string.
      * @return void
      */
     public function set($name, $value)
@@ -157,6 +179,7 @@ class ViewBlock
         if (!isset($this->_blocks[$name])) {
             return $default;
         }
+
         return $this->_blocks[$name];
     }
 
@@ -184,11 +207,13 @@ class ViewBlock
     /**
      * Get the name of the currently open block.
      *
-     * @return mixed Either null or the name of the last open block.
+     * @return string|null Either null or the name of the last open block.
      */
     public function active()
     {
-        return end($this->_active);
+        end($this->_active);
+
+        return key($this->_active);
     }
 
     /**

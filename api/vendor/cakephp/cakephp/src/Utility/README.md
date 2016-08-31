@@ -1,3 +1,6 @@
+[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/utility.svg?style=flat-square)](https://packagist.org/packages/cakephp/utility)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
+
 # CakePHP Utility Classes
 
 This library provides a range of utility classes that are used throughout the CakePHP framework
@@ -11,7 +14,7 @@ A ``Hash`` (as in PHP arrays) class, capable of extracting data using an intuiti
 ```php
 $things = [
     ['name' => 'Mark', 'age' => 15],
-    ['name' => 'Susan', 'age' => 30]
+    ['name' => 'Susan', 'age' => 30],
     ['name' => 'Lucy', 'age' => 25]
 ];
 

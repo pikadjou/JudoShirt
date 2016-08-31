@@ -15,10 +15,10 @@
 namespace Cake\Cache;
 
 use Cake\Core\InstanceConfigTrait;
+use InvalidArgumentException;
 
 /**
  * Storage engine for CakePHP caching
- *
  */
 abstract class CacheEngine
 {
@@ -111,6 +111,7 @@ abstract class CacheEngine
         foreach ($data as $key => $value) {
             $return[$key] = $this->write($key, $value);
         }
+
         return $return;
     }
 
@@ -135,6 +136,7 @@ abstract class CacheEngine
         foreach ($keys as $key) {
             $return[$key] = $this->read($key);
         }
+
         return $return;
     }
 
@@ -164,6 +166,15 @@ abstract class CacheEngine
      */
     abstract public function delete($key);
 
+
+    /**
+     * Delete all keys from the cache
+     *
+     * @param bool $check if true will check expiration, otherwise delete all
+     * @return bool True if the cache was successfully cleared, false otherwise
+     */
+    abstract public function clear($check);
+
     /**
      * Deletes keys from the cache
      *
@@ -177,16 +188,29 @@ abstract class CacheEngine
         foreach ($keys as $key) {
             $return[$key] = $this->delete($key);
         }
+
         return $return;
     }
 
     /**
-     * Delete all keys from the cache
+     * Add a key to the cache if it does not already exist.
      *
-     * @param bool $check if true will check expiration, otherwise delete all
-     * @return bool True if the cache was successfully cleared, false otherwise
+     * Defaults to a non-atomic implementation. Subclasses should
+     * prefer atomic implementations.
+     *
+     * @param string $key Identifier for the data.
+     * @param mixed $value Data to be cached.
+     * @return bool True if the data was successfully cached, false on failure.
      */
-    abstract public function clear($check);
+    public function add($key, $value)
+    {
+        $cachedValue = $this->read($key);
+        if ($cachedValue === false) {
+            return $this->write($key, $value);
+        }
+
+        return false;
+    }
 
     /**
      * Clears all values belonging to a group. Is up to the implementing engine
@@ -217,7 +241,7 @@ abstract class CacheEngine
      * Generates a safe key for use with cache engine storage engines.
      *
      * @param string $key the key passed over
-     * @return mixed string $key or false
+     * @return bool|string string key or false
      */
     public function key($key)
     {
@@ -230,7 +254,8 @@ abstract class CacheEngine
             $prefix = vsprintf($this->_groupPrefix, $this->groups());
         }
 
-        $key = preg_replace('/[\s]+/', '_', strtolower(trim(str_replace([DS, '/', '.'], '_', strval($key)))));
+        $key = preg_replace('/[\s]+/', '_', strtolower(trim(str_replace([DIRECTORY_SEPARATOR, '/', '.'], '_', strval($key)))));
+
         return $prefix . $key;
     }
 
@@ -244,8 +269,8 @@ abstract class CacheEngine
     protected function _key($key)
     {
         $key = $this->key($key);
-        if (!$key) {
-            throw new \InvalidArgumentException('An empty value is not valid as a cache key');
+        if ($key === false) {
+            throw new InvalidArgumentException('An empty value is not valid as a cache key');
         }
 
         return $this->_config['prefix'] . $key;

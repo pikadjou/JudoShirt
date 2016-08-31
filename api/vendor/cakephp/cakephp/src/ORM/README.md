@@ -1,10 +1,13 @@
+[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/orm.svg?style=flat-square)](https://packagist.org/packages/cakephp/orm)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
+
 # CakePHP ORM
 
 The CakePHP ORM provides a powerful and flexible way to work with relational
 databases. Using a datamapper pattern the ORM allows you to manipulate data as
 entities allowing you to create expressive domain layers in your applications.
 
-## Connecting to the Database
+## Database engines supported
 
 The CakePHP ORM is compatible with:
 
@@ -12,6 +15,9 @@ The CakePHP ORM is compatible with:
 * Postgres 8+
 * SQLite3
 * SQLServer 2008+
+* Oracle (through a [community plugin](https://github.com/CakeDC/cakephp-oracle-driver))
+
+## Connecting to the Database
 
 The first thing you need to do when using this library is register a connection
 object.  Before performing any operations with the connection, you need to
@@ -20,11 +26,13 @@ specify a driver to use:
 ```php
 use Cake\Datasource\ConnectionManager;
 
-ConnectionManager::create('default', [
+ConnectionManager::config('default', [
+	'className' => 'Cake\Database\Connection',
 	'driver' => 'Cake\Database\Driver\Mysql',
 	'database' => 'test',
-	'login' => 'root',
-	'password' => 'secret'
+	'username' => 'root',
+	'password' => 'secret',
+	'cacheMetaData' => false // If set to `true` you need to install the optional "cakephp/cache" package.
 ]);
 ```
 
@@ -33,7 +41,7 @@ mappers if no explicit connection is defined.
 
 ## Creating Associations
 
-In your table classes you can define the relations between your tables. CakePHP
+In your table classes you can define the relations between your tables. CakePHP's ORM
 supports 4 association types out of the box:
 
 * belongsTo - E.g. Many articles belong to a user.
@@ -84,7 +92,7 @@ $data = [
 ];
 
 $articles = TableRegistry::get('Articles');
-$article = $articles->newEnitity($data, [
+$article = $articles->newEntity($data, [
 	'associated' => ['Tags', 'Comments']
 ]);
 $articles->save($article, [
@@ -108,5 +116,5 @@ $articles->delete($article);
 
 ## Additional Documentation
 
-Consult [the CakePHP documentation](http://book.cakephp.org/3.0/en/orm.html)
+Consult [the CakePHP ORM documentation](http://book.cakephp.org/3.0/en/orm.html)
 for more in-depth documentation.

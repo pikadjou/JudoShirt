@@ -129,7 +129,7 @@ class Log
     /**
      * LogEngineRegistry class
      *
-     * @var LogEngineRegistry
+     * @var \Cake\Log\LogEngineRegistry
      */
     protected static $_registry;
 
@@ -243,27 +243,37 @@ class Log
      *
      * Reading config data back:
      *
-     * `Log::config('default');`
+     * ```
+     * Log::config('default');
+     * ```
      *
      * Setting a cache engine up.
      *
-     * `Log::config('default', $settings);`
+     * ```
+     * Log::config('default', $settings);
+     * ```
      *
      * Injecting a constructed adapter in:
      *
-     * `Log::config('default', $instance);`
+     * ```
+     * Log::config('default', $instance);
+     * ```
      *
      * Using a factory function to get an adapter:
      *
-     * `Log::config('default', function () { return new FileLog(); });`
+     * ```
+     * Log::config('default', function () { return new FileLog(); });
+     * ```
      *
      * Configure multiple adapters at once:
      *
-     * `Log::config($arrayOfConfig);`
+     * ```
+     * Log::config($arrayOfConfig);
+     * ```
      *
      * @param string|array $key The name of the logger config, or an array of multiple configs.
      * @param array|null $config An array of name => config data for adapter.
-     * @return mixed null when adding configuration and an array of configuration data when reading.
+     * @return array|null Null when adding configuration and an array of configuration data when reading.
      * @throws \BadMethodCallException When trying to modify an existing config.
      */
     public static function config($key, $config = null)
@@ -279,7 +289,7 @@ class Log
      * Get a logging engine.
      *
      * @param string $name Key name of a configured adapter to get.
-     * @return mixed Instance of BaseLog or false if not found
+     * @return \Cake\Log\Engine\BaseLog|false Instance of BaseLog or false if not found
      */
     public static function engine($name)
     {
@@ -311,14 +321,18 @@ class Log
      *
      * Write a 'warning' message to the logs:
      *
-     * `Log::write('warning', 'Stuff is broken here');`
+     * ```
+     * Log::write('warning', 'Stuff is broken here');
+     * ```
      *
      * ### Using scopes
      *
      * When writing a log message you can define one or many scopes for the message.
      * This allows you to handle messages differently based on application section/feature.
      *
-     * `Log::write('warning', 'Payment failed', ['scope' => 'payment']);`
+     * ```
+     * Log::write('warning', 'Payment failed', ['scope' => 'payment']);
+     * ```
      *
      * When configuring loggers you can configure the scopes a particular logger will handle.
      * When using scopes, you must ensure that the level of the message, and the scope of the message

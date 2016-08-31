@@ -14,11 +14,11 @@
  */
 namespace Cake\Database\Dialect;
 
-use Cake\Database\Dialect\TupleComparisonTranslatorTrait;
 use Cake\Database\Expression\FunctionExpression;
 use Cake\Database\Expression\OrderByExpression;
 use Cake\Database\Expression\UnaryExpression;
 use Cake\Database\Query;
+use Cake\Database\Schema\SqlserverSchema;
 use Cake\Database\SqlDialectTrait;
 use Cake\Database\SqlserverCompiler;
 use PDO;
@@ -65,7 +65,7 @@ trait SqlserverDialectTrait
         }
 
         if ($offset !== null && !$query->clause('order')) {
-            $query->order($query->newExpr()->add('SELECT NULL'));
+            $query->order($query->newExpr()->add('(SELECT NULL)'));
         }
 
         if ($this->_version() < 11 && $offset !== null) {
@@ -82,6 +82,8 @@ trait SqlserverDialectTrait
      */
     public function _version()
     {
+        $this->connect();
+
         return $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
     }
 
@@ -99,9 +101,9 @@ trait SqlserverDialectTrait
     protected function _pagingSubquery($original, $limit, $offset)
     {
         $field = '_cake_paging_._cake_page_rownum_';
+        $order = $original->clause('order') ?: new OrderByExpression('(SELECT NULL)');
 
         $query = clone $original;
-        $order = $query->clause('order') ?: new OrderByExpression('NULL');
         $query->select([
                 '_cake_page_rownum_' => new UnaryExpression('ROW_NUMBER() OVER', $order)
             ])->limit(null)
@@ -113,10 +115,11 @@ trait SqlserverDialectTrait
             ->from(['_cake_paging_' => $query]);
 
         if ($offset) {
-            $outer->where(["$field >" => $offset]);
+            $outer->where(["$field > " . (int)$offset]);
         }
         if ($limit) {
-            $outer->where(["$field <=" => (int)$offset + (int)$limit]);
+            $value = (int)$offset + (int)$limit;
+            $outer->where(["$field <= $value"]);
         }
 
         // Decorate the original query as that is what the
@@ -125,6 +128,7 @@ trait SqlserverDialectTrait
             if (isset($row['_cake_page_rownum_'])) {
                 unset($row['_cake_page_rownum_']);
             }
+
             return $row;
         });
 
@@ -135,8 +139,8 @@ trait SqlserverDialectTrait
      * Returns the passed query after rewriting the DISTINCT clause, so that drivers
      * that do not support the "ON" part can provide the actual way it should be done
      *
-     * @param Query $original The query to be transformed
-     * @return Query
+     * @param \Cake\Database\Query $original The query to be transformed
+     * @return \Cake\Database\Query
      */
     protected function _transformDistinct($original)
     {
@@ -153,10 +157,11 @@ trait SqlserverDialectTrait
             ->select(function ($q) use ($distinct, $order) {
                 $over = $q->newExpr('ROW_NUMBER() OVER')
                     ->add('(PARTITION BY')
-                    ->add($q->newExpr()->add($distinct)->type(','))
+                    ->add($q->newExpr()->add($distinct)->tieWith(','))
                     ->add($order)
                     ->add(')')
-                    ->type(' ');
+                    ->tieWith(' ');
+
                 return [
                     '_cake_distinct_pivot_' => $over
                 ];
@@ -176,6 +181,7 @@ trait SqlserverDialectTrait
             if (isset($row['_cake_distinct_pivot_'])) {
                 unset($row['_cake_distinct_pivot_']);
             }
+
             return $row;
         });
 
@@ -191,6 +197,7 @@ trait SqlserverDialectTrait
     protected function _expressionTranslators()
     {
         $namespace = 'Cake\Database\Expression';
+
         return [
             $namespace . '\FunctionExpression' => '_transformFunctionExpression',
             $namespace . '\TupleComparison' => '_transformTupleComparison'
@@ -209,7 +216,7 @@ trait SqlserverDialectTrait
         switch ($expression->name()) {
             case 'CONCAT':
                 // CONCAT function is expressed as exp1 + exp2
-                $expression->name('')->type(' +');
+                $expression->name('')->tieWith(' +');
                 break;
             case 'DATEDIFF':
                 $hasDay = false;
@@ -217,6 +224,7 @@ trait SqlserverDialectTrait
                     if ($value === 'day') {
                         $hasDay = true;
                     }
+
                     return $value;
                 };
                 $expression->iterateParts($visitor);
@@ -236,6 +244,51 @@ trait SqlserverDialectTrait
             case 'NOW':
                 $expression->name('GETUTCDATE');
                 break;
+            case 'EXTRACT':
+                $expression->name('DATEPART')->tieWith(' ,');
+                break;
+            case 'DATE_ADD':
+                $params = [];
+                $visitor = function ($p, $key) use (&$params) {
+                    if ($key === 0) {
+                        $params[2] = $p;
+                    } else {
+                        $valueUnit = explode(' ', $p);
+                        $params[0] = rtrim($valueUnit[1], 's');
+                        $params[1] = $valueUnit[0];
+                    }
+
+                    return $p;
+                };
+                $manipulator = function ($p, $key) use (&$params) {
+                    return $params[$key];
+                };
+
+                $expression
+                    ->name('DATEADD')
+                    ->tieWith(',')
+                    ->iterateParts($visitor)
+                    ->iterateParts($manipulator)
+                    ->add([$params[2] => 'literal']);
+                break;
+            case 'DAYOFWEEK':
+                $expression
+                    ->name('DATEPART')
+                    ->tieWith(' ')
+                    ->add(['weekday, ' => 'literal'], [], true);
+                break;
+            case 'SUBSTR':
+                $expression->name('SUBSTRING');
+                if (count($expression) < 4) {
+                    $params = [];
+                    $expression
+                        ->iterateParts(function ($p) use (&$params) {
+                            return $params[] = $p;
+                        })
+                        ->add([new FunctionExpression('LEN', [$params[0]]), ['string']]);
+                }
+
+                break;
         }
     }
 
@@ -249,7 +302,7 @@ trait SqlserverDialectTrait
      */
     public function schemaDialect()
     {
-        return new \Cake\Database\Schema\SqlserverSchema($this);
+        return new SqlserverSchema($this);
     }
 
     /**

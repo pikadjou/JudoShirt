@@ -15,12 +15,13 @@
 namespace Cake\Console;
 
 use Cake\Console\Exception\ConsoleException;
+use SimpleXmlElement;
 
 /**
  * An object to represent a single option used in the command line.
  * ConsoleOptionParser creates these when you use addOption()
  *
- * @see ConsoleOptionParser::addOption()
+ * @see \Cake\Console\ConsoleOptionParser::addOption()
  */
 class ConsoleInputOption
 {
@@ -141,6 +142,7 @@ class ConsoleInputOption
         if (strlen($name) < $width) {
             $name = str_pad($name, $width, ' ');
         }
+
         return sprintf('%s%s%s', $name, $this->_help, $default);
     }
 
@@ -153,12 +155,13 @@ class ConsoleInputOption
     {
         $name = (strlen($this->_short) > 0) ? ('-' . $this->_short) : ('--' . $this->_name);
         $default = '';
-        if (!empty($this->_default) && $this->_default !== true) {
+        if (strlen($this->_default) > 0 && $this->_default !== true) {
             $default = ' ' . $this->_default;
         }
         if (!empty($this->_choices)) {
             $default = ' ' . implode('|', $this->_choices);
         }
+
         return sprintf('[%s%s]', $name, $default);
     }
 
@@ -204,6 +207,7 @@ class ConsoleInputOption
                 )
             );
         }
+
         return true;
     }
 
@@ -213,7 +217,7 @@ class ConsoleInputOption
      * @param \SimpleXmlElement $parent The parent element.
      * @return \SimpleXmlElement The parent with this option appended.
      */
-    public function xml(\SimpleXmlElement $parent)
+    public function xml(SimpleXmlElement $parent)
     {
         $option = $parent->addChild('option');
         $option->addAttribute('name', '--' . $this->_name);
@@ -228,6 +232,7 @@ class ConsoleInputOption
         foreach ($this->_choices as $valid) {
             $choices->addChild('choice', $valid);
         }
+
         return $parent;
     }
 }

@@ -1,3 +1,6 @@
+[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/event.svg?style=flat-square)](https://packagist.org/packages/cakephp/event)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
+
 # CakePHP Event Library
 
 This library emulates several aspects of how events are triggered and managed in popular JavaScript
@@ -13,12 +16,12 @@ of the action.
 
 ```php
 use Cake\Event\Event;
-use Cake\Event\EventManagerTrait;
+use Cake\Event\EventDispatcherTrait;
 
 class Orders
 {
 
-	use EventManagerTrait;
+	use EventDispatcherTrait;
 
 	public function placeOrder($order)
 	{

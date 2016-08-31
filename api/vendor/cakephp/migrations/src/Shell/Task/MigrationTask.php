@@ -60,7 +60,7 @@ class MigrationTask extends SimpleMigrationTask
 
         $action = $this->detectAction($className);
 
-        if (empty($action)) {
+        if ($action === null) {
             return [
                 'plugin' => $this->plugin,
                 'pluginPath' => $pluginPath,
@@ -109,17 +109,17 @@ class MigrationTask extends SimpleMigrationTask
         if (preg_match('/^(Create|Drop)(.*)/', $name, $matches)) {
             $action = strtolower($matches[1]) . '_table';
             $table = Inflector::tableize(Inflector::pluralize($matches[2]));
-        } elseif (preg_match('/^(Add).+?(?:To)(.*)/', $name, $matches)) {
+        } elseif (preg_match('/^(Add).*(?:To)(.*)/', $name, $matches)) {
             $action = 'add_field';
             $table = Inflector::tableize(Inflector::pluralize($matches[2]));
-        } elseif (preg_match('/^(Remove).+?(?:From)(.*)/', $name, $matches)) {
+        } elseif (preg_match('/^(Remove).*(?:From)(.*)/', $name, $matches)) {
             $action = 'drop_field';
             $table = Inflector::tableize(Inflector::pluralize($matches[2]));
         } elseif (preg_match('/^(Alter)(.*)/', $name, $matches)) {
             $action = 'alter_table';
             $table = Inflector::tableize(Inflector::pluralize($matches[2]));
         } else {
-            return [];
+            return null;
         }
 
         return [$action, $table];

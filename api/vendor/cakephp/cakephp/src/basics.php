@@ -28,29 +28,34 @@ use Cake\Error\Debugger;
 
 if (!function_exists('debug')) {
     /**
-     * Prints out debug information about given variable.
+     * Prints out debug information about given variable and returns the
+     * variable that was passed.
      *
      * Only runs if debug level is greater than zero.
      *
      * @param mixed $var Variable to show debug information for.
      * @param bool|null $showHtml If set to true, the method prints the debug data in a browser-friendly way.
      * @param bool $showFrom If set to true, the method prints from where the function was called.
-     * @return void
+     * @return mixed The same $var that was passed
      * @link http://book.cakephp.org/3.0/en/development/debugging.html#basic-debugging
      * @link http://book.cakephp.org/3.0/en/core-libraries/global-constants-and-functions.html#debug
      */
     function debug($var, $showHtml = null, $showFrom = true)
     {
         if (!Configure::read('debug')) {
-            return;
+            return $var;
         }
 
+        $originalVar = $var;
         $file = '';
         $line = '';
         $lineInfo = '';
         if ($showFrom) {
             $trace = Debugger::trace(['start' => 1, 'depth' => 2, 'format' => 'array']);
-            $search = [ROOT];
+            $search = [];
+            if (defined('ROOT')) {
+                $search = [ROOT];
+            }
             if (defined('CAKE_CORE_INCLUDE_PATH')) {
                 array_unshift($search, CAKE_CORE_INCLUDE_PATH);
             }
@@ -73,7 +78,7 @@ HTML;
 
 TEXT;
         $template = $html;
-        if (php_sapi_name() === 'cli' || $showHtml === false) {
+        if ((PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') || $showHtml === false) {
             $template = $text;
             if ($showFrom) {
                 $lineInfo = sprintf('%s (line %s)', $file, $line);
@@ -91,6 +96,8 @@ TEXT;
             }
         }
         printf($template, $lineInfo, $var);
+
+        return $originalVar;
     }
 
 }
@@ -108,7 +115,6 @@ if (!function_exists('stackTrace')) {
      *
      * @param array $options Format for outputting stack trace
      * @return mixed Formatted stack trace
-     * @see Debugger::trace()
      */
     function stackTrace(array $options = [])
     {
@@ -123,24 +129,25 @@ if (!function_exists('stackTrace')) {
 
 }
 
-if (!function_exists('json_last_error_msg')) {
+if (!function_exists('breakpoint')) {
     /**
-     * Provides the fallback implementation of json_last_error_msg() available in PHP 5.5 and above.
-     *
-     * @return string Error message.
+     * Command to return the eval-able code to startup PsySH in interactive debugger
+     * Works the same way as eval(\Psy\sh());
+     * psy/psysh must be loaded in your project
+     * @link http://psysh.org/
+     * ```
+     * eval(breakpoint());
+     * ```
+     * @return string
      */
-    function json_last_error_msg()
+    function breakpoint()
     {
-        static $errors = array(
-            JSON_ERROR_NONE => '',
-            JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
-            JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
-            JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
-            JSON_ERROR_SYNTAX => 'Syntax error',
-            JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded'
+        if ((PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') && class_exists('\Psy\Shell')) {
+            return 'extract(\Psy\Shell::debug(get_defined_vars(), isset($this) ? $this : null));';
+        }
+        trigger_error(
+            "psy/psysh must be installed and you must be in a CLI environment to use the breakpoint function",
+            E_USER_WARNING
         );
-        $error = json_last_error();
-        return array_key_exists($error, $errors) ? $errors[$error] : "Unknown error ({$error})";
     }
-
 }
