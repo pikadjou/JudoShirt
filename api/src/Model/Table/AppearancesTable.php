@@ -56,6 +56,23 @@ class AppearancesTable extends Table
         return $this->find()->where(["shopId" => $shopId])->limit(1);
     }
 
+    public function getByDesignId($designId){
+        return $this->_matchWithDesign($this->_find(), $designId)->select($this)->toArray();
+    }
+
+
+    private function _find(){
+        return $this->find();
+    }
+
+    private function _matchWithDesign($query, $designId){
+
+        return $query->matching(
+                    'Products.Articles.Designs', function ($q) use ($designId) {
+                        return $q->where(["Designs.id" => $designId]);
+                    }
+                );
+    }
     public function addAppearancesForProduct($response){
     
         if(!$response->appearances){

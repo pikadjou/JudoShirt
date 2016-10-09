@@ -19,7 +19,7 @@ class ArticlesController extends AppController
         parent::initialize();
         $this->loadComponent('RequestHandler');
         
-         $this->loadModel("Designs");
+        $this->loadModel("Designs");
 
     }
     
@@ -30,6 +30,7 @@ class ArticlesController extends AppController
             parent::setJson($response);
             return;
         }
+
         $query = $this->Designs->getOne($id);
         $this->Designs->addCategories($query);
         $design = $query->first();

@@ -43,41 +43,6 @@ class DesignsTable extends Table
             'dependent' => true,
         ]);
     }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
-        
-        $validator
-            ->allowEmpty('name');
-        
-            
-        $validator
-            ->allowEmpty('content');
-            
-        $validator
-            ->allowEmpty('thumbnail');
-            
-        $validator
-            ->allowEmpty('header');
-            
-        $validator
-            ->allowEmpty('shopId');
-            
-        $validator
-            ->allowEmpty('idCustomShop');
-
-        return $validator;
-    }
     
     /**
      * Default get all design by category id.
@@ -134,8 +99,75 @@ class DesignsTable extends Table
         
         return $designs;
     }
+            
+    public function findByGenders($types){
+
+        $typeId = [];
+
+        foreach($types as $v){
+            $typeId[] = $v->id;
+        }
+        $query = $this->_matchWithType($this->_findNew(), $typeId);
+
+        $query->group('Designs.id');
+
+        $query->select($this);
+        return $query->toArray();
+
+
+    }
+
+    public function findTop(){
+
+        $query = $this->_findTop();
+
+        return $query->toArray();
+
+
+    }
     
-    
+    private function _find(){
+        
+        $designs = $this->find('all')
+                        ->order('Designs.priority');
+        
+        return $designs;
+    }
+    private function _findActive(){
+
+        $designs = $this->_find()->where(["Designs.visible" => true]);
+        
+        return $designs;
+    }
+    private function _findNew(){
+
+//Better to use config
+        $designs = $this->_findActive()->matching(
+                            'Categories', function ($q) {
+                        return $q->where(["Categories.id" => 2]);
+                    });
+        
+        return $designs;
+    }
+    private function _findTop(){
+
+//Better to use config
+        $designs = $this->_findActive()->matching(
+                            'Categories', function ($q) {
+                        return $q->where(["Categories.id" => 2]);
+                    });
+        
+        return $designs;
+    }
+
+    private function _matchWithType($query, $typeId){
+
+        return $query->matching(
+                            'Articles.Products.Types', function ($q) use ($typeId) {
+                        return $q->where(["Types.id IN" => $typeId]);
+                    }
+                );
+    }
     /**
      * Make join
      */

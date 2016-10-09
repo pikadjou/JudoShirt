@@ -38,6 +38,9 @@ class DesignsController extends AppController
         $query->contain([
             'Tags'
         ]);
+        $query->contain([
+            'Products.Colors'
+        ]);
         
         $design = $query->first();
         
@@ -69,7 +72,10 @@ class DesignsController extends AppController
         $query->contain([
             'Tags'
         ]);
-        
+        $query->contain([
+            'Products.Colors'
+        ]);
+
         $designs = $query->toArray();
         
         $category = null;
@@ -80,7 +86,7 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetDesignsResponse();
         $response->init($designs, $category);
         
-        Cache\CacheController($key, $response);
+        Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
 
@@ -99,7 +105,10 @@ class DesignsController extends AppController
         $query->contain([
             'Tags'
         ]);
-        
+        $query->contain([
+            'Products.Colors'
+        ]);
+
         $design = $query->first();
         
         
@@ -110,7 +119,7 @@ class DesignsController extends AppController
     }
     
     
-    public function getTopDesigns($limit = null, $tags = true)
+    public function getTopDesigns()
     {
         $key = "DesignsController-getTopDesigns-".$limit."-".$tags;
         if (($response = Cache\CacheController::read($key)) !== false) {
@@ -123,14 +132,10 @@ class DesignsController extends AppController
         if($category){
             $query = $this->Designs->getAllById($category->id);
             
-            if($limit){
-                $query->limit($limit);
-            }
-            if($tags){
-                $this->Designs->addTags($query);
-            }
             
             $designs = $query->toArray();
+
+            debug($designs);
         }
         
         $response = new DesignsRequestHandler\GetTopDesignsResponse();
@@ -193,6 +198,11 @@ class DesignsController extends AppController
             }
             
             $designs = $query->toArray();
+
+            $this->loadModel("Appearances");
+            foreach($designs as $design){
+                $design['appearances'] = $this->Appearances->getByDesignId($design->id);
+            }
         }
         
         $response = new DesignsRequestHandler\GetPromotionDesignsResponse();

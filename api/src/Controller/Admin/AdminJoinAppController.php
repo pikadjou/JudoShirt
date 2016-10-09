@@ -25,38 +25,86 @@ namespace App\Controller\Admin;
  */
 class AdminJoinAppController extends AdminAppController
 {
+    public $join = [];
     
     public function initialize()
     {
         parent::initialize();
         
+        $this->order = ['priority', 'id'];
+ 
+        $index = 1;
+        foreach ($this->model->associations()as $k => $v){
+            $this->join[$index] = $v;
+
+            $this->join[$index]->structure = $this->_getColumnsType($v);
+            
+            $joinkey = $v->foreignKey();
+            $this->join[$index]->joinalias = explode('_', $joinkey)[0];
+            $index++;
+        }
     }
     
-    public function index()
+    public function index($tableMain = 1)
     {
+        $query = $this->model->find()->contain([$this->join[1]->name(), $this->join[2]->name()]);
+        
+        $orderTable = $this->join[$tableMain];
+        
+        foreach($this->order as $v){
+            if(!array_key_exists($v , $orderTable->structure)){
+                continue;
+            }
+            $query->order($orderTable->name() .".".$v);
+        }
+        
+        $query->order($orderTable->foreignKey());
+        
+        $join[1] = $this->join[$tableMain];
+        
+        foreach($this->join as $k => $v){
 
-        $query = $this->model->find()->order($this->order);
-        
-        $this->set('types', $this->_getColumnsType());
+            if($k != $tableMain){
+                $join[count($join) + 1] = $v;
+            }
+        }
+          
+        $this->set('mainView', $tableMain);
+        $this->set('otherView', ($tableMain==1) ? 2 : 1);
+
+        $this->set('joins', $join);
         $this->set('datas', $this->paginate($query));
-        $this->set('_serialize', ['datas', "types"]);
+        $this->set('_serialize', ['datas', "joins"]);
         
-//        debug($this->paginate($this->model));
         $this->render('/Admin/Join/index');
     }
     
-     public function view($id = null)
+     public function view($tableMain = 1, $id = null)
     {
-        $data = $this->model->get($id,[
-            'contain' => $this->_getAssociationModel()
-         ]);
+        $query = $this->model->find()->contain([$this->join[1]->name(), $this->join[2]->name()]);
         
-        $this->set('types', $this->_getColumnsType());
+        $orderTable = $this->join[$tableMain];
+        
+        $query->where([$orderTable->alias() . ".id" => $id]);
+        
+        $join[1] = $this->join[$tableMain];
+        
+        foreach($this->join as $k => $v){
 
-        $this->set('data', $data);
-        $this->set('_serialize', ['data', "types"]);
+            if($k != $tableMain){
+                $join[count($join) + 1] = $v;
+            }
+        }
         
-        $this->render('/Admin/view');
+        $this->set('mainView', $tableMain);
+        $this->set('otherView', ($tableMain==1) ? 2 : 1);
+        
+        $this->set('joins', $join);
+        $this->set('datas', $this->paginate($query));
+        $this->set('_serialize', ['datas', "joins"]);
+        
+        $this->render('/Admin/Join/view');
+        
     }
 
 
@@ -67,47 +115,74 @@ class AdminJoinAppController extends AdminAppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($tableMain = 1, $id = null)
     {
-        $entity = null;
-        if($id){
-             $entity = $this->model->get($id, [
-                'contain' => $this->_getAssociationModel()
-            ]);
+        if(!$id){
+            return;
         }
-        if(!$entity){
-            $entity = $this->model->newEntity();
-        }
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $data = $this->request->data;
-//            debug($data);
-//            return;
-            //$entity->set($data, ['guard' => false]);
-            $entity = $this->model->patchEntity($entity, $data, ['validate' => false]);
-                        
-            if ($this->model->save($entity)) {
-                $this->Flash->success(__('The data has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The data could not be saved. Please, try again.'));
+        $join[1] = $this->join[$tableMain];
+        
+        foreach($this->join as $k => $v){
+            if($k != $tableMain){
+                $join[count($join) + 1] = $v;
             }
         }
         
-        $associationsList = [];
-        foreach ($this->associations as $key => $value) {
-            if($key === ""){
-                continue;
-            }
-            $associationsList[$value] = $this->model->$value->find('list', ['limit' => 200]);
-        }
-        
-        $this->set('associations', $this->associations);
-        $this->set('types', $this->_getColumnsType());
-        $this->set(compact('entity', 'associationsList'));  /*, 'categories', 'tags'*/
-        $this->set('_serialize', ["entity", "types", "associations"]);
-        
-        $this->render('/Admin/edit');
+        $query = $this->model->find()->contain([$this->join[1]->name(), $this->join[2]->name()]);
 
+        $query->where([$this->join[$tableMain]->alias() . ".id" => $id]);
+        
+        $otherView = ($tableMain==1) ? 2 : 1;
+        $queryList = $this->model->find()->contain([$this->join[$otherView]->name()]);
+        
+        $queryList->distinct([$this->join[$otherView]->foreignKey()]);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $datas = $this->request->data;
+                //debug($datas);
+            foreach ($query as $entity){
+                
+                if(!in_array($entity[$join[2]->joinalias]->id, $datas) || 
+                        $datas[$entity[$join[2]->joinalias]->id] == 0){
+                    $this->model->delete($entity);
+                }
+                
+                //unset($datas[$entity[$join[2]->joinalias]->id]);
+            }
+            //debug($datas);
+            
+            foreach ($datas as $key => $data){
+                
+                if($data == 0){
+                    continue;
+                }
+                $entity = $this->model->find()->where([$join[1]->foreignKey() => $id, $join[2]->foreignKey() => $key])->first();
+                
+                if($entity){
+                    continue;
+                }
+                
+                $entity = $this->model->newEntity();
+
+                $entity[$join[1]->foreignKey()] = $id;
+                $entity[$join[2]->foreignKey()] = $key;
+                $this->model->save($entity);
+            }
+
+        }
+        
+        $this->set('mainView', $tableMain);
+        $this->set('otherView', ($tableMain==1) ? 2 : 1);
+        
+        $this->set('allowField', ['id', 'name', 'short' , 'thumbnail']);
+        
+        $this->set('joins', $join);
+        $this->set('datas', $query);
+        $this->set('datasList', $queryList);
+
+        $this->set('_serialize', ['datas', 'datasList', "joins"]);
+        
+        $this->render('/Admin/Join/edit');
     }
     
     /**
@@ -127,32 +202,5 @@ class AdminJoinAppController extends AdminAppController
             $this->Flash->error(__('The data could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
-    }
-    
-    protected function _getColumnsType($model = null){
-        
-        if($model === null){
-            $model = $this->model;
-        }
-        
-        $return = [];
-        foreach($model->schema()->columns() as $column){
-            $return[$column] = $this->model->schema()->columnType($column);
-        }
-        
-        return $return;
-    }
-    
-    protected function _getAssociationModel(){
-        
-        $return = [];
-        foreach ($this->associations as $key => $value) {
-            if($key === ""){
-                $return = array_merge($return, $value);
-            }else{
-                $return[] = $value;
-            }
-        }
-        return $return;
     }
 }

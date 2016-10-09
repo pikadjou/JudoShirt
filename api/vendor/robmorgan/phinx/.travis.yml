@@ -12,25 +12,21 @@ php:
   - 7
   - hhvm
 
-env:
-  - COMPOSER_FLAGS=--prefer-lowest
-
 matrix:
-  exclude:
-    - php: hhvm
-      env: COMPOSER_FLAGS=--prefer-lowest
-  include:
-    - php: hhvm
-      env: COMPOSER_FLAGS=
+    include:
+        - php: 5.4
+          env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+    allow_failures:
+        - php: hhvm
 
 before_script:
     - travis_retry composer self-update
-    - travis_retry composer update --no-interaction --prefer-source --prefer-stable ${COMPOSER_FLAGS}
+    - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
     - mysql -e 'create database phinx_testing;'
     - psql -c 'create database phinx_testing;' -U postgres
 
 script:
-    - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+    - phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar

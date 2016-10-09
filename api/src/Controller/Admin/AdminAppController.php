@@ -36,6 +36,7 @@ class AdminAppController extends AppController
     {
         parent::initialize();
         
+        $this->autoRender = false;
     }
     
     public function index()
@@ -47,7 +48,6 @@ class AdminAppController extends AppController
         $this->set('datas', $this->paginate($query));
         $this->set('_serialize', ['datas', "types"]);
         
-//        debug($this->paginate($this->model));
         $this->render('/Admin/index');
     }
     
@@ -143,9 +143,8 @@ class AdminAppController extends AppController
         
         $return = [];
         foreach($model->schema()->columns() as $column){
-            $return[$column] = $this->model->schema()->columnType($column);
+            $return[$column] = $model->schema()->columnType($column);
         }
-        
         return $return;
     }
     

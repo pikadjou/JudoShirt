@@ -129,11 +129,13 @@ class Environment
     /**
      * Executes the specified seeder on this environment.
      *
-     * @param SeedInterface $seed
+     * @param MigrationInterface $migration Migration
+     * @param string $direction Direction
      * @return void
      */
     public function executeSeed(SeedInterface $seed)
     {
+        $startTime = time();
         $seed->setAdapter($this->getAdapter());
 
         // begin the transaction if the adapter supports it

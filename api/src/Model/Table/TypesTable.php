@@ -7,6 +7,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+
 /**
  * Tags Model
  *
@@ -38,6 +39,7 @@ class TypesTable extends Table
             'targetForeignKey' => 'product_id',
             'joinTable' => 'products_types'
         ]);
+
     }
 
     /**
@@ -59,39 +61,40 @@ class TypesTable extends Table
     }
     
     public function getByShopId($id){
-        return $this->find()->where(["shopId" => $id])->limit(1);
+        return $this->find()->where(["Types.shopId" => $id])->limit(1);
     }
-    
+
     public function getByName($name){
-        return $this->find()->where(["name" => $name])->limit(1);
+        return $this->find()->where(["Types.name" => $name])->limit(1);
     }
     
+    public function findMasterProducts(){
+        return $this->_findType(1)->where(["Types.parent_id IS" => null])->toArray();
+    }
+    public function findProducts(){
+        return $this->_findType(1)->toArray();
+    }
+    public function findGenders(){
+        return $this->_findType(2)->toArray();
+    }
+
+    private function _findType($type){
+        return $this->find()->where(["Types.type" => $type]);
+    } 
     public function addTypesForProduct($response){
                 
         $fullName = (string)$response->name;
-        $name = $response->categoryName;
-        $find = false;
-        for($i = 0, $l = count($this->_manualClotheType); $i < $l; $i++){
-            if(stripos($name, $this->_manualClotheType[$i]) !== false){
+        $name = (string)$response->categoryName;
 
-                $name = $this->_manualClotheType[$i];
-                $find = true;
-                break;
+        debug($fullName);
+        debug($name);
+
+        foreach ($this->_manualClotheMatch as $key => $value){
+            if(stripos($name, $key) !== false){
+                $name = str_replace($key, $value, $name);
             }
         }
-        
-        if($find === false){
-            
-            foreach ($this->_manualClotheMatch as $key => $value){
-                if(stripos($name, $key) !== false){
 
-                    $name = $value;
-                    $find = true;
-                    break;
-
-                }
-            }
-        }
         $types = [];
         
         $type = $this->getByName($name)->first();
@@ -142,7 +145,35 @@ class TypesTable extends Table
             $types[] = $this->save($type);
         }
         
-        return $types;
-        
+        return $types;   
+    }
+
+    public function findByGenders($types, $productModel){
+
+
+        $products = $productModel->findByGenders($types);
+        $productIds = [];
+
+        foreach($products as $v){
+            $productIds[] = $v->id;
+        }
+
+        $query = $this->_matchWithTypeProducts($this->_findType(1), $productIds);
+
+        $query->group('Types.id');
+
+        $query->select($this);
+
+        return $query->toArray();
+
+    }
+
+    private function _matchWithTypeProducts($query, $productIds){
+
+        return $query->matching(
+                    'Products', function ($q) use ($productIds) {
+                        return $q->where(["Products.id IN" => $productIds]);
+                    }
+                );
     }
 }

@@ -17,6 +17,7 @@ class Design
     
     public $categories = [];
     public $tags = [];
+    public $appearances = [];
     
     function __construct($design){
         
@@ -37,6 +38,10 @@ class Design
         
         for($i = 0, $l = count($design->tags); $i < $l; $i++){
             $this->tags[] = new \App\Services\Entity\Tag($design->tags[$i]);
+        }
+
+        for($i = 0, $l = count($design->appearances); $i < $l; $i++){
+            $this->appearances[] = new \App\Services\Entity\Appearance($design->appearances[$i]);
         }
     }
 }

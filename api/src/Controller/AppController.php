@@ -42,9 +42,9 @@ class AppController extends Controller
         parent::initialize();
         
        // $this->viewBuilder()->layout('empty');
-        if(Configure::read('debug')){
-            $this->render('index');  
-        }
+        if(Configure::read('DebugView')){
+            $this->render('/index');  
+       }
     }
     
     function beforeFilter(Event $event) {

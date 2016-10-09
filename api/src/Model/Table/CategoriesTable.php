@@ -147,6 +147,42 @@ class CategoriesTable extends Table
         return $design;
     }
     
+    public function findByGenders($types){
+        $typeId = [];
+
+        foreach($types as $v){
+            $typeId[] = $v->id;
+        }
+        $query = $this->_matchWithType($this->_findActive(), $typeId);
+
+        $query->group('Designs.id');
+
+        $query->select($this);
+
+        return $query->toArray();
+    }
+
+    private function _find(){
+        
+        $categories = $this->find('all')->order('Categories.visible');
+        
+        return $categories;
+    }
+    private function _findActive(){
+        
+        $categories =  $this->_find()->where(["Categories.visible" => true]);
+        
+        return $categories;
+    }
+
+    private function _matchWithType($query, $typeId){
+
+        return $query->matching(
+                        'Designs.Articles.Products.Types', function ($q) use ($typeId) {
+                    return $q->where(["Types.id IN" => $typeId]);
+                }
+            );
+    }
     public function addChildren($query){
         
         $query->contain(['Children']);

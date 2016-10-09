@@ -11,6 +11,7 @@
  */
 namespace Migrations;
 
+use Cake\Datasource\ConnectionManager;
 use Phinx\Config\Config;
 use Phinx\Config\ConfigInterface;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -48,6 +49,15 @@ class Migrations
     protected $default = [];
 
     /**
+     * Current command being run.
+     * Useful if some logic needs to be applied in the ConfigurationTrait depending
+     * on the command
+     *
+     * @var array
+     */
+    protected $command;
+
+    /**
      * Constructor
      * @param array $default Default option to be used when calling a method.
      * Available options are :
@@ -65,6 +75,28 @@ class Migrations
     }
 
     /**
+     * Sets the command
+     *
+     * @param string $command Command name to store.
+     * @return self
+     */
+    public function setCommand($command)
+    {
+        $this->command = $command;
+        return $this;
+    }
+
+    /**
+     * Gets the command
+     *
+     * @return string Command name
+     */
+    public function getCommand()
+    {
+        return $this->command;
+    }
+
+    /**
      * Returns the status of each migrations based on the options passed
      *
      * @param array $options Options to pass to the command
@@ -79,6 +111,7 @@ class Migrations
      */
     public function status($options = [])
     {
+        $this->setCommand('status');
         $input = $this->getInput('Status', [], $options);
         $params = ['default', $input->getOption('format')];
 
@@ -102,6 +135,7 @@ class Migrations
      */
     public function migrate($options = [])
     {
+        $this->setCommand('migrate');
         $input = $this->getInput('Migrate', [], $options);
         $method = 'migrate';
         $params = ['default', $input->getOption('target')];
@@ -132,6 +166,7 @@ class Migrations
      */
     public function rollback($options = [])
     {
+        $this->setCommand('rollback');
         $input = $this->getInput('Rollback', [], $options);
         $method = 'rollback';
         $params = ['default', $input->getOption('target')];
@@ -158,19 +193,50 @@ class Migrations
      *
      * @return bool Success
      */
-    public function markMigrated($version, $options = [])
+    public function markMigrated($version = null, $options = [])
     {
-        $input = $this->getInput('MarkMigrated', ['version' => $version], $options);
-        $params = [$version];
+        $this->setCommand('mark_migrated');
 
-        $isMigrated = $this->run('isMigrated', $params, $input);
-        if ($isMigrated) {
-            return true;
+        if (isset($options['target']) &&
+            isset($options['exclude']) &&
+            isset($options['only'])
+        ) {
+            $exceptionMessage = 'You should use `exclude` OR `only` (not both) along with a `target` argument';
+            throw new \InvalidArgumentException($exceptionMessage);
         }
 
-        $params[] = $this->getConfig()->getMigrationPath();
+        $input = $this->getInput('MarkMigrated', ['version' => $version], $options);
+        $this->setInput($input);
 
-        $this->run('markMigrated', $params, $input);
+        $params = [
+            $this->getConfig()->getMigrationPath(),
+            $this->getManager()->getVersionsToMark($input),
+            $this->output
+        ];
+
+        $this->run('markVersionsAsMigrated', $params, $input);
+        return true;
+    }
+
+    /**
+     * Seed the database using a seed file
+     *
+     * @param array $options Options to pass to the command
+     * Available options are :
+     *
+     * - `connection` The datasource connection to use
+     * - `source` The folder where migrations are in
+     * - `plugin` The plugin containing the migrations
+     * - `seed` The seed file to use
+     *
+     * @return bool Success
+     */
+    public function seed($options = [])
+    {
+        $this->setCommand('seed');
+        $input = $this->getInput('Seed', [], $options);
+        $params = ['default', $input->getOption('seed')];
+        $this->run('Seed', $params, $input);
         return true;
     }
 
@@ -188,13 +254,19 @@ class Migrations
     {
         if ($this->configuration instanceof Config) {
             $migrationPath = $this->getConfig()->getMigrationPath();
+            $seedPath = $this->getConfig()->getSeedPath();
         }
 
         $this->setInput($input);
         $newConfig = $this->getConfig(true);
         $manager = $this->getManager($newConfig);
+        $manager->setInput($input);
+
         if (isset($migrationPath) && $newConfig->getMigrationPath() !== $migrationPath) {
             $manager->resetMigrations();
+        }
+        if (isset($seedPath) && $newConfig->getSeedPath() !== $seedPath) {
+            $manager->resetSeeds();
         }
 
         return call_user_func_array([$manager, $method], $params);
@@ -217,10 +289,48 @@ class Migrations
 
             $this->manager = new CakeManager($config, $this->output);
         } elseif ($config !== null) {
+            $defaultEnvironment = $config->getEnvironment('default');
+            try {
+                $environment = $this->manager->getEnvironment('default');
+                $oldConfig = $environment->getOptions();
+                unset($oldConfig['connection']);
+                if ($oldConfig == $defaultEnvironment) {
+                    $defaultEnvironment['connection'] = $environment
+                        ->getAdapter()
+                        ->getConnection();
+                }
+            } catch (\InvalidArgumentException $e) {
+            }
+            $config['environments'] = ['default' => $defaultEnvironment];
+            $this->manager->setEnvironments([]);
             $this->manager->setConfig($config);
         }
 
+        $this->setAdapter();
         return $this->manager;
+    }
+
+    /**
+     * Sets the adapter the manager is going to need to operate on the DB
+     * This will make sure the adapter instance is a \Migrations\CakeAdapter instance
+     *
+     * @return void
+     */
+    public function setAdapter()
+    {
+        if ($this->input !== null) {
+            $connectionName = 'default';
+            if ($this->input->getOption('connection')) {
+                $connectionName = $this->input->getOption('connection');
+            }
+            $connection = ConnectionManager::get($connectionName);
+
+            $env = $this->manager->getEnvironment('default');
+            $adapter = $env->getAdapter();
+            if (!$adapter instanceof CakeAdapter) {
+                $env->setAdapter(new CakeAdapter($adapter, $connection));
+            }
+        }
     }
 
     /**

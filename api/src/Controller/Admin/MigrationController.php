@@ -37,7 +37,7 @@ class MigrationController extends AppController
         $status = $migrations->status();
         debug($status);
         // Will return true if success. If an error occurred, an exception will be thrown
-        $migrate = $migrations->migrate(['target' => "20160831175749"]);
+        $migrate = $migrations->migrate();
         debug($migrate);
     }
     

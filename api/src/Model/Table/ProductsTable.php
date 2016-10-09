@@ -95,6 +95,23 @@ class ProductsTable extends Table
         return $this->find()->where(["Products.shopId" => $id])->limit(1);
     }
     
+    public function findByGenders($types){
+
+        $typeId = [];
+
+        foreach($types as $v){
+            $typeId[] = $v->id;
+        }
+        $query = $this->_matchWithType($this->_findActive(), $typeId);
+
+        $query->group('Products.id');
+
+        $query->select($this);
+        return $query->toArray();
+
+
+    }
+
     public function updateProduct($shopId){
         
         $this->_doUpdateProduct($shopId);
@@ -121,6 +138,20 @@ class ProductsTable extends Table
         return true;
     }
     
+    private function _find(){
+        
+        $products = $this->find('all')
+                        ->order('Products.priority');
+        
+        return $products;
+    }
+    private function _findActive(){
+
+        $products = $this->_find()->where(["Products.visible" => true]);
+        
+        return $products;
+    }
+
     private function _doUpdateProduct($productShopId){
         if(!$productShopId){
             return;
@@ -157,6 +188,19 @@ class ProductsTable extends Table
         $this->addViewsToProduct($xmlProduct, $productModel);
 
     }
+
+    private function _matchWithType($query, $typeId){
+
+        return $query->matching(
+                            'Types', function ($q) use ($typeId) {
+                        return $q->where(["Types.id IN" => $typeId]);
+                    }
+                );
+    }
+
+    /*
+        Join Table
+    */
     public function addTypesToProduct($response, $product){
 
         $types = $this->_typesModel->addTypesForProduct($response);

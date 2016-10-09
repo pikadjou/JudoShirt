@@ -14,31 +14,18 @@
 namespace Migrations\Shell\Task;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-use Cake\Filesystem\Folder;
-use Cake\ORM\TableRegistry;
+use Migrations\Util\UtilTrait;
 
 /**
  * Task class for generating migration snapshot files.
  */
 class MigrationSnapshotTask extends SimpleMigrationTask
 {
-    /**
-     * Tables to skip
-     *
-     * @var array
-     */
-    public $skipTables = ['i18n', 'phinxlog'];
-
-    /**
-     * Regex of Table name to skip
-     *
-     * @var string
-     */
-    public $skipTablesRegex = '_phinxlog';
+    use UtilTrait;
+    use SnapshotTrait;
 
     /**
      * {@inheritDoc}
@@ -53,49 +40,6 @@ class MigrationSnapshotTask extends SimpleMigrationTask
         });
 
         return parent::bake($name);
-    }
-
-    /**
-     * After the file has been successfully created, we mark the newly
-     * created snapshot as applied
-     *
-     * {@inheritDoc}
-     */
-    public function createFile($path, $contents)
-    {
-        $createFile = parent::createFile($path, $contents);
-
-        if ($createFile) {
-            $this->markSnapshotApplied($path);
-        }
-
-        return $createFile;
-    }
-
-    /**
-     * Will mark a snapshot created, the snapshot being identified by its
-     * full file path.
-     *
-     * @param string $path Path to the newly created snapshot
-     * @return void
-     */
-    protected function markSnapshotApplied($path)
-    {
-        $fileName = pathinfo($path, PATHINFO_FILENAME);
-        list($version, ) = explode('_', $fileName, 2);
-
-
-        $dispatchCommand = 'migrations mark_migrated ' . $version;
-        if (!empty($this->params['connection'])) {
-            $dispatchCommand .= ' -c ' . $this->params['connection'];
-        }
-
-        if (!empty($this->params['plugin'])) {
-            $dispatchCommand .= ' -p ' . $this->params['plugin'];
-        }
-
-        $this->_io->out('Marking the snapshot ' . $fileName . ' as migrated...');
-        $this->dispatchShell($dispatchCommand);
     }
 
     /**
@@ -119,29 +63,15 @@ class MigrationSnapshotTask extends SimpleMigrationTask
         }
 
         $collection = $this->getCollection($this->connection);
-        $tables = $collection->listTables();
+        $options = [
+            'require-table' => $this->params['require-table'],
+            'plugin' => $this->plugin
+        ];
+        $tables = $this->getTablesToBake($collection, $options);
 
-        if ($this->params['require-table'] === true) {
-            $tableNamesInModel = $this->getTableNames($this->plugin);
+        sort($tables, SORT_NATURAL);
 
-            foreach ($tableNamesInModel as $num => $table) {
-                if (!in_array($tables[$num], $tables)) {
-                    unset($tableNamesInModel[$num]);
-                }
-            }
-            $tables = $tableNamesInModel;
-        } else {
-            foreach ($tables as $num => $table) {
-                if ((in_array($table, $this->skipTables)) || (strpos($table, $this->skipTablesRegex) !== false)) {
-                    unset($tables[$num]);
-                    continue;
-                }
-                if (!$this->tableToAdd($table, $this->plugin)) {
-                    unset($tables[$num]);
-                    continue;
-                }
-            }
-        }
+        $tables = array_combine($tables, $tables);
 
         $autoId = true;
         if (isset($this->params['disable-autoid'])) {
@@ -176,91 +106,13 @@ class MigrationSnapshotTask extends SimpleMigrationTask
      * To check if a Table Model is to be added in the migration file
      *
      * @param string $tableName Table name in underscore case.
-     * @param string $pluginName Plugin name if exists.
-     * @return bool true if the model is to be added.
+     * @param string|null $pluginName Plugin name if exists.
+     * @deprecated Will be removed in the next version
+     * @return bool True if the model is to be added.
      */
     public function tableToAdd($tableName, $pluginName = null)
     {
-        if (is_null($pluginName)) {
-            return true;
-        }
-
-        $pluginName = strtolower(str_replace('/', '_', $pluginName)) . '_';
-        if (strpos($tableName, $pluginName) !== false) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Gets list Tables Names
-     *
-     * @param string $pluginName Plugin name if exists.
-     * @return array
-     */
-    public function getTableNames($pluginName = null)
-    {
-        if (!is_null($pluginName) && !Plugin::loaded($pluginName)) {
-            return false;
-        }
-        $list = [];
-        $tables = $this->findTables($pluginName);
-        foreach ($tables as $num => $table) {
-            $list = $list + $this->fetchTableName($table, $pluginName);
-        }
-
-        return $list;
-    }
-
-    /**
-     * Find Table Class
-     *
-     * @param string $pluginName Plugin name if exists.
-     * @return array
-     */
-    public function findTables($pluginName = null)
-    {
-        $path = 'Model' . DS . 'Table' . DS;
-        if ($pluginName) {
-            $path = Plugin::path($pluginName) . 'src' . DS . $path;
-        } else {
-            $path = APP . $path;
-        }
-
-        if (!is_dir($path)) {
-            return false;
-        }
-
-        $tableDir = new Folder($path);
-        $tableDir = $tableDir->find('.*\.php');
-        return $tableDir;
-    }
-
-    /**
-     * fetch TableName From Table Object
-     *
-     * @param string $className Name of Table Class.
-     * @param string $pluginName Plugin name if exists.
-     * @return string
-     */
-    public function fetchTableName($className, $pluginName = null)
-    {
-        $tables = [];
-        $className = str_replace('Table.php', '', $className);
-        if (!is_null($pluginName)) {
-            $className = $pluginName . '.' . $className;
-        }
-
-        $table = TableRegistry::get($className);
-        foreach ($table->associations()->keys() as $key) {
-            if ($table->associations()->get($key)->type() === 'belongsToMany') {
-                $tables[] = $table->associations()->get($key)->_junctionTableName();
-            }
-        }
-        $tables[] = $table->table();
-
-        return $tables;
+        return true;
     }
 
     /**
@@ -274,7 +126,11 @@ class MigrationSnapshotTask extends SimpleMigrationTask
 
         $parser->description(
             'Bake migration snapshot class.'
-        )->addOption('require-table', [
+        )->addArgument('name', [
+            'help' => 'Name of the migration to bake. Can use Plugin.name to bake migration files into plugins.',
+            'required' => true
+        ])
+        ->addOption('require-table', [
             'boolean' => true,
             'default' => false,
             'help' => 'If require-table is set to true, check also that the table class exists.'
