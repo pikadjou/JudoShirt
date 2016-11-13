@@ -1,7 +1,7 @@
 module MartialShirt {
     'use strict';
 
-	export class C_FeaturedDesigns {
+	export class C_DesignFeatured extends MartialShirt.Init.AbstractModule {
 		
 
 		public static $inject = [
@@ -12,10 +12,19 @@ module MartialShirt {
 			private $scope: any,
 			private RH: Services.DesignsRequestHandler
 			) {
-			$scope.vm = $scope;
+			super();
+
+			this.init($scope);
 
 			this.RH.GetFeaturedDesignsReceived.add(this.onPacketRecieved, this);
 
+			this.launchService();
+		}
+
+		public destroy() {
+			super.destroy();
+
+			(<any>$('.slider')).slick('unslick');
 		}
 
 		public launchService() {
@@ -35,23 +44,34 @@ module MartialShirt {
 			this.$scope.vm.list = response.designs;
 
 		}
+
+		public onEnd() {
+			(<any>$('.slider')).slick({
+				slidesToShow: 3,
+				slidesToScroll: 1,
+				infinite: false,
+				arrows: true,
+				prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+				nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+			});
+		}
 	}
 
-	export class FeaturedDesigns implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/featuredDesigns.html";
+	export class DesignFeatured implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/design/featured.html";
 		public restrict = "E";
-		public replace = true;
+		public replace = false;
 		public scope = {
 		};
 
-		public static Name = "FeaturedDesigns".toLocaleLowerCase();
+		public static Name = "DesignFeatured".toLocaleLowerCase();
 
 		public static $inject = [];
 		constructor(/*list of dependencies*/) {
 
 		}
 
-		public controller = C_FeaturedDesigns;
+		public controller = C_DesignFeatured;
 	}
-	MartialShirt.Init.Application.MartialShirtApp.directive(FeaturedDesigns.Name, MartialShirtApp.Application.GetDirectiveFactory<FeaturedDesigns>(FeaturedDesigns));
+	MartialShirt.Init.Application.MartialShirtApp.directive(DesignFeatured.Name, MartialShirtApp.Application.GetDirectiveFactory<DesignFeatured>(DesignFeatured));
 }

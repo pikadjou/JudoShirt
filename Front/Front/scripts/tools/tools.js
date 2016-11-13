@@ -209,7 +209,9 @@ var MartialShirt;
                     }
                 }
                 $scope.vm = this;
+                $scope.$on('$destroy', this.destroy);
             };
+            AbstractModule.prototype.destroy = function () { };
             AbstractModule.prototype.Authenticated = function () {
                 this.isAuthenticated = true;
             };
@@ -225,6 +227,19 @@ var MartialShirt;
             return AbstractModule;
         }());
         Init.AbstractModule = AbstractModule;
+        var AbstractDirective = (function () {
+            function AbstractDirective() {
+                this.templateUrl = "";
+                this.restrict = "E";
+                this.replace = false;
+                this.scope = {};
+                this.controller = null;
+            }
+            AbstractDirective.Name = "";
+            AbstractDirective.$inject = [];
+            return AbstractDirective;
+        }());
+        Init.AbstractDirective = AbstractDirective;
     })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
 })(MartialShirt || (MartialShirt = {}));
 

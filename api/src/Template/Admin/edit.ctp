@@ -16,9 +16,13 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Hover Data Table</h3>
-
-                    <div>
-                        <?= $this->Html->link(__('Retour à la Liste'), ['action' => 'index']) ?>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <?= $this->Html->link(__('Retour à la Liste'), 
+                                ['action' => 'index'],
+                                ['class' => 'btn btn-block btn-info']
+                            ) ?>
+                        </div>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -40,7 +44,6 @@
                     <?=
                     $this->Form->button(__('Submit'));
                     $this->Form->end(); ?>
-                    ?>
                 </div>
             </div>
         </div>

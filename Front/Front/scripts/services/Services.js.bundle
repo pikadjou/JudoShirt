@@ -28,6 +28,9 @@
 
 	  <file>/scripts/services/Promotions/PromotionsClass.js</file>
 		<file>/scripts/services/Promotions/PromotionsRequestHandler.js</file>
+
+	  <file>/scripts/services/Types/TypesClass.js</file>
+	  <file>/scripts/services/Types/TypesRequestHandler.js</file>
 	  
 		<file>/scripts/services/Help/HelpClass.js</file>
 		<file>/scripts/services/Help/HelpRequestHandler.js</file>

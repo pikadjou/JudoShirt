@@ -23,6 +23,23 @@ class ArticlesController extends AppController
 
     }
     
+    public function getHilightArticles()
+    {
+        $key = "ArticlesController-getHilightArticles";
+        if (($response = Cache\CacheController::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+        
+        $articles = $this->Articles->findHilightProducts();
+        
+        $response = new ArticlesRequestHandler\GetHilightResponse();
+        $response->init($articles);
+
+        Cache\CacheController::write($key, $response);
+        parent::setJson($response);
+    }
+
     public function getArticles($id)
     {
         $key = "ArticlesController-getArticles-".$id;
@@ -43,6 +60,34 @@ class ArticlesController extends AppController
         
         $response = new ArticlesRequestHandler\GetArticlesResponse();
         $response->init($articles, $design);
+
+        Cache\CacheController::write($key, $response);
+        parent::setJson($response);
+    }
+
+    public function getArticlesByType($catId, $designId, $typesId)
+    {
+        if($designId == 0){
+            $designId = null;
+        }
+        if($catId == 0){
+            $catId = null;
+        }
+        if($typesId == 0){
+            $typesId = "";
+        }else{
+            $typesId = explode(";", $typesId);
+        }
+        $key = "ArticlesController-getArticlesByType-".$catId."-".$designId."-".$typesId;
+        if (($response = Cache\CacheController::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+
+        $articles = $this->Articles->findArticlesByType($catId, $designId, $typesId);
+        
+        $response = new ArticlesRequestHandler\GetArticlesResponse();
+        $response->init($articles);
 
         Cache\CacheController::write($key, $response);
         parent::setJson($response);

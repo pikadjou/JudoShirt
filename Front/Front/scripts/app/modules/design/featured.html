@@ -1,10 +1,10 @@
 ﻿<div class="module__container">
 	<h3 class="module__title">Produits à la une</h3>
 	<div class="module__content">
-		<ul class="small-block-grid-3 article-list__container">
-			<li ng-repeat="design in vm.list">
+		<div class="slider article-list__container">
+			<div ng-repeat="design in vm.list" repeat-end="vm.onEnd()">
 				<templatearticle design="design"></templatearticle>
-			</li>
-		</ul>
+			</div>
+		</div>
 	</div>
 </div>

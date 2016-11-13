@@ -1,6 +1,6 @@
 ﻿<div class="Slider__container">
 	<div class="promotions__slider">
-		<div ng-repeat="promotion in vm.promotions">
+		<div ng-repeat="promotion in vm.promotions" repeat-end="vm.onEnd()">
 			<a herf="#" ng-click="vm.goToPromotion(promotion)">
 				<img src="{{promotion.image}}" />
 				<span class="text">{{promotion.content.substring(0, 50)}}...</span>

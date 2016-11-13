@@ -12,26 +12,34 @@ var MartialShirt;
             _super.call(this);
             this.$scope = $scope;
             this.RH = RH;
-            this.categories = [];
+            this.types = [];
             this.cssClass = "";
             this.init($scope);
-            this.RH.GetCategories("");
-            this.RH.GetCategoriesReceived.add(this.onPacketRecieved, this);
+            this.RH.GetGenders([1]);
+            this.RH.GetGendersReceived.add(this.onPacketRecieved, this);
         }
+        C_MenuMain.prototype.openClose = function (type) {
+            if (type.active == true) {
+                type.active = false;
+            }
+            else {
+                type.active = true;
+            }
+        };
         C_MenuMain.prototype.onPacketRecieved = function (response) {
-            this.categories = response.categories;
-            this.cssClass = "small-block-grid-" + response.categories.length;
+            this.types = response.types;
+            this.cssClass = "small-block-grid-" + response.types.length;
         };
         C_MenuMain.$inject = [
             '$scope',
-            MartialShirt.Services.CategoriesRequestHandler.Name
+            MartialShirt.Services.TypesRequestHandler.Name
         ];
         return C_MenuMain;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_MenuMain = C_MenuMain;
     var MenuMain = (function () {
         function MenuMain() {
-            this.templateUrl = "/scripts/app/modules/menuMain.html";
+            this.templateUrl = "/scripts/app/modules/menu/menuMain.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};

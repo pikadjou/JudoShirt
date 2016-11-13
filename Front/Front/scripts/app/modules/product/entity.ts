@@ -17,7 +17,6 @@ module MartialShirt {
 			private RH: Services.ProductsRequestHandler
 			) {
 			super();
-
 			this.init($scope);
 
 			this.RH.GetProductReceived.add(this.onPacketRecieved, this);

@@ -20,19 +20,6 @@
   <ItemGroup>
     <Content Include="commit.txt" />
     <Content Include="content\css\Site.css" />
-    <Content Include="content\img\americanexpress-logo.png" />
-    <Content Include="content\img\background1.jpg" />
-    <Content Include="content\img\background2.jpg" />
-    <Content Include="content\img\bpost-logo.png" />
-    <Content Include="content\img\dhl-logo.jpg" />
-    <Content Include="content\img\email-logo.png" />
-    <Content Include="content\img\fb-logo.jpg" />
-    <Content Include="content\img\logo.jpg" />
-    <Content Include="content\img\logo_cb.png" />
-    <Content Include="content\img\mastercard-logo.jpg" />
-    <Content Include="content\img\paypal-logo.png" />
-    <Content Include="content\img\twitter-logo.png" />
-    <Content Include="content\img\ups-logo.jpg" />
     <Content Include="content\sass\Site.css">
       <DependentUpon>Site.scss</DependentUpon>
     </Content>
@@ -839,6 +826,7 @@
       <DependentUpon>App.js</DependentUpon>
     </Content>
     <Content Include="scripts\app\container\footer.html" />
+    <Content Include="scripts\app\container\sidebar.html" />
     <Content Include="scripts\app\container\header.html" />
     <Content Include="scripts\app\modules\account\subscription.html" />
     <Content Include="scripts\app\modules\account\detail.html" />
@@ -846,6 +834,12 @@
     <Content Include="scripts\app\modules\basket\checkout.html" />
     <Content Include="scripts\app\modules\custom\designer.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
+    <Content Include="scripts\app\modules\menu\creditMenu.html" />
+    <Content Include="scripts\app\modules\menu\socialMenu.html" />
+    <Content Include="scripts\app\modules\menu\typeMenu.html" />
+    <Content Include="scripts\app\modules\menu\sportMenu.html" />
+    <Content Include="scripts\app\modules\menu\subMenu.html" />
+    <Content Include="scripts\app\modules\article\featured.html" />
     <Content Include="scripts\app\modules\promotions\bestCode.html" />
     <Content Include="scripts\app\modules\shipping\list.html" />
     <Content Include="scripts\app\modules\product\entity.html" />
@@ -857,7 +851,7 @@
     <Content Include="scripts\app\modules\design.html" />
     <Content Include="scripts\app\modules\categoryDesigns.html" />
     <Content Include="scripts\app\modules\langSelector.html" />
-    <Content Include="scripts\app\modules\featuredDesigns.html" />
+    <Content Include="scripts\app\modules\design\featured.html" />
     <Content Include="scripts\app\modules\print.html" />
     <Content Include="scripts\app\modules\article.html" />
     <Content Include="scripts\app\pages\account\subscription.html" />
@@ -880,13 +874,14 @@
     <Content Include="scripts\app\templates\articleWidget.html" />
     <Content Include="scripts\app\templates\article.html" />
     <Content Include="scripts\app\widgets\account.html" />
-    <Content Include="scripts\app\widgets\promotionDesigns.html" />
+    <Content Include="scripts\app\modules\design\promotion.html" />
     <Content Include="scripts\app\widgets\new.html" />
     <Content Include="scripts\app\widgets\topTen.html" />
-    <Content Include="scripts\app\modules\menuMain.html" />
+    <Content Include="scripts\app\modules\menu\menuMain.html" />
     <Content Include="scripts\app\pages\home.html" />
     <TypeScriptCompile Include="boot.ts" />
     <TypeScriptCompile Include="scripts\app\container\footer.ts" />
+    <TypeScriptCompile Include="scripts\app\container\sidebar.ts" />
     <TypeScriptCompile Include="scripts\app\container\header.ts" />
     <TypeScriptCompile Include="scripts\app\controller\gtm.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\subscription.ts" />
@@ -895,6 +890,12 @@
     <TypeScriptCompile Include="scripts\app\modules\basket\checkout.ts" />
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\creditMenu.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\socialMenu.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\typeMenu.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\sportMenu.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\subMenu.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\article\featured.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\bestCode.ts" />
     <TypeScriptCompile Include="scripts\app\modules\shipping\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\product\entity.ts" />
@@ -906,7 +907,7 @@
     <TypeScriptCompile Include="scripts\app\modules\design.ts" />
     <TypeScriptCompile Include="scripts\app\modules\categoryDesigns.ts" />
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\featuredDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\design\featured.ts" />
     <TypeScriptCompile Include="scripts\app\modules\print.ts" />
     <TypeScriptCompile Include="scripts\app\modules\article.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\subscription.ts" />
@@ -929,14 +930,17 @@
     <TypeScriptCompile Include="scripts\app\templates\articleWidget.ts" />
     <TypeScriptCompile Include="scripts\app\templates\article.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\account.ts" />
-    <TypeScriptCompile Include="scripts\app\widgets\promotionDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\design\promotion.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\new.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
     <TypeScriptCompile Include="scripts\app\models\PlayerStorage.ts" />
+    <TypeScriptCompile Include="scripts\services\Articles\ArticlesClass.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Discounts.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\RangeCost.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\RegionCost.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Country.ts" />
+    <TypeScriptCompile Include="scripts\services\Types\TypesClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Types\TypesRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Shipping\ShippingClass.ts" />
     <TypeScriptCompile Include="scripts\services\Shipping\ShippingRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Cms\CmsClass.ts" />
@@ -971,6 +975,7 @@
     <TypeScriptCompile Include="scripts\services\Entity\Tag.ts" />
     <TypeScriptCompile Include="scripts\services\Prints\PrintsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\services\Articles\ArticlesRequestHandler.ts" />
+    <TypeScriptCompile Include="scripts\app\Lib.ts" />
     <TypeScriptCompile Include="scripts\tools\AbstractModule.ts" />
     <TypeScriptCompile Include="scripts\tools\Cache.ts" />
     <TypeScriptCompile Include="scripts\tools\Debug.ts" />
@@ -992,7 +997,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="scripts\app\shell.ts" />
     <TypeScriptCompile Include="scripts\app\pages\home.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\menuMain.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\menuMain.ts" />
     <TypeScriptCompile Include="scripts\services\Baskets\BasketsRequestHandler.ts" />
     <TypeScriptCompile Include="scripts\tools\Application.ts" />
     <TypeScriptCompile Include="scripts\tools\Signals.ts" />
@@ -1109,6 +1114,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="content\img\" />
     <Folder Include="content\sass\application\pages\" />
     <Folder Include="Properties\" />
   </ItemGroup>

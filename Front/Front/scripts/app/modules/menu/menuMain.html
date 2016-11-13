@@ -1,0 +1,13 @@
+﻿<div class="main-menu__container">
+	<div class="row">
+		<ul ng-class="vm.cssClass">
+			<li ng-repeat="type in vm.types">
+				<a href="" ng-click="vm.openClose(type)">{{type.name}}</a>
+				<div ng-show="type.active == true">
+					active
+				</div>
+				
+			</li>
+		</ul>
+	</div>
+</div>

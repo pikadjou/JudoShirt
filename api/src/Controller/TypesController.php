@@ -19,17 +19,17 @@ class TypesController extends AppController
         $this->loadComponent('RequestHandler');
     }
 
-    public function getMasterProducts()
+    public function getMasterTypes()
     {
-    	$key = "TypesController-getMasterProducts";
+    	$key = "TypesController-getMasterTypes";
         if (($response = Cache\CacheController::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
 
-        $types = $this->Types->findMasterProducts();
+        $types = $this->Types->findMasterTypes();
 
-        $response = new TypesRequestHandler\GetMasterProductsResponse();
+        $response = new TypesRequestHandler\GetMasterTypesResponse();
         $response->init($types);
         Cache\CacheController::write($key, $response);
 

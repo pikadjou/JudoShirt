@@ -41,7 +41,7 @@ class ProductsController extends AppController
         Cache\CacheController::write($key, $response);
         parent::setJson($response);
     }
-    
+
     public function getProduct($id)
     {
         $key = "ProductsController-getProduct-".$id;

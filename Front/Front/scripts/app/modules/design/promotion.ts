@@ -1,7 +1,7 @@
 module MartialShirt {
     'use strict';
 
-	export class C_WidgetPromotionDesigns {
+	export class C_DesignPromotion {
 		
 
 		public static $inject = [
@@ -38,21 +38,21 @@ module MartialShirt {
 		}
 	}
 
-	export class WidgetPromotionDesigns implements ng.IDirective {
-		public templateUrl = "/scripts/app/widgets/promotionDesigns.html";
+	export class DesignPromotion implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/design/promotion.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {
 		};
 
-		public static Name = "WidgetPromotionDesigns".toLocaleLowerCase();
+		public static Name = "DesignPromotion".toLocaleLowerCase();
 
 		public static $inject = [];
 		constructor(/*list of dependencies*/) {
 
 		}
 
-		public controller = C_WidgetPromotionDesigns;
+		public controller = C_DesignPromotion;
 	}
-	MartialShirt.Init.Application.MartialShirtApp.directive(WidgetPromotionDesigns.Name, MartialShirtApp.Application.GetDirectiveFactory<WidgetPromotionDesigns>(WidgetPromotionDesigns));
+	MartialShirt.Init.Application.MartialShirtApp.directive(DesignPromotion.Name, MartialShirtApp.Application.GetDirectiveFactory<DesignPromotion>(DesignPromotion));
 }

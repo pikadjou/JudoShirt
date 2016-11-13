@@ -36,17 +36,21 @@ var MartialShirt;
             this.RH.GetPromotionsActiveReceived.add(this.onPacketRecieved, this);
             this.RH.GetSlide([]);
         }
+        C_Slider.prototype.destroy = function () {
+            _super.prototype.destroy.call(this);
+            $('.promotions__slider').slick('unslick');
+        };
         C_Slider.prototype.onPacketRecieved = function (response) {
             this.promotions = response.promotions;
-            setTimeout(function () {
-                $('.promotions__slider').slick({
-                    autoplay: true,
-                    autoplaySpeed: 8000,
-                    arrows: true,
-                    prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-                    nextArrow: '<a href="#" class="slider__next"><span></span></a>'
-                });
-            }, 500);
+        };
+        C_Slider.prototype.onEnd = function () {
+            $('.promotions__slider').slick({
+                autoplay: true,
+                autoplaySpeed: 8000,
+                arrows: true,
+                prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+                nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+            });
         };
         C_Slider.$inject = [
             '$scope',
@@ -56,18 +60,16 @@ var MartialShirt;
         return C_Slider;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_Slider = C_Slider;
-    var Slider = (function () {
+    var Slider = (function (_super) {
+        __extends(Slider, _super);
         function Slider() {
+            _super.call(this);
             this.templateUrl = "/scripts/app/modules/promotions/slider.html";
-            this.restrict = "E";
-            this.replace = true;
-            this.scope = {};
             this.controller = C_Slider;
         }
         Slider.Name = "Slider".toLocaleLowerCase();
-        Slider.$inject = [];
         return Slider;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.Slider = Slider;
     MartialShirt.Init.Application.MartialShirtApp.directive(Slider.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Slider));
 })(MartialShirt || (MartialShirt = {}));

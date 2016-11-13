@@ -16,11 +16,28 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Hover Data Table</h3>
-                    <div>
-                        <?= $this->Html->link(__('Retour à la Liste'), ['action' => 'index']) ?>
-
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $data->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $data->id], ['confirm' => __('Are you sure you want to delete # {0}?', $data->id)]) ?>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <?= $this->Html->link(__('Retour à la Liste'), 
+                                ['action' => 'index'],
+                                ['class' => 'btn btn-block btn-info']
+                            ) ?>
+                        </div>
+                        <div class="col-sm-3">
+                            <?= $this->Html->link(__('Edit'), 
+                                ['action' => 'edit', $data->id],
+                                ['class' => 'btn btn-block btn-success']
+                            ) ?>
+                        </div>
+                        <div class="col-sm-3">
+                            <?= $this->Html->link(__('Delete'), 
+                                ['action' => 'delete', $data->id],
+                                [
+                                    'confirm' => __('Are you sure you want to delete # {0}?', $data->id),
+                                    'class' => 'btn btn-block btn-danger'
+                                ]
+                            ) ?>
+                        </div>
                     </div>
                 </div>
                 <!-- /.box-header -->

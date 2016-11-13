@@ -90,6 +90,30 @@ class DesignsController extends AppController
         parent::setJson($response);
     }
 
+    public function getDesignsByTypes($typeId = null)
+    {
+        $key = "DesignsController-getDesignsByTypes-".$typeId;
+        if (($response = Cache\CacheController::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+        $this->loadModel("Types");
+        $types = $this->Types->findAllChildren($typeId);
+
+        $typeIds = [$typeId];
+        foreach($types as $type){
+            $typeIds[] = $type->id;
+        }
+
+        $designs = $this->Designs->findDesignsByTypes($typeIds);
+        
+        $response = new DesignsRequestHandler\GetDesignsResponse();
+        $response->init($designs, null);
+        
+        Cache\CacheController::write($key, $response);
+        parent::setJson($response);
+    }
+
     /**
      * Index method
      *

@@ -15,10 +15,14 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Hover Data Table</h3>
-
-                    <div>
-                        <?= $this->Html->link(__('Add'), ['action' => 'edit']) ?>
+                    <h3 class="box-title"></h3>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <?= $this->Html->link(__('Add'), 
+                                ['action' => 'edit'],
+                                ['class' => 'btn btn-block btn-primary']
+                            ) ?>
+                        </div>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -83,18 +87,3 @@
         </div>
     </div>
 </section>
-
-<!--
-<script>
-  $(function () {
-    $('table').DataTable({
-      "paging": false,
-      "lengthChange": true,
-      "searching": false,
-      "ordering": false,
-      "info": false,
-      "autoWidth": true
-    });
-  });
-</script>
--->

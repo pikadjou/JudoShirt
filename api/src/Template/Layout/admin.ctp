@@ -91,64 +91,47 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
             <ul class="sidebar-menu">
                 <li class="header">Products Configuration</li>
+
                 <li class="treeview">
-                  <a href="#">
-                    <i class="fa fa-dashboard"></i> <span><?= __('Articles') ?></span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                        <a href="<?php echo $this->Url->build(['controller' => 'Articles', 'action' => 'index']) ?>">
-                            <i class="fa fa-circle-o"></i>
-                            <?= __('List') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $this->Url->build(['controller' => 'Articles', 'action' => 'edit']) ?>">
-                            <i class="fa fa-circle-o"></i>
-                            <?= __('New') ?>
-                        </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="treeview">
-                  <a href="#">
-                    <i class="fa fa-dashboard"></i> <span><?= __('Products') ?></span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                        <a href="<?php echo $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>">
-                            <i class="fa fa-circle-o"></i>
-                            <?= __('List') ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $this->Url->build(['controller' => 'Products', 'action' => 'edit']) ?>">
-                            <i class="fa fa-circle-o"></i>
-                            <?= __('New') ?>
-                        </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="treeview">
-                  <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>Layout Options</span>
-                    <span class="pull-right-container">
-                      <span class="label label-primary pull-right">4</span>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                    <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                    <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                    <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-                  </ul>
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> 
+                        <span>Products</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <?php $listeController = ['Articles', 'Products', 'Categories', 'Designs', 'Prints',
+                        'Appearances', 'Sizes', 'Cms', 'Configs']; 
+
+                        asort($listeController);
+                        ?>
+
+                        <?php foreach($listeController as $controller): ?>
+                        <li class="treeview">
+                          <a href="#">
+                            <i class="fa fa-dashboard"></i> <span><?= __($controller) ?></span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                          <ul class="treeview-menu">
+                            <li>
+                                <a href="<?php echo $this->Url->build(['controller' => $controller, 'action' => 'index']) ?>">
+                                    <i class="fa fa-circle-o"></i>
+                                    <?= __('List') ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->Url->build(['controller' => $controller, 'action' => 'edit']) ?>">
+                                    <i class="fa fa-circle-o"></i>
+                                    <?= __('New') ?>
+                                </a>
+                            </li>
+                          </ul>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </li>
             </ul>
         </section>
@@ -169,82 +152,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
         reserved.
     </footer>
-
-
-<!--
-    <div id="container">
-
-        <div id="content">
-            <?= $this->Flash->render() ?>
-
-            <div class="row">
-                <div class="actions columns large-2 medium-3">
-                    <h3><?= __('Actions') ?></h3>
-                    <ul class="side-nav">
-                        <li>
-                            Products
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'Products', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'Products', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Categories
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'Categories', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'Categories', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Designs
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'Designs', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'Designs', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Impressions
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'prints', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'prints', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Appearances
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'Appearances', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'Appearances', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Sizes
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'Sizes', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'Sizes', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Cms
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'cms', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'cms', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Configurations
-                            <ul>
-                                <li><?= $this->Html->link(__('List'), ['controller' => 'Configs', 'action' => 'index']) ?> </li>
-                                <li><?= $this->Html->link(__('New'), ['controller' => 'Configs', 'action' => 'add']) ?> </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <footer>
-        </footer>
-    </div>
-    -->
 </div>
 </body>
 </html>

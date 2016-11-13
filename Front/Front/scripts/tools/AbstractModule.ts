@@ -21,7 +21,7 @@
 			this._login.unauthenticatedSignal.add(this.Unauthenticated, this);
 		}
 
-		public init($scope: any) {
+		public init($scope: ng.IScope) {
 
 			for (var prop in $scope) {
 				if (this.hasOwnProperty(prop)) {
@@ -29,9 +29,12 @@
 				}
 			}
 
-			$scope.vm = this;
+			(<any>$scope).vm = this;
+
+			$scope.$on('$destroy', this.destroy);
 		}
 
+		public destroy() { }
 		public Authenticated() {
 			this.isAuthenticated = true;
 		}
@@ -59,5 +62,21 @@
 				//});
 			}, 1000);
 		}
+	}
+
+	export class AbstractDirective implements ng.IDirective {
+
+		public templateUrl = "";
+		public restrict = "E";
+		public replace = false;
+		public scope = {};
+
+		public static Name = "";
+
+		public static $inject = [];
+		constructor() { }
+
+		public controller = null;
+		
 	}
 }

@@ -41,37 +41,28 @@ class TypesTable extends Table
         ]);
 
     }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
-        $validator
-            ->allowEmpty('name');
-
-        return $validator;
-    }
     
     public function getByShopId($id){
-        return $this->find()->where(["Types.shopId" => $id])->limit(1);
+        return $this->_find()->where(["Types.shopId" => $id])->limit(1);
     }
 
     public function getByName($name){
-        return $this->find()->where(["Types.name" => $name])->limit(1);
+        return $this->_find()->where(["Types.name" => $name])->limit(1);
+    }
+    public function getParentByName($name){
+        return $this->_find()->where(["Types.name" => $name, "Types.parent_id IS" => null])->limit(1)->first();
+    }
+    public function getSubByName($name){
+        return $this->_find()->where(["Types.name" => $name, "Types.parent_id IS NOT" => null])->limit(1)->first();
     }
     
-    public function findMasterProducts(){
+    public function findMasterTypes(){
         return $this->_findType(1)->where(["Types.parent_id IS" => null])->toArray();
     }
-    public function findProducts(){
+    public function findAllChildren($typeId){
+        return $this->_find()->where(["Types.parent_id" => $typeId])->toArray();
+    }
+    public function findTypes(){
         return $this->_findType(1)->toArray();
     }
     public function findGenders(){
@@ -79,15 +70,12 @@ class TypesTable extends Table
     }
 
     private function _findType($type){
-        return $this->find()->where(["Types.type" => $type]);
-    } 
+        return $this->_find()->where(["Types.type" => $type]);
+    }
     public function addTypesForProduct($response){
                 
         $fullName = (string)$response->name;
         $name = (string)$response->categoryName;
-
-        debug($fullName);
-        debug($name);
 
         foreach ($this->_manualClotheMatch as $key => $value){
             if(stripos($name, $key) !== false){
@@ -97,14 +85,25 @@ class TypesTable extends Table
 
         $types = [];
         
-        $type = $this->getByName($name)->first();
+        $type = $this->getSubByName($name);
         
         if(!$type){
             $type =  $this->newEntity();
-        }        
+
+
+            $parent = $this->getParentByName($name);
+            if(!$parent){
+                $parent =  $this->newEntity();
+                $parent->name = $name;
+                $parent->type = 1;
+                $parent = $this->save($parent);
+            }
+        
+            $type->parent_id = $parent->id;
+        }
         $type->name = $name;
         $type->type = 1;
-        
+
         $types[] = $this->save($type);
         
         
@@ -168,6 +167,9 @@ class TypesTable extends Table
 
     }
 
+    private function _find(){
+        return $this->find()->order('Types.priority');
+    }
     private function _matchWithTypeProducts($query, $productIds){
 
         return $query->matching(

@@ -2,7 +2,7 @@
 
 namespace App\Services\TypesRequestHandler;
 
-class GetMasterProductsResponse extends \App\Services\RHBaseResponse
+class GetMasterTypesResponse extends \App\Services\RHBaseResponse
 {
     public $types = [];
     

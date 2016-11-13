@@ -99,7 +99,12 @@ class DesignsTable extends Table
         
         return $designs;
     }
-            
+        
+    public function findDesignsByTypes($typeId){
+        return $this->_matchWithType($this->_findActive(), $typeId)
+                ->distinct(["Designs.id"])
+                ->toArray();
+    }    
     public function findByGenders($types){
 
         $typeId = [];

@@ -142,9 +142,14 @@ var MartialShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetArticle", this.controller, "getArticle", request));
             };
+            ArticlesRequestHandler.prototype.GetHilightArticles = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetHilightArticles", this.controller, "getHilightArticles", request));
+            };
             ArticlesRequestHandler.prototype.addEvents = function () {
                 this.GetArticlesReceived = new signals.Signal();
                 this.GetArticleReceived = new signals.Signal();
+                this.GetHilightArticlesReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             ArticlesRequestHandler.prototype.onPacketReceived = function (response) {
@@ -159,6 +164,10 @@ var MartialShirt;
                     case ("GetArticleResponse"):
                         parsedResponse = (response.Content);
                         this.GetArticleReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetHilightResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetHilightArticlesReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;
@@ -454,6 +463,80 @@ var MartialShirt;
         }());
         Services.PromotionsRequestHandler = PromotionsRequestHandler;
         MartialShirt.Init.Application.MartialShirtApp.service(PromotionsRequestHandler.Name, PromotionsRequestHandler);
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/services/Types/TypesClass.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        var TypesClass;
+        (function (TypesClass) {
+            var GetGendersResponse = (function () {
+                function GetGendersResponse() {
+                }
+                return GetGendersResponse;
+            }());
+            TypesClass.GetGendersResponse = GetGendersResponse;
+            var GetMasterTypesResponse = (function () {
+                function GetMasterTypesResponse() {
+                }
+                return GetMasterTypesResponse;
+            }());
+            TypesClass.GetMasterTypesResponse = GetMasterTypesResponse;
+        })(TypesClass = Services.TypesClass || (Services.TypesClass = {}));
+    })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/services/Types/TypesRequestHandler.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Services;
+    (function (Services) {
+        'use strict';
+        var TypesRequestHandler = (function () {
+            function TypesRequestHandler(server) {
+                this.server = server;
+                this.controller = "types";
+                this.addEvents();
+            }
+            TypesRequestHandler.prototype.GetGenders = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetGenders", this.controller, "getGenders", request));
+            };
+            TypesRequestHandler.prototype.GetMasterTypes = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetMasterTypes", this.controller, "getMasterTypes", request));
+            };
+            TypesRequestHandler.prototype.addEvents = function () {
+                this.GetGendersReceived = new signals.Signal();
+                this.GetMasterTypesReceived = new signals.Signal();
+                this.server.packetReceived.add(this.onPacketReceived, this);
+            };
+            TypesRequestHandler.prototype.onPacketReceived = function (response) {
+                if (!response || !response.Content)
+                    return;
+                var parsedResponse = null;
+                switch (response.Identifier) {
+                    case ("GetGendersResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetGendersReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetMasterTypesResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetMasterTypesReceived.dispatch(parsedResponse);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            TypesRequestHandler.$inject = ['Server'];
+            TypesRequestHandler.Name = "TypesRequestHandler";
+            return TypesRequestHandler;
+        }());
+        Services.TypesRequestHandler = TypesRequestHandler;
+        MartialShirt.Init.Application.MartialShirtApp.service(TypesRequestHandler.Name, TypesRequestHandler);
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
 

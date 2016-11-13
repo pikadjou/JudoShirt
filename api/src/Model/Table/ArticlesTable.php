@@ -58,7 +58,24 @@ class ArticlesTable extends Table
         return $this->find()->where(["Articles.product_id" => $id, "Articles.visible" => true]);
     }
     
-    
+    public function findArticlesByType($catId, $designId, $typesId){
+        $query = $this->_find();
+
+        if($catId){
+            $query = $this->_byCategory($query, $catId);
+        }
+        if($designId){
+            $query = $this->_byDesign($query, $designId);
+        }
+        if($typesId && count($typesId) > 0){
+            $query = $this->_byTypes($query, $typesId);
+        }
+
+        return $query->contain(["Products"])->toArray();
+    }
+    public function findHilightProducts(){
+        return $this->_findHilight()->toArray();
+    }
     public function getOne($id){
         
         $article = $this->getOneNoCache($id)->first();
@@ -75,8 +92,7 @@ class ArticlesTable extends Table
         $date->sub(new \DateInterval('PT' . 12 . 'H'));
         $cacheTime = $date->getTimestamp();
         
-//        debug($lastUpdate);
-//        debug($cacheTime);
+
         if(Configure::read('CacheUpdateDB') === false){
             $lastUpdate = null;
         }
@@ -136,8 +152,7 @@ class ArticlesTable extends Table
         $date->sub(new \DateInterval('PT' . 12 . 'H'));
         $cacheTime = $date->getTimestamp();
         
-//        debug($lastUpdate);
-//        debug($cacheTime);
+
         if(Configure::read('CacheUpdateDB') === false){
             $lastUpdate = null;
         }       
@@ -212,6 +227,63 @@ class ArticlesTable extends Table
     }
     
     
+    private function _find(){
+        return $this->find()
+            ->where(["Articles.visible" => true])
+            ->order('Articles.priority');
+    }
+
+    private function _byDesign($query, $designId){
+        if($query == null){
+            $query = $this->_find();
+        }
+        $query->matching('Designs', function(\Cake\ORM\Query $q) use ($designId) {
+                return $q->where([
+                    'Designs.id' => $designId
+                ]);
+            });
+
+        return $query;
+    }
+
+    private function _byCategory($query, $catId){
+        if($query == null){
+            $query = $this->_find();
+        }
+        $query->matching('Designs.Categories', function(\Cake\ORM\Query $q) use ($catId) {
+                return $q->where([
+                    'Categories.id' => $catId
+                ]);
+            });
+
+        return $query;
+    }
+    private function _byTypes($query, $typesId){
+        if($query == null){
+            $query = $this->_find();
+        }
+        $query->matching('Products.Types', function(\Cake\ORM\Query $q) use ($typesId) {
+                return $q->where([
+                    'Types.id IN' => $typesId
+                ]);
+            });
+
+        return $query;
+    }
+
+    private function _findHilight($query = null){
+        if($query == null){
+            $query = $this->_find();
+        }
+        $query->where(["Articles.priority" => -1]);
+        
+        $this->_byCategory($query, 1);
+
+        $query->contain(["Products"]);
+
+        return $query;
+    }
+
     private function _setDirty($designId){
         
         $this->updateAll(

@@ -25,19 +25,24 @@ module MartialShirt {
 			this.RH.GetSlide([]);
 		}
 
+		public destroy() {
+			super.destroy();
+
+			(<any>$('.promotions__slider')).slick('unslick');
+		}
+
 		public onPacketRecieved(response: MartialShirt.Services.PromotionsClass.GetPromotionsActiveResponse) {
 			this.promotions = response.promotions;
+		}
 
-			setTimeout(function () {
-				(<any>$('.promotions__slider')).slick({
-					autoplay: true,
-					autoplaySpeed: 8000,
-					arrows: true,
-					prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-					nextArrow: '<a href="#" class="slider__next"><span></span></a>'
-				});
-			}, 500);
-			
+		public onEnd() {
+			(<any>$('.promotions__slider')).slick({
+				autoplay: true,
+				autoplaySpeed: 8000,
+				arrows: true,
+				prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+				nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+			});
 		}
 
 		public goToPromotion = (promotion : Services.Entity.Promotion) => {
@@ -61,17 +66,11 @@ module MartialShirt {
 		}
 	}
 
-	export class Slider implements ng.IDirective {
+	export class Slider extends MartialShirt.Init.AbstractDirective {
 		public templateUrl = "/scripts/app/modules/promotions/slider.html";
-		public restrict = "E";
-		public replace = true;
-		public scope = {
-		};
 
 		public static Name = "Slider".toLocaleLowerCase();
-
-		public static $inject = [];
-		constructor() { }
+		constructor() { super(); }
 
 		public controller = C_Slider;
 	}

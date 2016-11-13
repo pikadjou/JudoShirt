@@ -3,33 +3,41 @@ module MartialShirt {
 
 	export class C_MenuMain extends Init.AbstractModule{
 		
-		public categories: Services.Entity.Category[] = [];
+		public types: Services.Entity.Type[] = [];
 		public cssClass: string = "";
 		public static $inject = [
 			'$scope',
-			Services.CategoriesRequestHandler.Name
+			Services.TypesRequestHandler.Name
 		];
 		constructor(
 			private $scope: any,
-			private RH: Services.CategoriesRequestHandler
+			private RH: Services.TypesRequestHandler
 			) {
 			super();
 
 			this.init($scope);
 
-			this.RH.GetCategories("");
+			this.RH.GetGenders([1]);
 
-			this.RH.GetCategoriesReceived.add(this.onPacketRecieved, this);
+			this.RH.GetGendersReceived.add(this.onPacketRecieved, this);
 		}
 
-		public onPacketRecieved(response: Services.CategoriesClass.GetCategoriesResponse) {
-			this.categories = response.categories;
-			this.cssClass = "small-block-grid-" + response.categories.length;
+		public openClose(type: Services.Entity.Type) {
+			if (type.active == true) {
+				type.active = false;
+			} else {
+				type.active = true;
+
+			}
+		}
+		public onPacketRecieved(response: Services.TypesClass.GetGendersResponse) {
+			this.types = response.types;
+			this.cssClass = "small-block-grid-" + response.types.length;
 		}
 	}
 
 	export class MenuMain implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/menuMain.html";
+		public templateUrl = "/scripts/app/modules/menu/menuMain.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

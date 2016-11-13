@@ -175,11 +175,11 @@ class CategoriesTable extends Table
         return $categories;
     }
 
-    private function _matchWithType($query, $typeId){
+    private function _matchWithType($query, $typeIds){
 
         return $query->matching(
-                        'Designs.Articles.Products.Types', function ($q) use ($typeId) {
-                    return $q->where(["Types.id IN" => $typeId]);
+                        'Designs.Articles.Products.Types', function ($q) use ($typeIds) {
+                    return $q->where(["Types.id IN" => $typeIds]);
                 }
             );
     }

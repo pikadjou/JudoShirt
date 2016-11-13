@@ -82,6 +82,33 @@ var MartialShirt;
     MartialShirtApp.init();
 })(MartialShirt || (MartialShirt = {}));
 
+///#source 1 1 /scripts/app/Lib.js
+var MartialShirt;
+(function (MartialShirt) {
+    var App;
+    (function (App) {
+        var Lib;
+        (function (Lib) {
+            'use strict';
+            var RepeatEnd = (function () {
+                function RepeatEnd() {
+                    this.restrict = "A";
+                    this.link = function (scope, element, attrs) {
+                        if (scope.$last) {
+                            scope.$eval(attrs.repeatEnd);
+                        }
+                    };
+                }
+                RepeatEnd.Name = "repeatEnd";
+                RepeatEnd.$inject = [];
+                return RepeatEnd;
+            }());
+            Lib.RepeatEnd = RepeatEnd;
+            MartialShirt.Init.Application.MartialShirtApp.directive(RepeatEnd.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(RepeatEnd));
+        })(Lib = App.Lib || (App.Lib = {}));
+    })(App = MartialShirt.App || (MartialShirt.App = {}));
+})(MartialShirt || (MartialShirt = {}));
+
 ///#source 1 1 /scripts/app/container/header.js
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -164,7 +191,48 @@ var MartialShirt;
     })(Container = MartialShirt.Container || (MartialShirt.Container = {}));
 })(MartialShirt || (MartialShirt = {}));
 
-///#source 1 1 /scripts/app/modules/menuMain.js
+///#source 1 1 /scripts/app/container/sidebar.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    var Container;
+    (function (Container) {
+        'use strict';
+        var C_SideBar = (function (_super) {
+            __extends(C_SideBar, _super);
+            function C_SideBar($scope) {
+                _super.call(this);
+                this.$scope = $scope;
+                this.init($scope);
+            }
+            C_SideBar.$inject = [
+                '$scope'
+            ];
+            return C_SideBar;
+        }(MartialShirt.Init.AbstractModule));
+        Container.C_SideBar = C_SideBar;
+        var SideBar = (function () {
+            function SideBar() {
+                this.templateUrl = "/scripts/app/container/sidebar.html";
+                this.restrict = "E";
+                this.replace = true;
+                this.scope = {};
+                this.controller = C_SideBar;
+            }
+            SideBar.Name = "SideBarcontainer".toLocaleLowerCase();
+            SideBar.$inject = [];
+            return SideBar;
+        }());
+        Container.SideBar = SideBar;
+        MartialShirt.Init.Application.MartialShirtApp.directive(SideBar.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(SideBar));
+    })(Container = MartialShirt.Container || (MartialShirt.Container = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/menu/menuMain.js
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -179,26 +247,34 @@ var MartialShirt;
             _super.call(this);
             this.$scope = $scope;
             this.RH = RH;
-            this.categories = [];
+            this.types = [];
             this.cssClass = "";
             this.init($scope);
-            this.RH.GetCategories("");
-            this.RH.GetCategoriesReceived.add(this.onPacketRecieved, this);
+            this.RH.GetGenders([1]);
+            this.RH.GetGendersReceived.add(this.onPacketRecieved, this);
         }
+        C_MenuMain.prototype.openClose = function (type) {
+            if (type.active == true) {
+                type.active = false;
+            }
+            else {
+                type.active = true;
+            }
+        };
         C_MenuMain.prototype.onPacketRecieved = function (response) {
-            this.categories = response.categories;
-            this.cssClass = "small-block-grid-" + response.categories.length;
+            this.types = response.types;
+            this.cssClass = "small-block-grid-" + response.types.length;
         };
         C_MenuMain.$inject = [
             '$scope',
-            MartialShirt.Services.CategoriesRequestHandler.Name
+            MartialShirt.Services.TypesRequestHandler.Name
         ];
         return C_MenuMain;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_MenuMain = C_MenuMain;
     var MenuMain = (function () {
         function MenuMain() {
-            this.templateUrl = "/scripts/app/modules/menuMain.html";
+            this.templateUrl = "/scripts/app/modules/menu/menuMain.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};
@@ -212,50 +288,325 @@ var MartialShirt;
     MartialShirt.Init.Application.MartialShirtApp.directive(MenuMain.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(MenuMain));
 })(MartialShirt || (MartialShirt = {}));
 
-///#source 1 1 /scripts/app/modules/featuredDesigns.js
+///#source 1 1 /scripts/app/modules/menu/sportMenu.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
-    var C_FeaturedDesigns = (function () {
-        function C_FeaturedDesigns($scope, RH) {
+    var C_SportMenu = (function (_super) {
+        __extends(C_SportMenu, _super);
+        function C_SportMenu($scope, rh) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.rh = rh;
+            this.categories = [];
+            this.init($scope);
+            this.rh.GetCategoriesReceived.add(this.onPacketRecived, this);
+            this.rh.GetCategories(null);
+        }
+        C_SportMenu.prototype.onPacketRecived = function (response) {
+            this.categories = response.categories;
+        };
+        C_SportMenu.$inject = [
+            '$scope',
+            MartialShirt.Services.CategoriesRequestHandler.Name
+        ];
+        return C_SportMenu;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_SportMenu = C_SportMenu;
+    var SportMenu = (function () {
+        function SportMenu() {
+            this.templateUrl = "/scripts/app/modules/menu/sportMenu.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_SportMenu;
+        }
+        SportMenu.Name = "SportMenu".toLocaleLowerCase();
+        SportMenu.$inject = [];
+        return SportMenu;
+    }());
+    MartialShirt.SportMenu = SportMenu;
+    MartialShirt.Init.Application.MartialShirtApp.directive(SportMenu.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(SportMenu));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/menu/typeMenu.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_TypeMenu = (function (_super) {
+        __extends(C_TypeMenu, _super);
+        function C_TypeMenu($scope, rh) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.rh = rh;
+            this.types = [];
+            this.init($scope);
+            this.rh.GetMasterTypesReceived.add(this.onPacketRecived, this);
+            this.rh.GetMasterTypes();
+        }
+        C_TypeMenu.prototype.onPacketRecived = function (response) {
+            this.types = response.types;
+        };
+        C_TypeMenu.$inject = [
+            '$scope',
+            MartialShirt.Services.TypesRequestHandler.Name
+        ];
+        return C_TypeMenu;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_TypeMenu = C_TypeMenu;
+    var TypeMenu = (function () {
+        function TypeMenu() {
+            this.templateUrl = "/scripts/app/modules/menu/typeMenu.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_TypeMenu;
+        }
+        TypeMenu.Name = "TypeMenu".toLocaleLowerCase();
+        TypeMenu.$inject = [];
+        return TypeMenu;
+    }());
+    MartialShirt.TypeMenu = TypeMenu;
+    MartialShirt.Init.Application.MartialShirtApp.directive(TypeMenu.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TypeMenu));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/menu/creditMenu.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_CreditMenu = (function (_super) {
+        __extends(C_CreditMenu, _super);
+        function C_CreditMenu($scope) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.init($scope);
+        }
+        C_CreditMenu.$inject = [
+            '$scope'
+        ];
+        return C_CreditMenu;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_CreditMenu = C_CreditMenu;
+    var CreditMenu = (function () {
+        function CreditMenu() {
+            this.templateUrl = "/scripts/app/modules/menu/creditMenu.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_CreditMenu;
+        }
+        CreditMenu.Name = "CreditMenu".toLocaleLowerCase();
+        CreditMenu.$inject = [];
+        return CreditMenu;
+    }());
+    MartialShirt.CreditMenu = CreditMenu;
+    MartialShirt.Init.Application.MartialShirtApp.directive(CreditMenu.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(CreditMenu));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/menu/socialMenu.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_SocialMenu = (function (_super) {
+        __extends(C_SocialMenu, _super);
+        function C_SocialMenu($scope) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.init($scope);
+        }
+        C_SocialMenu.$inject = [
+            '$scope'
+        ];
+        return C_SocialMenu;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_SocialMenu = C_SocialMenu;
+    var SocialMenu = (function () {
+        function SocialMenu() {
+            this.templateUrl = "/scripts/app/modules/menu/socialMenu.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_SocialMenu;
+        }
+        SocialMenu.Name = "SocialMenu".toLocaleLowerCase();
+        SocialMenu.$inject = [];
+        return SocialMenu;
+    }());
+    MartialShirt.SocialMenu = SocialMenu;
+    MartialShirt.Init.Application.MartialShirtApp.directive(SocialMenu.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(SocialMenu));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/menu/subMenu.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_SubMenu = (function (_super) {
+        __extends(C_SubMenu, _super);
+        function C_SubMenu($scope) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.init($scope);
+        }
+        C_SubMenu.$inject = [
+            '$scope'
+        ];
+        return C_SubMenu;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_SubMenu = C_SubMenu;
+    var SubMenu = (function () {
+        function SubMenu() {
+            this.templateUrl = "/scripts/app/modules/menu/subMenu.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_SubMenu;
+        }
+        SubMenu.Name = "SubMenu".toLocaleLowerCase();
+        SubMenu.$inject = [];
+        return SubMenu;
+    }());
+    MartialShirt.SubMenu = SubMenu;
+    MartialShirt.Init.Application.MartialShirtApp.directive(SubMenu.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(SubMenu));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/design/featured.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_DesignFeatured = (function (_super) {
+        __extends(C_DesignFeatured, _super);
+        function C_DesignFeatured($scope, RH) {
+            _super.call(this);
             this.$scope = $scope;
             this.RH = RH;
-            $scope.vm = $scope;
+            this.init($scope);
             this.RH.GetFeaturedDesignsReceived.add(this.onPacketRecieved, this);
+            this.launchService();
         }
-        C_FeaturedDesigns.prototype.launchService = function () {
+        C_DesignFeatured.prototype.destroy = function () {
+            _super.prototype.destroy.call(this);
+            $('.slider').slick('unslick');
+        };
+        C_DesignFeatured.prototype.launchService = function () {
             if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature)) {
                 this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature));
                 return;
             }
             this.RH.GetFeaturedDesigns([]);
         };
-        C_FeaturedDesigns.prototype.onPacketRecieved = function (response) {
+        C_DesignFeatured.prototype.onPacketRecieved = function (response) {
             MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature, response);
             this.$scope.vm.category = response.category;
             this.$scope.vm.list = response.designs;
         };
-        C_FeaturedDesigns.$inject = [
+        C_DesignFeatured.prototype.onEnd = function () {
+            $('.slider').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                infinite: false,
+                arrows: true,
+                prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+                nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+            });
+        };
+        C_DesignFeatured.$inject = [
             '$scope',
             MartialShirt.Services.DesignsRequestHandler.Name
         ];
-        return C_FeaturedDesigns;
+        return C_DesignFeatured;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_DesignFeatured = C_DesignFeatured;
+    var DesignFeatured = (function () {
+        function DesignFeatured() {
+            this.templateUrl = "/scripts/app/modules/design/featured.html";
+            this.restrict = "E";
+            this.replace = false;
+            this.scope = {};
+            this.controller = C_DesignFeatured;
+        }
+        DesignFeatured.Name = "DesignFeatured".toLocaleLowerCase();
+        DesignFeatured.$inject = [];
+        return DesignFeatured;
     }());
-    MartialShirt.C_FeaturedDesigns = C_FeaturedDesigns;
-    var FeaturedDesigns = (function () {
-        function FeaturedDesigns() {
-            this.templateUrl = "/scripts/app/modules/featuredDesigns.html";
+    MartialShirt.DesignFeatured = DesignFeatured;
+    MartialShirt.Init.Application.MartialShirtApp.directive(DesignFeatured.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(DesignFeatured));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/app/modules/design/promotion.js
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_DesignPromotion = (function () {
+        function C_DesignPromotion($scope, RH) {
+            this.$scope = $scope;
+            this.RH = RH;
+            $scope.vm = $scope;
+            this.RH.GetPromoDesignsReceived.add(this.onPacketRecieved, this);
+            this.launchService();
+        }
+        C_DesignPromotion.prototype.launchService = function () {
+            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion)) {
+                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion));
+                return;
+            }
+            this.RH.GetPromoDesigns([5]);
+        };
+        C_DesignPromotion.prototype.onPacketRecieved = function (response) {
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion, response);
+            this.$scope.vm.category = response.category;
+            this.$scope.vm.list = response.designs;
+        };
+        C_DesignPromotion.$inject = [
+            '$scope',
+            MartialShirt.Services.DesignsRequestHandler.Name
+        ];
+        return C_DesignPromotion;
+    }());
+    MartialShirt.C_DesignPromotion = C_DesignPromotion;
+    var DesignPromotion = (function () {
+        function DesignPromotion() {
+            this.templateUrl = "/scripts/app/modules/design/promotion.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {};
-            this.controller = C_FeaturedDesigns;
+            this.controller = C_DesignPromotion;
         }
-        FeaturedDesigns.Name = "FeaturedDesigns".toLocaleLowerCase();
-        FeaturedDesigns.$inject = [];
-        return FeaturedDesigns;
+        DesignPromotion.Name = "DesignPromotion".toLocaleLowerCase();
+        DesignPromotion.$inject = [];
+        return DesignPromotion;
     }());
-    MartialShirt.FeaturedDesigns = FeaturedDesigns;
-    MartialShirt.Init.Application.MartialShirtApp.directive(FeaturedDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(FeaturedDesigns));
+    MartialShirt.DesignPromotion = DesignPromotion;
+    MartialShirt.Init.Application.MartialShirtApp.directive(DesignPromotion.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(DesignPromotion));
 })(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/modules/categoryDesigns.js
@@ -962,17 +1313,21 @@ var MartialShirt;
             this.RH.GetPromotionsActiveReceived.add(this.onPacketRecieved, this);
             this.RH.GetSlide([]);
         }
+        C_Slider.prototype.destroy = function () {
+            _super.prototype.destroy.call(this);
+            $('.promotions__slider').slick('unslick');
+        };
         C_Slider.prototype.onPacketRecieved = function (response) {
             this.promotions = response.promotions;
-            setTimeout(function () {
-                $('.promotions__slider').slick({
-                    autoplay: true,
-                    autoplaySpeed: 8000,
-                    arrows: true,
-                    prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-                    nextArrow: '<a href="#" class="slider__next"><span></span></a>'
-                });
-            }, 500);
+        };
+        C_Slider.prototype.onEnd = function () {
+            $('.promotions__slider').slick({
+                autoplay: true,
+                autoplaySpeed: 8000,
+                arrows: true,
+                prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+                nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+            });
         };
         C_Slider.$inject = [
             '$scope',
@@ -982,18 +1337,16 @@ var MartialShirt;
         return C_Slider;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_Slider = C_Slider;
-    var Slider = (function () {
+    var Slider = (function (_super) {
+        __extends(Slider, _super);
         function Slider() {
+            _super.call(this);
             this.templateUrl = "/scripts/app/modules/promotions/slider.html";
-            this.restrict = "E";
-            this.replace = true;
-            this.scope = {};
             this.controller = C_Slider;
         }
         Slider.Name = "Slider".toLocaleLowerCase();
-        Slider.$inject = [];
         return Slider;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.Slider = Slider;
     MartialShirt.Init.Application.MartialShirtApp.directive(Slider.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Slider));
 })(MartialShirt || (MartialShirt = {}));
@@ -1619,6 +1972,68 @@ var MartialShirt;
     MartialShirt.Init.Application.MartialShirtApp.directive(ProductEntity.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(ProductEntity));
 })(MartialShirt || (MartialShirt = {}));
 
+///#source 1 1 /scripts/app/modules/article/featured.js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var MartialShirt;
+(function (MartialShirt) {
+    'use strict';
+    var C_ArticleFeatured = (function (_super) {
+        __extends(C_ArticleFeatured, _super);
+        function C_ArticleFeatured($scope, RH) {
+            _super.call(this);
+            this.$scope = $scope;
+            this.RH = RH;
+            this.articles = [];
+            this.init($scope);
+            this.RH.GetHilightArticlesReceived.add(this.onPacketRecieved, this);
+            this.launchService();
+        }
+        C_ArticleFeatured.prototype.destroy = function () {
+            _super.prototype.destroy.call(this);
+            $('.slider').slick('unslick');
+        };
+        C_ArticleFeatured.prototype.launchService = function () {
+            this.RH.GetHilightArticles();
+        };
+        C_ArticleFeatured.prototype.onPacketRecieved = function (response) {
+            this.articles = response.articles;
+        };
+        C_ArticleFeatured.prototype.onEnd = function () {
+            $('.slider').slick({
+                autoplay: true,
+                autoplaySpeed: 8000,
+                arrows: true,
+                prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
+                nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+            });
+        };
+        C_ArticleFeatured.$inject = [
+            '$scope',
+            MartialShirt.Services.ArticlesRequestHandler.Name
+        ];
+        return C_ArticleFeatured;
+    }(MartialShirt.Init.AbstractModule));
+    MartialShirt.C_ArticleFeatured = C_ArticleFeatured;
+    var ArticleFeatured = (function () {
+        function ArticleFeatured() {
+            this.templateUrl = "/scripts/app/modules/article/featured.html";
+            this.restrict = "E";
+            this.replace = true;
+            this.scope = {};
+            this.controller = C_ArticleFeatured;
+        }
+        ArticleFeatured.Name = "ArticleFeatured".toLocaleLowerCase();
+        ArticleFeatured.$inject = [];
+        return ArticleFeatured;
+    }());
+    MartialShirt.ArticleFeatured = ArticleFeatured;
+    MartialShirt.Init.Application.MartialShirtApp.directive(ArticleFeatured.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(ArticleFeatured));
+})(MartialShirt || (MartialShirt = {}));
+
 ///#source 1 1 /scripts/app/modules/basket/checkout.js
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2183,53 +2598,6 @@ var MartialShirt;
     }());
     MartialShirt.WidgetNew = WidgetNew;
     MartialShirt.Init.Application.MartialShirtApp.directive(WidgetNew.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetNew));
-})(MartialShirt || (MartialShirt = {}));
-
-///#source 1 1 /scripts/app/widgets/promotionDesigns.js
-var MartialShirt;
-(function (MartialShirt) {
-    'use strict';
-    var C_WidgetPromotionDesigns = (function () {
-        function C_WidgetPromotionDesigns($scope, RH) {
-            this.$scope = $scope;
-            this.RH = RH;
-            $scope.vm = $scope;
-            this.RH.GetPromoDesignsReceived.add(this.onPacketRecieved, this);
-            this.launchService();
-        }
-        C_WidgetPromotionDesigns.prototype.launchService = function () {
-            if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion)) {
-                this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion));
-                return;
-            }
-            this.RH.GetPromoDesigns([5]);
-        };
-        C_WidgetPromotionDesigns.prototype.onPacketRecieved = function (response) {
-            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.DesignPromotion, response);
-            this.$scope.vm.category = response.category;
-            this.$scope.vm.list = response.designs;
-        };
-        C_WidgetPromotionDesigns.$inject = [
-            '$scope',
-            MartialShirt.Services.DesignsRequestHandler.Name
-        ];
-        return C_WidgetPromotionDesigns;
-    }());
-    MartialShirt.C_WidgetPromotionDesigns = C_WidgetPromotionDesigns;
-    var WidgetPromotionDesigns = (function () {
-        function WidgetPromotionDesigns() {
-            this.templateUrl = "/scripts/app/widgets/promotionDesigns.html";
-            this.restrict = "E";
-            this.replace = true;
-            this.scope = {};
-            this.controller = C_WidgetPromotionDesigns;
-        }
-        WidgetPromotionDesigns.Name = "WidgetPromotionDesigns".toLocaleLowerCase();
-        WidgetPromotionDesigns.$inject = [];
-        return WidgetPromotionDesigns;
-    }());
-    MartialShirt.WidgetPromotionDesigns = WidgetPromotionDesigns;
-    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetPromotionDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetPromotionDesigns));
 })(MartialShirt || (MartialShirt = {}));
 
 ///#source 1 1 /scripts/app/widgets/account.js
