@@ -1,7 +1,8 @@
-﻿<div class="sub-menu__container">
+﻿<div class="sport-menu__container">
+	<h2>Sports</h2>
 	<ul>
 		<li ng-repeat="category in vm.categories">
-			<a href="">{{category.name}}</a>
+			<a href="{{vm._application.getUrl('Category')}}/{{category.url}}">{{category.name}}</a>
 		</li>
 	</ul>
 </div>

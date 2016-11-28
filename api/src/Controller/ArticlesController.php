@@ -23,7 +23,7 @@ class ArticlesController extends AppController
 
     }
     
-    public function getHilightArticles()
+    public function getHilightArticles($catId = null)
     {
         $key = "ArticlesController-getHilightArticles";
         if (($response = Cache\CacheController::read($key)) !== false) {
@@ -31,7 +31,10 @@ class ArticlesController extends AppController
             return;
         }
         
-        $articles = $this->Articles->findHilightProducts();
+        if($catId === null){
+            $catId = 1;
+        }
+        $articles = $this->Articles->findHilightProducts($catId);
         
         $response = new ArticlesRequestHandler\GetHilightResponse();
         $response->init($articles);

@@ -11,7 +11,10 @@
 
 		public link = (scope, element, attrs) => {
 			if (scope.$last) {
-				scope.$eval(attrs.repeatEnd);
+				setTimeout(() => {
+					scope.$eval(attrs.repeatEnd);
+				}, 50, scope);
+				
 			}
 		}
 

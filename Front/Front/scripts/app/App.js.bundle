@@ -22,7 +22,7 @@
 		<file>/scripts/app/container/footer.js</file>
 	  <file>/scripts/app/container/sidebar.js</file>
 
-
+	  <file>/scripts/app/modules/menu/accountMenu.js</file>
 	  <file>/scripts/app/modules/menu/menuMain.js</file>
 	  <file>/scripts/app/modules/menu/sportMenu.js</file>
 	  <file>/scripts/app/modules/menu/typeMenu.js</file>
@@ -37,7 +37,6 @@
 	  <file>/scripts/app/modules/categoryDesigns.js</file>
 		<file>/scripts/app/modules/langSelector.js</file>
 		<file>/scripts/app/modules/design.js</file>
-		<file>/scripts/app/modules/article.js</file>
 		<file>/scripts/app/modules/basket.js</file>
 		<file>/scripts/app/modules/print.js</file>
 	  
@@ -62,6 +61,7 @@
 	  <file>/scripts/app/modules/product/entity.js</file>
 	  
 	  <file>/scripts/app/modules/article/featured.js</file>
+	  <file>/scripts/app/modules/article/article.js</file>
 
 
 	  <file>/scripts/app/modules/basket/checkout.js</file>
@@ -98,7 +98,7 @@
 		<file>/scripts/app/widgets/account.js</file>
 	  
 		<file>/scripts/app/templates/article.js</file>
-		<file>/scripts/app/templates/articleWidget.js</file>
+	  <file>/scripts/app/templates/design.js</file>
 		<file>/scripts/app/templates/loader.js</file>
 
 	  <file>/scripts/app/models/PlayerStorage.js</file>

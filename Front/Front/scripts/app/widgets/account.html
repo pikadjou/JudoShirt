@@ -1,5 +1,5 @@
-﻿<div class="row widget__account">
-	<div ng-if="vm.isAuthenticated" class="small-10 columns no-padding">
+﻿<div class="widget__account">
+	<div ng-if="vm.isAuthenticated">
 		<div class="row collapse authenticated">
 			<div class="small-offset-5 small-6 columns hello">
 				Bonjour, {{vm._login.user.name}} <i class="fa fa-smile-o"></i>
@@ -23,59 +23,51 @@
 			</div>
 		</div>
 	</div>
-	<div ng-if="!vm.isAuthenticated" class="small-10 columns no-padding">
+	<div ng-if="!vm.isAuthenticated">
 		<div class="unauthenticated">
-			<div class="row">
-				<div class="small-offset-5 small-6 columns connection">
-					<a ng-click="vm._connectionPanelOpen = !vm._connectionPanelOpen" class="button button-player">
-						Connection
-						<i ng-show="!vm._connectionPanelOpen" class="fa fa-chevron-down"></i>
-						<i ng-show="vm._connectionPanelOpen" class="fa fa-chevron-up"></i>
-					</a>
-					<div ng-if="vm._connectionPanelOpen === true" class="account-panel connection-panel">
-						<form>
-							<div class="row">
-								<div class="small-12 columns">
-									<label>
-										Pseudo ou email
-										<input type="text" placeholder="Pseudo ou email" ng-model="vm._loginForm.pseudo">
+			<div class="connection">
+				<a ng-click="vm._connectionPanelOpen = !vm._connectionPanelOpen">
+					Connection
+				</a>
+				<div ng-if="vm._connectionPanelOpen === true" class="account-panel connection-panel">
+					<form>
+						<div class="row">
+							<div class="small-12 columns">
+								<label>
+									Pseudo ou email
+									<input type="text" placeholder="Pseudo ou email" ng-model="vm._loginForm.pseudo">
 
-										<span ng-if="vm._loginForm.errorPseudo" class="error">{{vm._loginForm.errorPseudo}}</span>
-									</label>
-								</div>
-								<div class="small-12 columns">
-									<label>
-										Mot de passe
-										<input type="password" placeholder="Mot de passe" ng-model="vm._loginForm.password">
-
-										<span ng-if="vm._loginForm.errorPassword" class="error">{{vm._loginForm.errorPassword}}</span>
-									</label>
-								</div>
-								<div class="small-12 columns">
-									<button class="button button-action" ng-click="vm.submit()" ng-class="{disable: vm._loader}">
-										<span ng-if="vm._loader"><i class="fa fa-spinner fa-spin"></i></span>
-										<span ng-if="!vm._loader">Connection</span>
-									</button>
-									<span ng-if="vm._loginForm.errorServeur" class="error">{{vm._loginForm.errorServeur}}</span>
-
-								</div>
+									<span ng-if="vm._loginForm.errorPseudo" class="error">{{vm._loginForm.errorPseudo}}</span>
+								</label>
 							</div>
-						</form>
-					</div>
+							<div class="small-12 columns">
+								<label>
+									Mot de passe
+									<input type="password" placeholder="Mot de passe" ng-model="vm._loginForm.password">
+
+									<span ng-if="vm._loginForm.errorPassword" class="error">{{vm._loginForm.errorPassword}}</span>
+								</label>
+							</div>
+							<div class="small-12 columns">
+								<button class="button button-action" ng-click="vm.submit()" ng-class="{disable: vm._loader}">
+									<span ng-if="vm._loader"><i class="fa fa-spinner fa-spin"></i></span>
+									<span ng-if="!vm._loader">Connection</span>
+								</button>
+								<span ng-if="vm._loginForm.errorServeur" class="error">{{vm._loginForm.errorServeur}}</span>
+
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-			<div class="row">
+
+			<!--<div class="row">
 				<div class="small-offset-5 small-6 columns subscribe">
 					<a href="{{vm._application.getUrl('AccountSubscription')}}" class="button button-action">
 						Inscription
 					</a>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</div>
-	<div class="small-2 columns no-padding">
-		<basket></basket>
-	</div>
-
-
 </div>

@@ -8,9 +8,10 @@ var MartialShirt;
     'use strict';
     var C_DesignFeatured = (function (_super) {
         __extends(C_DesignFeatured, _super);
-        function C_DesignFeatured($scope, RH) {
+        function C_DesignFeatured($scope, $element, RH) {
             _super.call(this);
             this.$scope = $scope;
+            this.$element = $element;
             this.RH = RH;
             this.init($scope);
             this.RH.GetFeaturedDesignsReceived.add(this.onPacketRecieved, this);
@@ -18,7 +19,7 @@ var MartialShirt;
         }
         C_DesignFeatured.prototype.destroy = function () {
             _super.prototype.destroy.call(this);
-            $('.slider').slick('unslick');
+            this._jview.find('.slider').slick('unslick');
         };
         C_DesignFeatured.prototype.launchService = function () {
             if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.DesignFeature)) {
@@ -33,8 +34,8 @@ var MartialShirt;
             this.$scope.vm.list = response.designs;
         };
         C_DesignFeatured.prototype.onEnd = function () {
-            $('.slider').slick({
-                slidesToShow: 3,
+            this._jview.find('.slider').slick({
+                slidesToShow: 4,
                 slidesToScroll: 1,
                 infinite: false,
                 arrows: true,
@@ -44,6 +45,7 @@ var MartialShirt;
         };
         C_DesignFeatured.$inject = [
             '$scope',
+            '$element',
             MartialShirt.Services.DesignsRequestHandler.Name
         ];
         return C_DesignFeatured;

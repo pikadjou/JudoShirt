@@ -1,0 +1,38 @@
+﻿.credit-menu__container{
+	.information{
+		
+		padding: 30px;
+		background-color: $light-blue-color;
+		h2{
+			color: $white-color;
+			margin: 0;
+		}
+		ul{
+			margin : 0;
+			padding: 0;
+			list-style : none;
+
+			text-align: center;
+			li{
+				list-style : none;
+				display: inline;
+				img{
+					margin: 10px;
+					max-width : 40px;
+					height: auto;
+				}
+			}
+		}
+	}
+
+	.spreadshirt{
+		margin-top: 25px;
+		width: 100%;
+		text-align: center;
+		background: #00B1A6;
+		img{
+			width: 50%;
+		}
+	}
+	
+}

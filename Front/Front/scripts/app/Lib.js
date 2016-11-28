@@ -10,7 +10,9 @@ var MartialShirt;
                     this.restrict = "A";
                     this.link = function (scope, element, attrs) {
                         if (scope.$last) {
-                            scope.$eval(attrs.repeatEnd);
+                            setTimeout(function () {
+                                scope.$eval(attrs.repeatEnd);
+                            }, 50, scope);
                         }
                     };
                 }

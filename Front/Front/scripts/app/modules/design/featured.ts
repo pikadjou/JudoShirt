@@ -6,10 +6,12 @@ module MartialShirt {
 
 		public static $inject = [
 			'$scope',
+			'$element',
 			Services.DesignsRequestHandler.Name
 		];
 		constructor(
 			private $scope: any,
+			private $element : any,
 			private RH: Services.DesignsRequestHandler
 			) {
 			super();
@@ -24,7 +26,7 @@ module MartialShirt {
 		public destroy() {
 			super.destroy();
 
-			(<any>$('.slider')).slick('unslick');
+			(<any>this._jview.find('.slider')).slick('unslick');
 		}
 
 		public launchService() {
@@ -46,14 +48,16 @@ module MartialShirt {
 		}
 
 		public onEnd() {
-			(<any>$('.slider')).slick({
-				slidesToShow: 3,
+
+			(<any>this._jview.find('.slider')).slick({
+				slidesToShow: 4,
 				slidesToScroll: 1,
 				infinite: false,
 				arrows: true,
 				prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
 				nextArrow: '<a href="#" class="slider__next"><span></span></a>'
 			});
+			
 		}
 	}
 

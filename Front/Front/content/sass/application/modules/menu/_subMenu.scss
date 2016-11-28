@@ -1,0 +1,27 @@
+﻿.sub-menu__container{
+	height: 100%;
+	vertical-align: bottom;
+	a{
+		text-align: center;
+		font-size: rem-calc(14);
+
+		border-right: 1px $white-color solid;
+
+		padding : 0 5px;
+	}
+	ul{
+		list-style: none;
+		text-align: center;
+		li{
+			display:inline-block;
+			list-style:none;
+			
+			text-align : center;
+			&:last-child{
+				a{
+					border: none;
+				}
+			}
+		}
+	}
+}

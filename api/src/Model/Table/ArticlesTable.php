@@ -73,8 +73,14 @@ class ArticlesTable extends Table
 
         return $query->contain(["Products"])->toArray();
     }
-    public function findHilightProducts(){
-        return $this->_findHilight()->toArray();
+    public function findHilightProducts($catId){
+        return $this->_findHilight(null, $catId)
+                    ->contain([
+                        'Products' => [
+                            "Appearances"
+                        ]
+                    ])
+                    ->toArray();
     }
     public function getOne($id){
         
@@ -271,13 +277,13 @@ class ArticlesTable extends Table
         return $query;
     }
 
-    private function _findHilight($query = null){
+    private function _findHilight($query = null, $catId){
         if($query == null){
             $query = $this->_find();
         }
         $query->where(["Articles.priority" => -1]);
         
-        $this->_byCategory($query, 1);
+        $this->_byCategory($query, $catId);
 
         $query->contain(["Products"]);
 

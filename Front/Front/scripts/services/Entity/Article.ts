@@ -6,6 +6,7 @@
 
 		public short: string;
 		public content: string;
+		public price: number;
 
 		public thumbnail: string;
 		public sizeThumbnail: string;

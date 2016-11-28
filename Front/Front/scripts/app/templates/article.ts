@@ -3,7 +3,7 @@ module MartialShirt {
 
 	export class C_TemplateArticle extends Init.AbstractModule{
 		
-		public design: Services.Entity.Design = null;
+		public article: Services.Entity.Article = null;
 
 		public static $inject = [
 			'$scope'
@@ -18,18 +18,15 @@ module MartialShirt {
 		}
 	}
 
-	export class TemplateArticle implements ng.IDirective {
+	export class TemplateArticle extends Init.AbstractDirective implements ng.IDirective {
 		public templateUrl = "/scripts/app/templates/article.html";
-		public restrict = "E";
-		public replace = true;
 		public scope = {
-			design: '='
+			article: '='
 		};
 
 		public static Name = "TemplateArticle".toLocaleLowerCase();
 
-		public static $inject = [];
-		constructor() { }
+		constructor() { super(); }
 
 		public controller = C_TemplateArticle;
 	}

@@ -1,0 +1,13 @@
+﻿.header_container {
+	background-color : $light-blue-color;
+	.content{
+		
+		padding: 10px;
+		.logo{
+			font-family : 'Roboto Thin';
+			font-size: rem-calc(36);
+			color: $white-color;
+		}
+	}
+	
+}

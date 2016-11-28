@@ -1,0 +1,97 @@
+﻿<div class="module__container article__container">
+	<div class="error" ng-if="vm.errorMessage !== ''">
+		<div class="alert label">
+			{{vm.errorMessage}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-6 columns">
+			<img src="{{vm.getImageUrl(0, 0)}}" alt="{{vm.article.name}}" class="main" />
+
+			<div class="views">
+				<span ng-repeat="view in vm.views | orderBy: priority" class="view">
+					<a href="#" ng-click="vm.changeSelectedView(view)" ng-class="{'active' : vm.isDefaultView(view)}">
+						<img src="{{vm.getImageUrl(view.shopId, 0)}}" alt="{{view.name}}" />
+					</a>
+				</span>
+			</div>
+		</div>
+		<div class="small-6 columns">
+			<h2>
+				{{ vm.article.design.name }}
+			</h2>
+			<h3>
+				{{ vm.article.name }}
+
+				<span ng-if="vm.article.idCustomShop" class="custom">
+					<!--<a href="/designer/{{vm.article.idCustomShop}}">Personnaliser</a>-->
+				</span>
+			</h3>
+
+			<div class="short-content">
+				<p ng-bind-html="vm.renderHtml(vm.article.short)"></p>
+			</div>
+			<div class="price">
+				{{vm.article.price}} €
+				<small class="small">TTC</small>
+				<small class="small">
+					Hors frais de port
+				</small>
+			</div>
+
+			<div class="selection row">
+				<div class="appearances small-6 columns">
+					<div class="dropdown" ng-click="vm.showAppearance = !vm.showAppearance">
+						Couleur
+						<span class="selected" ng-if="vm.SelectedAppearance !== null">
+							: <img src="{{vm.SelectedAppearance.thumbnail}}" alt="{{vm.SelectedAppearance.name}}" />
+						</span>
+						<i class="fa fa-chevron-down" aria-hidden="true"></i>
+					</div>
+					<div class="dropdown-content" ng-if="vm.showAppearance">
+						<span ng-repeat="appearance in vm.appearances | orderBy: priority" class="appearance">
+							<a href="#" ng-click="vm.changeSelectedAppearance(appearance)" ng-class="{'active' : vm.isDefaultAppearance(appearance)}">
+								<i class="fa fa-check fa-2x" aria-hidden="true" ng-if="vm.isDefaultAppearance(appearance)"></i>
+								<img src="{{appearance.thumbnail}}" alt="{{appearance.name}}" />
+							</a>
+						</span>
+					</div>
+				</div>
+
+				<div class="sizes small-6 columns">
+					<div class="dropdown" ng-click="vm.showSize = !vm.showSize">
+						Taille
+						<span class="selected" ng-if="vm.SelectedSize !== null">
+							: {{ vm.SelectedSize.name }}
+						</span>
+						<i class="fa fa-chevron-down" aria-hidden="true"></i>
+					</div>
+					<div class="dropdown-content" ng-if="vm.showSize">
+						<span ng-repeat="size in vm.sizes | orderBy: priority" class="size">
+							<a href="#" ng-click="vm.changeSelectedSize(size)" class="button button-action" ng-class="{'active' : vm.isDefaultSize(size)}">
+								{{size.name}}
+							</a>
+						</span>
+					</div>
+
+				</div>
+
+				<div class="action small-12 columns">
+					<a class="button button-action expand" ng-click="vm.addToBasket()">
+						Ajouter au panier
+					</a>
+				</div>
+			</div>
+			<div class="content">
+				<h4>
+					Desciption du produit
+				</h4>
+				<p ng-bind-html="vm.renderHtml(vm.article.content)"></p>
+			</div>
+
+			<div class="size-information">
+				<img src="{{vm.article.sizeThumbnail}}" />
+			</div>
+		</div>
+	</div>
+</div>

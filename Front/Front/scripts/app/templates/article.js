@@ -11,7 +11,7 @@ var MartialShirt;
         function C_TemplateArticle($scope) {
             _super.call(this);
             this.$scope = $scope;
-            this.design = null;
+            this.article = null;
             this.init($scope);
         }
         C_TemplateArticle.$inject = [
@@ -20,20 +20,19 @@ var MartialShirt;
         return C_TemplateArticle;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_TemplateArticle = C_TemplateArticle;
-    var TemplateArticle = (function () {
+    var TemplateArticle = (function (_super) {
+        __extends(TemplateArticle, _super);
         function TemplateArticle() {
+            _super.call(this);
             this.templateUrl = "/scripts/app/templates/article.html";
-            this.restrict = "E";
-            this.replace = true;
             this.scope = {
-                design: '='
+                article: '='
             };
             this.controller = C_TemplateArticle;
         }
         TemplateArticle.Name = "TemplateArticle".toLocaleLowerCase();
-        TemplateArticle.$inject = [];
         return TemplateArticle;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.TemplateArticle = TemplateArticle;
     MartialShirt.Init.Application.MartialShirtApp.directive(TemplateArticle.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateArticle));
 })(MartialShirt || (MartialShirt = {}));

@@ -19,6 +19,8 @@ module MartialShirt {
 
 		public errorMessage = "";
 
+		public showAppearance = false;
+		public showSize = false;
 		public sce = null;
 		public static $inject = [
 			'$scope',
@@ -110,9 +112,12 @@ module MartialShirt {
 		}
 		public changeSelectedAppearance(appearance: Services.Entity.Appearance) {
 			this.SelectedAppearance = appearance;
+			this.showAppearance = false;
+
 		}
 		public changeSelectedSize(size: Services.Entity.Size) {
 			this.SelectedSize = size;
+			this.showSize = false;
 		}
 
 		public isDefaultSize(size: Services.Entity.Size): boolean {
@@ -174,7 +179,7 @@ module MartialShirt {
 	}
 
 	export class Article implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/article.html";
+		public templateUrl = "/scripts/app/modules/article/article.html";
 		public restrict = "E";
 		public replace = true;
 		public scope = {

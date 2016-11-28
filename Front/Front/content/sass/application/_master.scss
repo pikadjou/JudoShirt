@@ -1,29 +1,17 @@
-﻿/*
+﻿
 @import "common";
-@import "widgets/common";
-@import "modules/common";
 
-@import "spreadshirt";
+@import "container/header";
+@import "container/sidebar";
 
-@import "container/footer";
-
-@import "modules/menuTop";
-@import "modules/headerContent";
-@import "modules/menuMain";
-@import "modules/slider";
-@import "modules/design";
-@import "modules/article";
-@import "modules/print";
-@import "modules/promotion";
+@import "modules/menu/subMenu";
+@import "modules/menu/accountMenu";
+@import "modules/menu/creditMenu";
+@import "modules/menu/socialMenu";
+@import "modules/account";
 @import "modules/basket";
 
-@import "widgets/new";
-@import "widgets/top-ten";
-@import "widgets/account";
+@import "modules/article/article";
 
 
-
-
-@import "maintenance";
-*/
-
+@import "templates/template";

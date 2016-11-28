@@ -24,6 +24,8 @@ var MartialShirt;
             this.views = null;
             this.SelectedView = null;
             this.errorMessage = "";
+            this.showAppearance = false;
+            this.showSize = false;
             this.sce = null;
             this._sce = $sce;
             this.init($scope);
@@ -83,9 +85,11 @@ var MartialShirt;
         };
         C_Article.prototype.changeSelectedAppearance = function (appearance) {
             this.SelectedAppearance = appearance;
+            this.showAppearance = false;
         };
         C_Article.prototype.changeSelectedSize = function (size) {
             this.SelectedSize = size;
+            this.showSize = false;
         };
         C_Article.prototype.isDefaultSize = function (size) {
             if (!this.SelectedSize) {
@@ -148,7 +152,7 @@ var MartialShirt;
     MartialShirt.C_Article = C_Article;
     var Article = (function () {
         function Article() {
-            this.templateUrl = "/scripts/app/modules/article.html";
+            this.templateUrl = "/scripts/app/modules/article/article.html";
             this.restrict = "E";
             this.replace = true;
             this.scope = {

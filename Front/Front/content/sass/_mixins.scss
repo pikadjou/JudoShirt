@@ -1,0 +1,13 @@
+﻿@mixin box-shadow ($string) {
+	  -webkit-box-shadow: $string;
+	  -moz-box-shadow:    $string;
+	  box-shadow:         $string;
+}
+
+@mixin radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+}

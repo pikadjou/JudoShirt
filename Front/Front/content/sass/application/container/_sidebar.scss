@@ -1,0 +1,36 @@
+﻿.sidebar_container{
+	margin-top: -65px;
+	background-color: $white-color;
+	h1{
+		font-family: 'Roboto-Thin', sans-serif;
+		font-size: rem-calc(16);
+		color: $light-black-color;
+		margin: 0;
+	}
+	h2{
+		font-family: 'Roboto-Bold', sans-serif;
+		font-size: rem-calc(20);
+		color: $black-color;
+	}
+	.categories{
+		padding: 30px;
+		@include box-shadow(0 2px 1px #888888);
+		ul{
+			margin: 0;
+			padding : 0;
+			li{
+				display: block;
+				a{
+					font-family: 'Lato', sans-serif;
+					color: $black-color;
+					font-size: rem-calc(16);
+				}
+			}
+		}
+	}
+	
+	.credit, .social{
+		margin-top: 25px;
+	}
+	
+}

@@ -834,6 +834,7 @@
     <Content Include="scripts\app\modules\basket\checkout.html" />
     <Content Include="scripts\app\modules\custom\designer.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
+    <Content Include="scripts\app\modules\menu\accountMenu.html" />
     <Content Include="scripts\app\modules\menu\creditMenu.html" />
     <Content Include="scripts\app\modules\menu\socialMenu.html" />
     <Content Include="scripts\app\modules\menu\typeMenu.html" />
@@ -853,7 +854,7 @@
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\design\featured.html" />
     <Content Include="scripts\app\modules\print.html" />
-    <Content Include="scripts\app\modules\article.html" />
+    <Content Include="scripts\app\modules\article\article.html" />
     <Content Include="scripts\app\pages\account\subscription.html" />
     <Content Include="scripts\app\pages\account\detail.html" />
     <Content Include="scripts\app\pages\account\order.html" />
@@ -870,8 +871,8 @@
     <Content Include="scripts\app\pages\article.html" />
     <Content Include="scripts\app\pages\promotions\entity.html" />
     <Content Include="scripts\app\pages\promotions\list.html" />
+    <Content Include="scripts\app\templates\design.html" />
     <Content Include="scripts\app\templates\loader.html" />
-    <Content Include="scripts\app\templates\articleWidget.html" />
     <Content Include="scripts\app\templates\article.html" />
     <Content Include="scripts\app\widgets\account.html" />
     <Content Include="scripts\app\modules\design\promotion.html" />
@@ -890,6 +891,7 @@
     <TypeScriptCompile Include="scripts\app\modules\basket\checkout.ts" />
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\accountMenu.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\creditMenu.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\socialMenu.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\typeMenu.ts" />
@@ -909,7 +911,7 @@
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design\featured.ts" />
     <TypeScriptCompile Include="scripts\app\modules\print.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\article.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\article\article.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\order.ts" />
@@ -926,8 +928,8 @@
     <TypeScriptCompile Include="scripts\app\pages\article.ts" />
     <TypeScriptCompile Include="scripts\app\pages\promotions\entity.ts" />
     <TypeScriptCompile Include="scripts\app\pages\promotions\list.ts" />
+    <TypeScriptCompile Include="scripts\app\templates\design.ts" />
     <TypeScriptCompile Include="scripts\app\templates\loader.ts" />
-    <TypeScriptCompile Include="scripts\app\templates\articleWidget.ts" />
     <TypeScriptCompile Include="scripts\app\templates\article.ts" />
     <TypeScriptCompile Include="scripts\app\widgets\account.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design\promotion.ts" />
@@ -1079,21 +1081,6 @@
     <Content Include="content\sass\Site.css.map">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
-    <Content Include="content\sass\application\modules\_menuTop.scss" />
-    <Content Include="content\sass\application\modules\_headerContent.scss" />
-    <Content Include="content\sass\application\modules\_menuMain.scss" />
-    <Content Include="content\sass\application\widgets\_new.scss" />
-    <Content Include="content\sass\application\widgets\_top-ten.scss" />
-    <Content Include="content\sass\application\widgets\_account.scss" />
-    <Content Include="content\sass\application\_spreadshirt.scss" />
-    <Content Include="content\sass\application\modules\_slider.scss" />
-    <Content Include="content\sass\application\container\_footer.scss" />
-    <Content Include="content\sass\application\widgets\_common.scss" />
-    <Content Include="content\sass\application\modules\_common.scss" />
-    <Content Include="content\sass\application\modules\_design.scss" />
-    <Content Include="content\sass\application\modules\_article.scss" />
-    <Content Include="content\sass\application\modules\_print.scss" />
-    <Content Include="content\sass\application\modules\_promotion.scss" />
     <Content Include="lib\lib.js.bundle">
       <SubType>Designer</SubType>
     </Content>
@@ -1104,8 +1091,18 @@
     <Content Include="scripts\tools\tools.min.js.map">
       <DependentUpon>tools.min.js</DependentUpon>
     </Content>
-    <Content Include="content\sass\application\modules\_basket.scss" />
     <Content Include="content\sass\application\_maintenance.scss" />
+    <Content Include="content\sass\application\container\_header.scss" />
+    <Content Include="content\sass\application\modules\menu\_subMenu.scss" />
+    <Content Include="content\sass\application\modules\menu\_accountMenu.scss" />
+    <Content Include="content\sass\application\container\_sidebar.scss" />
+    <Content Include="content\sass\_mixins.scss" />
+    <Content Include="content\sass\application\modules\menu\_creditMenu.scss" />
+    <Content Include="content\sass\application\modules\menu\_socialMenu.scss" />
+    <Content Include="content\sass\application\templates\_template.scss" />
+    <Content Include="content\sass\application\modules\_account.scss" />
+    <Content Include="content\sass\application\modules\_basket.scss" />
+    <Content Include="content\sass\application\modules\article\_article.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -1115,7 +1112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\img\" />
-    <Folder Include="content\sass\application\pages\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

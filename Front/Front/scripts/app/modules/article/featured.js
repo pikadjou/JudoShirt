@@ -8,9 +8,10 @@ var MartialShirt;
     'use strict';
     var C_ArticleFeatured = (function (_super) {
         __extends(C_ArticleFeatured, _super);
-        function C_ArticleFeatured($scope, RH) {
+        function C_ArticleFeatured($scope, $element, RH) {
             _super.call(this);
             this.$scope = $scope;
+            this.$element = $element;
             this.RH = RH;
             this.articles = [];
             this.init($scope);
@@ -19,7 +20,7 @@ var MartialShirt;
         }
         C_ArticleFeatured.prototype.destroy = function () {
             _super.prototype.destroy.call(this);
-            $('.slider').slick('unslick');
+            this._jview.find('.slider').slick('unslick');
         };
         C_ArticleFeatured.prototype.launchService = function () {
             this.RH.GetHilightArticles();
@@ -28,7 +29,9 @@ var MartialShirt;
             this.articles = response.articles;
         };
         C_ArticleFeatured.prototype.onEnd = function () {
-            $('.slider').slick({
+            this._jview.find('.slider').slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 8000,
                 arrows: true,
@@ -38,6 +41,7 @@ var MartialShirt;
         };
         C_ArticleFeatured.$inject = [
             '$scope',
+            "$element",
             MartialShirt.Services.ArticlesRequestHandler.Name
         ];
         return C_ArticleFeatured;

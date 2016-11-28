@@ -31,6 +31,10 @@ var MartialShirt;
                         this[prop] = $scope[prop];
                     }
                 }
+                if (this.$element) {
+                    this._view = this.$element;
+                    this._jview = $(this._view);
+                }
                 $scope.vm = this;
                 $scope.$on('$destroy', this.destroy);
             };

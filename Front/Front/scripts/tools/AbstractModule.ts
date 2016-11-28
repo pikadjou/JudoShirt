@@ -3,6 +3,8 @@
 
 	export class AbstractModule {
 
+		public _view: HTMLElement;
+		public _jview: JQuery;
 		public _sce = null;
 		public _signal = MartialShirt.Init.Signals.getInstance();
 		public _application = MartialShirt.Init.Application.getInstance();
@@ -29,6 +31,10 @@
 				}
 			}
 
+			if ((<any>this).$element) {
+				this._view = (<any>this).$element;
+				this._jview = $(this._view);
+			}
 			(<any>$scope).vm = this;
 
 			$scope.$on('$destroy', this.destroy);

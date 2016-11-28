@@ -1,0 +1,23 @@
+﻿<div class="design__template__container template__container">
+	<div class="content">
+		<div class="image">
+			<img ng-src="{{vm.design.thumbnail}}" />
+		</div>
+		<div class="separator"></div>
+		<div class="name">
+			<span class="name">{{vm.design.name}}</span>
+		</div>
+	</div>
+	<div class="hover">
+		<a href="{{vm._application.getUrl('Design')}}/{{vm.design.url}}">
+			<div class="link">
+				<span class="pastille">
+					Afficher le design
+				</span>
+			</div>
+			<div class="infos">
+				<span class="name">{{vm.design.name}}</span>
+			</div>
+		</a>
+	</div>
+</div>

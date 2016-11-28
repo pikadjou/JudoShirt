@@ -1,7 +1,10 @@
 ﻿<div class="basket__container">
 	<div class="basket__title" ng-click="vm.showHideBasket()">
-		<i class="fa fa-shopping-basket fa-4x"></i>
-		<div class="count">{{vm.getNbItems()}}</div>
+		<span class="name">
+			<i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+			Mon pannier
+		</span>
+		<span class="count">{{vm.getNbItems()}}</span>
 	</div>
 	<div class="basket__content" ng-if="vm.showBasket">
 		<templateloader ng-if="vm.loader"></templateloader>

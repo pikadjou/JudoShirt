@@ -1,15 +1,46 @@
-﻿<div class="article__container">
-	<a href="{{vm._application.getUrl('Design')}}/{{vm.design.url}}">
-		<div class="row collapse">
-			<div class="small-12 columns">
-				<img ng-src="{{vm.design.thumbnail}}" />
-			</div>
-			<div class="small-12 columns">
-				<span class="name">{{vm.design.name}}</span>
-			</div>
-			<div class="small-12 columns">
-				<button>Voir les produits</button>
-			</div>
+﻿<div class="design__template__container template__container">
+	<div class="content">
+		<div class="image">
+			<img ng-src="{{vm.article.thumbnail}}" />
 		</div>
-	</a>
+		<div class="separator"></div>
+		<div class="name">
+			<div class="row">
+				<div class="small-6 columns">
+					<span class="name">{{vm.article.name}}</span>
+				</div>
+				<div class="small-6 columns">
+					<span class="price">{{vm.article.price}} <i class="fa fa-eur" aria-hidden="true"></i></span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="hover">
+		<a href="{{vm._application.getUrl('Article')}}/{{vm.article.url}}">
+			<div class="link">
+				<span class="pastille">
+					Afficher l'article
+				</span>
+			</div>
+			<div class="infos">
+				<div class="row">
+					<div class="small-6 columns">
+						<span class="name">{{vm.article.name}}</span>
+					</div>
+					<div class="small-6 columns">
+						<span class="price">{{vm.article.price}} <i class="fa fa-eur" aria-hidden="true"></i></span>
+					</div>
+					<div class="small-12 columns colors">
+						<div class="name">couleur</div>
+						<div>
+							<span ng-repeat="appearance in vm.article.appearances">
+								<img class="color" src="{{appearance.thumbnail}}" />
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
 </div>
