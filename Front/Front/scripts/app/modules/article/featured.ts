@@ -41,7 +41,7 @@ module MartialShirt {
 
 		public onEnd() {
 			(<any>this._jview.find('.slider')).slick({
-				slidesToShow: 4,
+				slidesToShow: 3,
 				slidesToScroll: 1,
 				autoplay: true,
 				autoplaySpeed: 8000,

@@ -8,11 +8,13 @@ module MartialShirt {
 		public static $inject = [
 			'$scope',
 			'$location',
+			"$element",
 			Services.PromotionsRequestHandler.Name
 		];
 		constructor(
 			private $scope: any,
-			private $location : any,
+			private $location: any,
+			private $element: any,
 			private RH: Services.PromotionsRequestHandler
 			) {
 

@@ -809,6 +809,7 @@
     <Content Include="lib\foundation\vendor\modernizr.js" />
     <Content Include="lib\foundation\vendor\placeholder.js" />
     <Content Include="lib\angulartics\gtm.js" />
+    <Content Include="lib\iframe\iframeResizer.js" />
     <Content Include="lib\jquery\iframe-autoresize.js" />
     <Content Include="lib\jquery\jquery.js" />
     <Content Include="lib\lib.js">
@@ -819,6 +820,7 @@
     </Content>
     <Content Include="lib\signals\signal.js" />
     <Content Include="maintenance.html" />
+    <Content Include="test.html" />
     <Content Include="scripts\app\App.js">
       <DependentUpon>App.js.bundle</DependentUpon>
     </Content>
@@ -832,7 +834,9 @@
     <Content Include="scripts\app\modules\account\detail.html" />
     <Content Include="scripts\app\modules\account\order.html" />
     <Content Include="scripts\app\modules\basket\checkout.html" />
+    <Content Include="scripts\app\modules\category\articles.html" />
     <Content Include="scripts\app\modules\custom\designer.html" />
+    <Content Include="scripts\app\modules\design\articles.html" />
     <Content Include="scripts\app\modules\help\contact.html" />
     <Content Include="scripts\app\modules\menu\accountMenu.html" />
     <Content Include="scripts\app\modules\menu\creditMenu.html" />
@@ -848,9 +852,8 @@
     <Content Include="scripts\app\modules\promotions\entity.html" />
     <Content Include="scripts\app\modules\promotions\list.html" />
     <Content Include="scripts\app\modules\promotions\slider.html" />
-    <Content Include="scripts\app\modules\basket.html" />
-    <Content Include="scripts\app\modules\design.html" />
-    <Content Include="scripts\app\modules\categoryDesigns.html" />
+    <Content Include="scripts\app\modules\basket\items.html" />
+    <Content Include="scripts\app\modules\category\designs.html" />
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\design\featured.html" />
     <Content Include="scripts\app\modules\print.html" />
@@ -889,7 +892,9 @@
     <TypeScriptCompile Include="scripts\app\modules\account\detail.ts" />
     <TypeScriptCompile Include="scripts\app\modules\account\order.ts" />
     <TypeScriptCompile Include="scripts\app\modules\basket\checkout.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\category\articles.ts" />
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\design\articles.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\accountMenu.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\creditMenu.ts" />
@@ -905,9 +910,8 @@
     <TypeScriptCompile Include="scripts\app\modules\promotions\entity.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\promotions\slider.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\basket.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\design.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\categoryDesigns.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\basket\items.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\category\designs.ts" />
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design\featured.ts" />
     <TypeScriptCompile Include="scripts\app\modules\print.ts" />
@@ -1101,8 +1105,10 @@
     <Content Include="content\sass\application\modules\menu\_socialMenu.scss" />
     <Content Include="content\sass\application\templates\_template.scss" />
     <Content Include="content\sass\application\modules\_account.scss" />
-    <Content Include="content\sass\application\modules\_basket.scss" />
+    <Content Include="content\sass\application\modules\basket\_items.scss" />
     <Content Include="content\sass\application\modules\article\_article.scss" />
+    <Content Include="content\sass\application\modules\menu\_sportMenu.scss" />
+    <Content Include="content\sass\application\modules\menu\_typeMenu.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

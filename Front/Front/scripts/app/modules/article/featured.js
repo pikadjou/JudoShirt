@@ -30,7 +30,7 @@ var MartialShirt;
         };
         C_ArticleFeatured.prototype.onEnd = function () {
             this._jview.find('.slider').slick({
-                slidesToShow: 4,
+                slidesToShow: 3,
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 8000,

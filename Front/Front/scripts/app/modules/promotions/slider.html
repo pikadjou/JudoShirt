@@ -1,10 +1,16 @@
 ﻿<div class="Slider__container">
-	<div class="promotions__slider">
-		<div ng-repeat="promotion in vm.promotions" repeat-end="vm.onEnd()">
-			<a herf="#" ng-click="vm.goToPromotion(promotion)">
-				<img src="{{promotion.image}}" />
-				<span class="text">{{promotion.content.substring(0, 50)}}...</span>
-			</a>
+	<div class="row collapse">
+		<div class="small-9 columns promotions__slider">
+			<div ng-repeat="promotion in vm.promotions" repeat-end="vm.onEnd()">
+				<a herf="#" ng-click="vm.goToPromotion(promotion)">
+					<img src="{{promotion.image}}" />
+				</a>
+			</div>
+		</div>
+		<div class="small-3 columns">
+			<div ng-repeat="promotion in vm.promotions" repeat-end="vm.onEnd()">
+				<span class="text">{{promotion.name}}</span>
+			</div>
 		</div>
 	</div>
 </div>

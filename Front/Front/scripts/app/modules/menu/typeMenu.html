@@ -1,8 +1,39 @@
 ﻿<div class="type-menu__container">
 	<h2>Produits</h2>
 	<ul>
-		<li ng-repeat="type in vm.types">
-			<a href="">{{type.name}}</a>
+		<li ng-repeat="type in vm.types" ng-class="(vm.selectedTypes.length > 0 && vm.selectedTypes.indexOf(type) > -1) ? 'active' : '' ">
+			<div class="content">
+				<a class="parent-link" ng-if="vm.category !== null" href="{{vm._application.getUrl('Category')}}/{{vm.category.url}}/{{type.id}}">{{type.name}}</a>
+
+				<a class="parent-link" ng-if="vm.design !== null" ng-class="(vm.isExcludeType(type)) ? 'disabled' : ''"
+				   href="{{vm._application.getUrl('Design')}}/{{vm.design.url}}/{{type.id}}">{{type.name}}</a>
+
+				<span class="more" ng-click="vm.openType(type)">
+					<span ng-hide="(vm.openTypes.length > 0 && vm.openTypes.indexOf(type) > -1)">
+						<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+					</span>
+					<span ng-show="(vm.openTypes.length > 0 && vm.openTypes.indexOf(type) > -1)">
+						<i class="fa fa-minus-square-o" aria-hidden="true"></i>
+					</span>
+				</span>
+
+			</div>
+
+			<ul class="children" ng-show="(vm.openTypes.length > 0 && vm.openTypes.indexOf(type) > -1)">
+				<li ng-repeat="children in type.children" ng-class="(vm.selectedTypes.length > 0 && vm.selectedTypes.indexOf(children) > -1) ? 'active' : '' ">
+					<div class="content">
+						<a class="child-link" ng-if="vm.category !== null" 
+						   href="{{vm._application.getUrl('Category')}}/{{vm.category.url}}/{{children.id}}">
+							{{children.name}}
+						</a>
+						<a class="child-link" ng-if="vm.design !== null" ng-class="(vm.isExcludeType(children)) ? 'disabled' : ''"
+						   href="{{vm._application.getUrl('Design')}}/{{vm.design.url}}/{{children.id}}">
+							{{children.name}}
+						</a>
+					</div>
+				</li>
+			</ul>
 		</li>
+
 	</ul>
 </div>

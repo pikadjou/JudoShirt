@@ -6,5 +6,6 @@
 		
 		public parent: Services.Entity.Category;
 		public children: Services.Entity.Category[];
+		public designs: Services.Entity.Design[];
 	}
 } 

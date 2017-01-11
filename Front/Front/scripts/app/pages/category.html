@@ -1,17 +1,16 @@
-﻿<div class="row page">
-	<div class="small-12 columns">
-		<div class="row">
-			<div class="small-2 columns sidebar">
-				<widgetnew></widgetnew>
-				<widgetpromotiondesigns></widgetpromotiondesigns>
-			</div>
-			<div class="small-8 columns">
+﻿<div class="row collapse page">
+	<div class="small-3 columns sidebar">
+		<sidebarcontainer></sidebarcontainer>
+	</div>
+	<div class="small-9 columns">
+
+		<div class="page-content">
+			<div ng-if="vm.typesId.length === 0">
 				<categorydesigns catid="{{vm.id}}"></categorydesigns>
 			</div>
-			<div class="small-2 columns sidebar">
-				<widgettopten></widgettopten>
+			<div ng-if="vm.typesId.length > 0">
+				<categoryarticles catid="{{vm.id}}" typesId="{{vm.typesId.join(',')}}"></categoryarticles>
 			</div>
 		</div>
-
 	</div>
 </div>

@@ -23,7 +23,7 @@ class ShippingController extends AppController
     public function getShipping()
     {
         $key = "ShippingController-getShipping";
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -32,7 +32,7 @@ class ShippingController extends AppController
         $response = new ShippingRequestHandler\GetShippingResponse();
         $response->init($countries);
 
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
     

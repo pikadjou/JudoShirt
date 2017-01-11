@@ -33,11 +33,14 @@
 
 	  <file>/scripts/app/modules/design/featured.js</file>
 	  <file>/scripts/app/modules/design/promotion.js</file>
+	  <file>/scripts/app/modules/design/articles.js</file>
 
-	  <file>/scripts/app/modules/categoryDesigns.js</file>
-		<file>/scripts/app/modules/langSelector.js</file>
-		<file>/scripts/app/modules/design.js</file>
-		<file>/scripts/app/modules/basket.js</file>
+	  <file>/scripts/app/modules/category/designs.js</file>
+	  <file>/scripts/app/modules/category/articles.js</file>
+
+
+
+	  <file>/scripts/app/modules/langSelector.js</file>
 		<file>/scripts/app/modules/print.js</file>
 	  
 		<file>/scripts/app/modules/promotions/slider.js</file>
@@ -63,7 +66,7 @@
 	  <file>/scripts/app/modules/article/featured.js</file>
 	  <file>/scripts/app/modules/article/article.js</file>
 
-
+	  <file>/scripts/app/modules/basket/items.js</file>
 	  <file>/scripts/app/modules/basket/checkout.js</file>
 	  
 		<file>/scripts/app/pages/home.js</file>

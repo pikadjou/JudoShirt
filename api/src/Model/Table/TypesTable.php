@@ -39,7 +39,16 @@ class TypesTable extends Table
             'targetForeignKey' => 'product_id',
             'joinTable' => 'products_types'
         ]);
-
+        
+        $this->hasMany('ChildrenTypes', [
+            'className' => 'types',
+            'foreignKey' => 'parent_id',
+            'dependent' => true,
+        ]);
+        $this->belongsTo('ParentTypes', [
+            'className' => 'types',
+            'foreignKey' => 'parent_id'
+        ]);
     }
     
     public function getByShopId($id){
@@ -57,7 +66,10 @@ class TypesTable extends Table
     }
     
     public function findMasterTypes(){
-        return $this->_findType(1)->where(["Types.parent_id IS" => null])->toArray();
+        return $this->_findType(1)
+        ->where(["Types.parent_id IS" => null])
+        ->contain(['ChildrenTypes'])
+        ->toArray();
     }
     public function findAllChildren($typeId){
         return $this->_find()->where(["Types.parent_id" => $typeId])->toArray();
@@ -68,10 +80,30 @@ class TypesTable extends Table
     public function findGenders(){
         return $this->_findType(2)->toArray();
     }
+    public function findExcludeTypeByDesign($desingId){
+        $includeTypes = $this->_matchWithTypeDesign($this->_findType(1), $desingId)
+        ->distinct("Types.id")->select($this)->toArray();
+        
+        $allTypes = $this->_findType(1)->where(["Types.parent_id IS NOT" => null])->toArray();
+        
+        $returnType = [];
+        foreach($allTypes as $aType){
+            $found = false;
+            foreach($includeTypes as $iType){
+                if($aType->id === $iType->id){
+                    $found = true;
+                    break;
+                }
+            }
+            //debug($found);
+            if($found === false){
+                $returnType[] = $aType;
+            }
+        }
 
-    private function _findType($type){
-        return $this->_find()->where(["Types.type" => $type]);
+        return $returnType;
     }
+
     public function addTypesForProduct($response){
                 
         $fullName = (string)$response->name;
@@ -146,6 +178,7 @@ class TypesTable extends Table
         
         return $types;   
     }
+    
 
     public function findByGenders($types, $productModel){
 
@@ -170,11 +203,25 @@ class TypesTable extends Table
     private function _find(){
         return $this->find()->order('Types.priority');
     }
+
+    private function _findType($type){
+        return $this->_find()->where(["Types.type" => $type]);
+    }
+
     private function _matchWithTypeProducts($query, $productIds){
 
         return $query->matching(
                     'Products', function ($q) use ($productIds) {
                         return $q->where(["Products.id IN" => $productIds]);
+                    }
+                );
+    }
+
+    private function _matchWithTypeDesign($query, $designId){
+
+        return $query->matching(
+                    'Products.Articles.Designs', function ($q) use ($designId) {
+                        return $q->where(["Designs.id" => $designId]);
                     }
                 );
     }

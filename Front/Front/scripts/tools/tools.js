@@ -20,6 +20,29 @@ var MartialShirt;
         Init.Signals = Signals;
     })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
 })(MartialShirt || (MartialShirt = {}));
+signals.Signal.signalsByContext = {};
+signals.Signal.prototype.add = function (listener, listenerContext, priority) {
+    if (typeof listener !== 'function') {
+        throw new Error('listener is a required param of {fn}() and should be a Function.'.replace('{fn}', 'add'));
+    }
+    var binding = this._registerListener(listener, false, listenerContext, priority);
+    if (listenerContext.hasOwnProperty('_guid')) {
+        if (!signals.Signal.signalsByContext[listenerContext._guid])
+            signals.Signal.signalsByContext[listenerContext._guid] = [];
+        signals.Signal.signalsByContext[listenerContext._guid].push(binding);
+    }
+    return binding;
+};
+signals.Signal.prototype.kill = function (listenerContext) {
+    if (!listenerContext.hasOwnProperty('_guid') || !signals.Signal.signalsByContext[listenerContext._guid])
+        return;
+    var binding;
+    for (var i = 0, max = signals.Signal.signalsByContext[listenerContext._guid].length; i < max; i++) {
+        binding = signals.Signal.signalsByContext[listenerContext._guid][i];
+        binding.detach();
+    }
+    delete signals.Signal.signalsByContext[listenerContext._guid];
+};
 
 ///#source 1 1 /scripts/tools/Application.js
 var MartialShirt;
@@ -52,6 +75,17 @@ var MartialShirt;
                         return this._parseUrl(array[i].url);
                     }
                 }
+            };
+            Application.prototype.isCms = function (name, route) {
+                for (var array = this.getRoutes(), i = 0, l = array.length; i < l; i++) {
+                    if (name === array[i].name) {
+                        if (route.$$route.originalPath === array[i].url) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                return false;
             };
             Application.prototype._parseUrl = function (url) {
                 var ret = "";
@@ -183,6 +217,7 @@ var MartialShirt;
         var AbstractModule = (function () {
             function AbstractModule() {
                 var _this = this;
+                this._guid = "";
                 this._sce = null;
                 this._signal = MartialShirt.Init.Signals.getInstance();
                 this._application = MartialShirt.Init.Application.getInstance();
@@ -201,6 +236,7 @@ var MartialShirt;
                 }
                 this._login.authenticatedSignal.add(this.Authenticated, this);
                 this._login.unauthenticatedSignal.add(this.Unauthenticated, this);
+                this._guid = MartialShirt.Init.Application.NewGuid();
             }
             AbstractModule.prototype.init = function ($scope) {
                 for (var prop in $scope) {
@@ -213,9 +249,11 @@ var MartialShirt;
                     this._jview = $(this._view);
                 }
                 $scope.vm = this;
-                $scope.$on('$destroy', this.destroy);
+                $scope.$on('$destroy', this.destroy.bind(this));
             };
-            AbstractModule.prototype.destroy = function () { };
+            AbstractModule.prototype.destroy = function () {
+                signals.Signal.prototype.kill(this);
+            };
             AbstractModule.prototype.Authenticated = function () {
                 this.isAuthenticated = true;
             };
@@ -341,13 +379,21 @@ var MartialShirt;
             function Cache() {
                 var _this = this;
                 this.KEY = {
+                    SelectedTypeIds: "SelectedTypeIds",
+                    SelectedDesign: "SelectedDesign",
+                    SelectedCategory: "SelectedCategory",
                     Design: 'Design',
                     Category: 'Category',
+                    CategoryArticle: 'CategoryArticle',
                     DesignFeature: 'DesignFeature',
                     DesignTop: 'DesignTop',
                     DesignPromotion: 'DesignPromotion',
-                    DesignNew: 'DesignNew'
+                    DesignNew: 'DesignNew',
+                    SportMenu: "SportMenu",
+                    TypeMenu: "TypeMenu",
+                    ExcludeTypeMenu: "TypeMenu"
                 };
+                this.cache_updated = new signals.Signal();
                 this._cache = {};
                 this.invalidate = function (key) {
                     if (_this._cache.hasOwnProperty(key))
@@ -379,6 +425,7 @@ var MartialShirt;
                     expire_on: (Date.now() / 1000 >> 0) + (for_seconds ? for_seconds : MartialShirt.Config.defaultCacheTime),
                     data: JSON.parse(JSON.stringify(data))
                 };
+                this.cache_updated.dispatch(key, this._cache[key].data);
             };
             Cache.prototype.getCache = function (key) {
                 if (!this.isKeyCached(key))

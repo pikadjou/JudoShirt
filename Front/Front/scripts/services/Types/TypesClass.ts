@@ -5,4 +5,7 @@
 	export class GetMasterTypesResponse {
 		public types: Services.Entity.Type[];
     }
+	export class GetExcludeTypesResponse {
+		public types: Services.Entity.Type[];
+    }
 } 

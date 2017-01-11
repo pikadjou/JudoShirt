@@ -22,7 +22,7 @@ class TypesController extends AppController
     public function getMasterTypes()
     {
     	$key = "TypesController-getMasterTypes";
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -31,7 +31,24 @@ class TypesController extends AppController
 
         $response = new TypesRequestHandler\GetMasterTypesResponse();
         $response->init($types);
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
+
+        parent::setJson($response);
+    }
+
+    public function getExcludeTypes($designId)
+    {
+    	$key = "TypesController-getExcludeType-$designId";
+        if (($response = Cache\CacheModel::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+
+        $types = $this->Types->findExcludeTypeByDesign($designId);
+        $response = new TypesRequestHandler\GetExcludeTypesResponse();
+        $response->init($types);
+
+        Cache\CacheModel::write($key, $response);
 
         parent::setJson($response);
     }
@@ -39,7 +56,7 @@ class TypesController extends AppController
 	public function getProducts()
     {
     	$key = "TypesController-getProducts";
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -47,7 +64,7 @@ class TypesController extends AppController
         $types = $this->Types->findProducts();
         $response = new TypesRequestHandler\GetMasterProductsResponse();
         $response->init($types);
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
 
         parent::setJson($response);
     }
@@ -55,7 +72,7 @@ class TypesController extends AppController
     public function getGenders($full = true)
     {
     	$key = "TypesController-getGenders-".($full)? '1' : '0';
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -82,7 +99,7 @@ class TypesController extends AppController
 
         $response = new TypesRequestHandler\GetGendersResponse();
         $response->init($types);
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
 
         parent::setJson($response);
     }

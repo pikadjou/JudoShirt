@@ -6,6 +6,7 @@ var MartialShirt;
         var AbstractModule = (function () {
             function AbstractModule() {
                 var _this = this;
+                this._guid = "";
                 this._sce = null;
                 this._signal = MartialShirt.Init.Signals.getInstance();
                 this._application = MartialShirt.Init.Application.getInstance();
@@ -24,6 +25,7 @@ var MartialShirt;
                 }
                 this._login.authenticatedSignal.add(this.Authenticated, this);
                 this._login.unauthenticatedSignal.add(this.Unauthenticated, this);
+                this._guid = MartialShirt.Init.Application.NewGuid();
             }
             AbstractModule.prototype.init = function ($scope) {
                 for (var prop in $scope) {
@@ -36,9 +38,11 @@ var MartialShirt;
                     this._jview = $(this._view);
                 }
                 $scope.vm = this;
-                $scope.$on('$destroy', this.destroy);
+                $scope.$on('$destroy', this.destroy.bind(this));
             };
-            AbstractModule.prototype.destroy = function () { };
+            AbstractModule.prototype.destroy = function () {
+                signals.Signal.prototype.kill(this);
+            };
             AbstractModule.prototype.Authenticated = function () {
                 this.isAuthenticated = true;
             };

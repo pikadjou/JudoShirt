@@ -3,12 +3,19 @@
 
 	export class Cache {
 		public KEY = {
+			SelectedTypeIds: "SelectedTypeIds",
+			SelectedDesign: "SelectedDesign",
+			SelectedCategory: "SelectedCategory",
 			Design: 'Design',
 			Category: 'Category',
+			CategoryArticle: 'CategoryArticle',
 			DesignFeature: 'DesignFeature',
 			DesignTop: 'DesignTop',
 			DesignPromotion: 'DesignPromotion',
-			DesignNew: 'DesignNew'
+			DesignNew: 'DesignNew',
+			SportMenu: "SportMenu",
+			TypeMenu: "TypeMenu",
+			ExcludeTypeMenu: "TypeMenu"
 		};
 
 		private static instance: Cache;
@@ -20,7 +27,7 @@
 
 			return this.instance;
 		}
-		//public cache_updated: signals.Signal = new signals.Signal();
+		public cache_updated: Signal = new signals.Signal();
 
 		private _cache: { [index: string]: { expire_on: number; data: any }; } = {};
 
@@ -53,7 +60,7 @@
 				expire_on: (Date.now() / 1000 >> 0) + (for_seconds ? for_seconds : Config.defaultCacheTime),
 				data: JSON.parse(JSON.stringify(data))
 			};
-			//this.cache_updated.dispatch(key, this._cache[key].data);
+			this.cache_updated.dispatch(key, this._cache[key].data);
 		}
 
 		public getCache(key: string): any {

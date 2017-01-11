@@ -15,7 +15,9 @@
     <file>/lib/angular/angular.js</file>
 	<file>/lib/angular/angular-route.js</file>
 	<file>/lib/angular/angular-sanitize.js</file>
-	<!--<file>/lib/angulartics/angulartics.js</file>
+	<file>/lib/iframe/iframeResizer.js</file>
+
+	  <!--<file>/lib/angulartics/angulartics.js</file>
 	<file>/lib/angulartics/gtm.js</file>-->
   </files>
 </bundle>

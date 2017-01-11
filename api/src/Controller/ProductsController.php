@@ -25,7 +25,7 @@ class ProductsController extends AppController
     public function getProducts()
     {
         $key = "ProductsController-getProducts";
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -38,7 +38,7 @@ class ProductsController extends AppController
         $response = new ProductsRequestHandler\GetProductsResponse();
         $response->init($products);
 
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
 
@@ -46,7 +46,7 @@ class ProductsController extends AppController
     {
         $key = "ProductsController-getProduct-".$id;
         //Cache::delete($key);
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -62,7 +62,7 @@ class ProductsController extends AppController
         $response = new ProductsRequestHandler\GetProductResponse();
         $response->init($product, $artciles);
 
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
 
     }

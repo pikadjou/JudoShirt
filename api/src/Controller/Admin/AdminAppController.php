@@ -36,7 +36,7 @@ class AdminAppController extends AppController
     {
         parent::initialize();
         
-        $this->autoRender = false;
+        //$this->autoRender = false;
     }
     
     public function index()

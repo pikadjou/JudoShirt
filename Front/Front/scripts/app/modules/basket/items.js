@@ -6,9 +6,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 var MartialShirt;
 (function (MartialShirt) {
     'use strict';
-    var C_Basket = (function (_super) {
-        __extends(C_Basket, _super);
-        function C_Basket($scope, $location, RH) {
+    var C_BasketItems = (function (_super) {
+        __extends(C_BasketItems, _super);
+        function C_BasketItems($scope, $location, RH) {
             _super.call(this);
             this.$scope = $scope;
             this.$location = $location;
@@ -25,36 +25,36 @@ var MartialShirt;
                 this.launchGetBasket();
             }
         }
-        C_Basket.prototype.Authenticated = function () {
+        C_BasketItems.prototype.Authenticated = function () {
             _super.prototype.Authenticated.call(this);
             this.launchGetBasket();
         };
-        C_Basket.prototype.launchGetBasket = function () {
+        C_BasketItems.prototype.launchGetBasket = function () {
             var request = new MartialShirt.Services.BasketsClass.GetBasketRequest();
             request.id = this.basketId;
             request.token = this._login.getToken();
             this.loader = true;
             this.RH.GetBasket(request);
         };
-        C_Basket.prototype.onPacketRecieved = function (response) {
+        C_BasketItems.prototype.onPacketRecieved = function (response) {
             this.basket = response.basket;
             this._setBasketID(this.basket.id);
             this.loader = false;
         };
-        C_Basket.prototype._fillBasketId = function () {
+        C_BasketItems.prototype._fillBasketId = function () {
             var basketId = MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).getItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
             if (basketId) {
                 this._setBasketID(basketId);
             }
         };
-        C_Basket.prototype._setBasketID = function (basketId) {
+        C_BasketItems.prototype._setBasketID = function (basketId) {
             if (!basketId) {
                 return;
             }
             this.basketId = basketId;
             MartialShirt.Models.PlayerStorage.PlayerStorage.getInstance(MartialShirt.Models.PlayerStorage.EStorageType.SESSION).setItem(MartialShirt.Models.PlayerStorage.PlayerStorageConst.BASKET_ID, basketId);
         };
-        C_Basket.prototype.showHideBasket = function () {
+        C_BasketItems.prototype.showHideBasket = function () {
             this.showBasket = !this.showBasket;
             if (this.showBasket === true) {
                 MartialShirt.Controller.GTM.getInstance().LocationChange("/basket");
@@ -63,7 +63,7 @@ var MartialShirt;
                 MartialShirt.Controller.GTM.getInstance().LocationChange(this.$location.path());
             }
         };
-        C_Basket.prototype.getNbItems = function () {
+        C_BasketItems.prototype.getNbItems = function () {
             if (!this.basket || this.basket === null) {
                 return 0;
             }
@@ -73,7 +73,7 @@ var MartialShirt;
             }
             return nb;
         };
-        C_Basket.prototype.addArticle = function (article) {
+        C_BasketItems.prototype.addArticle = function (article) {
             var basketItem = this.getBasketItemByArticle(article);
             if (basketItem) {
                 basketItem.quantity++;
@@ -83,7 +83,7 @@ var MartialShirt;
                 this.createBasketItem(article);
             }
         };
-        C_Basket.prototype.createBasketItem = function (article) {
+        C_BasketItems.prototype.createBasketItem = function (article) {
             var basketItem = this.getBasketItemByArticle(article);
             var request = new MartialShirt.Services.BasketsClass.AddArticleRequest();
             request.article = article;
@@ -92,7 +92,7 @@ var MartialShirt;
             this.loader = true;
             this.RH.addArticle(request);
         };
-        C_Basket.prototype.updateBasketItem = function (basketItem) {
+        C_BasketItems.prototype.updateBasketItem = function (basketItem) {
             var request = new MartialShirt.Services.BasketsClass.UpdateQuantityRequest();
             request.basketId = this.basket.id;
             request.id = basketItem.id;
@@ -101,7 +101,7 @@ var MartialShirt;
             this.loader = true;
             this.RH.UpdateQuantity(request);
         };
-        C_Basket.prototype.addQuantity = function (basketItem, quantity) {
+        C_BasketItems.prototype.addQuantity = function (basketItem, quantity) {
             if (quantity === 0) {
                 basketItem.quantity = 0;
             }
@@ -110,7 +110,7 @@ var MartialShirt;
             }
             this.updateBasketItem(basketItem);
         };
-        C_Basket.prototype.getBasketItemByArticle = function (article) {
+        C_BasketItems.prototype.getBasketItemByArticle = function (article) {
             if (!this.basket || !this.basket.basketItems) {
                 return null;
             }
@@ -128,26 +128,24 @@ var MartialShirt;
                 return basketItem;
             }
         };
-        C_Basket.$inject = [
+        C_BasketItems.$inject = [
             '$scope',
             '$location',
             MartialShirt.Services.BasketsRequestHandler.Name
         ];
-        return C_Basket;
+        return C_BasketItems;
     }(MartialShirt.Init.AbstractModule));
-    MartialShirt.C_Basket = C_Basket;
-    var Basket = (function () {
-        function Basket() {
-            this.templateUrl = "/scripts/app/modules/basket.html";
-            this.restrict = "E";
-            this.replace = true;
-            this.scope = {};
-            this.controller = C_Basket;
+    MartialShirt.C_BasketItems = C_BasketItems;
+    var BasketItems = (function (_super) {
+        __extends(BasketItems, _super);
+        function BasketItems() {
+            _super.call(this);
+            this.templateUrl = "/scripts/app/modules/basket/items.html";
+            this.controller = C_BasketItems;
         }
-        Basket.Name = "Basket".toLocaleLowerCase();
-        Basket.$inject = [];
-        return Basket;
-    }());
-    MartialShirt.Basket = Basket;
-    MartialShirt.Init.Application.MartialShirtApp.directive(Basket.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Basket));
+        BasketItems.Name = "BasketItems".toLocaleLowerCase();
+        return BasketItems;
+    }(MartialShirt.Init.AbstractDirective));
+    MartialShirt.BasketItems = BasketItems;
+    MartialShirt.Init.Application.MartialShirtApp.directive(BasketItems.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(BasketItems));
 })(MartialShirt || (MartialShirt = {}));

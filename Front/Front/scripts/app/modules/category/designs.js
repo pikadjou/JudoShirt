@@ -19,6 +19,10 @@ var MartialShirt;
             this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
             this.launchService();
         }
+        C_CategoryDesigns.prototype.destroy = function () {
+            _super.prototype.destroy.call(this);
+            MartialShirt.Init.Cache.getInstance().invalidate(MartialShirt.Init.Cache.getInstance().KEY.SelectedCategory);
+        };
         C_CategoryDesigns.prototype.launchService = function () {
             if (MartialShirt.Init.Cache.getInstance().isKeyCached(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid)) {
                 this.onPacketRecieved(MartialShirt.Init.Cache.getInstance().getCache(MartialShirt.Init.Cache.getInstance().KEY.Category + this.catid));
@@ -32,6 +36,7 @@ var MartialShirt;
             this.category = response.category;
             this.list = response.designs;
             this.loader = false;
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.SelectedCategory, this.category);
         };
         C_CategoryDesigns.$inject = [
             '$scope',
@@ -40,11 +45,11 @@ var MartialShirt;
         return C_CategoryDesigns;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_CategoryDesigns = C_CategoryDesigns;
-    var CategoryDesigns = (function () {
+    var CategoryDesigns = (function (_super) {
+        __extends(CategoryDesigns, _super);
         function CategoryDesigns() {
-            this.templateUrl = "/scripts/app/modules/categoryDesigns.html";
-            this.restrict = "E";
-            this.replace = true;
+            _super.call(this);
+            this.templateUrl = "/scripts/app/modules/category/designs.html";
             this.scope = {
                 catid: '@'
             };
@@ -53,7 +58,7 @@ var MartialShirt;
         CategoryDesigns.Name = "CategoryDesigns".toLocaleLowerCase();
         CategoryDesigns.$inject = [];
         return CategoryDesigns;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.CategoryDesigns = CategoryDesigns;
     MartialShirt.Init.Application.MartialShirtApp.directive(CategoryDesigns.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(CategoryDesigns));
 })(MartialShirt || (MartialShirt = {}));

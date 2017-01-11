@@ -4,6 +4,8 @@
 		public name: string;
 		public content: string;
 		public type: number;
+		public parent: Type;
+		public children: Type[];
 
 		public desings : Design[];
 		public categories : Category[];

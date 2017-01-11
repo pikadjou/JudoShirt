@@ -7,13 +7,21 @@ var MartialShirt;
             function Cache() {
                 var _this = this;
                 this.KEY = {
+                    SelectedTypeIds: "SelectedTypeIds",
+                    SelectedDesign: "SelectedDesign",
+                    SelectedCategory: "SelectedCategory",
                     Design: 'Design',
                     Category: 'Category',
+                    CategoryArticle: 'CategoryArticle',
                     DesignFeature: 'DesignFeature',
                     DesignTop: 'DesignTop',
                     DesignPromotion: 'DesignPromotion',
-                    DesignNew: 'DesignNew'
+                    DesignNew: 'DesignNew',
+                    SportMenu: "SportMenu",
+                    TypeMenu: "TypeMenu",
+                    ExcludeTypeMenu: "TypeMenu"
                 };
+                this.cache_updated = new signals.Signal();
                 this._cache = {};
                 this.invalidate = function (key) {
                     if (_this._cache.hasOwnProperty(key))
@@ -45,6 +53,7 @@ var MartialShirt;
                     expire_on: (Date.now() / 1000 >> 0) + (for_seconds ? for_seconds : MartialShirt.Config.defaultCacheTime),
                     data: JSON.parse(JSON.stringify(data))
                 };
+                this.cache_updated.dispatch(key, this._cache[key].data);
             };
             Cache.prototype.getCache = function (key) {
                 if (!this.isKeyCached(key))

@@ -29,6 +29,17 @@ var MartialShirt;
                     }
                 }
             };
+            Application.prototype.isCms = function (name, route) {
+                for (var array = this.getRoutes(), i = 0, l = array.length; i < l; i++) {
+                    if (name === array[i].name) {
+                        if (route.$$route.originalPath === array[i].url) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                return false;
+            };
             Application.prototype._parseUrl = function (url) {
                 var ret = "";
                 var explode = url.split("/");

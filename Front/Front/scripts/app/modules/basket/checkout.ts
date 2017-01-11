@@ -38,7 +38,22 @@ module MartialShirt {
 			this.RH.GetBasket(request);
 		}
 		public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse) {
-			this.checkoutlink = response.basket.checkoutLink;
+			this.RH.GetBasketReceived.remove(this.onPacketRecieved, this);
+
+			//window.document.domain = "https://checkout.spreadshirt.be";
+
+			this.checkoutlink = "https://acceptance.martialshirt.com/maintenance.html"; //response.basket.checkoutLink;
+			console.log(this._guid);
+			console.log("onPacket");
+			setTimeout(() => {
+				(<any>$('#iframe')).iFrameResize({
+					checkOrigin: false, // ["checkout.spreadshirt.be", "martialshirt.front"],
+					log: true,
+					//inPageLinks: true,
+					heightCalculationMethod: "lowestElement"
+				});
+			}, 5000);
+			
 		}
 	}
 

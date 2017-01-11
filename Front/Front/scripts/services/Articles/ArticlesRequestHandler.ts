@@ -9,6 +9,8 @@ module MartialShirt.Services {
 		public GetArticlesReceived: Signal;
 		public GetArticleReceived: Signal;
 		public GetHilightArticlesReceived: Signal;
+		public GetArticlesByCategoryReceived: Signal;
+
 
 		public controller = "articles";
 		constructor(
@@ -26,11 +28,16 @@ module MartialShirt.Services {
 		public GetHilightArticles(request: any = []): string {
 			return this.server.request(new MartialShirt.Services.Request("GET", "GetHilightArticles", this.controller, "getHilightArticles", request));
 		}
+		public GetArticlesByCatgegory(request: any = []): string {
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetArticlesByCategory", this.controller, "getArticlesByCategory", request));
+		}
 
 		private addEvents(): void {
 			this.GetArticlesReceived = new signals.Signal();
 			this.GetArticleReceived = new signals.Signal();
 			this.GetHilightArticlesReceived = new signals.Signal();
+			this.GetArticlesByCategoryReceived = new signals.Signal();
+
 
 			this.server.packetReceived.add(this.onPacketReceived, this);
 		}
@@ -51,6 +58,10 @@ module MartialShirt.Services {
 				case ("GetHilightResponse"):
 					parsedResponse = <any>(response.Content);
 					this.GetHilightArticlesReceived.dispatch(parsedResponse);
+					break;
+				case ("GetArticlesByCategoryResponse"):
+					parsedResponse = <any>(response.Content);
+					this.GetArticlesByCategoryReceived.dispatch(parsedResponse);
 					break;
 				default:
 					break;

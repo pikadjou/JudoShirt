@@ -14,8 +14,8 @@
 			img{
 				display: inline;
 
-				max-height: 150px;
-				max-width : 160px;
+				max-height: 200px;
+				//max-width : 160px;
 
 				padding-bottom: 10px;
 				
@@ -29,6 +29,8 @@
 		}
 		.name{
 			text-align: center;
+			font-size : rem-calc(13);
+
 		}
 	}
 	.hover{
@@ -45,7 +47,7 @@
 		@include box-shadow(0 2px 1px #888888);
 
 		.link{
-			height:60%;
+			height:55%;
 
 			background: rgba(33, 150, 243, 0.6);
 
@@ -81,9 +83,13 @@
 			background-color: $white-color;
 			color: $black-color;
 
-			height: 40%;
+			height: 45%;
 
+			.name{
+				font-size: rem-calc(11);
+			}
 			.colors{
+				margin-top: 5px;
 				text-align: left;
 				.name{
 					font-size: rem-calc(12);

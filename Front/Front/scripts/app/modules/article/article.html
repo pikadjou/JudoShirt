@@ -39,9 +39,9 @@
 				</small>
 			</div>
 
-			<div class="selection row">
-				<div class="appearances small-6 columns">
-					<div class="dropdown" ng-click="vm.showAppearance = !vm.showAppearance">
+			<div class="selection row collapse">
+				<div class="appearances dropdown small-6 columns">
+					<div class="dropdown-title" ng-click="vm.showAppearance = !vm.showAppearance">
 						Couleur
 						<span class="selected" ng-if="vm.SelectedAppearance !== null">
 							: <img src="{{vm.SelectedAppearance.thumbnail}}" alt="{{vm.SelectedAppearance.name}}" />
@@ -49,17 +49,18 @@
 						<i class="fa fa-chevron-down" aria-hidden="true"></i>
 					</div>
 					<div class="dropdown-content" ng-if="vm.showAppearance">
-						<span ng-repeat="appearance in vm.appearances | orderBy: priority" class="appearance">
-							<a href="#" ng-click="vm.changeSelectedAppearance(appearance)" ng-class="{'active' : vm.isDefaultAppearance(appearance)}">
-								<i class="fa fa-check fa-2x" aria-hidden="true" ng-if="vm.isDefaultAppearance(appearance)"></i>
-								<img src="{{appearance.thumbnail}}" alt="{{appearance.name}}" />
-							</a>
-						</span>
+						<ul class="small-block-grid-5">
+							<li ng-repeat="appearance in vm.appearances | orderBy: priority" class="appearance">
+								<a href="#" ng-click="vm.changeSelectedAppearance(appearance)" ng-class="{'active' : vm.isDefaultAppearance(appearance)}">
+									<img src="{{appearance.thumbnail}}" alt="{{appearance.name}}" />
+								</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 
-				<div class="sizes small-6 columns">
-					<div class="dropdown" ng-click="vm.showSize = !vm.showSize">
+				<div class="sizes dropdown small-offset-1 small-5 columns">
+					<div class="dropdown-title" ng-click="vm.showSize = !vm.showSize">
 						Taille
 						<span class="selected" ng-if="vm.SelectedSize !== null">
 							: {{ vm.SelectedSize.name }}
@@ -67,11 +68,13 @@
 						<i class="fa fa-chevron-down" aria-hidden="true"></i>
 					</div>
 					<div class="dropdown-content" ng-if="vm.showSize">
-						<span ng-repeat="size in vm.sizes | orderBy: priority" class="size">
-							<a href="#" ng-click="vm.changeSelectedSize(size)" class="button button-action" ng-class="{'active' : vm.isDefaultSize(size)}">
-								{{size.name}}
-							</a>
-						</span>
+						<ul class="small-block-grid-3">
+							<li ng-repeat="size in vm.sizes | orderBy: priority" class="size">
+								<a href="#" ng-click="vm.changeSelectedSize(size)" ng-class="{'active' : vm.isDefaultSize(size)}">
+									{{size.name}}
+								</a>
+							</li>
+						</ul>
 					</div>
 
 				</div>

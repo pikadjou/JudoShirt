@@ -1,6 +1,6 @@
 ﻿module MartialShirt.Services.Entity {
 	export class Design {
-		public id: string;
+		public id: number;
 		public name: string;
 		public url: string;
 

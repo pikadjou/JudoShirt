@@ -1,0 +1,27 @@
+﻿.sport-menu__container{
+
+	
+	.active{
+		& > .content{
+			& > a{
+				&.design-link, &.child-link, &.parent-link{
+					color: $blue-color;
+				}
+			}
+		} 
+	}
+	ul.children{
+		//display: none;
+		margin-left: 20px;
+
+		&.open{
+			display: block;
+		}
+	}
+
+
+	ul.designs{
+		//display: none;
+		margin-left: 20px;
+	}
+}

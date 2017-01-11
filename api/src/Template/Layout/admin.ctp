@@ -134,6 +134,51 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </ul>
                 </li>
             </ul>
+            <ul class="sidebar-menu">
+                <li class="header">Cache</li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> 
+                        <span>File Cache</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        
+                        <li class="treeview">
+                          <a href="<?php echo $this->Url->build(['controller' => 'Caches', 'action' => 'files']) ?>">
+                            <i class="fa fa-dashboard"></i> <span><?= __("List") ?></span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> 
+                        <span>DB Cache</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        
+                        <li class="treeview">
+                           <a href="<?php echo $this->Url->build(['controller' => 'Caches', 'action' => 'db']) ?>">
+                            <i class="fa fa-dashboard"></i> <span><?= __("List") ?></span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </section>
     </aside>
 

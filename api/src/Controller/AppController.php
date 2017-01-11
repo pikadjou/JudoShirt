@@ -25,7 +25,7 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-require_once(ROOT . DS . 'plugins' . DS  . 'Cache' . DS . 'CacheController.php');
+require_once(ROOT . DS . 'plugins' . DS  . 'Cache' . DS . 'CacheModel.php');
 
 class AppController extends Controller
 {
@@ -55,12 +55,15 @@ class AppController extends Controller
     }
 
     public function setJson($content){
-        
+        debug($content);
         if($content === null){
             
             $this->set('_serialize', []);
             return;
         }
+
+        ob_start('ob_gzhandler');
+        
         $classe = get_class($content);
         $explode = explode("\\", $classe);
         
@@ -69,5 +72,9 @@ class AppController extends Controller
         $this->set('Identifier', $name); 
         $this->set('Content', $content);
         $this->set('_serialize', ['Identifier', 'Content']);
+
+        if(Configure::read('DebugView')){
+            debug($content);
+       }
     }
 }

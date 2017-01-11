@@ -8,11 +8,12 @@ var MartialShirt;
     'use strict';
     var C_Slider = (function (_super) {
         __extends(C_Slider, _super);
-        function C_Slider($scope, $location, RH) {
+        function C_Slider($scope, $location, $element, RH) {
             var _this = this;
             _super.call(this);
             this.$scope = $scope;
             this.$location = $location;
+            this.$element = $element;
             this.RH = RH;
             this.promotions = [];
             this.goToPromotion = function (promotion) {
@@ -55,6 +56,7 @@ var MartialShirt;
         C_Slider.$inject = [
             '$scope',
             '$location',
+            "$element",
             MartialShirt.Services.PromotionsRequestHandler.Name
         ];
         return C_Slider;

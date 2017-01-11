@@ -1,0 +1,11 @@
+﻿<div class="module__container category_designs_container">
+	<h3 class="module__title">{{ vm.category.name }}</h3>
+	<templateloader ng-if="vm.loader"></templateloader>
+	<div class="module__content" ng-if="!vm.loader">
+		<ul class="small-block-grid-3 article-list__container">
+			<li ng-repeat="article in vm.articles" ng-if="vm.isVisibleArticle(article)">
+				<templatearticle article="article"></templatearticle>
+			</li>
+		</ul>
+	</div>
+</div>

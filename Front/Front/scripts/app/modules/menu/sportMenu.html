@@ -1,8 +1,44 @@
 ﻿<div class="sport-menu__container">
 	<h2>Sports</h2>
 	<ul>
-		<li ng-repeat="category in vm.categories">
-			<a href="{{vm._application.getUrl('Category')}}/{{category.url}}">{{category.name}}</a>
+		<li ng-repeat="category in vm.categories" ng-class="(vm.category && vm.category.id === category.id) ? 'active' : '' ">
+			<div class="content">
+				<a class="parent-link" href="{{vm._application.getUrl('Category')}}/{{category.url}}">{{category.name}}</a>
+
+				<span class="more" ng-click="vm.openCategory(category)">
+					<span ng-hide="(vm.openCategories.length > 0 && vm.openCategories.indexOf(category) > -1)">
+						<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+					</span>
+					<span ng-show="(vm.openCategories.length > 0 && vm.openCategories.indexOf(category) > -1)">
+						<i class="fa fa-minus-square-o" aria-hidden="true"></i>
+					</span>
+				</span>
+			</div>
+
+			<ul class="children" ng-if="category.children.length > 0" ng-show="(vm.openCategories.length > 0 && vm.openCategories.indexOf(category) > -1)">
+				<li ng-repeat="child in category.children" ng-class="(vm.category && vm.category.id === child.id) ? 'active' : '' ">
+					<div class="content">
+						<a class="child-link" href="{{vm._application.getUrl('Category')}}/{{child.url}}">{{child.name}}</a>
+
+						<span class="more" ng-click="vm.openCategory(child)">
+							<span ng-hide="(vm.openCategories.length > 0 && vm.openCategories.indexOf(child) > -1)">
+								<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+							</span>
+							<span ng-show="(vm.openCategories.length > 0 && vm.openCategories.indexOf(child) > -1)">
+								<i class="fa fa-minus-square-o" aria-hidden="true"></i>
+							</span>
+						</span>
+					</div>
+
+					<ul class="designs" ng-if="child.designs.length > 0" ng-show="(vm.openCategories.length > 0 && vm.openCategories.indexOf(child) > -1)">
+						<li ng-repeat="design in child.designs" ng-class="(vm.design && vm.design.id === design.id) ? 'active' : '' ">
+							<div class="content">
+								<a class="design-link" href="{{vm._application.getUrl('Design')}}/{{design.url}}">{{design.name}}</a>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
 		</li>
 	</ul>
 </div>

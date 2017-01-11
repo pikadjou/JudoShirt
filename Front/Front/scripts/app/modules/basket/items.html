@@ -1,0 +1,119 @@
+﻿<div class="basket__container">
+	<div class="basket__title" ng-click="vm.showHideBasket()">
+		<span class="name">
+			<i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+			Mon pannier
+		</span>
+		<span class="count" ng-class="{ 'active' : vm.showBasket }">{{vm.getNbItems()}}</span>
+	</div>
+	<div class="basket__content" ng-if="vm.showBasket">
+		<templateloader ng-if="vm.loader"></templateloader>
+		<div class="articles">
+			<div ng-if="vm.getNbItems() > 0">
+				<div class="article" ng-repeat="basketItem in vm.basket.basketItems">
+					<div class="row">
+						<div class="small-2 columns image">
+							<img src="{{basketItem.pictureLink}}" alt="{{basketItem.description}}" />
+						</div>
+						<div class="small-10 columns">
+
+							<div class="row collapse information">
+								<div class="small-10 columns">
+									<div class="description">{{basketItem.description}}</div>
+								</div>
+								<div class="small-2 columns">
+									<div class="price price-unit">{{basketItem.price * basketItem.quantity}} <i class="fa fa-eur" aria-hidden="true"></i></div>
+								</div>
+							</div>
+
+							<div class="row collapse subinformation">
+								<div class="small-5 columns caracteristique">
+									<div class="size">
+										taille : {{basketItem.size.name}}
+									</div>
+									<div class="appearance">
+										couleur : {{basketItem.appearance.name}}
+									</div>
+								</div>
+								<div class="small-2 columns">
+									<div class="size price-unit">{{basketItem.price}} <i class="fa fa-eur" aria-hidden="true"></i></div>
+								</div>
+								<div class="small-5 columns">
+
+									<div class="row collapse">
+										<div class="small-2 columns">
+											<span class="prefix delete" ng-click="vm.addQuantity(basketItem, 0)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+										</div>
+										<div class="small-2 columns">
+											<span class="prefix" ng-click="vm.addQuantity(basketItem, -1)"><i class="fa fa-minus" aria-hidden="true"></i></span>
+										</div>
+										<div class="small-5 columns">
+											<input class="text" type="text" ng-model="basketItem.quantity" ng-change="vm.updateBasketItem(basketItem)" />
+										</div>
+										<div class="small-2 columns end">
+											<span class="postfix" ng-click="vm.addQuantity(basketItem, 1)"><i class="fa fa-plus" aria-hidden="true"></i></span>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="summary">
+					<div class="row">
+						<div class="small-6 columns">
+							<div class="subtotal">
+								Sous-total:
+								<span class="value">
+									{{vm.basket.priceItems}} <i class="fa fa-eur" aria-hidden="true"></i>
+								</span>
+							</div>
+							<div class="shipping">
+								Frais de port:
+								<span class="value">
+									{{vm.basket.priceShipping}} <i class="fa fa-eur" aria-hidden="true"></i>
+								</span>
+							</div>
+							<div class="discounts">
+								<div class="discount" ng-repeat="discount in vm.basket.discounts">
+									Code promotion:
+									<span class="value">
+										-{{discount.price}} <i class="fa fa-eur" aria-hidden="true"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="small-6 columns ">
+							<div class="total">
+								Total
+								<span class="ttc">
+									ttc
+								</span>
+								<span class="value">
+									{{vm.basket.priceTotal}} <i class="fa fa-eur" aria-hidden="true"></i>
+								</span>
+								<div class="delivery">
+									Livraison: 4 à 6 jours ouvrables
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="empty" ng-if="vm.getNbItems() === 0">
+				Votre panier est vide
+			</div>
+
+		</div>
+		<div class="bottom">
+			<div class="order">
+				<a class="button button-player" ng-class="{disabled: vm.getNbItems() === 0}" href="{{(vm.getNbItems() === 0) ? '#' : vm._application.getUrl('Checkout') + '/' + vm.basket.id}}" ng-click="vm.showHideBasket()">Commander</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -6,13 +6,15 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Categories Model
  *
  * @property \Cake\ORM\Association\BelongsToMany $Designs
  */
-class CategoriesTable extends Table
+class CategoriesTable extends AppTable
 {
 
     /**
@@ -83,6 +85,13 @@ class CategoriesTable extends Table
         
         return $category;
     }
+
+    public function getChildren($parentId)
+    {
+        $category = $this->find()->where(["visible" => 1, "parent_id IS" => $parentId]);
+        
+        return $category;
+    }
     /**
      * Default get all design by category id.
      *
@@ -93,7 +102,7 @@ class CategoriesTable extends Table
     {
         $category = $this->find()->where(["id" => $id])->limit(1);
         
-        return $category;
+        return $category->first();
     }
     /**
      * Default get all design by category id.
@@ -162,9 +171,25 @@ class CategoriesTable extends Table
         return $query->toArray();
     }
 
+    public function findWithDesigns(){
+
+        $designTable = TableRegistry::get('Designs');
+
+        $parent = $this->getParents()->toArray();
+
+        foreach($parent as $category){
+            $category['children'] = $this->getChildren($category->id)->toArray();
+
+            foreach($category->children as $child){
+                $child['design'] = $designTable->getAllById($child->id, false)->toArray();
+            }
+        }
+
+        return $parent;
+    }
     private function _find(){
         
-        $categories = $this->find('all')->order('Categories.visible');
+        $categories = $this->find('all')->order('Categories.priority');
         
         return $categories;
     }
@@ -175,6 +200,7 @@ class CategoriesTable extends Table
         return $categories;
     }
 
+    
     private function _matchWithType($query, $typeIds){
 
         return $query->matching(
@@ -182,6 +208,35 @@ class CategoriesTable extends Table
                     return $q->where(["Types.id IN" => $typeIds]);
                 }
             );
+    }
+
+    private function _addDesign($query){
+        
+        $query->matching('Children.Designs', function(\Cake\ORM\Query $q) {
+                return $q->where([
+                    'Designs.visible' => true
+                ]);
+            });
+
+            return $query;
+    }
+
+    private function _addChildren($query){
+        
+        $query->matching('Children', function(\Cake\ORM\Query $q) {
+
+            return $q->matching('Designs', function(\Cake\ORM\Query $q) {
+                return $q->where([
+                    'Designs.visible' => true
+                ]);
+            })
+            ->where([
+                'Children.visible' => true
+            ]);
+        });
+
+        return $query;
+        
     }
     public function addChildren($query){
         

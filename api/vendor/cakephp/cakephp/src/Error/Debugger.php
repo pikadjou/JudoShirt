@@ -178,7 +178,7 @@ class Debugger
      * @see \Cake\Error\Debugger::exportVar()
      * @link http://book.cakephp.org/3.0/en/development/debugging.html#outputting-values
      */
-    public static function dump($var, $depth = 3)
+    public static function dump($var, $depth = 5)
     {
         pr(static::exportVar($var, $depth));
     }

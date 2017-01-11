@@ -39,6 +39,7 @@ var MartialShirt;
             this.appearances = response.article.appearances;
             this.views = response.article.views;
             this._setDefaultValues();
+            MartialShirt.Init.Cache.getInstance().cache(MartialShirt.Init.Cache.getInstance().KEY.SelectedDesign, this.design);
         };
         C_Article.prototype._setDefaultValues = function () {
             var imagePath = this.article.thumbnail;

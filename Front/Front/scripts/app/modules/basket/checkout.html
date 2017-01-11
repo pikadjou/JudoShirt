@@ -6,11 +6,11 @@
 		</span>
 	</h3>
 	<div class="module__content">
-		<div id="iframe-container">
-			<iframe id="iframe" ng-src="{{vm.trustSrc(vm.checkoutlink)}}" iframe-onload="{{vm.iframeresize()}}">
-				<span>Your browser does not support iframes.</span>
-			</iframe>
-		</div>
+
+		<iframe id="iframe" ng-src="{{vm.trustSrc(vm.checkoutlink)}}" scrolling="no">
+			<span>Your browser does not support iframes.</span>
+		</iframe>
+
 	</div>
 
 </div>

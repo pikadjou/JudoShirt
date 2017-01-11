@@ -52,7 +52,7 @@
                                                 case "thumbnail": ?>
                                                     <img src="<?php echo $data->$name; ?>">
                                                     <?php break;
-                                                case "lastProductsUpdate": ?>
+                                                case "lastUpdate": ?>
                                                     <?php echo date("d-m-Y", $data->$name); ?>
                                                     <?php break;
                                                 default: ?>

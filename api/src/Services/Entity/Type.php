@@ -9,6 +9,10 @@ class Type
     public $content = "";
     public $type = 1;
 
+    public $parent = null;
+    public $children = [];
+
+
     public $desings = [];
     public $categories = [];
     public $secondTypes = []; 
@@ -38,7 +42,18 @@ class Type
                 $this->secondTypes[] = new \App\Services\Entity\type($type->secondTypes[$i]);
             }
         }
+        
+        if($type->parent_type){
+            $this->parent = new \App\Services\Entity\type($type->parent_type);
+        }
+
+        if($type->children_types){
+            for($i = 0, $l = count($type->children_types); $i < $l; $i++){
+                $this->children[] = new \App\Services\Entity\type($type->children_types[$i]);
+            }
+        }
     }
+
 }
 
 ?>

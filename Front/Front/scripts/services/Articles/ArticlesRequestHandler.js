@@ -21,10 +21,15 @@ var MartialShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetHilightArticles", this.controller, "getHilightArticles", request));
             };
+            ArticlesRequestHandler.prototype.GetArticlesByCatgegory = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetArticlesByCategory", this.controller, "getArticlesByCategory", request));
+            };
             ArticlesRequestHandler.prototype.addEvents = function () {
                 this.GetArticlesReceived = new signals.Signal();
                 this.GetArticleReceived = new signals.Signal();
                 this.GetHilightArticlesReceived = new signals.Signal();
+                this.GetArticlesByCategoryReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             ArticlesRequestHandler.prototype.onPacketReceived = function (response) {
@@ -43,6 +48,10 @@ var MartialShirt;
                     case ("GetHilightResponse"):
                         parsedResponse = (response.Content);
                         this.GetHilightArticlesReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetArticlesByCategoryResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetArticlesByCategoryReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

@@ -94,7 +94,7 @@ class ProductsTable extends Table
     public function getOneByShopId($id){
         return $this->find()->where(["Products.shopId" => $id])->limit(1);
     }
-    
+
     public function findByGenders($types){
 
         $typeId = [];
@@ -160,6 +160,7 @@ class ProductsTable extends Table
         $url = $this->_spreadshirt->_urlShop . "/productTypes/".$productShopId."?locale=fr_FR";
 
         $xmlProduct = $this->_spreadshirt->getRequest($url) ;
+        //debug($xmlProduct);
         $xmlProduct = simplexml_load_string($xmlProduct);
 
 
@@ -174,8 +175,8 @@ class ProductsTable extends Table
         $productModel->short = (string)$xmlProduct->shortDescription;
         $productModel->content = (string)$xmlProduct->description;
 
-        $productModel->thumbnail = (string)$xmlProduct->resources->resource[0]->attributes('xlink', true);
-        $productModel->sizeThumbnail = (string)$xmlProduct->resources->resource[1]->attributes('xlink', true);
+       // $productModel->thumbnail = (string)$xmlProduct->resources->resource[0]->attributes('xlink', true);
+        //$productModel->sizeThumbnail = (string)$xmlProduct->resources->resource[1]->attributes('xlink', true);
         
         $this->save($productModel);
         

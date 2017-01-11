@@ -33,8 +33,10 @@ interface Signal {
      * @author Miller Medeiros
      * @constructor
      */
+
     new (): Signal;
 
+	signalsByContext: { [index: string]: SignalBinding[]; };
     /**
      * If Signal is active and should broadcast events.
      */

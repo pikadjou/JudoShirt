@@ -1,16 +1,19 @@
 ﻿<div class="sub-menu__container">
 	<ul>
 		<li>
-			<a href="">PLan du site</a>
+			<a href="">Plan du site</a>
 		</li>
 		<li>
-			<a href="">Type d'impression</a>
+			<a href="{{vm._application.getUrl('Promotions')}}">Promotions</a>
 		</li>
 		<li>
-			<a href="">Méthode de livraison</a>
+			<a href="{{vm._application.getUrl('Prints')}}">Type d'impression</a>
 		</li>
 		<li>
-			<a href="">Contact</a>
+			<a href="{{vm._application.getUrl('Shipping')}}">Méthode de livraison</a>
+		</li>
+		<li>
+			<a href="{{vm._application.getUrl('Contact')}}">Contact</a>
 		</li>
 	</ul>
 </div>

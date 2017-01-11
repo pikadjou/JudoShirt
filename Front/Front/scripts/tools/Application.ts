@@ -37,6 +37,18 @@
 				}
 			}
 		}
+
+		public isCms(name: string, route : any) : boolean {
+			for (var array = this.getRoutes(), i = 0, l = array.length; i < l; i++) {
+				if (name === array[i].name) {
+					if (route.$$route.originalPath === array[i].url) {
+						return true;
+					}
+					return false;
+				}
+			}
+			return false;
+		}
 		private _parseUrl(url: string) : string{
 
 			var ret = "";

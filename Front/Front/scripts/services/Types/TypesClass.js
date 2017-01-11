@@ -16,6 +16,12 @@ var MartialShirt;
                 return GetMasterTypesResponse;
             }());
             TypesClass.GetMasterTypesResponse = GetMasterTypesResponse;
+            var GetExcludeTypesResponse = (function () {
+                function GetExcludeTypesResponse() {
+                }
+                return GetExcludeTypesResponse;
+            }());
+            TypesClass.GetExcludeTypesResponse = GetExcludeTypesResponse;
         })(TypesClass = Services.TypesClass || (Services.TypesClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));

@@ -52,6 +52,9 @@ module MartialShirt {
 			this.views = response.article.views;
 
 			this._setDefaultValues();
+
+			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.SelectedDesign, this.design);
+			
 		}
 
 		private _setDefaultValues() {

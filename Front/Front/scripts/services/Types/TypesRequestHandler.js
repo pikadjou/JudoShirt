@@ -17,9 +17,14 @@ var MartialShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetMasterTypes", this.controller, "getMasterTypes", request));
             };
+            TypesRequestHandler.prototype.GetExcludeTypes = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetExcludeTypes", this.controller, "getExcludeTypes", request));
+            };
             TypesRequestHandler.prototype.addEvents = function () {
                 this.GetGendersReceived = new signals.Signal();
                 this.GetMasterTypesReceived = new signals.Signal();
+                this.GetExcludeTypesReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             TypesRequestHandler.prototype.onPacketReceived = function (response) {
@@ -34,6 +39,10 @@ var MartialShirt;
                     case ("GetMasterTypesResponse"):
                         parsedResponse = (response.Content);
                         this.GetMasterTypesReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetExcludeTypesResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetExcludeTypesReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

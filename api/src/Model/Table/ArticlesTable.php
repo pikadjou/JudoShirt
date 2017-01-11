@@ -73,6 +73,7 @@ class ArticlesTable extends Table
 
         return $query->contain(["Products"])->toArray();
     }
+
     public function findHilightProducts($catId){
         return $this->_findHilight(null, $catId)
                     ->contain([
@@ -82,7 +83,32 @@ class ArticlesTable extends Table
                     ])
                     ->toArray();
     }
-    public function getOne($id){
+
+    public function findAllArticles(){
+
+        $query = $this->_find();
+
+        return $query->toArray();
+
+    }
+    public function findByCategory($catId){
+
+        if($catId == 0){
+            $query = $this->_find();
+        }else{
+            $query = $this->_byCategory($this->_find(), $catId);
+        }
+        
+
+        $this->addProduct($query);
+
+        //$query->select($this);
+
+        return $query->toArray();
+
+    }
+
+    public function getOne($id, $forced = false){
         
         $article = $this->getOneNoCache($id)->first();
        
@@ -99,7 +125,7 @@ class ArticlesTable extends Table
         $cacheTime = $date->getTimestamp();
         
 
-        if(Configure::read('CacheUpdateDB') === false){
+        if($forced === true || Configure::read('CacheUpdateDB') === false){
             $lastUpdate = null;
         }
                 
@@ -146,20 +172,19 @@ class ArticlesTable extends Table
         return $articles;
     }
     
-    public function findByDesign($design)
+    public function findByDesign($design, $forced = false)
     {
-        //debug($design);
         $id = $design->id;
-        $lastUpdate = $design->lastProductsUpdate;
+        $lastUpdate = $design->lastUpdate;
         
         $date = new \DateTime();
         $actualTime = $date->getTimestamp();
         
-        $date->sub(new \DateInterval('PT' . 12 . 'H'));
+        $date->sub(new \DateInterval('PT' . 23 . 'H'));
         $cacheTime = $date->getTimestamp();
         
 
-        if(Configure::read('CacheUpdateDB') === false){
+        if($forced === true || Configure::read('CacheUpdateDB') === false){
             $lastUpdate = null;
         }       
         if($lastUpdate === null || $lastUpdate < $cacheTime){
@@ -206,7 +231,7 @@ class ArticlesTable extends Table
 
                 }
 
-                $design->lastProductsUpdate = $actualTime;
+                $design->lastUpdate = $actualTime;
                 $this->_desingsModel->save($design);
             }
             
@@ -218,10 +243,19 @@ class ArticlesTable extends Table
         return $articles;
     }
     
+    public function addAppearence($query){
+        $query->contain([
+            'Products' => [
+                'Appearances'
+            ]
+        ]);
+    }
     public function addProduct($query){
         $query->contain([
             'Products' => [
-                'Types'
+                'Types' => [
+                    'ParentTypes'
+                ]
             ]
         ]);
     }
@@ -236,7 +270,7 @@ class ArticlesTable extends Table
     private function _find(){
         return $this->find()
             ->where(["Articles.visible" => true])
-            ->order('Articles.priority');
+            ->order('Articles.priority ASC');
     }
 
     private function _byDesign($query, $designId){

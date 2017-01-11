@@ -30,7 +30,17 @@ var MartialShirt;
             this.RH.GetBasket(request);
         };
         C_Checkout.prototype.onPacketRecieved = function (response) {
-            this.checkoutlink = response.basket.checkoutLink;
+            this.RH.GetBasketReceived.remove(this.onPacketRecieved, this);
+            this.checkoutlink = "https://acceptance.martialshirt.com/maintenance.html";
+            console.log(this._guid);
+            console.log("onPacket");
+            setTimeout(function () {
+                $('#iframe').iFrameResize({
+                    checkOrigin: false,
+                    log: true,
+                    heightCalculationMethod: "lowestElement"
+                });
+            }, 5000);
         };
         C_Checkout.$inject = [
             '$scope',

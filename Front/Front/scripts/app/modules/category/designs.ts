@@ -20,11 +20,19 @@ module MartialShirt {
 			super();
 
 			this.init($scope);
+
 			this.RH.GetDesignsReceived.add(this.onPacketRecieved, this);
+
 
 			this.launchService();
 		}
 
+		public destroy() {
+			super.destroy();
+
+			Init.Cache.getInstance().invalidate(Init.Cache.getInstance().KEY.SelectedCategory);
+
+		}
 		public launchService() {
 
 			if (Init.Cache.getInstance().isKeyCached(Init.Cache.getInstance().KEY.Category + this.catid)) {
@@ -43,13 +51,14 @@ module MartialShirt {
 			this.list = response.designs;
 
 			this.loader = false;
+
+			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.SelectedCategory, this.category);
 		}
 	}
 
-	export class CategoryDesigns implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/categoryDesigns.html";
-		public restrict = "E";
-		public replace = true;
+	export class CategoryDesigns extends Init.AbstractDirective implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/category/designs.html";
+	
 		public scope = {
 			catid: '@'
 		};
@@ -57,7 +66,7 @@ module MartialShirt {
 		public static Name = "CategoryDesigns".toLocaleLowerCase();
 
 		public static $inject = [];
-		constructor() { }
+		constructor() { super(); }
 
 		public controller = C_CategoryDesigns;
 	}

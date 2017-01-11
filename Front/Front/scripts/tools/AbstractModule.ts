@@ -3,6 +3,7 @@
 
 	export class AbstractModule {
 
+		public _guid = "";
 		public _view: HTMLElement;
 		public _jview: JQuery;
 		public _sce = null;
@@ -21,6 +22,8 @@
 			}
 			this._login.authenticatedSignal.add(this.Authenticated, this);
 			this._login.unauthenticatedSignal.add(this.Unauthenticated, this);
+
+			this._guid = MartialShirt.Init.Application.NewGuid();
 		}
 
 		public init($scope: ng.IScope) {
@@ -37,10 +40,12 @@
 			}
 			(<any>$scope).vm = this;
 
-			$scope.$on('$destroy', this.destroy);
+			$scope.$on('$destroy', this.destroy.bind(this));
 		}
 
-		public destroy() { }
+		public destroy() {
+			(<any>signals.Signal.prototype).kill(this);
+		}
 		public Authenticated() {
 			this.isAuthenticated = true;
 		}

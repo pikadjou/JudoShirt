@@ -1,0 +1,114 @@
+﻿.basket__container{
+	position: relative;
+	.basket__title{
+		color: $white-color;
+		cursor: pointer;
+		.name{
+			padding: 15px;
+
+			background-color: $blue-color;
+			border: 1px $light-blue-color solid;
+
+			i{
+				margin: 5px 10px 0 0;
+			}
+		}
+		.count{
+			padding: 15px 25px;
+			background-color: $blue-color;
+			border: 1px $light-blue-color solid;
+
+			&.active{
+				color: $blue-color;
+				background-color : $white-color;
+			}
+		}
+	}
+
+	.basket__content{
+		position: absolute;
+		top: 50px;
+		right: 1px;
+		width: 180%;
+
+		text-align: center;
+
+		background-color : $white-color;
+
+		z-index: 20;
+
+		.articles{
+			padding: 15px;
+		}
+		.article{
+			padding: 15px;
+			border-bottom: 0.5px solid $light-black-color;
+
+			.image{
+				padding: 0;
+			}
+
+			.information{
+			
+				margin-bottom: 15px;
+				.description{
+					font-weight: bold;
+				}
+				.price{
+					font-weight: bold;
+					color: $blue-color;
+				}
+			}
+			.subinformation{
+				font-size: rem-calc(14);
+				color: $black-color;
+				.caracteristique{
+					text-align: left;
+					font-weight: 100;
+				}
+
+				.prefix, .postfix{
+					background-color: $light-blue-color;
+					color: $white-color;
+				}
+				.text{
+					color: $light-blue-color;
+					text-align: center;
+				}
+
+			}
+		}
+		.summary{
+			padding: 15px;
+			text-align: left;
+			font-weight: bold;
+			.value{
+				font-weight: normal;
+
+				padding-left: 10px;
+			}
+
+			.total{
+				font-size: rem-calc(18);
+				color: $blue-color;
+
+				.ttc, .delivery{
+					font-size: rem-calc(12);
+					font-weight: normal;
+				}
+			}
+		}
+
+		.bottom{
+			.order{
+				a{
+					display: block;
+					margin: 0;
+				}
+			}
+		}
+		
+		
+		
+	}
+}

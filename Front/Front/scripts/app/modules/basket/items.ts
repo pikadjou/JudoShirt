@@ -1,7 +1,7 @@
 module MartialShirt {
     'use strict';
 
-	export class C_Basket extends MartialShirt.Init.AbstractModule {
+	export class C_BasketItems extends MartialShirt.Init.AbstractModule {
 
 		public showBasket: boolean = false;
 
@@ -162,18 +162,15 @@ module MartialShirt {
 		}
 	}
 
-	export class Basket implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/basket.html";
-		public restrict = "E";
-		public replace = true;
-		public scope = { };
+	export class BasketItems extends Init.AbstractDirective implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/basket/items.html";
+		
 
-		public static Name = "Basket".toLocaleLowerCase();
+		public static Name = "BasketItems".toLocaleLowerCase();
 
-		public static $inject = [];
-		constructor() { }
+		constructor() { super(); }
 
-		public controller = C_Basket;
+		public controller = C_BasketItems;
 	}
-	MartialShirt.Init.Application.MartialShirtApp.directive(Basket.Name, MartialShirtApp.Application.GetDirectiveFactory<Basket>(Basket));
+	MartialShirt.Init.Application.MartialShirtApp.directive(BasketItems.Name, MartialShirtApp.Application.GetDirectiveFactory<BasketItems>(BasketItems));
 }

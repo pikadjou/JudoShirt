@@ -84,7 +84,7 @@ class DesignsTable extends Table
      * @param integer $id (optional)
      * @return App\Model\Table\DesignsTable
      */
-    public function getAllById($catId = null)
+    public function getAllById($catId = null, $withJoin = true)
     {
         $designs = $this->getAll();
 
@@ -95,7 +95,12 @@ class DesignsTable extends Table
                 ]);
             });
         }
-        $this->addCategories($designs);
+
+        if($withJoin){
+            $this->addCategories($designs);
+        }else{
+           $designs->select($this);
+        }
         
         return $designs;
     }

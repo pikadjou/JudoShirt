@@ -1,0 +1,33 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Judo Shirt - Maintenance</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="/content/sass/Site.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+</head>
+<body>
+
+	<div class="maintenance__container">
+
+		<h1>Maintenance</h1>
+
+		<iframe id="iframe" ng-src="https://checkout.spreadshirt.be/?basketId=d2dd5918-a1cb-4374-ad38-b158ad66c018&amp;shopId=100045684" scrolling="no" src="https://checkout.spreadshirt.be/?basketId=d2dd5918-a1cb-4374-ad38-b158ad66c018&amp;shopId=100045684">
+			&lt;span&gt;Your browser does not support iframes.&lt;/span&gt;
+		</iframe>
+	</div>
+	<script src="lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="https://acceptance.martialshirt.com/iframeResizer.js"></script>
+	<script type="text/javascript">
+		$('#iframe').iFrameResize({
+			checkOrigin: false, // ["checkout.spreadshirt.be", "martialshirt.front"],
+			log: true,
+			//inPageLinks: true,
+			heightCalculationMethod: "lowestElement"
+		});
+
+	</script>
+</body>
+</html>
+ 

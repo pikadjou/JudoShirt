@@ -146,10 +146,15 @@ var MartialShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetHilightArticles", this.controller, "getHilightArticles", request));
             };
+            ArticlesRequestHandler.prototype.GetArticlesByCatgegory = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetArticlesByCategory", this.controller, "getArticlesByCategory", request));
+            };
             ArticlesRequestHandler.prototype.addEvents = function () {
                 this.GetArticlesReceived = new signals.Signal();
                 this.GetArticleReceived = new signals.Signal();
                 this.GetHilightArticlesReceived = new signals.Signal();
+                this.GetArticlesByCategoryReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             ArticlesRequestHandler.prototype.onPacketReceived = function (response) {
@@ -168,6 +173,10 @@ var MartialShirt;
                     case ("GetHilightResponse"):
                         parsedResponse = (response.Content);
                         this.GetHilightArticlesReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetArticlesByCategoryResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetArticlesByCategoryReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;
@@ -485,6 +494,12 @@ var MartialShirt;
                 return GetMasterTypesResponse;
             }());
             TypesClass.GetMasterTypesResponse = GetMasterTypesResponse;
+            var GetExcludeTypesResponse = (function () {
+                function GetExcludeTypesResponse() {
+                }
+                return GetExcludeTypesResponse;
+            }());
+            TypesClass.GetExcludeTypesResponse = GetExcludeTypesResponse;
         })(TypesClass = Services.TypesClass || (Services.TypesClass = {}));
     })(Services = MartialShirt.Services || (MartialShirt.Services = {}));
 })(MartialShirt || (MartialShirt = {}));
@@ -509,9 +524,14 @@ var MartialShirt;
                 if (request === void 0) { request = []; }
                 return this.server.request(new MartialShirt.Services.Request("GET", "GetMasterTypes", this.controller, "getMasterTypes", request));
             };
+            TypesRequestHandler.prototype.GetExcludeTypes = function (request) {
+                if (request === void 0) { request = []; }
+                return this.server.request(new MartialShirt.Services.Request("GET", "GetExcludeTypes", this.controller, "getExcludeTypes", request));
+            };
             TypesRequestHandler.prototype.addEvents = function () {
                 this.GetGendersReceived = new signals.Signal();
                 this.GetMasterTypesReceived = new signals.Signal();
+                this.GetExcludeTypesReceived = new signals.Signal();
                 this.server.packetReceived.add(this.onPacketReceived, this);
             };
             TypesRequestHandler.prototype.onPacketReceived = function (response) {
@@ -526,6 +546,10 @@ var MartialShirt;
                     case ("GetMasterTypesResponse"):
                         parsedResponse = (response.Content);
                         this.GetMasterTypesReceived.dispatch(parsedResponse);
+                        break;
+                    case ("GetExcludeTypesResponse"):
+                        parsedResponse = (response.Content);
+                        this.GetExcludeTypesReceived.dispatch(parsedResponse);
                         break;
                     default:
                         break;

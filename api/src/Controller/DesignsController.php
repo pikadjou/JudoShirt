@@ -33,12 +33,6 @@ class DesignsController extends AppController
         $query = $this->Designs->getOne($id);
  
         $query->contain([
-            'Categories'
-        ]);
-        $query->contain([
-            'Tags'
-        ]);
-        $query->contain([
             'Products.Colors'
         ]);
         
@@ -57,15 +51,16 @@ class DesignsController extends AppController
     public function getDesigns($catId = null)
     {
         $key = "DesignsController-getDesigns-".$catId;
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
-        if($catId === null){
+        if($catId === null || $catId == 0){
             $query = $this->Designs->getAll();
         }else{
             $query = $this->Designs->getAllById($catId);
         }
+        /*
         $query->contain([
             'Categories'
         ]);
@@ -75,25 +70,25 @@ class DesignsController extends AppController
         $query->contain([
             'Products.Colors'
         ]);
-
+*/
         $designs = $query->toArray();
         
         $category = null;
         if($catId !== null){
-            $category = $this->Categories->getOne($catId)->first();    
+            $category = $this->Categories->getOne($catId);    
         }
         
         $response = new DesignsRequestHandler\GetDesignsResponse();
         $response->init($designs, $category);
         
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
 
     public function getDesignsByTypes($typeId = null)
     {
         $key = "DesignsController-getDesignsByTypes-".$typeId;
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -110,7 +105,7 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetDesignsResponse();
         $response->init($designs, null);
         
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
 
@@ -146,7 +141,7 @@ class DesignsController extends AppController
     public function getTopDesigns()
     {
         $key = "DesignsController-getTopDesigns-".$limit."-".$tags;
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -165,14 +160,14 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetTopDesignsResponse();
         $response->init($designs, $category);
         
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
     
     public function getNewDesigns($limit = null, $tags = true)
     {
         $key = "DesignsController-getNewDesigns-".$limit."-".$tags;
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -196,14 +191,14 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetNewDesignsResponse();
         $response->init($designs, $category);
         
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
     
     public function getPromoDesigns($limit = null, $tags = true)
     {
         $key = "DesignsController-getPromoDesigns-".$limit."-".$tags;
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -222,24 +217,25 @@ class DesignsController extends AppController
             }
             
             $designs = $query->toArray();
-
+/*
             $this->loadModel("Appearances");
             foreach($designs as $design){
                 $design['appearances'] = $this->Appearances->getByDesignId($design->id);
             }
+            */
         }
         
         $response = new DesignsRequestHandler\GetPromotionDesignsResponse();
         $response->init($designs, $category);
         
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
     
     public function getFeaturedDesigns()
     {
         $key = "DesignsController-getFeaturedDesigns";
-        if (($response = Cache\CacheController::read($key)) !== false) {
+        if (($response = Cache\CacheModel::read($key)) !== false) {
             parent::setJson($response);
             return;
         }
@@ -255,7 +251,7 @@ class DesignsController extends AppController
         $response = new DesignsRequestHandler\GetFeaturedDesignsResponse();
         $response->init($designs, $category);
         
-        Cache\CacheController::write($key, $response);
+        Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
 }
