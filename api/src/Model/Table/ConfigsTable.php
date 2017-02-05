@@ -27,24 +27,14 @@ class ConfigsTable extends Table
         $this->primaryKey('id');
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
-        $validator
-            ->allowEmpty('name');
-            
-        $validator
-            ->allowEmpty('value');
+    public function getFrontConfig(){
+        return $this->_findActive()->where(["front" => true])->toArray();
+    }
 
-        return $validator;
+    private function _find(){
+        return $this->find('all');
+    }
+    private function _findActive(){
+        return $this->_find()->where(["Configs.visible" => true]);
     }
 }

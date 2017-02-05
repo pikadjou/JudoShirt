@@ -84,8 +84,8 @@ var MartialShirt;
                         if (child.designs.length > 0) {
                             for (var i_3 = 0, l_3 = child.designs.length; i_3 < l_3; i_3++) {
                                 if (child.designs[i_3].id === id) {
-                                    this.openCategories.push(child);
                                     this.openCategories.push(category);
+                                    this.openCategories.push(child);
                                     this.design = child.designs[i_3];
                                 }
                             }

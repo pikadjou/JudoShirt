@@ -37,35 +37,35 @@
 				}
 				url = url + this.urlExtension;
 
-				console.log("PACKET_SEND : url : " + url);
+				MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url);
 
 				this.$http.get(url).
 					then((response: any) => {
 						this.onPacketReceived(response.data);
 					}, function (response) {
-						console.log(response);
+						MartialShirt.Init.Logger.LogError(String(response));
 					});
 			} else if (request.Type.toLocaleUpperCase() === "POST") {
 
 				url = url + this.urlExtension;
-				console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+				MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url + " Data: {0}", request);
 
 				this.$http.post(url, request.Content).
 					then((response: any) => {
 						this.onPacketReceived(response.data);
 					}, function (response) {
-						console.log(response);
+						MartialShirt.Init.Logger.LogError(String(response));
 					});
 			} else if (request.Type.toLocaleUpperCase() === "PUT") {
 
 				url = url + this.urlExtension;
-				console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+				MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url + " Data: {0}", request);
 
 				this.$http.put(url, request.Content).
 					then((response: any) => {
 						this.onPacketReceived(response.data);
 					}, function (response) {
-						console.log(response);
+						MartialShirt.Init.Logger.LogError(String(response));
 					});
 			}
 
@@ -74,9 +74,9 @@
 		private onPacketReceived(response: Request): void {
 			
 			if (response.Id === "00000000-0000-0000-0000-000000000000") {
-				//error
+				MartialShirt.Init.Logger.LogError(String(response));
 			}
-			console.log("PACKET_RECIEVED : data : ", response);
+			MartialShirt.Init.Logger.LogInfo("PACKET_RECIEVED : data : ", response);
 			// Dispatch the request, services should receive this if binded correctly
 			this.packetReceived.dispatch(response);
 			

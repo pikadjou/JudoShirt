@@ -28,8 +28,12 @@ class CmsController extends AppController
         
         $cms = $query->toArray();
         
+        $this->loadModel("Configs");
+
+        $configs = $this->Configs->getFrontConfig();
+
         $response = new CmsRequestHandler\GetRoutesResponse();
-        $response->init($cms);
+        $response->init($cms, $configs);
 
         parent::setJson($response);
     }

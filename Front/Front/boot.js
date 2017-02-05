@@ -51,23 +51,25 @@ var MartialShirt;
             s.async = false;
             s.onload = function () {
                 MartialShirt.Config.versionning = version;
-                if (MartialShirt.Config.Maintenance) {
-                    var indexMaintenance = window.location.href.indexOf("/maintenance");
-                    if (indexMaintenance === -1) {
-                        window.location.href = '/maintenance.html';
-                        return;
-                    }
-                }
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", MartialShirt.Config.UrlApi + "cms/getRoutes.json");
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status == 200) {
                             window.routesResponse = JSON.parse(xhr.responseText).Content;
+                            MartialShirt.Config.update(window.routesResponse.configs);
+                            if (MartialShirt.Config.Maintenance) {
+                                var indexMaintenance = window.location.href.indexOf("/maintenance");
+                                if (indexMaintenance === -1) {
+                                    window.location.href = '/maintenance.html';
+                                    return;
+                                }
+                            }
                             LauchApplication.Launch();
                         }
                         else {
-                            alert('something else other than 200 was returned');
+                            window.location.href = '/maintenance.html';
+                            return;
                         }
                     }
                 };

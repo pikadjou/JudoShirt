@@ -1,0 +1,43 @@
+﻿.design__articles__container{
+	.filters{
+		.types, .sorts{
+			border: 1px solid $blue-color;
+			padding: 10px;
+			position: relative;
+			display: inline-block;
+
+			.items{
+				padding: 0px;
+				margin: 0px;
+
+				display: inline-block;
+				//text-align:center;
+				.item{
+					display: none;
+					cursor: pointer;
+
+					&.active{
+						display: block;
+					}
+				}
+				&.active{
+					.item{
+						display: block;
+
+						&.active, &:hover{
+							color: $blue-color;
+						}
+					}
+				}				
+			}
+			.opener{
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				padding-left: 10px;
+				color: $blue-color;
+			}
+
+		}
+	}
+}

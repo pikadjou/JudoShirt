@@ -63,16 +63,8 @@
 			s.async = false;
 
 			s.onload = function () {
+
 				Config.versionning = version;
-				if (Config.Maintenance) {
-					var indexMaintenance = window.location.href.indexOf("/maintenance");
-
-					if (indexMaintenance === -1) {
-						window.location.href = '/maintenance.html';
-						return;
-					}
-				}
-
 				//Load route
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", Config.UrlApi + "cms/getRoutes.json");
@@ -81,9 +73,22 @@
 						if (xhr.status == 200) {
 							//ok
 							(<any>window).routesResponse = JSON.parse(xhr.responseText).Content;
+							Config.update((<any>window).routesResponse.configs);
+
+							if (Config.Maintenance) {
+								var indexMaintenance = window.location.href.indexOf("/maintenance");
+
+								if (indexMaintenance === -1) {
+									window.location.href = '/maintenance.html';
+									return;
+								}
+							}
 							LauchApplication.Launch();
+
+							
 						} else {
-							alert('something else other than 200 was returned');
+							window.location.href = '/maintenance.html';
+							return;
 						}
 					}
 				};

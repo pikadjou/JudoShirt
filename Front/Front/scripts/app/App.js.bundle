@@ -25,12 +25,15 @@
 	  <file>/scripts/app/modules/menu/accountMenu.js</file>
 	  <file>/scripts/app/modules/menu/menuMain.js</file>
 	  <file>/scripts/app/modules/menu/sportMenu.js</file>
+	  <file>/scripts/app/modules/menu/sportMenuBreadcrumb.js</file>
 	  <file>/scripts/app/modules/menu/typeMenu.js</file>
 	  <file>/scripts/app/modules/menu/creditMenu.js</file>
 	  <file>/scripts/app/modules/menu/socialMenu.js</file>
+	  <file>/scripts/app/modules/menu/help.js</file>
 
 	  <file>/scripts/app/modules/menu/subMenu.js</file>
 
+	  
 	  <file>/scripts/app/modules/design/featured.js</file>
 	  <file>/scripts/app/modules/design/promotion.js</file>
 	  <file>/scripts/app/modules/design/articles.js</file>

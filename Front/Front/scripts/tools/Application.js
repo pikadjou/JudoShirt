@@ -17,7 +17,7 @@ var MartialShirt;
                 if (!cmsList) {
                     return;
                 }
-                this._routes = cmsList.pages || [];
+                this._routes = cmsList || [];
             };
             Application.prototype.getRoutes = function () {
                 return this._routes;

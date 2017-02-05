@@ -21,7 +21,9 @@
 
 		constructor(
 		) {
-
+			if (Config.gtmKey === "") {
+				return;
+			}
 			this._dataLayer = (<any>window).dataLayer = (<any>window).dataLayer || [];
 
 			this._dataLayer.push({
@@ -31,8 +33,14 @@
 			LauchApplication.addDynamicScript('//www.googletagmanager.com/gtm.js?id=' + Config.gtmKey);
 		}
 
+		private _addEvent(event: Object) {
+			if (Config.gtmKey === "") {
+				return;
+			}
+			this._dataLayer.push(event);
+		}
 		public LocationChange(path: string) {
-			this._dataLayer.push({
+			this._addEvent({
 				event: 'ngRouteChange',
 				attributes: {
 					route: path

@@ -5,7 +5,7 @@ var MartialShirt;
         function MartialShirtApp() {
         }
         MartialShirtApp.init = function () {
-            MartialShirtApp.Application.setRoutes(window.routesResponse);
+            MartialShirtApp.Application.setRoutes(window.routesResponse.pages);
             MartialShirt.Init.Application.MartialShirtApp.config([
                 '$routeProvider',
                 '$locationProvider',

@@ -820,6 +820,8 @@
     </Content>
     <Content Include="lib\signals\signal.js" />
     <Content Include="maintenance.html" />
+    <Content Include="scripts\app\modules\menu\sportMenuBreadcrumb.html" />
+    <Content Include="scripts\app\modules\menu\help.html" />
     <Content Include="test.html" />
     <Content Include="scripts\app\App.js">
       <DependentUpon>App.js.bundle</DependentUpon>
@@ -896,6 +898,8 @@
     <TypeScriptCompile Include="scripts\app\modules\custom\designer.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design\articles.ts" />
     <TypeScriptCompile Include="scripts\app\modules\help\contact.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\sportMenuBreadcrumb.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\menu\help.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\accountMenu.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\creditMenu.ts" />
     <TypeScriptCompile Include="scripts\app\modules\menu\socialMenu.ts" />
@@ -941,6 +945,7 @@
     <TypeScriptCompile Include="scripts\app\widgets\topTen.ts" />
     <TypeScriptCompile Include="scripts\app\models\PlayerStorage.ts" />
     <TypeScriptCompile Include="scripts\services\Articles\ArticlesClass.ts" />
+    <TypeScriptCompile Include="scripts\services\Entity\Config.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\Discounts.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\RangeCost.ts" />
     <TypeScriptCompile Include="scripts\services\Entity\RegionCost.ts" />
@@ -985,6 +990,7 @@
     <TypeScriptCompile Include="scripts\tools\AbstractModule.ts" />
     <TypeScriptCompile Include="scripts\tools\Cache.ts" />
     <TypeScriptCompile Include="scripts\tools\Debug.ts" />
+    <TypeScriptCompile Include="scripts\tools\Logger.ts" />
     <TypeScriptCompile Include="scripts\tools\Server.ts" />
     <Content Include="scripts\services\Services.js">
       <DependentUpon>Services.js.bundle</DependentUpon>
@@ -1109,6 +1115,8 @@
     <Content Include="content\sass\application\modules\article\_article.scss" />
     <Content Include="content\sass\application\modules\menu\_sportMenu.scss" />
     <Content Include="content\sass\application\modules\menu\_typeMenu.scss" />
+    <Content Include="content\sass\application\modules\menu\_breadcrumb.scss" />
+    <Content Include="content\sass\application\modules\design\_articles.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

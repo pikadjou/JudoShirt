@@ -13,6 +13,7 @@ var MartialShirt;
             function C_SideBar($scope) {
                 _super.call(this);
                 this.$scope = $scope;
+                this.ishelp = false;
                 this.init($scope);
             }
             C_SideBar.$inject = [
@@ -21,18 +22,19 @@ var MartialShirt;
             return C_SideBar;
         }(MartialShirt.Init.AbstractModule));
         Container.C_SideBar = C_SideBar;
-        var SideBar = (function () {
+        var SideBar = (function (_super) {
+            __extends(SideBar, _super);
             function SideBar() {
+                _super.call(this);
                 this.templateUrl = "/scripts/app/container/sidebar.html";
-                this.restrict = "E";
-                this.replace = true;
-                this.scope = {};
+                this.scope = {
+                    ishelp: '@'
+                };
                 this.controller = C_SideBar;
             }
             SideBar.Name = "SideBarcontainer".toLocaleLowerCase();
-            SideBar.$inject = [];
             return SideBar;
-        }());
+        }(MartialShirt.Init.AbstractDirective));
         Container.SideBar = SideBar;
         MartialShirt.Init.Application.MartialShirtApp.directive(SideBar.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(SideBar));
     })(Container = MartialShirt.Container || (MartialShirt.Container = {}));

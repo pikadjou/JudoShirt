@@ -1,4 +1,4 @@
-﻿<div class="module__container design__container">
+﻿<div class="module__container design__articles__container">
 	<h3 class="module__title">
 		{{vm.design.name}}
 
@@ -8,7 +8,36 @@
 	</h3>
 	<templateloader ng-if="vm.loader"></templateloader>
 	<div class="module__content" ng-if="!vm.loader">
-		
+		<div class="filters row">
+			<div class="types small-2 columns" ng-click="vm.openGender = !vm.openGender">
+				<ul class="items" ng-class="(vm.openGender === true) ? 'active' : ''">
+					<li class="item" ng-click="vm.setGenderId(0)" ng-class="(vm.genderId === 0) ? 'active' : ''">
+						Tous
+					</li>
+					<li class="item" ng-repeat="type in vm.getGenderType()" ng-click="vm.setGenderId(type.id)" ng-class="(vm.genderId === type.id) ? 'active' : ''">
+						{{type.name}}
+					</li>
+				</ul>
+				<span class="opener">
+					<i class="fa fa-chevron-down" aria-hidden="true" ng-show="vm.openGender === false"></i>
+					<i class="fa fa-chevron-up" aria-hidden="true" ng-show="vm.openGender === true"></i>
+				</span>
+			</div>
+			<div class="sorts small-2 columns" ng-click="vm.openSort = !vm.openSort">
+				<ul class="items" ng-class="(vm.openSort === true) ? 'active' : ''">
+					<li class="item" ng-click="vm.setSortId(0)" ng-class="(vm.sortId === 0) ? 'active' : ''">
+						Pertinence
+					</li>
+					<li class="item" ng-click="vm.setSortId(1)" ng-class="(vm.sortId === 1) ? 'active' : ''">
+						Prix
+					</li>
+				</ul>
+				<span class="opener">
+					<i class="fa fa-chevron-down" aria-hidden="true" ng-show="vm.openSort === false"></i>
+					<i class="fa fa-chevron-up" aria-hidden="true" ng-show="vm.openSort === true"></i>
+				</span>
+			</div>
+		</div>
 		<div>
 			<ul class="small-block-grid-3 article-list__container">
 				<li ng-repeat="article in vm.articles" ng-if="vm.isVisibleArticle(article)">

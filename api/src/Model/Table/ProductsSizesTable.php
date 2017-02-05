@@ -69,13 +69,12 @@ class ProductsSizesTable extends Table
         
 
         if(!$join){
-            debug($join);
             $join = $this->newEntity();
             
             $join->product_id = $productId;
             $join->size_id = $sizeId;
             
-            debug($this->save($join));
+            $this->save($join);
 
         }
     }

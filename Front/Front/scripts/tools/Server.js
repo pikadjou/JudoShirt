@@ -25,40 +25,41 @@ var MartialShirt;
                         url = url + "/" + request.Content[i];
                     }
                     url = url + this.urlExtension;
-                    console.log("PACKET_SEND : url : " + url);
+                    MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url);
                     this.$http.get(url).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {
-                        console.log(response);
+                        MartialShirt.Init.Logger.LogError(String(response));
                     });
                 }
                 else if (request.Type.toLocaleUpperCase() === "POST") {
                     url = url + this.urlExtension;
-                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url + " Data: {0}", request);
                     this.$http.post(url, request.Content).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {
-                        console.log(response);
+                        MartialShirt.Init.Logger.LogError(String(response));
                     });
                 }
                 else if (request.Type.toLocaleUpperCase() === "PUT") {
                     url = url + this.urlExtension;
-                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url + " Data: {0}", request);
                     this.$http.put(url, request.Content).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {
-                        console.log(response);
+                        MartialShirt.Init.Logger.LogError(String(response));
                     });
                 }
                 return request.Id;
             };
             Server.prototype.onPacketReceived = function (response) {
                 if (response.Id === "00000000-0000-0000-0000-000000000000") {
+                    MartialShirt.Init.Logger.LogError(String(response));
                 }
-                console.log("PACKET_RECIEVED : data : ", response);
+                MartialShirt.Init.Logger.LogInfo("PACKET_RECIEVED : data : ", response);
                 this.packetReceived.dispatch(response);
             };
             Server.$inject = ['$http'];

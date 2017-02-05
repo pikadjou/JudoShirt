@@ -3460,6 +3460,72 @@ iframe {
   display: block;
 }
 
+.breadcrumb__container > div {
+  display: inline-block;
+  position: relative;
+}
+
+.breadcrumb__container > div ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 1;
+}
+
+.breadcrumb__container > div ul li {
+  list-style: none;
+}
+
+.breadcrumb__container > div a:hover {
+  color: #37474F;
+}
+
+.breadcrumb__container > div .selectedItem, .breadcrumb__container > div .item {
+  background-color: #2196F3;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 100;
+  margin: 5px 0;
+  padding: 2px 5px;
+}
+
+.breadcrumb__container > div .selectedItem .down, .breadcrumb__container > div .item .down {
+  font-size: 0.625rem;
+}
+
+.breadcrumb__container > div .separateur {
+  padding: 0 5px;
+  color: #37474F;
+  font-size: 0.6875rem;
+}
+
+.breadcrumb__container > div .items {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 5px;
+  padding: 5px;
+  min-width: 100%;
+}
+
+.breadcrumb__container > div .items a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.breadcrumb__container > div:hover .items {
+  display: block;
+}
+
+.breadcrumb__container .home {
+  font-size: 1.125rem;
+}
+
 .widget__account .connection {
   font-family: "Lato-bold", sans-serif;
   font-size: 1.125rem;
@@ -3719,6 +3785,44 @@ iframe {
   font-size: 0.9375rem;
 }
 
+.design__articles__container .filters .types, .design__articles__container .filters .sorts {
+  border: 1px solid #1976D2;
+  padding: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.design__articles__container .filters .types .items, .design__articles__container .filters .sorts .items {
+  padding: 0px;
+  margin: 0px;
+  display: inline-block;
+}
+
+.design__articles__container .filters .types .items .item, .design__articles__container .filters .sorts .items .item {
+  display: none;
+  cursor: pointer;
+}
+
+.design__articles__container .filters .types .items .item.active, .design__articles__container .filters .sorts .items .item.active {
+  display: block;
+}
+
+.design__articles__container .filters .types .items.active .item, .design__articles__container .filters .sorts .items.active .item {
+  display: block;
+}
+
+.design__articles__container .filters .types .items.active .item.active, .design__articles__container .filters .types .items.active .item:hover, .design__articles__container .filters .sorts .items.active .item.active, .design__articles__container .filters .sorts .items.active .item:hover {
+  color: #1976D2;
+}
+
+.design__articles__container .filters .types .opener, .design__articles__container .filters .sorts .opener {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding-left: 10px;
+  color: #1976D2;
+}
+
 .template__container {
   position: relative;
   margin: 5px;
@@ -3731,6 +3835,9 @@ iframe {
 
 .template__container .content {
   text-align: center;
+  -webkit-box-shadow: 0px 0px 10px 0px #888888;
+  -moz-box-shadow: 0px 0px 10px 0px #888888;
+  box-shadow: 0px 0px 10px 0px #888888;
 }
 
 .template__container .content .image {

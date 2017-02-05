@@ -3,6 +3,8 @@ module MartialShirt.Container {
 
 	export class C_SideBar extends Init.AbstractModule{
 		
+		public ishelp = false;
+
 
 		public static $inject = [
 			'$scope'
@@ -17,18 +19,17 @@ module MartialShirt.Container {
 		}
 	}
 
-	export class SideBar implements ng.IDirective {
+	export class SideBar extends Init.AbstractDirective implements ng.IDirective {
 		public static Name = "SideBarcontainer".toLocaleLowerCase();
 
 		public templateUrl = "/scripts/app/container/sidebar.html";
-		public restrict = "E";
-		public replace = true;
+
 		public scope = {
+			ishelp: '@'
 		};
 
-		public static $inject = [];
 		constructor(/*list of dependencies*/) {
-
+			super();
 		}
 
 		public controller = C_SideBar;

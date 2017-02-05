@@ -29,16 +29,70 @@ use Migrations\Migrations;
 class MigrationController extends AppController
 {
     
-     public function index()
+    public function index()
     {
         $migrations = new Migrations();
 
         // Will return an array of all migrations and their status
         $status = $migrations->status();
-        debug($status);
-        // Will return true if success. If an error occurred, an exception will be thrown
-        $migrate = $migrations->migrate();
-        debug($migrate);
+
+        $this->set('migrations', array_reverse($status));
+        $this->set('_serialize', ['status']);
     }
     
+    public function mark($id)
+    {
+        $migrations = new Migrations();
+
+        $migrate = $migrations->markMigrated($id);
+
+        if($migrate){
+            $this->Flash->success(__('Migration is ok'));
+        }else{
+            $this->Flash->error(__('Migration is not ok'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function upgrade()
+    {
+        $migrations = new Migrations();
+
+        $migrate = $migrations->migrate();
+
+        if($migrate){
+            $this->Flash->success(__('Migration is ok'));
+        }else{
+            $this->Flash->error(__('Migration is not ok'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function downgrade()
+    {
+        $migrations = new Migrations();
+        
+        $migrate = $migrations->rollback();
+
+        if($migrate){
+            $this->Flash->success(__('Migration is ok'));
+        }else{
+            $this->Flash->error(__('Migration is not ok'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function seed()
+    {
+        $migrations = new Migrations();
+        
+        $migrate = $migrations->seed();
+
+        if($migrate){
+            $this->Flash->success(__('Migration is ok'));
+        }else{
+            $this->Flash->error(__('Migration is not ok'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
 }

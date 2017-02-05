@@ -1,5 +1,10 @@
 ﻿<div class="sidebar_container">
-	<div class="categories">
+	<div class="categories" ng-if="vm.ishelp">
+		<h1>Help</h1>
+		<helpmenu></helpmenu>
+		<sportmenu></sportmenu>
+	</div>
+	<div class="categories" ng-if="!vm.ishelp">
 		<h1>Catégories</h1>
 		<sportmenu></sportmenu>
 		<typemenu></typemenu>

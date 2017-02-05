@@ -29,7 +29,7 @@ var MartialShirt;
             }
             AbstractModule.prototype.init = function ($scope) {
                 for (var prop in $scope) {
-                    if (this.hasOwnProperty(prop)) {
+                    if (this.hasOwnProperty(prop) && $scope[prop] !== undefined && $scope[prop] !== null) {
                         this[prop] = $scope[prop];
                     }
                 }

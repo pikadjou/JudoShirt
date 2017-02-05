@@ -6,6 +6,9 @@ var MartialShirt;
         var GTM = (function () {
             function GTM() {
                 this._dataLayer = [];
+                if (MartialShirt.Config.gtmKey === "") {
+                    return;
+                }
                 this._dataLayer = window.dataLayer = window.dataLayer || [];
                 this._dataLayer.push({
                     'gtm.start': new Date().getTime(), event: 'gtm.js'
@@ -18,8 +21,14 @@ var MartialShirt;
                 }
                 return this.uniqueInstance;
             };
+            GTM.prototype._addEvent = function (event) {
+                if (MartialShirt.Config.gtmKey === "") {
+                    return;
+                }
+                this._dataLayer.push(event);
+            };
             GTM.prototype.LocationChange = function (path) {
-                this._dataLayer.push({
+                this._addEvent({
                     event: 'ngRouteChange',
                     attributes: {
                         route: path

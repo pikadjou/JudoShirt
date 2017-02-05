@@ -1,0 +1,63 @@
+﻿<div class="breadcrumb__container">
+	<div class="home">
+		<i class="fa fa-home" aria-hidden="true"></i>
+	</div>
+
+	
+	<div class="first-step" ng-if="vm.openCategories.length > 0">
+		<span class="separateur">
+			<i class="fa fa-chevron-right" aria-hidden="true"></i>
+		</span>
+		<span class="selectedItem">
+			<a href="{{vm._application.getUrl('Category')}}/{{vm.openCategories[0].url}}">
+				{{vm.openCategories[0].name}}
+			</a>
+			<span class="down">
+				<i class="fa fa-chevron-down" aria-hidden="true"></i>
+			</span>
+		</span>
+		<ul class="items">
+			<li class="item" ng-repeat="category in vm.categories">
+				<a href="{{vm._application.getUrl('Category')}}/{{category.url}}">{{category.name}}</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="second-step" ng-if="vm.openCategories.length > 1">
+		<span class="separateur">
+			<i class="fa fa-chevron-right" aria-hidden="true"></i>
+		</span>
+		<span class="selectedItem">
+			<a href="{{vm._application.getUrl('Category')}}/{{vm.openCategories[1].url}}">
+				{{vm.openCategories[1].name}}
+			</a>
+			<span class="down">
+				<i class="fa fa-chevron-down" aria-hidden="true"></i>
+			</span>
+		</span>
+		<ul class="items">
+			<li class="item" ng-repeat="child in vm.openCategories[0].children">
+				<a href="{{vm._application.getUrl('Category')}}/{{child.url}}">{{child.name}}</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="design-step" ng-if="vm.design !== null">
+		<span class="separateur">
+			<i class="fa fa-chevron-right" aria-hidden="true"></i>
+		</span>
+		<span class="selectedItem">
+			<a href="{{vm._application.getUrl('Design')}}/{{vm.design.url}}">
+				{{vm.design.name}}
+			</a>
+			<span class="down">
+				<i class="fa fa-chevron-down" aria-hidden="true"></i>
+			</span>
+		</span>
+		<ul class="items">
+			<li class="item" ng-repeat="design in vm.openCategories[1].designs">
+				<a href="{{vm._application.getUrl('Design')}}/{{design.url}}">{{design.name}}</a>
+			</li>
+		</ul>
+	</div>
+</div>

@@ -16,10 +16,10 @@ module MartialShirt {
 			Services.CategoriesRequestHandler.Name
 		];
 		constructor(
-			private $scope: any,
-			private $route: angular.route.IRouteService,
-			private $routeParams,
-			private rh: Services.CategoriesRequestHandler
+			protected $scope: any,
+			protected $route: angular.route.IRouteService,
+			protected $routeParams,
+			protected rh: Services.CategoriesRequestHandler
 			) {
 			super();
 
@@ -109,8 +109,9 @@ module MartialShirt {
 
 							for (let i = 0, l = child.designs.length; i < l; i++) {
 								if (child.designs[i].id === id) {
-									this.openCategories.push(child);
+
 									this.openCategories.push(category);
+									this.openCategories.push(child);
 
 									this.design = child.designs[i];
 

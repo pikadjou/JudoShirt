@@ -21,11 +21,11 @@
 		 * Routes CMS
 		 */
 		private _routes: Services.Entity.Cms[] = [];
-		public setRoutes(cmsList: Services.CmsClass.GetRoutesResponse) {
+		public setRoutes(cmsList: Services.Entity.Cms[]) {
 			if (!cmsList) {
 				return;
 			}
-			this._routes = cmsList.pages || [];
+			this._routes = cmsList || [];
 		}
 		public getRoutes(): Services.Entity.Cms[] {
 			return this._routes;

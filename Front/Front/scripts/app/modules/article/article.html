@@ -1,10 +1,13 @@
 ﻿<div class="module__container article__container">
+
+	<templateloader ng-if="vm.loader"></templateloader>
+
 	<div class="error" ng-if="vm.errorMessage !== ''">
 		<div class="alert label">
 			{{vm.errorMessage}}
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" ng-if="!vm.loader">
 		<div class="small-6 columns">
 			<img src="{{vm.getImageUrl(0, 0)}}" alt="{{vm.article.name}}" class="main" />
 
@@ -27,6 +30,8 @@
 					<!--<a href="/designer/{{vm.article.idCustomShop}}">Personnaliser</a>-->
 				</span>
 			</h3>
+
+			<div class="short-content
 
 			<div class="short-content">
 				<p ng-bind-html="vm.renderHtml(vm.article.short)"></p>

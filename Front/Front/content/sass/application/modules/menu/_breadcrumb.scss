@@ -1,0 +1,68 @@
+﻿.breadcrumb__container{
+	& > div{
+		display: inline-block;
+		position: relative;
+
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+
+			z-index: 1;
+			li{
+				list-style: none;
+			}
+		}
+		
+		a{
+			&:hover{
+				color: $light-black-color;
+			}
+		}
+		.selectedItem, .item{
+			background-color: $light-blue-color;
+			@include border-radius(10px);
+
+			color: $white-color;
+			font-weight: 100;
+			margin: 5px 0;
+			padding: 2px 5px;
+
+			.down{
+				font-size: rem-calc(10);
+			}
+		}
+		.separateur{
+			padding: 0 5px;
+			color: $light-black-color;
+			font-size: rem-calc(11);
+		}
+		.items{
+			display: none;
+			position: absolute;
+			top: 20px;
+			left: 5px;
+
+			padding: 5px;
+			min-width: 100%;
+
+			a{
+				display: block;
+				width: 100%;
+				height: 100%;
+
+				text-align: center;
+			}
+		}
+
+		&:hover{
+			.items{
+				display: block;
+			}
+		}
+	}
+
+	.home{
+		font-size: rem-calc(18);
+	}
+}

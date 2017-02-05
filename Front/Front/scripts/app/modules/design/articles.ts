@@ -7,6 +7,14 @@ module MartialShirt {
 		public typesid: string = "";
 
 		public typesId: number[] = [];
+
+		public genderId: number = 0;
+		public sortId: number = 0;
+
+
+		public openGender: boolean = false;
+		public openSort: boolean = false;
+
 		public design: Services.Entity.Design = null;
 		public articles: Services.Entity.Article[] = [];
 
@@ -62,6 +70,8 @@ module MartialShirt {
 			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.Design + this.designid, response);
 
 			this.articles = response.articles;
+			this.sortArticles();
+
 			this.design = response.design;
 
 			this.loader = false;
@@ -70,8 +80,62 @@ module MartialShirt {
 
 		}
 
+		public sortArticles() {
+			//return this.articles;
+			
+			let sortFct = null;
+			
+			if (this.sortId === 1) {
+				sortFct = this._sortByPrice;
+			} else {
+				sortFct = this._sortByPertinence;
+			}
+			
+			this.articles = this.articles.sort(sortFct);
+			
+		}
+		public getGenderType(): Services.Entity.Type[] {
+
+
+			let types: Services.Entity.Type[] = [];
+
+			for (let i = 0, l = this.articles.length, article: Services.Entity.Article = null; i < l; i++) {
+				article = this.articles[i];
+				for (let i = 0, l = article.types.length, type: Services.Entity.Type = null; i < l; i++) {
+					type = article.types[i];
+
+					if (type.type === 2) {
+						let found = false;
+						for (let i = 0, l = types.length; i < l; i++) {
+							if (type.id === types[i].id) {
+								found = true;
+								break;
+							}
+						}
+						if (found === false) {
+							types.push(type);
+						}
+					}
+				}
+			}
+			return types;
+		}
 
 		public isVisibleArticle(article: Services.Entity.Article): boolean {
+
+			let isVisible: boolean = true;
+			isVisible = this._isVisibleArticleByType(article);
+
+			if (isVisible === false) {
+				return false;
+			}
+
+			isVisible = this._isVisibleArticleByGender(article);
+
+			return isVisible;
+		}
+
+		protected _isVisibleArticleByType(article: Services.Entity.Article): boolean {
 
 			if (this.typesId.length === 0) {
 				return true;
@@ -101,6 +165,49 @@ module MartialShirt {
 			}
 
 			return false;
+		}
+
+		protected _isVisibleArticleByGender(article: Services.Entity.Article): boolean {
+
+			if (this.genderId === 0) {
+				return true;
+			}
+
+			if (article.types.length === 0) {
+				return false;
+			}
+
+			for (let types = article.types, i = 0, l = types.length, type: Services.Entity.Type = null; i < l; i++) {
+				type = types[i];
+
+				if (this.genderId === type.id) {
+					return true;	
+				} 
+			}
+
+			return false;
+		}
+
+		public setGenderId(id : number) {
+			this.genderId = id;
+
+			//this.openGender = false;
+			this.sortArticles();
+		}
+
+		public setSortId(id: number) {
+			this.sortId = id;
+
+			//this.openSort = false;
+			this.sortArticles();
+
+		}
+
+		private _sortByPrice(a: Services.Entity.Article, b: Services.Entity.Article) {
+			return a.price - b.price;
+		}
+		private _sortByPertinence(a: Services.Entity.Article, b: Services.Entity.Article) {
+			return a.priority - b.priority;
 		}
 	}
 

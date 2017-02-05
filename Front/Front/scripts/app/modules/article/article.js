@@ -30,9 +30,14 @@ var MartialShirt;
             this._sce = $sce;
             this.init($scope);
             this.RH.GetArticleReceived.add(this.onPacketRecieved, this);
-            this.RH.GetArticle([this.articleid]);
+            this.launchService();
         }
+        C_Article.prototype.launchService = function () {
+            this.loader = true;
+            this.RH.GetArticle([this.articleid]);
+        };
         C_Article.prototype.onPacketRecieved = function (response) {
+            this.loader = false;
             this.article = response.article;
             this.design = response.article.design;
             this.sizes = response.article.sizes;

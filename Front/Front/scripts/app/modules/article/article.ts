@@ -39,11 +39,20 @@ module MartialShirt {
 
 			this.RH.GetArticleReceived.add(this.onPacketRecieved, this);
 
+			this.launchService();
+		}
+
+		public launchService() {
+
+			this.loader = true;
 			this.RH.GetArticle([this.articleid]);
 
 		}
 
 		public onPacketRecieved(response: any) {
+
+			this.loader = false;
+
 			this.article = response.article;
 			this.design = response.article.design;
 

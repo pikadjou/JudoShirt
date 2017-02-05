@@ -1,4 +1,47 @@
-﻿///#source 1 1 /scripts/tools/Signals.js
+﻿///#source 1 1 /scripts/tools/Logger.js
+var MartialShirt;
+(function (MartialShirt) {
+    var Init;
+    (function (Init) {
+        'use strict';
+        var Logger = (function () {
+            function Logger() {
+            }
+            Logger.LogInfo = function (message, data) {
+                if (data == undefined)
+                    data = "";
+                if (MartialShirt.Config.DEBUG && Logger.INFO >= MartialShirt.Config.DEBUG_LEVEL)
+                    console.info(message, data);
+            };
+            Logger.LogWarning = function (message, data) {
+                if (data == undefined)
+                    data = "";
+                if (MartialShirt.Config.DEBUG && Logger.WARNING >= MartialShirt.Config.DEBUG_LEVEL)
+                    console.warn('/!\\ ' + message + ' /!\\', data);
+            };
+            Logger.LogDebug = function (message, data) {
+                if (data == undefined)
+                    data = "";
+                if (MartialShirt.Config.DEBUG && Logger.DEBUG >= MartialShirt.Config.DEBUG_LEVEL)
+                    console.debug(message, data);
+            };
+            Logger.LogError = function (message, data) {
+                if (data == undefined)
+                    data = "";
+                if (MartialShirt.Config.DEBUG && Logger.ERROR >= MartialShirt.Config.DEBUG_LEVEL)
+                    console.error('/!\\ ' + message + ' /!\\', data);
+            };
+            Logger.INFO = 0;
+            Logger.WARNING = 1;
+            Logger.DEBUG = 2;
+            Logger.ERROR = 3;
+            return Logger;
+        }());
+        Init.Logger = Logger;
+    })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
+})(MartialShirt || (MartialShirt = {}));
+
+///#source 1 1 /scripts/tools/Signals.js
 var MartialShirt;
 (function (MartialShirt) {
     var Init;
@@ -64,7 +107,7 @@ var MartialShirt;
                 if (!cmsList) {
                     return;
                 }
-                this._routes = cmsList.pages || [];
+                this._routes = cmsList || [];
             };
             Application.prototype.getRoutes = function () {
                 return this._routes;
@@ -240,7 +283,7 @@ var MartialShirt;
             }
             AbstractModule.prototype.init = function ($scope) {
                 for (var prop in $scope) {
-                    if (this.hasOwnProperty(prop)) {
+                    if (this.hasOwnProperty(prop) && $scope[prop] !== undefined && $scope[prop] !== null) {
                         this[prop] = $scope[prop];
                     }
                 }
@@ -313,40 +356,41 @@ var MartialShirt;
                         url = url + "/" + request.Content[i];
                     }
                     url = url + this.urlExtension;
-                    console.log("PACKET_SEND : url : " + url);
+                    MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url);
                     this.$http.get(url).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {
-                        console.log(response);
+                        MartialShirt.Init.Logger.LogError(String(response));
                     });
                 }
                 else if (request.Type.toLocaleUpperCase() === "POST") {
                     url = url + this.urlExtension;
-                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url + " Data: {0}", request);
                     this.$http.post(url, request.Content).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {
-                        console.log(response);
+                        MartialShirt.Init.Logger.LogError(String(response));
                     });
                 }
                 else if (request.Type.toLocaleUpperCase() === "PUT") {
                     url = url + this.urlExtension;
-                    console.log("PACKET_SEND : url : " + url + " Data: {0}", request);
+                    MartialShirt.Init.Logger.LogInfo("PACKET_SEND : url : " + url + " Data: {0}", request);
                     this.$http.put(url, request.Content).
                         then(function (response) {
                         _this.onPacketReceived(response.data);
                     }, function (response) {
-                        console.log(response);
+                        MartialShirt.Init.Logger.LogError(String(response));
                     });
                 }
                 return request.Id;
             };
             Server.prototype.onPacketReceived = function (response) {
                 if (response.Id === "00000000-0000-0000-0000-000000000000") {
+                    MartialShirt.Init.Logger.LogError(String(response));
                 }
-                console.log("PACKET_RECIEVED : data : ", response);
+                MartialShirt.Init.Logger.LogInfo("PACKET_RECIEVED : data : ", response);
                 this.packetReceived.dispatch(response);
             };
             Server.$inject = ['$http'];

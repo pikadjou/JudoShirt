@@ -8,13 +8,13 @@ module MartialShirt {
 
 		static init() {
 
-			MartialShirtApp.Application.setRoutes((<any>window).routesResponse);
+			MartialShirtApp.Application.setRoutes((<any>window).routesResponse.pages);
+
 			MartialShirt.Init.Application.MartialShirtApp.config([
 				'$routeProvider',
 				'$locationProvider',
 				($routeProvider: angular.route.IRouteProvider, $locationProvider: any) => {
 
-					
 					var cmsPages = MartialShirtApp.Application.getRoutes();
 					for (var i = 0, l = cmsPages.length, page: Services.Entity.Cms = null; i < l; i++){
 						page = cmsPages[i];
