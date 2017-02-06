@@ -7,8 +7,8 @@
 			<i class="fa fa-reply"></i>retour aux produits
 		</a>
 		<div>
-			<ul class="small-block-grid-4 article-list__container">
-				<li ng-repeat="article in vm.articles">
+			<div class="row article-list__container">
+				<span ng-repeat="article in vm.articles" class="small-3 columns">
 					<div class="article__container">
 						<a href="{{vm._application.getUrl('Article')}}/{{article.url}}">
 							<div class="row collapse">
@@ -27,8 +27,8 @@
 							</div>
 						</a>
 					</div>
-				</li>
-			</ul>
+				</span>
+			</div>
 
 		</div>
 	</div>

@@ -18,18 +18,15 @@ module MartialShirt {
 		}
 	}
 
-	export class TemplateDesign implements ng.IDirective {
+	export class TemplateDesign extends Init.AbstractDirective implements ng.IDirective {
 		public templateUrl = "/scripts/app/templates/design.html";
-		public restrict = "E";
-		public replace = true;
 		public scope = {
 			design: '='
 		};
 
 		public static Name = "TemplateDesign".toLocaleLowerCase();
 
-		public static $inject = [];
-		constructor() { }
+		constructor() { super(); }
 
 		public controller = C_TemplateDesign;
 	}

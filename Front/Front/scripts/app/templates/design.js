@@ -20,20 +20,19 @@ var MartialShirt;
         return C_TemplateDesign;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_TemplateDesign = C_TemplateDesign;
-    var TemplateDesign = (function () {
+    var TemplateDesign = (function (_super) {
+        __extends(TemplateDesign, _super);
         function TemplateDesign() {
+            _super.call(this);
             this.templateUrl = "/scripts/app/templates/design.html";
-            this.restrict = "E";
-            this.replace = true;
             this.scope = {
                 design: '='
             };
             this.controller = C_TemplateDesign;
         }
         TemplateDesign.Name = "TemplateDesign".toLocaleLowerCase();
-        TemplateDesign.$inject = [];
         return TemplateDesign;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.TemplateDesign = TemplateDesign;
     MartialShirt.Init.Application.MartialShirtApp.directive(TemplateDesign.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(TemplateDesign));
 })(MartialShirt || (MartialShirt = {}));

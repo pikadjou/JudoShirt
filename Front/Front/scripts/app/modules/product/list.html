@@ -4,27 +4,25 @@
 	</h3>
 	<div class="module__content">
 
-		<div>
-			<ul class="small-block-grid-4 article-list__container">
-				<li ng-repeat="product in vm.products">
-					<div class="article__container">
-						<a href="{{vm._application.getUrl('Product')}}/{{product.url}}">
-							<div class="row collapse">
-								<div class="small-12 columns">
-									<img ng-src="{{product.thumbnail}}" />
-								</div>
-								<div class="small-12 columns">
-									<span class="name">{{product.name}}</span>
-								</div>
-								<div class="small-12 columns">
-									<button>Voir les articles</button>
-								</div>
+		<div class="row article-list__container">
+			<div ng-repeat="product in vm.products" class="small-3 columns">
+				<div class="article__container">
+					<a href="{{vm._application.getUrl('Product')}}/{{product.url}}">
+						<div class="row collapse">
+							<div class="small-12 columns">
+								<img ng-src="{{product.thumbnail}}" />
 							</div>
-						</a>
-					</div>
-				</li>
-			</ul>
-
+							<div class="small-12 columns">
+								<span class="name">{{product.name}}</span>
+							</div>
+							<div class="small-12 columns">
+								<button>Voir les articles</button>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
 		</div>
+
 	</div>
 </div>

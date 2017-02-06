@@ -1,41 +1,53 @@
 ﻿.design__articles__container{
 	.filters{
 		.types, .sorts{
-			border: 1px solid $blue-color;
-			padding: 10px;
+			
 			position: relative;
 			display: inline-block;
+			padding: 0;
 
-			.items{
-				padding: 0px;
-				margin: 0px;
+			.content{
+				border: 1px solid $blue-color;
+				padding: 10px;
 
-				display: inline-block;
-				//text-align:center;
-				.item{
-					display: none;
-					cursor: pointer;
+				.items{
+					padding: 0px;
+					margin: 0px;
 
-					&.active{
-						display: block;
-					}
-				}
-				&.active{
+					display: inline-block;
+					//text-align:center;
 					.item{
-						display: block;
+						display: none;
+						cursor: pointer;
 
-						&.active, &:hover{
-							color: $blue-color;
+						&.active{
+							display: block;
+						}
+					}		
+				}
+				.opener{
+					position: absolute;
+					top: 10px;
+					right: 10px;
+					padding-left: 10px;
+					color: $blue-color;
+				}
+
+				&.active{
+					position: absolute;
+					z-index: 2;
+					width: 100%;
+					background-color: $white-color;
+					.items{
+						.item{
+							display: block;
+
+							&.active, &:hover{
+								color: $blue-color;
+							}
 						}
 					}
-				}				
-			}
-			.opener{
-				position: absolute;
-				top: 10px;
-				right: 10px;
-				padding-left: 10px;
-				color: $blue-color;
+				}
 			}
 
 		}

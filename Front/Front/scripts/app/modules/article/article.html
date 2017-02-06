@@ -54,13 +54,13 @@
 						<i class="fa fa-chevron-down" aria-hidden="true"></i>
 					</div>
 					<div class="dropdown-content" ng-if="vm.showAppearance">
-						<ul class="small-block-grid-5">
-							<li ng-repeat="appearance in vm.appearances | orderBy: priority" class="appearance">
+						<div class="row">
+							<span ng-repeat="appearance in vm.appearances | orderBy: priority" class="appearance small-2 columns">
 								<a href="#" ng-click="vm.changeSelectedAppearance(appearance)" ng-class="{'active' : vm.isDefaultAppearance(appearance)}">
 									<img src="{{appearance.thumbnail}}" alt="{{appearance.name}}" />
 								</a>
-							</li>
-						</ul>
+							</span>
+						</div>
 					</div>
 				</div>
 
@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="action small-12 columns">
-					<a class="button button-action expand" ng-click="vm.addToBasket()">
+					<a class="button button-action expanded" ng-click="vm.addToBasket()">
 						Ajouter au panier
 					</a>
 				</div>

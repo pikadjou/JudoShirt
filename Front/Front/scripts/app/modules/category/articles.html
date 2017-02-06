@@ -2,10 +2,10 @@
 	<h3 class="module__title">{{ vm.category.name }}</h3>
 	<templateloader ng-if="vm.loader"></templateloader>
 	<div class="module__content" ng-if="!vm.loader">
-		<ul class="small-block-grid-3 article-list__container">
-			<li ng-repeat="article in vm.articles" ng-if="vm.isVisibleArticle(article)">
+		<div class="row article-list__container">
+			<span ng-repeat="article in vm.articles" ng-if="vm.isVisibleArticle(article)" class="small-4 columns">
 				<templatearticle article="article"></templatearticle>
-			</li>
-		</ul>
+			</span>
+		</div>
 	</div>
 </div>
