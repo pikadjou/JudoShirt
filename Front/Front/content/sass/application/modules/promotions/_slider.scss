@@ -1,0 +1,17 @@
+﻿.Slider__container{
+	.promotions_content{
+		.item{
+			background-color: $black-color;
+			color: $white-color;
+			padding: 15px;
+
+			.text{
+				text-transform: uppercase;
+				margin-bottom: 10px;
+			}
+			.short{
+				color: $light-black-color;
+			}
+		}
+	}
+}

@@ -1,7 +1,7 @@
 ﻿$black-color: #263238;
 $light-black-color: #37474F;
 
-$gray-color: ;
+$gray-color: #798489;
 
 $blue-color: #1976D2;
 $light-blue-color: #2196F3;
@@ -10,11 +10,16 @@ $white-color : #ffffff;
 
 $link-color: $white-color;
 
-$font-roboto-blod: 'Roboto-Bold', sans-serif;
-$font-roboto-medium: 'Roboto-Medium', sans-serif;
+$error-color: red;
 
+
+
+$font-roboto: 'Roboto', sans-serif;
 $font-lato : 'Lato', sans-serif;
-$font-lato-bold : 'Lato-bold', sans-serif;
+
+$font-bold: 700;
+$font-small: 300;
+$font-thin: 100;
 
 body{
 	background: $white-color;
@@ -35,16 +40,25 @@ a{
 	}
 }
 
+h1, h2, h3, h4, h5,h6{
+	color: $black-color;
+	font-family: $font-roboto;
 
+	a{
+		color: $black-color;
+		&:hover{
+			color: $black-color;
+		}
+	}
+}
+h1{
+	font-size: rem-calc(30);
+}
+h3{
+	font-size: rem-calc(18);
+}
 .loader__container{
 	text-align: center;
-}
-
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
 }
 
 @mixin button-action() {
@@ -57,6 +71,6 @@ a{
 
 iframe{
 	width: 100%;
-	height: 100%;
+	min-height: 500px;
 	border: none;
 }

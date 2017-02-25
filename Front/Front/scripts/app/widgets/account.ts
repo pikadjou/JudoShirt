@@ -70,21 +70,18 @@
 		public logout = () => {
 			this._login.Logout();
 		}
+
+		public openRegister = () => {
+			this._signal.openSpreadShirt.dispatch(Init.EOpenSpreadShirt.REGISTER);
+		}
 	}
 
-	export class WidgetAccount  implements ng.IDirective {
+	export class WidgetAccount extends Init.AbstractDirective implements ng.IDirective {
 		public templateUrl = "/scripts/app/widgets/account.html";
-		public restrict = "E";
-		public transclude = true;
-		public scope = {
-		};
 
 		public static Name = "WidgetAccount".toLocaleLowerCase();
 
-		public static $inject = [];
-		constructor(/*list of dependencies*/) {
-
-		}
+		constructor() {	super(); }
 
 		public controller = C_WidgetAccount ;
 	}

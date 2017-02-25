@@ -2,9 +2,9 @@
 	<h3 class="module__title">Produits à la une</h3>
 	<div class="module__content">
 		<div class="slider article-list__container">
-			<div ng-repeat="design in vm.list" repeat-end="vm.onEnd()">
+			<span ng-repeat="design in vm.list" repeat-end="vm.onEnd()">
 				<templatedesign design="design"></templatedesign>
-			</div>
+			</span>
 		</div>
 	</div>
 </div>

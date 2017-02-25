@@ -7,9 +7,10 @@
 				</a>
 			</div>
 		</div>
-		<div class="small-3 columns">
-			<div ng-repeat="promotion in vm.promotions" repeat-end="vm.onEnd()">
-				<span class="text">{{promotion.name}}</span>
+		<div class="small-3 columns promotions_content">
+			<div ng-repeat="promotion in vm.promotions" repeat-end="vm.onEnd()" class="item">
+				<div class="text">{{promotion.name}}</div>
+				<div class="short">{{promotion.short}}</div>
 			</div>
 		</div>
 	</div>

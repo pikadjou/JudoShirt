@@ -50,6 +50,7 @@ var MartialShirt;
         var Signals = (function () {
             function Signals() {
                 this.askAddArticle = new signals.Signal();
+                this.openSpreadShirt = new signals.Signal();
             }
             Signals.getInstance = function () {
                 if (!this.instance) {
@@ -61,6 +62,11 @@ var MartialShirt;
             return Signals;
         }());
         Init.Signals = Signals;
+        (function (EOpenSpreadShirt) {
+            EOpenSpreadShirt[EOpenSpreadShirt["REGISTER"] = 0] = "REGISTER";
+            EOpenSpreadShirt[EOpenSpreadShirt["ORDER"] = 1] = "ORDER";
+        })(Init.EOpenSpreadShirt || (Init.EOpenSpreadShirt = {}));
+        var EOpenSpreadShirt = Init.EOpenSpreadShirt;
     })(Init = MartialShirt.Init || (MartialShirt.Init = {}));
 })(MartialShirt || (MartialShirt = {}));
 signals.Signal.signalsByContext = {};

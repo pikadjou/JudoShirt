@@ -18,6 +18,11 @@ class CachesController extends AdminAppController
         
         $this->order = ['lastUpdate', 'priority', 'id'];
     }
+
+    public function other()
+    {
+        $this->set('_serialize', []);
+    }
     public function files()
     {
         $this->set('caches', Cache\CacheModel::getAllValues());
@@ -126,4 +131,15 @@ class CachesController extends AdminAppController
         return $this->redirect(['action' => 'db']);
     }
 
+    public function updatePrints()
+    {
+        $this->loadModel("Prints");
+
+        $query = $this->Prints->update();
+        
+        
+        $this->Flash->success(__('The data has been upadated.'));
+        
+        $this->redirect(['action' => 'list', 'controller' => "prints"]);
+    }
 }

@@ -1,0 +1,29 @@
+﻿.shipping__container{
+	.country{
+		margin: 5px 0;
+		padding: 8px;
+	}
+	.country__content{
+		font-size:rem-calc(13);
+
+		i{
+			font-size:rem-calc(11);
+
+			&.fa-plus{
+				font-size:rem-calc(13);
+			}
+		}
+		.cost{
+			border-bottom: 1px dotted $gray-color;
+		}
+		.range{
+			span{
+				padding: 0 2px;
+			}
+		}
+		.price{
+			float: right;
+			color: $blue-color;
+		}
+	}
+}

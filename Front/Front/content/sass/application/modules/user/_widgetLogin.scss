@@ -1,0 +1,80 @@
+﻿.widget__account{
+	.connection{
+		font-family: $font-lato;
+		font-weight: $font-bold;
+
+		font-size: rem-calc(18);
+
+		a{
+			display: inline-block;
+			padding: 10px;
+		}
+
+		&.active{
+			background-color: $white-color;
+			a{
+				color: $blue-color;
+			}
+		}
+	}
+
+	.account-panel{
+		position: relative;
+
+		.account-panel-content{
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 3;
+
+			padding: 15px 30px;
+
+			width: 150%;
+			background-color: $white-color;
+
+			label{
+				text-align: left;
+				font-size: rem-calc(12);
+				margin-bottom: 10px;
+				input{
+					height: 40px;
+					display: block;
+					width: 100%;
+					
+				}
+			}
+			.forget{
+				a{
+					color: $light-black-color;
+					padding: 0;
+					font-size: rem-calc(12);
+
+					display: block;
+					text-align: right;
+				}
+			}
+			.submit{
+				padding: 15px 0;
+
+				border-bottom: 1px solid $light-black-color;
+				button{
+					margin: 0;
+				}
+			}
+			.register{
+				padding: 15px 0;
+				.button{
+					margin: 0;
+
+					border: 1px solid $blue-color;
+					background-color: $white-color;
+
+					color: $blue-color;
+				}
+			}
+			.error{
+				color: $error-color;
+			}
+		}
+	}
+}

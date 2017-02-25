@@ -1,18 +1,12 @@
 ﻿<div class="widget__account">
 	<div ng-if="vm.isAuthenticated">
-		<div class="row collapse authenticated">
-			<div class="small-offset-5 small-6 columns hello">
-				Bonjour, {{vm._login.user.name}} <i class="fa fa-smile-o"></i>
-			</div>
-			<div class="small-offset-5 small-6 end columns">
-				<div class=" my-account">
-					<a ng-click="vm._accountPanelOpen = !vm._accountPanelOpen" class="button button-player expanded">
-						<i class="fa fa-shopping-bag"></i>
-						Mon compte
-						<i ng-show="!vm._accountPanelOpen" class="fa fa-chevron-down"></i>
-						<i ng-show="vm._accountPanelOpen" class="fa fa-chevron-up"></i>
-					</a>
-					<div ng-if="vm._accountPanelOpen === true" class="my-account-panel account-panel">
+		<div class="authenticated">
+			<div class=" my-account">
+				<a ng-click="vm._accountPanelOpen = !vm._accountPanelOpen" class="button button-player expanded">
+					Mon compte
+				</a>
+				<div class="account-panel">
+					<div ng-if="vm._accountPanelOpen === true" class="account-panel-content my-account-panel">
 						<ul>
 							<li><a href="{{vm._application.getUrl('AccountOrder')}}" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-shopping-cart"></i> Mes commandes</a></li>
 							<li><a href="{{vm._application.getUrl('AccountDetail')}}" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-user"></i> Mes details</a></li>
@@ -25,49 +19,57 @@
 	</div>
 	<div ng-if="!vm.isAuthenticated">
 		<div class="unauthenticated">
-			<div class="connection">
+			<div class="connection" ng-class="vm._connectionPanelOpen === true ? 'active' : ''">
 				<a ng-click="vm._connectionPanelOpen = !vm._connectionPanelOpen">
 					Connection
 				</a>
-				<div ng-if="vm._connectionPanelOpen === true" class="account-panel connection-panel">
-					<form>
-						<div class="row">
-							<div class="small-12 columns">
-								<label>
-									Pseudo ou email
-									<input type="text" placeholder="Pseudo ou email" ng-model="vm._loginForm.pseudo">
+				<div class="account-panel">
+					<div ng-if="vm._connectionPanelOpen === true" class="account-panel-content connection-panel">
+						<div class="pseudo">
+							<label>
+								Pseudo ou email
+								<input type="text" placeholder="Pseudo ou email" ng-model="vm._loginForm.pseudo">
 
-									<span ng-if="vm._loginForm.errorPseudo" class="error">{{vm._loginForm.errorPseudo}}</span>
-								</label>
-							</div>
-							<div class="small-12 columns">
-								<label>
-									Mot de passe
-									<input type="password" placeholder="Mot de passe" ng-model="vm._loginForm.password">
-
-									<span ng-if="vm._loginForm.errorPassword" class="error">{{vm._loginForm.errorPassword}}</span>
-								</label>
-							</div>
-							<div class="small-12 columns">
-								<button class="button button-action" ng-click="vm.submit()" ng-class="{disable: vm._loader}">
-									<span ng-if="vm._loader"><i class="fa fa-spinner fa-spin"></i></span>
-									<span ng-if="!vm._loader">Connection</span>
-								</button>
-								<span ng-if="vm._loginForm.errorServeur" class="error">{{vm._loginForm.errorServeur}}</span>
-
-							</div>
+								<span ng-if="vm._loginForm.errorPseudo" class="error">{{vm._loginForm.errorPseudo}}</span>
+							</label>
 						</div>
-					</form>
+						<div class="password">
+							<label>
+								Mot de passe
+								<input type="password" placeholder="Mot de passe" ng-model="vm._loginForm.password">
+
+								<span ng-if="vm._loginForm.errorPassword" class="error">{{vm._loginForm.errorPassword}}</span>
+							</label>
+						</div>
+						<div class="forget">
+							<a hre="#">
+								Mot de passe oublié?
+							</a>
+						</div>
+						<div class="error">
+							<span ng-if="vm._loginForm.errorServeur" class="error">{{vm._loginForm.errorServeur}}</span>
+						</div>
+						<div class="submit">
+							<button class="button button-action expanded" ng-click="vm.submit()" ng-class="{disable: vm._loader}">
+								<span ng-if="vm._loader"><i class="fa fa-spinner fa-spin"></i></span>
+								<span ng-if="!vm._loader">Se Connecter</span>
+							</button>
+						</div>
+						<div class="register">
+							<a class="button expanded" href="#" ng-click="vm.openRegister()">
+								<span>S'inscrire</span>
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
-
 			<!--<div class="row">
-				<div class="small-offset-5 small-6 columns subscribe">
-					<a href="{{vm._application.getUrl('AccountSubscription')}}" class="button button-action">
-						Inscription
-					</a>
-				</div>
-			</div>-->
+			<div class="small-offset-5 small-6 columns subscribe">
+				<a href="{{vm._application.getUrl('AccountSubscription')}}" class="button button-action">
+					Inscription
+				</a>
+			</div>
+		</div>-->
 		</div>
 	</div>
 </div>

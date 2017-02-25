@@ -43,7 +43,7 @@ var MartialShirt;
         Config.Minification = false;
         Config.Maintenance = false;
         Config.UrlApi = "http://martialshirt.api/";
-        Config.subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
+        Config.subscriptionLink = "https://www.spreadshirt.be/register";
         Config.orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
         Config.detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
         Config.spreadShirt = SpreadShirtConfig;

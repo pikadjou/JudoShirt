@@ -46,13 +46,13 @@ module MartialShirt {
 			var url = "/";
 			switch (promotion.type) {
 				case "category":
-					url += "category" + "/" + promotion.params;
+					url += this._application.getUrl('Category') + "/" + promotion.params;
 					break;
 				case "design":
-					url += "design" + "/" + promotion.params;
+					url += this._application.getUrl('Design') + "/" + promotion.params;
 					break;
 				case "promotion":
-					url += "promotion" + "/" + promotion.params;
+					url += this._application.getUrl('Promotion') + "/" + promotion.params;
 					break;
 				case "url":
 					url = promotion.params;

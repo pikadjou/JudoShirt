@@ -18,7 +18,7 @@
 
 		public static UrlApi = "http://martialshirt.api/";
 
-		public static subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
+		public static subscriptionLink = "https://www.spreadshirt.be/register";
 		public static orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
 		public static detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
 

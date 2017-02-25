@@ -32,11 +32,12 @@ class PromotionsController extends AppController
     }
     
     public function getSlide(){
-        
+
         $query = $this->Promotions->getSlide();
         
         $promotions = $query->toArray();
-        
+        debug($promotions);
+        //die();
         $response = new PromotionsRequestHandler\GetPromotionsResponse();
         $response->init($promotions);
 

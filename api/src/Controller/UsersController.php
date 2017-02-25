@@ -81,6 +81,9 @@ class UsersController extends AppController
             }
         }else{
             $response->init(false);
+
+           $response->addCookie("erreur", $headers);
+            
         }
         parent::setJson($response);
     }

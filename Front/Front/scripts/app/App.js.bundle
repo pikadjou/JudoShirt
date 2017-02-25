@@ -44,7 +44,9 @@
 
 
 	  <file>/scripts/app/modules/langSelector.js</file>
-		<file>/scripts/app/modules/print.js</file>
+	  
+	  
+		<file>/scripts/app/modules/prints/list.js</file>
 	  
 		<file>/scripts/app/modules/promotions/slider.js</file>
 		<file>/scripts/app/modules/promotions/list.js</file>
@@ -102,8 +104,10 @@
 	  <file>/scripts/app/widgets/topTen.js</file>
 		<file>/scripts/app/widgets/new.js</file>
 		<file>/scripts/app/widgets/account.js</file>
-	  
-		<file>/scripts/app/templates/article.js</file>
+	  <file>/scripts/app/widgets/spreadshirt.js</file>
+
+
+	  <file>/scripts/app/templates/article.js</file>
 	  <file>/scripts/app/templates/design.js</file>
 		<file>/scripts/app/templates/loader.js</file>
 
