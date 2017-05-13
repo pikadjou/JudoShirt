@@ -26,7 +26,6 @@ module MartialShirt {
 
 		public onPacketRecieved(response: any) {
 			this.printList = response.prints;
-
 		}
 
 		public openClose = (print) => {

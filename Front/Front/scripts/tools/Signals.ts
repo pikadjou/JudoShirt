@@ -4,6 +4,9 @@ module MartialShirt.Init {
 	export class Signals {
 
 		public askAddArticle: Signal = new signals.Signal();
+
+		public openSpreadShirt: Signal = new signals.Signal();
+
 		
 		private static instance: Signals;
 		public static getInstance(): Signals {
@@ -17,6 +20,11 @@ module MartialShirt.Init {
 
 		constructor() {	}
 
+	}
+
+	export enum EOpenSpreadShirt {
+		REGISTER,
+		ORDER
 	}
 }
 

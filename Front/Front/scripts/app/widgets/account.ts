@@ -70,6 +70,10 @@
 		public logout = () => {
 			this._login.Logout();
 		}
+
+		public openRegister = () => {
+			this._signal.openSpreadShirt.dispatch(Init.EOpenSpreadShirt.REGISTER);
+		}
 	}
 
 	export class WidgetAccount extends Init.AbstractDirective implements ng.IDirective {

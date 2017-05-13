@@ -1,0 +1,11 @@
+﻿<div class="widget__spreadshirt" ng-show="vm.urlIframe !== ''">
+	<div class="reveal large" id="spreadshirtModale" data-reveal>
+		<h1>Awesome. I Have It.</h1>
+		<span aria-hidden="true" class="close-button" data-close aria-label="Close modal">&times;</span>
+		
+		<iframe id="iframe" ng-src="{{vm.trustSrc(vm.urlIframe)}}">
+			<span>Your browser does not support iframes.</span>
+		</iframe>
+
+	</div>
+</div>

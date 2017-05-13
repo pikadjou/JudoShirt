@@ -26,6 +26,9 @@ var MartialShirt;
             this.logout = function () {
                 _this._login.Logout();
             };
+            this.openRegister = function () {
+                _this._signal.openSpreadShirt.dispatch(MartialShirt.Init.EOpenSpreadShirt.REGISTER);
+            };
             this.init($scope);
             this._login.addErrorHandler(this.errorLogin);
         }
