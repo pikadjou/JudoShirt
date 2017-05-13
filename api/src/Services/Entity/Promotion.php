@@ -6,6 +6,8 @@ class Promotion
 {
     public $id = 0;
     public $name = "";
+    public $short = "";
+    
     public $content = "";
     public $image = "";
     
@@ -21,6 +23,8 @@ class Promotion
         }
         $this->id = $promotion->id;
         $this->name = $promotion->name;
+        $this->short = $promotion->short;
+        
         $this->content = $promotion->content;
         
         $this->type = $promotion->type;

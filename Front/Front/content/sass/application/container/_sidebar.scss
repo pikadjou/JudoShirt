@@ -6,6 +6,8 @@
 		font-size: rem-calc(16);
 		color: $light-black-color;
 		margin: 0;
+
+		text-transform: uppercase;
 	}
 	h2{
 		font-family: 'Roboto-Bold', sans-serif;
@@ -17,18 +19,24 @@
 		position: relative;
 	
 		.more{
-			//font-size: rem-calc(25);
-
 			position: absolute;
 			right: 10px;
 			padding: 0 10px;
 
 			color : $blue-color;
 			cursor: pointer;
-		
 		}
 	}
-	
+	.back{
+		margin-bottom: 10px;
+		a{
+			font-size: rem-calc(14);
+			color: $gray-color;
+			i{
+				color: $gray-color;
+			}
+		}
+	}
 	.categories{
 		padding: 30px;
 		@include box-shadow(0 2px 1px #888888);

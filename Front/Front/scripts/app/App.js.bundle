@@ -44,7 +44,9 @@
 
 
 	  <file>/scripts/app/modules/langSelector.js</file>
-		<file>/scripts/app/modules/print.js</file>
+	  
+	  
+		<file>/scripts/app/modules/prints/list.js</file>
 	  
 		<file>/scripts/app/modules/promotions/slider.js</file>
 		<file>/scripts/app/modules/promotions/list.js</file>

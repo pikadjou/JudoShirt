@@ -34,16 +34,13 @@ module MartialShirt {
 		}
 	}
 
-	export class Print implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/print.html";
+	export class Print extends Init.AbstractDirective implements ng.IDirective {
+		public templateUrl = "/scripts/app/modules/prints/list.html";
 		public restrict = "E";
-		public replace = true;
-		public scope = { };
 
-		public static Name = "Print".toLocaleLowerCase();
+		public static Name = "PrintList".toLocaleLowerCase();
 
-		public static $inject = [];
-		constructor() { }
+		constructor() { super(); }
 
 		public controller = C_Print;
 	}

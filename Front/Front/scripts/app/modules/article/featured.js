@@ -36,7 +36,8 @@ var MartialShirt;
                 autoplaySpeed: 8000,
                 arrows: true,
                 prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-                nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+                nextArrow: '<a href="#" class="slider__next"><span></span></a>',
+                adaptiveHeight: true
             });
         };
         C_ArticleFeatured.$inject = [

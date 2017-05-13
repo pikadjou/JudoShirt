@@ -26,38 +26,6 @@ class PromotionsTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
     }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
-        $validator
-            ->allowEmpty('name');
-        
-        $validator
-            ->allowEmpty('content');
-            
-        $validator
-            ->allowEmpty('image');
-            
-        $validator
-            ->add('startDate', 'valid', ['rule' => 'date'])
-            ->allowEmpty('startDate');
-            
-        $validator
-            ->add('endDate', 'valid', ['rule' => 'date'])
-            ->allowEmpty('endDate');
-
-        return $validator;
-    }
     
     public function getOne($id) {
         

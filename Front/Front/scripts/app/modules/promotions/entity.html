@@ -1,17 +1,14 @@
 ﻿<div class="module__container promotion__container">
-	<h3 class="module__title">Promotion - {{vm.promotion.name}}</h3>
-	<div class="module__content">
-		<a class="button back" href="{{vm._application.getUrl('Promotions')}}">
-			<i class="fa fa-chevron-left"></i>retour à la list des promotions
-		</a>
-		<h4 class="header">
-			<div class="row">
-				<div class="small-8 columns">
+	<h1 class="module__title">Promotion - {{vm.promotion.name}}</h1>
+	<div class="module__content promotion__container">
+		<h3 class="header">
+			<span class="row">
+				<span class="small-8 columns">
 					<a href="{{vm._application.getUrl('Promotion')}}/{{vm.promotion.id}}">
 						{{vm.promotion.name}}
 					</a>
-				</div>
-				<div class="small-4 columns date">
+				</span>
+				<span class="small-4 columns date">
 					<span class="start">
 						{{vm.CoreLib.timestampToDate(vm.promotion.startDate)}}
 					</span>
@@ -21,21 +18,21 @@
 					<span class="end">
 						{{vm.CoreLib.timestampToDate(vm.promotion.endDate)}}
 					</span>
-				</div>
-			</div>
-		</h4>
+				</span>
+			</span>
+		</h3>
 		<div class="content">
 			<div class="banner">
 				<img src="{{vm.promotion.image}}" />
+				<div class="link" ng-if="vm.isPromotionLink()">
+					<a class="button button-action expended" ng-click="vm.goToPromotion(vm.promotion)">
+						Vers la promotion
+					</a>
+				</div>
 			</div>
 			{{vm.promotion.content}}
 		</div>
 
-		<div class="link">
-			<a href="#" ng-if="vm.isPromotionLink()" ng-click="vm.goToPromotion(vm.promotion)">
-				Vers la promotion
-			</a>
-		</div>
 	</div>
 
 </div>

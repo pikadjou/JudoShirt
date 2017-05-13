@@ -857,7 +857,7 @@
     <Content Include="scripts\app\modules\category\designs.html" />
     <Content Include="scripts\app\modules\langSelector.html" />
     <Content Include="scripts\app\modules\design\featured.html" />
-    <Content Include="scripts\app\modules\print.html" />
+    <Content Include="scripts\app\modules\prints\list.html" />
     <Content Include="scripts\app\modules\article\article.html" />
     <Content Include="scripts\app\pages\account\subscription.html" />
     <Content Include="scripts\app\pages\account\detail.html" />
@@ -917,7 +917,7 @@
     <TypeScriptCompile Include="scripts\app\modules\category\designs.ts" />
     <TypeScriptCompile Include="scripts\app\modules\langSelector.ts" />
     <TypeScriptCompile Include="scripts\app\modules\design\featured.ts" />
-    <TypeScriptCompile Include="scripts\app\modules\print.ts" />
+    <TypeScriptCompile Include="scripts\app\modules\prints\list.ts" />
     <TypeScriptCompile Include="scripts\app\modules\article\article.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\subscription.ts" />
     <TypeScriptCompile Include="scripts\app\pages\account\detail.ts" />
@@ -1062,7 +1062,6 @@
     <Content Include="content\sass\application\modules\menu\_creditMenu.scss" />
     <Content Include="content\sass\application\modules\menu\_socialMenu.scss" />
     <Content Include="content\sass\application\templates\_template.scss" />
-    <Content Include="content\sass\application\modules\_account.scss" />
     <Content Include="content\sass\application\modules\basket\_items.scss" />
     <Content Include="content\sass\application\modules\article\_article.scss" />
     <Content Include="content\sass\application\modules\menu\_sportMenu.scss" />
@@ -1156,6 +1155,10 @@
     <Content Include="content\sass\_vendor\sassy-lists\stylesheets\helpers\_missing-dependencies.scss" />
     <Content Include="content\sass\_vendor\sassy-lists\stylesheets\helpers\_true.scss" />
     <Content Include="content\sass\_foundation.scss" />
+    <Content Include="content\sass\application\modules\promotions\_slider.scss" />
+    <Content Include="content\sass\application\modules\user\_widgetLogin.scss" />
+    <Content Include="content\sass\application\modules\promotions\_list.scss" />
+    <Content Include="content\sass\application\modules\shipping\_list.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

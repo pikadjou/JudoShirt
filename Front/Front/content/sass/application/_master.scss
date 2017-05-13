@@ -1,5 +1,4 @@
-﻿
-@import "common";
+﻿@import "common";
 
 @import "container/header";
 @import "container/sidebar";
@@ -12,8 +11,6 @@
 @import "modules/menu/typeMenu";
 @import "modules/menu/breadcrumb";
 
-@import "modules/account";
-
 @import "modules/basket/items";
 
 @import "modules/article/article";
@@ -22,3 +19,10 @@
 
 
 @import "templates/template";
+
+@import "modules/promotions/slider";
+@import "modules/promotions/list";
+
+@import "modules/user/widgetLogin";
+
+@import "modules/shipping/list";

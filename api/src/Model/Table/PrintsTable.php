@@ -60,7 +60,7 @@ class PrintsTable extends Table
         return $this->find()->where(["shopId" => $id])->limit(1);
     }
     
-    public function getAllBySpreadShirt() {
+    public function update() {
         $url = $this->_spreadshirt->_urlShop . "/printTypes";
         
         $response = $this->_spreadshirt->getRequest($url) ;
@@ -88,7 +88,6 @@ class PrintsTable extends Table
             $printEntity->name = (string)$response->name;
             $printEntity->content = (string)$response->description;
 
-            //debug($product);
             $this->save($printEntity);
         }
         

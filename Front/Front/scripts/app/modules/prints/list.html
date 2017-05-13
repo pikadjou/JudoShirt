@@ -1,0 +1,16 @@
+﻿<div class="module__container print__container">
+	<h1 class="module__title">Type d'impression</h1>
+
+	<div class="module__content">
+		<div ng-repeat="print in vm.printList">
+			<div class="print">
+				<h3 class="print__title header">
+					{{print.name}}
+				</h3>
+				<div class="content">
+					{{print.content}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

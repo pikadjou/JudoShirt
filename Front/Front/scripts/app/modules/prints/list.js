@@ -30,18 +30,17 @@ var MartialShirt;
         return C_Print;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_Print = C_Print;
-    var Print = (function () {
+    var Print = (function (_super) {
+        __extends(Print, _super);
         function Print() {
-            this.templateUrl = "/scripts/app/modules/print.html";
+            _super.call(this);
+            this.templateUrl = "/scripts/app/modules/prints/list.html";
             this.restrict = "E";
-            this.replace = true;
-            this.scope = {};
             this.controller = C_Print;
         }
-        Print.Name = "Print".toLocaleLowerCase();
-        Print.$inject = [];
+        Print.Name = "PrintList".toLocaleLowerCase();
         return Print;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.Print = Print;
     MartialShirt.Init.Application.MartialShirtApp.directive(Print.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(Print));
 })(MartialShirt || (MartialShirt = {}));

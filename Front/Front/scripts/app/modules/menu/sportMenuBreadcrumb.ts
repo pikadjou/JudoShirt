@@ -25,7 +25,7 @@ module MartialShirt {
 
 		public static Name = "Breadcrumb".toLocaleLowerCase();
 
-		constructor(/*list of dependencies*/) { super(); }
+		constructor() { super(); }
 
 		public controller = C_SportMenuBreacrumb;
 	}

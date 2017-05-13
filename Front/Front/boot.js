@@ -58,6 +58,7 @@ var MartialShirt;
                         if (xhr.status == 200) {
                             window.routesResponse = JSON.parse(xhr.responseText).Content;
                             MartialShirt.Config.update(window.routesResponse.configs);
+                            console.log(MartialShirt.Config.Maintenance);
                             if (MartialShirt.Config.Maintenance) {
                                 var indexMaintenance = window.location.href.indexOf("/maintenance");
                                 if (indexMaintenance === -1) {
@@ -68,7 +69,6 @@ var MartialShirt;
                             LauchApplication.Launch();
                         }
                         else {
-                            window.location.href = '/maintenance.html';
                             return;
                         }
                     }

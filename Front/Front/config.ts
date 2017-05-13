@@ -18,7 +18,7 @@
 
 		public static UrlApi = "http://martialshirt.api/";
 
-		public static subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
+		public static subscriptionLink = "https://www.spreadshirt.be/register";
 		public static orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
 		public static detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
 
@@ -26,10 +26,12 @@
 
 		public static defaultCacheTime = 300;
 
-		public static update(configs: Services.Entity.Config[]) {
-			for (let i = 0, l = configs.length; i < l; i++) {
+        public static update(configs: Services.Entity.Config[]) {
+            alert("config");
+            for (let i = 0, l = configs.length; i < l; i++) {
+                alert(configs[i].name);
 				if (MartialShirt.Config.hasOwnProperty(configs[i].name) === true) {
-
+                    
 					var value = null;
 					switch (typeof MartialShirt.Config[configs[i].name]) {
 						case "boolean":

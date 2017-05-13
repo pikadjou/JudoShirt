@@ -11,6 +11,5 @@ class PrintsController extends AdminAppController
     {
         $this->model = $this->Prints;
     }
-
     
 }

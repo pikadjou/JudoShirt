@@ -21,7 +21,7 @@
 		}
 		.selectedItem, .item{
 			background-color: $light-blue-color;
-			@include border-radius(10px);
+			@include radius(10px);
 
 			color: $white-color;
 			font-weight: 100;

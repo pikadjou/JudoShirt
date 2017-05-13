@@ -2,6 +2,7 @@
 	export class Promotion {
 		public id: number;
 		public name: string;
+		public short: string;
 		public content: string;
 		public image: string;
 		public type: string;

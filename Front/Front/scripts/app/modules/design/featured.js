@@ -35,12 +35,13 @@ var MartialShirt;
         };
         C_DesignFeatured.prototype.onEnd = function () {
             this._jview.find('.slider').slick({
-                slidesToShow: 4,
+                slidesToShow: 3,
                 slidesToScroll: 1,
                 infinite: false,
                 arrows: true,
                 prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-                nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+                nextArrow: '<a href="#" class="slider__next"><span></span></a>',
+                adaptiveHeight: true
             });
         };
         C_DesignFeatured.$inject = [
@@ -51,18 +52,16 @@ var MartialShirt;
         return C_DesignFeatured;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_DesignFeatured = C_DesignFeatured;
-    var DesignFeatured = (function () {
+    var DesignFeatured = (function (_super) {
+        __extends(DesignFeatured, _super);
         function DesignFeatured() {
+            _super.call(this);
             this.templateUrl = "/scripts/app/modules/design/featured.html";
-            this.restrict = "E";
-            this.replace = false;
-            this.scope = {};
             this.controller = C_DesignFeatured;
         }
         DesignFeatured.Name = "DesignFeatured".toLocaleLowerCase();
-        DesignFeatured.$inject = [];
         return DesignFeatured;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.DesignFeatured = DesignFeatured;
     MartialShirt.Init.Application.MartialShirtApp.directive(DesignFeatured.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(DesignFeatured));
 })(MartialShirt || (MartialShirt = {}));

@@ -101,7 +101,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <?php $listeController = ['Articles', 'Products', 'Categories', 'Designs', 'Prints',
+                        <?php $listeController = ['Articles', 'Products', 'Categories', 'Designs', 'Promotions', 'Prints',
                         'Appearances', 'Sizes', 'Cms', 'Configs']; 
 
                         asort($listeController);
@@ -215,6 +215,26 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         
                         <li class="treeview">
                            <a href="<?php echo $this->Url->build(['controller' => 'Caches', 'action' => 'db']) ?>">
+                            <i class="fa fa-dashboard"></i> <span><?= __("List") ?></span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> 
+                        <span>Other Cache</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        
+                        <li class="treeview">
+                           <a href="<?php echo $this->Url->build(['controller' => 'Caches', 'action' => 'other']) ?>">
                             <i class="fa fa-dashboard"></i> <span><?= __("List") ?></span>
                             <span class="pull-right-container">
                               <i class="fa fa-angle-left pull-right"></i>

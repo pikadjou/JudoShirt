@@ -65,18 +65,16 @@ var MartialShirt;
         return C_WidgetAccount;
     }(MartialShirt.Init.AbstractModule));
     MartialShirt.C_WidgetAccount = C_WidgetAccount;
-    var WidgetAccount = (function () {
+    var WidgetAccount = (function (_super) {
+        __extends(WidgetAccount, _super);
         function WidgetAccount() {
+            _super.call(this);
             this.templateUrl = "/scripts/app/widgets/account.html";
-            this.restrict = "E";
-            this.transclude = true;
-            this.scope = {};
             this.controller = C_WidgetAccount;
         }
         WidgetAccount.Name = "WidgetAccount".toLocaleLowerCase();
-        WidgetAccount.$inject = [];
         return WidgetAccount;
-    }());
+    }(MartialShirt.Init.AbstractDirective));
     MartialShirt.WidgetAccount = WidgetAccount;
     MartialShirt.Init.Application.MartialShirtApp.directive(WidgetAccount.Name, MartialShirt.MartialShirtApp.Application.GetDirectiveFactory(WidgetAccount));
 })(MartialShirt || (MartialShirt = {}));

@@ -1,16 +1,16 @@
 ﻿<div class="promotions__container module__container">
-	<h3 class="module__title">Promotions</h3>
+	<h1 class="module__title">Promotions</h1>
 	<div class="module__content">
 		<div ng-repeat="promotion in vm.promotions">
 			<div class="promotion__container">
-				<h4 class="header">
-					<div class="row">
-						<div class="small-8 columns">
+				<h3 class="header">
+					<span class="row">
+						<span class="small-8 columns">
 							<a href="/promotion/{{promotion.id}}">
 								{{promotion.name}}
 							</a>
-						</div>
-						<div class="small-4 columns date">
+						</span>
+						<span class="small-4 columns date">
 							<span class="start">
 								{{vm.CoreLib.timestampToDate(promotion.startDate)}}
 							</span>
@@ -20,22 +20,24 @@
 							<span class="end">
 								{{vm.CoreLib.timestampToDate(promotion.endDate)}}
 							</span>
-						</div>
-					</div>
-				</h4>
+						</span>
+					</span>
+				</h3>
 				<div class="content">
 					<div class="banner">
 						<img src="{{promotion.image}}" />
+
+						<div class="link">
+							<a class="button button-action expanded" ng-if="vm.isPromotionLink(promotion)" ng-click="vm.goToPromotion(promotion)">
+								Vers la promotion
+							</a>
+						</div>
 					</div>
 					{{promotion.content}}
 				</div>
 				
-				<div class="link">
-					<a href="#" ng-if="vm.isPromotionLink(promotion)" ng-click="vm.goToPromotion(promotion)">
-						Vers la promotion
-					</a>
-				</div>
 			</div>
+			<div class="clear"></div>
 		</div>
 	</div>
 </div>

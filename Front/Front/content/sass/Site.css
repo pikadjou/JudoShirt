@@ -3216,6 +3216,27 @@ a:hover {
   color: #1976D2;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: #263238;
+  font-family: "Roboto", sans-serif;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #263238;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  color: #263238;
+}
+
+h1 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
 .loader__container {
   text-align: center;
 }
@@ -3255,6 +3276,7 @@ iframe {
   font-size: 1rem;
   color: #37474F;
   margin: 0;
+  text-transform: uppercase;
 }
 
 .sidebar_container h2 {
@@ -3273,6 +3295,19 @@ iframe {
   padding: 0 10px;
   color: #1976D2;
   cursor: pointer;
+}
+
+.sidebar_container .back {
+  margin-bottom: 10px;
+}
+
+.sidebar_container .back a {
+  font-size: 0.875rem;
+  color: #798489;
+}
+
+.sidebar_container .back a i {
+  color: #798489;
 }
 
 .sidebar_container .categories {
@@ -3479,12 +3514,6 @@ iframe {
 
 .breadcrumb__container .home {
   font-size: 1.125rem;
-}
-
-.widget__account .connection {
-  font-family: "Lato-bold", sans-serif;
-  font-size: 1.125rem;
-  padding: 15px;
 }
 
 .basket__container {
@@ -3808,9 +3837,9 @@ templatearticle .template__container .price, templatedesign .template__container
 
 templatearticle .template__container .content, templatedesign .template__container .content {
   text-align: center;
-  -webkit-box-shadow: 0px 0px 10px 0px #888888;
-  -moz-box-shadow: 0px 0px 10px 0px #888888;
-  box-shadow: 0px 0px 10px 0px #888888;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(121, 121, 121, 0.5);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(121, 121, 121, 0.5);
+  box-shadow: 0px 0px 10px 0px rgba(121, 121, 121, 0.5);
   height: 100%;
   display: block;
 }
@@ -3856,7 +3885,7 @@ templatearticle .template__container .hover .link, templatedesign .template__con
 }
 
 templatearticle .template__container .hover .link .pastille, templatedesign .template__container .hover .link .pastille {
-  font-family: "Roboto-Medium", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 0.75rem;
   width: 70px;
   height: 70px;
@@ -3866,11 +3895,10 @@ templatearticle .template__container .hover .link .pastille, templatedesign .tem
   color: #263238;
   background-color: #fefefe;
   overflow-wrap: normal;
-  border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
-  -o-border-radius: 100%;
+  border-radius: 100%;
 }
 
 templatearticle .template__container .hover .link .pastille:hover, templatedesign .template__container .hover .link .pastille:hover {
@@ -3879,7 +3907,7 @@ templatearticle .template__container .hover .link .pastille:hover, templatedesig
 
 templatearticle .template__container .hover .infos, templatedesign .template__container .hover .infos {
   padding-top: 15px;
-  font-family: "Roboto-Medium", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 0.875rem;
   background-color: #ffffff;
   color: #263238;
@@ -3906,6 +3934,147 @@ templatearticle .template__container .hover .infos .colors .color, templatedesig
 
 templatearticle .template__container:hover .hover, templatedesign .template__container:hover .hover {
   visibility: visible;
+}
+
+.Slider__container .promotions_content .item {
+  background-color: #263238;
+  color: #ffffff;
+  padding: 15px;
+}
+
+.Slider__container .promotions_content .item .text {
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.Slider__container .promotions_content .item .short {
+  color: #37474F;
+}
+
+.promotions__container .promotion__container .content, .promotion__container .promotion__container .content {
+  margin: 20px 0;
+  position: relative;
+  font-size: rel-calc(16);
+  font-weight: 300;
+  color: #263238;
+}
+
+.promotions__container .promotion__container .content .banner, .promotion__container .promotion__container .content .banner {
+  width: 50%;
+  height: auto;
+  float: left;
+  padding: 0 10px 10px 0;
+}
+
+.promotions__container .clear, .promotion__container .clear {
+  clear: both;
+}
+
+.widget__account .connection {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.widget__account .connection a {
+  display: inline-block;
+  padding: 10px;
+}
+
+.widget__account .connection.active {
+  background-color: #ffffff;
+}
+
+.widget__account .connection.active a {
+  color: #1976D2;
+}
+
+.widget__account .account-panel {
+  position: relative;
+}
+
+.widget__account .account-panel .account-panel-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 15px 30px;
+  width: 150%;
+  background-color: #ffffff;
+}
+
+.widget__account .account-panel .account-panel-content label {
+  text-align: left;
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+}
+
+.widget__account .account-panel .account-panel-content label input {
+  height: 40px;
+  display: block;
+  width: 100%;
+}
+
+.widget__account .account-panel .account-panel-content .forget a {
+  color: #37474F;
+  padding: 0;
+  font-size: 0.75rem;
+  display: block;
+  text-align: right;
+}
+
+.widget__account .account-panel .account-panel-content .submit {
+  padding: 15px 0;
+  border-bottom: 1px solid #37474F;
+}
+
+.widget__account .account-panel .account-panel-content .submit button {
+  margin: 0;
+}
+
+.widget__account .account-panel .account-panel-content .register {
+  padding: 15px 0;
+}
+
+.widget__account .account-panel .account-panel-content .register .button {
+  margin: 0;
+  border: 1px solid #1976D2;
+  background-color: #ffffff;
+  color: #1976D2;
+}
+
+.widget__account .account-panel .account-panel-content .error {
+  color: red;
+}
+
+.shipping__container .country {
+  margin: 5px 0;
+  padding: 8px;
+}
+
+.shipping__container .country__content {
+  font-size: 0.8125rem;
+}
+
+.shipping__container .country__content i {
+  font-size: 0.6875rem;
+}
+
+.shipping__container .country__content i.fa-plus {
+  font-size: 0.8125rem;
+}
+
+.shipping__container .country__content .cost {
+  border-bottom: 1px dotted #798489;
+}
+
+.shipping__container .country__content .range span {
+  padding: 0 2px;
+}
+
+.shipping__container .country__content .price {
+  float: right;
+  color: #1976D2;
 }
 
 /*# sourceMappingURL=Site.css.map */

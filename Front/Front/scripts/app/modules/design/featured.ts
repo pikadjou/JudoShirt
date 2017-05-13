@@ -50,29 +50,25 @@ module MartialShirt {
 		public onEnd() {
 
 			(<any>this._jview.find('.slider')).slick({
-				slidesToShow: 4,
+				slidesToShow: 3,
 				slidesToScroll: 1,
 				infinite: false,
 				arrows: true,
 				prevArrow: '<a href="#" class="slider__prev"><span></span></a>',
-				nextArrow: '<a href="#" class="slider__next"><span></span></a>'
+				nextArrow: '<a href="#" class="slider__next"><span></span></a>',
+				adaptiveHeight:true
 			});
 			
 		}
 	}
 
-	export class DesignFeatured implements ng.IDirective {
+	export class DesignFeatured extends Init.AbstractDirective implements ng.IDirective {
 		public templateUrl = "/scripts/app/modules/design/featured.html";
-		public restrict = "E";
-		public replace = false;
-		public scope = {
-		};
 
 		public static Name = "DesignFeatured".toLocaleLowerCase();
 
-		public static $inject = [];
-		constructor(/*list of dependencies*/) {
-
+		constructor() {
+			super();
 		}
 
 		public controller = C_DesignFeatured;

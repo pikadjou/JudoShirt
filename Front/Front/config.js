@@ -13,7 +13,9 @@ var MartialShirt;
         function Config() {
         }
         Config.update = function (configs) {
+            alert("config");
             for (var i = 0, l = configs.length; i < l; i++) {
+                alert(configs[i].name);
                 if (MartialShirt.Config.hasOwnProperty(configs[i].name) === true) {
                     var value = null;
                     switch (typeof MartialShirt.Config[configs[i].name]) {
@@ -43,7 +45,7 @@ var MartialShirt;
         Config.Minification = false;
         Config.Maintenance = false;
         Config.UrlApi = "http://martialshirt.api/";
-        Config.subscriptionLink = "https://www.spreadshirt.be/connexion-C2108";
+        Config.subscriptionLink = "https://www.spreadshirt.be/register";
         Config.orderLink = "https://www.spreadshirt.be/votre-commande-C3472";
         Config.detailsLink = "https://www.spreadshirt.be/donnees-de-lutilisateur-C162";
         Config.spreadShirt = SpreadShirtConfig;

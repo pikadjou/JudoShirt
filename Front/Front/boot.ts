@@ -74,7 +74,7 @@
 							//ok
 							(<any>window).routesResponse = JSON.parse(xhr.responseText).Content;
 							Config.update((<any>window).routesResponse.configs);
-
+                            console.log(Config.Maintenance);
 							if (Config.Maintenance) {
 								var indexMaintenance = window.location.href.indexOf("/maintenance");
 
@@ -87,7 +87,7 @@
 
 							
 						} else {
-							window.location.href = '/maintenance.html';
+							//window.location.href = '/maintenance.html';
 							return;
 						}
 					}
