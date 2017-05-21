@@ -1,0 +1,33 @@
+{
+    "version": "1.7.3",
+    "compileOnSave": true,
+    "compilerOptions": {
+        "rootDir": "Scripts",
+        "sourceMap": true,
+        "target": "es5",
+        "module": "amd",
+        "declaration": false,
+        "noImplicitAny": false,
+        "noResolve": true,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "isolatedModules": false,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true
+    },
+    "filesGlob": [
+        "./typings/**/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build"
+    ],
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}
