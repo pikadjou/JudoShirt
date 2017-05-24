@@ -47,7 +47,7 @@ function prepare(env)
         path: {
             root: env.workspaceDir,
             assetsRoot: env.assetsRoot,
-            app: env.appRoot + 'src/',
+            app: env.srcRoot,
             allSources: allSources,
             nonAmdSources: nonAmdSources,
             nonAmdSourcesExclusions: nonAmdSourcesExclusions,
@@ -56,9 +56,9 @@ function prepare(env)
             scss: sass_src,
             //scssLib: env.workspaceDir + 'sass/_lib/',
             images: [env.assetsRoot + 'content/pictures/**/*'],
-            lib: env.appRoot + 'lib/**/*.js',
-            libAssets: [env.appRoot + 'lib/**/*', '!' + env.appRoot + 'lib/**/*.js'],
-            sourceRoot: env.appRoot,
+            lib: env.srcRoot + 'lib/**/*.js',
+            libAssets: [env.srcRoot + 'lib/**/*', '!' + env.srcRoot + 'lib/**/*.js'],
+            sourceRoot: env.srcRoot,
             output: env.outputRoot,
             outputDist: env.outputRoot + 'Scripts/',
             outputLib: env.outputRoot + 'Scripts/lib/',
@@ -79,7 +79,7 @@ function prepare(env)
         },
         env: env,
         export: {
-            scripts: [env.appRoot + '**/*.tpl']
+            scripts: []
         }
     });
 }

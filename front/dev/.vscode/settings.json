@@ -15,24 +15,6 @@
     "typescript.format.insertSpaceAfterCommaDelimiter": true,
     "javascript.format.placeOpenBraceOnNewLineForFunctions": true,
     "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
-    "codemetrics.basics.CodeLensHiddenUnder": 0,
-    "codemetrics.nodeconfiguration.AnyKeyword": 100,
-    "beautify.language": {
-        "js": {
-            "type": [
-                "json"
-            ],
-            "filename": [
-                ".jshintrc",
-                ".jsbeautify"
-            ]
-        },
-        "css": [
-            "css",
-            "scss"
-        ],
-        "html": []
-    },
     "files.exclude": {
         "node_modules/": true,
         "obj/": true,

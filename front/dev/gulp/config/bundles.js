@@ -108,38 +108,67 @@ function prepare()
         //dependencies will be included in the module's file when the build is done.
         modules: [
             //Website bundle
-            /*{
+            {
                 enabled: true,
                 inject: false,
-                path: '../',
-                name: 'app.bundle',
+                path: 'lib/',
+                name: 'lib.bundle',
+                outputName: "lib/lib.bundle",
                 include: [
-                    'lib/modernizr-2.8.3.js',
-                    'lib/knockout-3.2.0.js',
-                    'lib/knockout-switch-case.min.js',
-                    'lib/signals.min.js',
-                    'lib/swfobject.js',
-                    'lib/moment-with-locales.min.js',
-                    'app/core/AppConfig.js',
-                    'app/core/App.js',
-                    'app/util/AppCache.js',
-                    'app/util/AppSignals.js',
-                    'app/util/Logger.js',
-                    'app/core/lib.js',
-
-                ],
-                exclude: [
-                    'knockout',
-                    'service/SearchRequestHandler/ETargetType'
+                    '/jquery/jquery.js',
+                    '/signals/signal.js',
+                    '/angular/angular.js',
+                    '/angular/angular-route.js',
+                    '/angular/angular-sanitize.js',
+                    '/iframe/iframeResizer.js',
+                    '/angulartics/angulartics.js',
+                    '/angulartics/gtm.js'
                 ]
-            },*/
+            },
             //Bundle all files in each services directory
             {
                 enabled: true,
                 all: true,
+                inject: false,
                 path: 'services/**/',
                 include: '*.js',
                 name: 'services.bundle',
+                outputName: "services/services.bundle",
+                priority: [
+                    'services/Users/UsersRequestHandler.js',
+
+                ]
+            },
+            {
+                enabled: true,
+                all: true,
+                inject: false,
+                path: 'app/**/',
+                include: '*.js',
+                name: 'app.bundle',
+                outputName: "app/app.bundle",
+                priority: [
+                    'app/shell.js',
+                    'app/Lib.js'
+                ]
+            },
+            /*{
+                enabled: true,
+                all: true,
+                path: 'lib/**',
+                include: '*.js',
+                name: 'lib.bundle',
+                outputName: "lib/lib.bundle",
+                exclude: []
+    },*/
+            {
+                enabled: true,
+                all: true,
+                inject: false,
+                path: 'tools/**/',
+                include: '*.js',
+                name: 'tools.bundle',
+                outputName: "tools/tools.bundle",
                 exclude: []
             }
         ]

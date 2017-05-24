@@ -62,7 +62,7 @@ class AppController extends Controller
             return;
         }
 
-        ob_start('ob_gzhandler');
+        //ob_start('ob_gzhandler');
         
         $classe = get_class($content);
         $explode = explode("\\", $classe);
@@ -76,5 +76,9 @@ class AppController extends Controller
         if(Configure::read('DebugView')){
             debug($content);
        }
+
+      /*while (ob_get_level() > 0) {
+            ob_end_flush();
+        }*/
     }
 }

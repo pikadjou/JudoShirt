@@ -1,53 +1,60 @@
-﻿module MartialShirt {
+﻿module MartialShirt
+{
     'use strict';
 
-	
-	export class C_WidgetSpreadShirt extends MartialShirt.Init.AbstractModule {
-		
-		public urlIframe: string = '';
 
-		public static $inject = [
-			'$scope',
-			'$sce'
-		];
-		constructor(
-			private $scope: any,
-			private $sce: any
-			) {
+    export class C_WidgetSpreadShirt extends MartialShirt.Init.AbstractModule
+    {
 
-			super();
+        public urlIframe: string = '';
 
-			this._sce = $sce;
-			this.init($scope);
+        public static $inject = [
+            '$scope',
+            '$sce'
+        ];
+        constructor(
+            private $scope: any,
+            private $sce: any
+        )
+        {
 
-			this._signal.openSpreadShirt.add(this.choseLink, this);
-		}
+            super();
 
-		public choseLink(type: Init.EOpenSpreadShirt) {
-			switch (type) {
-				case Init.EOpenSpreadShirt.REGISTER:
-					this.urlIframe = Config.subscriptionLink;
-					break;
-				default:
-					this.urlIframe = "";
-					break;
-			}
+            this._sce = $sce;
+            this.init($scope);
 
-			if (this.urlIframe !== "") {
-				(<any>$(document)).foundation();
-				(<any>$('#spreadshirtModale')).foundation('open');
-			}
-		}
-	}
+            this._signal.openSpreadShirt.add(this.choseLink, this);
+        }
 
-	export class WidgetSpreadShirt extends Init.AbstractDirective implements ng.IDirective {
-		public templateUrl = "/scripts/app/widgets/spreadshirt.html";
+        public choseLink(type: Init.EOpenSpreadShirt)
+        {
+            switch (type)
+            {
+                case Init.EOpenSpreadShirt.REGISTER:
+                    this.urlIframe = MartialShirt.Config.subscriptionLink;
+                    break;
+                default:
+                    this.urlIframe = "";
+                    break;
+            }
 
-		public static Name = "WidgetSpreadShirt".toLocaleLowerCase();
+            if (this.urlIframe !== "")
+            {
+                (<any>$(document)).foundation();
+                (<any>$('#spreadshirtModale')).foundation('open');
+            }
+        }
+    }
 
-		constructor() {	super(); }
+    export class WidgetSpreadShirt extends Init.AbstractDirective implements ng.IDirective
+    {
+        public templateUrl = "/scripts/app/widgets/spreadshirt.html";
 
-		public controller = C_WidgetSpreadShirt ;
-	}
-	MartialShirt.Init.Application.MartialShirtApp.directive(WidgetSpreadShirt.Name, MartialShirtApp.Application.GetDirectiveFactory<WidgetSpreadShirt>(WidgetSpreadShirt));
+        public static Name = "WidgetSpreadShirt".toLocaleLowerCase();
+
+        constructor() { super(); }
+
+        public controller = C_WidgetSpreadShirt;
+    }
+    MartialShirt.Init.Application.MartialShirtApp.directive(WidgetSpreadShirt.Name, MartialShirtApp.Application.GetDirectiveFactory<WidgetSpreadShirt>(WidgetSpreadShirt));
 }

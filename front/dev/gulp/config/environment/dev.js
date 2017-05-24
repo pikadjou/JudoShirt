@@ -3,7 +3,8 @@ var workspaceDir = '';
 
 module.exports = {
     workspaceDir: workspaceDir,
-    appRoot: workspaceDir + 'src/',
+    appRoot: workspaceDir,
+    srcRoot: workspaceDir + 'src/',
     //outputRoot: workspaceDir + 'build/',
     outputRoot: '../build/',
     assetsRoot: '../build/',

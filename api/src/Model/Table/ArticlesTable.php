@@ -180,7 +180,7 @@ class ArticlesTable extends Table
         $date = new \DateTime();
         $actualTime = $date->getTimestamp();
         
-        $date->sub(new \DateInterval('PT' . 23 . 'H'));
+        $date->sub(new \DateInterval('PT' . 24 . 'H'));
         $cacheTime = $date->getTimestamp();
         
 

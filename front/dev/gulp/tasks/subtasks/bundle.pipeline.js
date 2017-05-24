@@ -46,9 +46,10 @@ gulp.task('bundle.pipeline', function (callback)
 gulp.task('bundle-services', function (callback)
 {
     prepareConfig(bundles);
-    console.log('Bundles modules', bundles.modules);
+    //console.log('Bundles modules', bundles.modules);
 
     bundles.onModuleBundleComplete = onModuleBundleComplete;
+
     rjs.optimize(bundles, function (buildResponse)
     {
         //console.log('build response', buildResponse);
@@ -192,7 +193,7 @@ function makeModuleConfig(item)
     var dir = item.path.slice(0, item.path.length - 1);
 
 
-    item.name = item.path + (item.hasOwnProperty('name') ? item.name : dir.split('/').pop() + '.bundle').toString();
+    item.name = item.hasOwnProperty('outputName') ? item.outputName : (item.path + (item.hasOwnProperty('name') ? item.name : dir.split('/').pop() + '.bundle').toString());
     //console.log('name', item.name);
     item.create = true;
 
@@ -217,13 +218,45 @@ function makeModuleConfig(item)
             //console.log('include match', match);
             if (match.indexOf('.bundle') != -1)
                 continue;
+            /*
+                        console.log('path matches', match);
+                        console.log('path relative matches', path.relative(root, path.resolve(match)).replace(/\\/g, '/').replace(/\.[^/.]+$/, ""));
+            */
+            matchInclude = path.relative(root, path.resolve(match)).replace(/\\/g, '/');
+            if (!item.hasOwnProperty('all') || item.all === false)
+            {
+                matchInclude.replace(/\.[^/.]+$/, "");
+            }
 
-            include.push(path.relative(root, path.resolve(match)).replace(/\\/g, '/').replace(/\.[^/.]+$/, ""));
+            include.push(matchInclude);
+
+        }
+    }
+
+    if (item.hasOwnProperty('priority') && item.priority && item.priority.length > 0)
+    {
+        //console.log('path include priority', item.priority);
+        //console.log('path include', include);
+
+        for (var i = 0, l = item.priority.length, index = null, temp = null; i < l; i++)
+        {
+            index = include.indexOf(item.priority[i]);
+            console.log('path index', index);
+
+            if (index > -1)
+            {
+                temp = include[i];
+                include[i] = include[index];
+                include[index] = temp;
+
+            }
         }
     }
 
     item.include = include;
     delete item.path;
+
+    console.log('path include', item.include);
 
     return item;
 }

@@ -20,7 +20,7 @@
             return this.uniqueInstance;
         }
 
-        public urlApi = Config.UrlApi;
+        public urlApi = MartialShirt.Config.UrlApi;
         public urlExtension = ".json";
         /* signals */
         public packetReceived: Signal = new signals.Signal();
