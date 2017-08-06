@@ -73,34 +73,26 @@ class AppearancesTable extends Table
                     }
                 );
     }
-    public function addAppearancesForProduct($response){
+    public function addAppearanceByXML($XMLappearance){
     
-        if(!$response->appearances){
-            return;            
+        
+        $shopId = (string)$XMLappearance->attributes()->id;
+        
+        $appearanceModel = $this->getByShopId($shopId)->first();
+
+        if(!$appearanceModel){
+            $appearanceModel = $this->newEntity();
         }
         
-        $return = [];
-        foreach ($response->appearances->appearance as $appearance){
+        $appearanceModel->name = (string)$XMLappearance->name;
+        $appearanceModel->color = (string)$XMLappearance->colors->color;
+        $appearanceModel->thumbnail = (string)$XMLappearance->resources->resource->attributes('xlink', true);
 
-            $shopId = (string)$appearance->attributes()->id;
-            
-            $appearanceModel = $this->getByShopId($shopId)->first();
+        
+        $appearanceModel->shopId = $shopId;
 
-            if(!$appearanceModel){
-               $appearanceModel = $this->newEntity();
-            }
-            
-            $appearanceModel->name = (string)$appearance->name;
-            $appearanceModel->color = (string)$appearance->colors->color;
-            $appearanceModel->thumbnail = (string)$appearance->resources->resource->attributes('xlink', true);
-
-            
-            $appearanceModel->shopId = $shopId;
-
-            $this->save($appearanceModel);
-            $return[] = $appearanceModel;
-        }
+        $this->save($appearanceModel);
+        return $appearanceModel;
     
-        return $return;
     }
 }

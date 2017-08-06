@@ -11,7 +11,7 @@
     export class Config
     {
 
-        public static DEBUG: boolean = false;
+        public static DEBUG: boolean = true;
         public static DEBUG_LEVEL: number = 0; // 0 - info, 1 - warning, 2 - debug, 3 - error
 
         public static versionning: string = "000-000-000-000-000";

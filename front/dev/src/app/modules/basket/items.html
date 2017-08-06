@@ -39,23 +39,12 @@
 									<div class="size price-unit">{{basketItem.price}} <i class="fa fa-eur" aria-hidden="true"></i></div>
 								</div>
 								<div class="small-5 columns">
-
-									<div class="row collapse">
-										<div class="small-2 columns">
-											<span class="prefix delete" ng-click="vm.addQuantity(basketItem, 0)"><i class="fa fa-trash" aria-hidden="true"></i></span>
-										</div>
-										<div class="small-2 columns">
-											<span class="prefix" ng-click="vm.addQuantity(basketItem, -1)"><i class="fa fa-minus" aria-hidden="true"></i></span>
-										</div>
-										<div class="small-5 columns">
-											<input class="text" type="text" ng-model="basketItem.quantity" ng-change="vm.updateBasketItem(basketItem)" />
-										</div>
-										<div class="small-2 columns end">
-											<span class="postfix" ng-click="vm.addQuantity(basketItem, 1)"><i class="fa fa-plus" aria-hidden="true"></i></span>
-										</div>
-									</div>
-
-
+                                    <div class="input-group">
+										<!--<span class="input-group-label" ng-click="vm.addQuantity(basketItem, 0)"><i class="fa fa-trash" aria-hidden="true"></i></span>-->
+										<span class="input-group-label" ng-click="vm.addQuantity(basketItem, -1)"><i class="fa fa-minus" aria-hidden="true"></i></span>
+										<input class="input-group-field" type="number" ng-model="basketItem.quantity" ng-change="vm.updateBasketItem(basketItem)" />
+										<span class="input-group-label" ng-click="vm.addQuantity(basketItem, 1)"><i class="fa fa-plus" aria-hidden="true"></i></span> 
+                                    </div>
 								</div>
 							</div>
 

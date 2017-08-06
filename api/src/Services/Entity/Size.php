@@ -11,9 +11,9 @@ class Size
     public $shopId = 0;
     public $priority = 0;
     
-    function __construct($size){
+    function __construct($size = null){
         if($size === null){
-            return;
+            return $this;
         }
         
         $this->id = $size->id;

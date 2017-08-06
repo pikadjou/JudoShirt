@@ -29,31 +29,21 @@ class SizesTable extends Table
         return $this->find()->where(["shopId" => $shopId])->limit(1);
     }
 
-    public function addSizesForProduct($response){
+    public function addSizeByXML($XMLSize){
     
-        if(!$response->sizes){
-            return;            
+        $shopId = (string)$XMLSize->attributes()->id;
+        
+        $sizeEntity = $this->getByShopId($shopId)->first();
+
+        if(!$sizeEntity){
+            $sizeEntity = $this->newEntity();
         }
         
-        $return = [];
-        foreach ($response->sizes->size as $size){
+        $sizeEntity->name = (string)$XMLSize->name;           
+        
+        $sizeEntity->shopId = $shopId;
 
-            $shopId = (string)$size->attributes()->id;
-            
-            $sizeEntity = $this->getByShopId($shopId)->first();
-
-            if(!$sizeEntity){
-               $sizeEntity = $this->newEntity();
-            }
-            
-            $sizeEntity->name = (string)$size->name;           
-            
-            $sizeEntity->shopId = $shopId;
-
-            $this->save($sizeEntity);
-            $return[] = $sizeEntity;
-        }
-    
-        return $return;
+        $this->save($sizeEntity);
+        return $sizeEntity;
     }
 }

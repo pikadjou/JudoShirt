@@ -8,6 +8,8 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
 
+use Cake\Log\Log;
+
 use App\Model\SpreadShirt;
 /**
  * Categories Model
@@ -29,6 +31,9 @@ class ProductsTable extends Table
     
     private $_sizesModel = null;
     private $_productsSizesModel = null;
+
+    private $_measuresModel = null;
+    private $_productsSizesMeasuresModel = null;
     /**
      * Initialize method
      *
@@ -59,6 +64,11 @@ class ProductsTable extends Table
             'targetForeignKey' => 'size_id',
             'joinTable' => 'products_sizes'
         ]);
+         $this->belongsToMany('Measures', [
+            'foreignKey' => 'product_id',
+            'targetForeignKey' => 'measure_id',
+            'joinTable' => 'products_sizes_measures'
+        ]);
         $this->belongsToMany('Views', [
             'foreignKey' => 'product_id',
             'targetForeignKey' => 'view_id',
@@ -76,6 +86,9 @@ class ProductsTable extends Table
         
         $this->_sizesModel = TableRegistry::get('Sizes');
         $this->_productsSizesModel = TableRegistry::get('ProductsSizes');
+
+        $this->_measuresModel = TableRegistry::get('Measures');
+        $this->_productsSizesMeasuresModel = TableRegistry::get('ProductsSizesMeasures');
         
         $this->_viewsModel = TableRegistry::get('Views');
         $this->_productsViewsModel = TableRegistry::get('ProductsViews');
@@ -175,19 +188,13 @@ class ProductsTable extends Table
         $productModel->short = (string)$xmlProduct->shortDescription;
         $productModel->content = (string)$xmlProduct->description;
 
-       // $productModel->thumbnail = (string)$xmlProduct->resources->resource[0]->attributes('xlink', true);
-        //$productModel->sizeThumbnail = (string)$xmlProduct->resources->resource[1]->attributes('xlink', true);
+        $productModel->thumbnail = (string)$xmlProduct->resources->resource[0]->attributes('xlink', true);
+        $productModel->sizeThumbnail = (string)$xmlProduct->resources->resource[1]->attributes('xlink', true);
         
         $this->save($productModel);
         
-        $this->addTypesToProduct($xmlProduct, $productModel);
-
-        $this->addAppearancesToProduct($xmlProduct, $productModel);
+        $this->parseXmlFeatures($xmlProduct, $productModel);
         
-        $this->addSizesToProduct($xmlProduct, $productModel);
-        
-        $this->addViewsToProduct($xmlProduct, $productModel);
-
     }
 
     private function _matchWithType($query, $typeId){
@@ -202,9 +209,38 @@ class ProductsTable extends Table
     /*
         Join Table
     */
-    public function addTypesToProduct($response, $product){
+    public function parseXmlFeatures($xmlProduct, $productModel){
 
-        $types = $this->_typesModel->addTypesForProduct($response);
+        $this->_addType($xmlProduct, $productModel);
+
+        if($xmlProduct->appearances && $xmlProduct->appearances->appearance){
+            foreach ($xmlProduct->appearances->appearance as $appearance){
+                $this->_addAppearance($appearance, $productModel);
+            }         
+        }
+        if($xmlProduct->sizes && $xmlProduct->sizes->size){
+            foreach ($xmlProduct->sizes->size as $size){
+                $sizeEntity = $this->_addSize($size, $productModel);
+
+                if($size->measures && $size->measures->measure){
+                    foreach ($size->measures->measure as $measure){
+                    Log::debug(json_encode($measure));
+                        
+                        $this->_addMeasure($measure, $productModel, $sizeEntity);
+                    }
+                }
+            }         
+        }
+        if($xmlProduct->views && $xmlProduct->views->view){
+            foreach ($xmlProduct->views->view as $view){
+                $this->_addView($view, $productModel);
+            }         
+        }
+    }
+
+    private function _addType($response, $product){
+
+        $types = $this->_typesModel->addTypesByXML($response);
 
         for($i = 0, $l = count($types), $type = null; $i < $l; $i++){
             $type = $types[$i];
@@ -218,35 +254,34 @@ class ProductsTable extends Table
         }
     }
     
-    public function addAppearancesToProduct($response, $product){
+    private function _addAppearance($response, $product){
         
-        $appearances = $this->_appearancesModel->addAppearancesForProduct($response);
+        $appearance = $this->_appearancesModel->addAppearanceByXML($response);
 
-        for($i = 0, $l = count($appearances), $appearance = null; $i < $l; $i++){
-            $appearance = $appearances[$i];
-            $this->_productsAppearancesModel->linkProductAndAppearanceId($product->id, $appearance->id);
-            
-        }
+        $this->_productsAppearancesModel->linkProductAndAppearanceId($product->id, $appearance->id);
     }
     
-    public function addSizesToProduct($response, $product){
+    private function _addSize($response, $product){
         
-        $sizes = $this->_sizesModel->addSizesForProduct($response);
+        $size = $this->_sizesModel->addSizeByXML($response);
 
-        for($i = 0, $l = count($sizes), $size = null; $i < $l; $i++){
-            $size = $sizes[$i];
-            $this->_productsSizesModel->linkProductAndSizeId($product->id, $size->id);
-        }
+        $this->_productsSizesModel->linkProductAndSizeId($product->id, $size->id);
+
+        return $size;
+    }
+
+    private function _addMeasure($response, $product, $size){
+        
+        $measure = $this->_measuresModel->addByXML($response);
+
+        $this->_productsSizesMeasuresModel->linkProductSizeMeasureId($product->id,  $size->id, $measure->id);
     }
     
-    public function addViewsToProduct($response, $product){
+    private function _addView($response, $product){
         
-        $views = $this->_viewsModel->addViewsForProduct($response);
+        $view = $this->_viewsModel->addByXML($response);
 
-        for($i = 0, $l = count($views), $view = null; $i < $l; $i++){
-            $view = $views[$i];
-            $this->_productsViewsModel->linkProductAndViewId($product->id, $view->id);
-        }
+        $this->_productsViewsModel->linkProductAndViewId($product->id, $view->id);
     }
     /*
      * Make join

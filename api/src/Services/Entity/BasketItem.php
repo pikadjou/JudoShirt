@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Log\Log;
+
 namespace App\Services\Entity;
 
 class BasketItem

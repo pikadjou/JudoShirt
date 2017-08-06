@@ -8,6 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
 
+use Cake\Log\Log;
 use Cake\Core\Configure;
 use App\Model\SpreadShirt;
 /**
@@ -165,7 +166,8 @@ class ArticlesTable extends Table
                     'Products' => [
                         "Views",
                         "Sizes",
-                        "Appearances"
+                        "Appearances",
+                        "Measures"
                     ]
                 ]);
         
@@ -183,7 +185,6 @@ class ArticlesTable extends Table
         $date->sub(new \DateInterval('PT' . 24 . 'H'));
         $cacheTime = $date->getTimestamp();
         
-
         if($forced === true || Configure::read('CacheUpdateDB') === false){
             $lastUpdate = null;
         }       
@@ -192,8 +193,10 @@ class ArticlesTable extends Table
             $this->_setDirty($id);
             $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($design->shopId)";
 
-            $response = $this->_spreadshirt->getRequest($url) ;
+            $response = $this->_spreadshirt->getRequest($url);
+
             $response = simplexml_load_string($response);
+
             if($response->article){
                 foreach ($response->article as $article){
                     $articleId = (string)$article->attributes()->id;
@@ -222,7 +225,11 @@ class ArticlesTable extends Table
         
                             
                     $articleModel->content = (string)$article->description;
-                    $articleModel->price = (string)$article->price->vatIncluded;
+                    
+                    $url = $this->_spreadshirt->_urlShop . "/articles/".$articleModel->shopId."/price";
+                    $responsePrice = $this->_spreadshirt->getRequest($url);
+                    $responsePrice = simplexml_load_string($responsePrice);
+                    $articleModel->price = (string)$responsePrice->vatIncluded;
 
                     $articleModel->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
 

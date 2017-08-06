@@ -5,6 +5,8 @@ use App\Controller\AppController;
 use App\Services\BasketsRequestHandler;
 use App\Services\HelpRequestHandler;
 
+use Cake\Log\Log;
+
 class BasketsController extends AppController
 {
 
@@ -19,9 +21,11 @@ class BasketsController extends AppController
         if($id === "null"){
             $id = null;
         }
+        
         if($token === "null" || $token === ""){
             $token = null;
         }
+        
         $basket = null;
         if($id === null){
             // creation du basket
@@ -38,7 +42,7 @@ class BasketsController extends AppController
         $explode = explode("\r\n\r\n", $basket, 2);
         $basket = end($explode);
         $basket = simplexml_load_string($basket);
-//debug($basket);
+        
         //traitement du basket
         $response = new BasketsRequestHandler\GetBasketResponse();
         $response->init($basket);

@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Product
  * @property \Cake\ORM\Association\BelongsTo $Color
  */
-class ProductsSizesTable extends Table
+class ProductsSizesMeasuresTable extends Table
 {
 
     /**
@@ -23,7 +23,7 @@ class ProductsSizesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('products_sizes');
+        $this->table('products_sizes_measures');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->belongsTo('Products', [
@@ -31,6 +31,9 @@ class ProductsSizesTable extends Table
         ]);
         $this->belongsTo('Sizes', [
             'foreignKey' => 'size_id'
+        ]);
+        $this->belongsTo('Measures', [
+            'foreignKey' => 'measure_id'
         ]);
     }
 
@@ -59,22 +62,28 @@ class ProductsSizesTable extends Table
     {
         $rules->add($rules->existsIn(['product_id'], 'Products'));
         $rules->add($rules->existsIn(['size_id'], 'Sizes'));
+        $rules->add($rules->existsIn(['measure_id'], 'Measures'));
+        
         return $rules;
     }
-    
-    public function linkProductAndSizeId($productId, $sizeId){
 
-        $join = $this->find()->where(["product_id" => $productId, "size_id" => $sizeId])->limit(1)->first();
+    public function linkProductSizeMeasureId($productId, $sizeId, $measureId){
+
+        $join = $this->_getByIds($productId, $sizeId, $measureId)->first();
         
-
         if(!$join){
             $join = $this->newEntity();
             
             $join->product_id = $productId;
             $join->size_id = $sizeId;
+            $join->measure_id = $measureId;
             
             $this->save($join);
-
         }
     }
+
+    private function _getByIds($productId, $sizeId, $measureId){
+        return $this->find()->where(["product_id" => $productId, "size_id" => $sizeId, "measure_id" => $measureId])->limit(1);
+    }
+    
 }

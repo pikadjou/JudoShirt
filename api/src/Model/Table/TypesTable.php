@@ -104,7 +104,7 @@ class TypesTable extends Table
         return $returnType;
     }
 
-    public function addTypesForProduct($response){
+    public function addTypesByXML($response){
                 
         $fullName = (string)$response->name;
         $name = (string)$response->categoryName;
@@ -116,12 +116,10 @@ class TypesTable extends Table
         }
 
         $types = [];
-        
         $type = $this->getSubByName($name);
-        
+
         if(!$type){
             $type =  $this->newEntity();
-
 
             $parent = $this->getParentByName($name);
             if(!$parent){

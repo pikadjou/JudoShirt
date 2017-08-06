@@ -13,9 +13,9 @@ class Appearance
     public $shopId = 0;
     public $priority = 0;
     
-    function __construct($appearance){
+    function __construct($appearance = null){
         if($appearance === null){
-            return;
+            return $this;
         }
         
         $this->id = $appearance->id;

@@ -31,8 +31,6 @@
 				</span>
 			</h3>
 
-			<div class="short-content
-
 			<div class="short-content">
 				<p ng-bind-html="vm.renderHtml(vm.article.short)"></p>
 			</div>
@@ -97,8 +95,35 @@
 				<p ng-bind-html="vm.renderHtml(vm.article.content)"></p>
 			</div>
 
-			<div class="size-information">
-				<img src="{{vm.article.sizeThumbnail}}" />
+			<div class="size-information row">
+                <div class="small-6 columns">
+                    <img src="{{vm.article.sizeThumbnail}}" />
+                </div>
+                <div class="small-6 columns">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Taille</th>
+                                <th ng-repeat="measure in vm.getHeaderMeasure()">
+                                    {{measure}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="size in vm.sizes | orderBy: priority">
+                                <td>{{size.name}}</td>
+                                <td ng-repeat="measure in vm.findMeasuresBySizeIndex($index)">
+                                    {{measure.value}}
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>                
+
+                
+                
+
 			</div>
 		</div>
 	</div>

@@ -4,6 +4,8 @@ namespace App\Services\Entity;
 
 use Cake\Utility\Inflector;
 
+use Cake\Log\Log;
+
 class Article
 {
     public $id = 0;
@@ -25,6 +27,7 @@ class Article
     public $types = [];
     
     public $sizes = [];
+    public $measures = [];
     public $appearances = [];
     public $views = [];
     
@@ -68,10 +71,14 @@ class Article
         for($i = 0, $l = count($article->product->types); $i < $l; $i++){
             $this->types[] = new \App\Services\Entity\Type($article->product->types[$i]);
         }
+        for($i = 0, $l = count($article->product->measures); $i < $l; $i++){
+            $this->measures[] = new \App\Services\Entity\Measure($article->product->measures[$i]);
+        }
          
         for($i = 0, $l = count($article->product->sizes); $i < $l; $i++){
             $this->sizes[] = new \App\Services\Entity\Size($article->product->sizes[$i]);
         }
+    debug($article->product);
         for($i = 0, $l = count($article->product->appearances); $i < $l; $i++){
             $this->appearances[] = new \App\Services\Entity\Appearance($article->product->appearances[$i]);
         }

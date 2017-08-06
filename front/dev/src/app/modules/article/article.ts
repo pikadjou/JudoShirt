@@ -1,209 +1,296 @@
-module MartialShirt {
+module MartialShirt
+{
     'use strict';
 
-	export class C_Article extends MartialShirt.Init.AbstractModule {
+    export class C_Article extends MartialShirt.Init.AbstractModule
+    {
 
-		public prefixImage = "";
-		public articleid: number = 0;
-		public article: Services.Entity.Article = null;
-		public design: Services.Entity.Design = null;
+        public prefixImage = "";
+        public articleid: number = 0;
+        public article: Services.Entity.Article = null;
+        public design: Services.Entity.Design = null;
 
-		public sizes: Services.Entity.Size[] = null;
-		public SelectedSize: Services.Entity.Size = null;
+        public sizes: Services.Entity.Size[] = null;
+        public SelectedSize: Services.Entity.Size = null;
 
-		public appearances: Services.Entity.Appearance[] = null;
-		public SelectedAppearance: Services.Entity.Appearance = null;
+        public measures: Services.Entity.Measure[] = null;
 
-		public views: Services.Entity.View[] = null;
-		public SelectedView: Services.Entity.View = null;
+        public appearances: Services.Entity.Appearance[] = null;
+        public SelectedAppearance: Services.Entity.Appearance = null;
 
-		public errorMessage = "";
+        public views: Services.Entity.View[] = null;
+        public SelectedView: Services.Entity.View = null;
 
-		public showAppearance = false;
-		public showSize = false;
-		public sce = null;
-		public static $inject = [
-			'$scope',
-			'$sce',
-			Services.ArticlesRequestHandler.Name
-		];
-		constructor(
-			private $scope: any,
-			private $sce: any,
-			private RH: Services.ArticlesRequestHandler
-			) {
-			super();
+        public errorMessage = "";
 
-			this._sce = $sce;
-			this.init($scope);
+        public showAppearance = false;
+        public showSize = false;
+        public sce = null;
+        public static $inject = [
+            '$scope',
+            '$sce',
+            Services.ArticlesRequestHandler.Name
+        ];
+        constructor(
+            private $scope: any,
+            private $sce: any,
+            private RH: Services.ArticlesRequestHandler
+        )
+        {
+            super();
 
-			this.RH.GetArticleReceived.add(this.onPacketRecieved, this);
+            this._sce = $sce;
+            this.init($scope);
 
-			this.launchService();
-		}
+            this.RH.GetArticleReceived.add(this.onPacketRecieved, this);
 
-		public launchService() {
+            this.launchService();
 
-			this.loader = true;
-			this.RH.GetArticle([this.articleid]);
+        }
 
-		}
+        public launchService()
+        {
 
-		public onPacketRecieved(response: any) {
+            this.loader = true;
+            this.RH.GetArticle([this.articleid]);
 
-			this.loader = false;
+        }
 
-			this.article = response.article;
-			this.design = response.article.design;
+        public onPacketRecieved(response: any)
+        {
 
-			this.sizes = response.article.sizes;
-			this.appearances = response.article.appearances;
-			this.views = response.article.views;
+            this.loader = false;
 
-			this._setDefaultValues();
+            this.article = response.article;
+            this.design = response.article.design;
 
-			Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.SelectedDesign, this.design);
-			
-		}
+            this.sizes = response.article.sizes;
+            this.appearances = response.article.appearances;
+            this.views = response.article.views;
 
-		private _setDefaultValues() {
+            this._setMeasures(response.article.measures);
 
-			var imagePath = this.article.thumbnail;
+            this._setDefaultValues();
 
-			var explode = imagePath.split('/');
+            Init.Cache.getInstance().cache(Init.Cache.getInstance().KEY.SelectedDesign, this.design);
 
-			for (var i = 0, l = explode.length; i < l; i++) {
+        }
 
-				if (explode[i] === "views") {
-					break;
-				}
-				this.prefixImage += explode[i] + "/";
-			}
+        private _setDefaultValues()
+        {
 
-			if (this.article.extra) {
-				var explode = this.article.extra.split("-");
+            var imagePath = this.article.thumbnail;
 
-				for (var i = 0, l = explode.length, value = null; i < l; i++) {
+            var explode = imagePath.split('/');
 
-					value = explode[i].split(":");
+            for (var i = 0, l = explode.length; i < l; i++)
+            {
 
-					switch (value[0]) {
-						case "view":
-							this.SelectedView = this._getViewByShopId(value[1]);
-							break;
-						case "appearance":
-							this.SelectedAppearance = this._getAppearanceByShopId(value[1]);
-							break;
-					}
-				}
-			}
-		}
-		private _getViewByShopId(shopId: number) : Services.Entity.View {
+                if (explode[i] === "views")
+                {
+                    break;
+                }
+                this.prefixImage += explode[i] + "/";
+            }
 
-			for (var i = 0, l = this.views.length; i < l; i++) {
-				if (this.views[i].shopId == shopId) {
-					return this.views[i];
-				}
-			}
+            if (this.article.extra)
+            {
+                var explode = this.article.extra.split("-");
 
-			return null;
-		}
-		private _getAppearanceByShopId(shopId: number) : Services.Entity.Appearance {
+                for (var i = 0, l = explode.length, value = null; i < l; i++)
+                {
 
-			for (var i = 0, l = this.appearances.length; i < l; i++) {
-				if (this.appearances[i].shopId == shopId) {
-					return this.appearances[i];
-				}
-			}
+                    value = explode[i].split(":");
 
-			return null;
-		}
+                    switch (value[0])
+                    {
+                        case "view":
+                            this.SelectedView = this._getViewByShopId(value[1]);
+                            break;
+                        case "appearance":
+                            this.SelectedAppearance = this._getAppearanceByShopId(value[1]);
+                            break;
+                    }
+                }
+            }
+        }
 
-		public changeSelectedView(view: Services.Entity.View) {
-			this.SelectedView = view;
-		}
-		public changeSelectedAppearance(appearance: Services.Entity.Appearance) {
-			this.SelectedAppearance = appearance;
-			this.showAppearance = false;
+        public getHeaderMeasure(): string[]
+        {
 
-		}
-		public changeSelectedSize(size: Services.Entity.Size) {
-			this.SelectedSize = size;
-			this.showSize = false;
-		}
+            var measureHeader = [];
+            for (let measure of this.measures)
+            {
+                if (measureHeader.indexOf(measure.name) > -1)
+                {
+                    continue;
+                }
 
-		public isDefaultSize(size: Services.Entity.Size): boolean {
-			if (!this.SelectedSize) {
-				return false;
-			}
-			if (this.SelectedSize === size) {
-				return true;
-			}
-			return false;
-		}
-		public isDefaultAppearance(appearance: Services.Entity.Appearance) : boolean {
-			if (!this.SelectedAppearance) {
-				return false;
-			}
-			if (this.SelectedAppearance === appearance) {
-				return true;
-			}
-			return false;
-		}
-		public isDefaultView(view: Services.Entity.View): boolean {
-			if (!this.SelectedView) {
-				return false;
-			}
-			if (this.SelectedView === view) {
-				return true;
-			}
-			return false;
-		}
+                measureHeader.push(measure.name);
+            }
+            return measureHeader;
 
-		public getImageUrl(view: number, appearance: number) : string {
+        }
 
-			if (view === 0) {
-				view = (this.SelectedView !== null) ? this.SelectedView.shopId : 0;
-			}
-			if (appearance === 0) {
-				appearance = (this.SelectedAppearance !== null) ? this.SelectedAppearance.shopId : 0;
-			}
-			return this.prefixImage + "views/" + view + ",appearanceId=" + appearance +",width=500,height=500";
-		}
+        public findMeasuresBySizeIndex($sizeIndex: number): number[]
+        {
+            let headers = this.getHeaderMeasure();
 
-		public addToBasket() {
-			if (!this.SelectedSize) {
-				this.errorMessage = "Merci de selectionner une taille pour votre produit";
-				return;
-			}
-			if (!this.SelectedAppearance) {
-				this.errorMessage = "Merci de selectionner une couleur pour votre produit";
-				return;
-			}
+            var measures = [];
+            for (let header of headers)
+            {
+                let collection = this.measures.filter(x => x.name === header);
 
-			var article: Services.Entity.Article = this.article;
-			article.sizes = [this.SelectedSize];
-			article.appearances = [this.SelectedAppearance];
+                if (!collection)
+                {
+                    continue;
+                }
+                if (collection.length < $sizeIndex)
+                {
+                    continue;
+                }
 
-			this._signal.askAddArticle.dispatch(article);
-			this.errorMessage = "";
-		}
-	}
+                measures.push(collection[$sizeIndex]);
+            }
+            return measures;
+        }
 
-	export class Article implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/article/article.html";
-		public restrict = "E";
-		public replace = true;
-		public scope = {
-			articleid: '@'
-		};
+        private _setMeasures(measures: Services.Entity.Measure[])
+        {
+            this.measures = measures;
 
-		public static Name = "Article".toLocaleLowerCase();
+        }
+        private _getViewByShopId(shopId: number): Services.Entity.View
+        {
 
-		public static $inject = [];
-		constructor() { }
+            for (var i = 0, l = this.views.length; i < l; i++)
+            {
+                if (this.views[i].shopId == shopId)
+                {
+                    return this.views[i];
+                }
+            }
 
-		public controller = C_Article;
-	}
-	MartialShirt.Init.Application.MartialShirtApp.directive(Article.Name, MartialShirtApp.Application.GetDirectiveFactory<Article>(Article));
+            return null;
+        }
+        private _getAppearanceByShopId(shopId: number): Services.Entity.Appearance
+        {
+
+            for (var i = 0, l = this.appearances.length; i < l; i++)
+            {
+                if (this.appearances[i].shopId == shopId)
+                {
+                    return this.appearances[i];
+                }
+            }
+
+            return null;
+        }
+
+        public changeSelectedView(view: Services.Entity.View)
+        {
+            this.SelectedView = view;
+        }
+        public changeSelectedAppearance(appearance: Services.Entity.Appearance)
+        {
+            this.SelectedAppearance = appearance;
+            this.showAppearance = false;
+
+        }
+        public changeSelectedSize(size: Services.Entity.Size)
+        {
+            this.SelectedSize = size;
+            this.showSize = false;
+        }
+
+        public isDefaultSize(size: Services.Entity.Size): boolean
+        {
+            if (!this.SelectedSize)
+            {
+                return false;
+            }
+            if (this.SelectedSize === size)
+            {
+                return true;
+            }
+            return false;
+        }
+        public isDefaultAppearance(appearance: Services.Entity.Appearance): boolean
+        {
+            if (!this.SelectedAppearance)
+            {
+                return false;
+            }
+            if (this.SelectedAppearance === appearance)
+            {
+                return true;
+            }
+            return false;
+        }
+        public isDefaultView(view: Services.Entity.View): boolean
+        {
+            if (!this.SelectedView)
+            {
+                return false;
+            }
+            if (this.SelectedView === view)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public getImageUrl(view: number, appearance: number): string
+        {
+
+            if (view === 0)
+            {
+                view = (this.SelectedView !== null) ? this.SelectedView.shopId : 0;
+            }
+            if (appearance === 0)
+            {
+                appearance = (this.SelectedAppearance !== null) ? this.SelectedAppearance.shopId : 0;
+            }
+            return this.prefixImage + "views/" + view + ",appearanceId=" + appearance + ",width=500,height=500";
+        }
+
+        public addToBasket()
+        {
+            if (!this.SelectedSize)
+            {
+                this.errorMessage = "Merci de selectionner une taille pour votre produit";
+                return;
+            }
+            if (!this.SelectedAppearance)
+            {
+                this.errorMessage = "Merci de selectionner une couleur pour votre produit";
+                return;
+            }
+
+            var article: Services.Entity.Article = this.article;
+            article.sizes = [this.SelectedSize];
+            article.appearances = [this.SelectedAppearance];
+
+            this._signal.askAddArticle.dispatch(article);
+            this.errorMessage = "";
+        }
+    }
+
+    export class Article implements ng.IDirective
+    {
+        public templateUrl = "/scripts/app/modules/article/article.html";
+        public restrict = "E";
+        public replace = true;
+        public scope = {
+            articleid: '@'
+        };
+
+        public static Name = "Article".toLocaleLowerCase();
+
+        public static $inject = [];
+        constructor() { }
+
+        public controller = C_Article;
+    }
+    MartialShirt.Init.Application.MartialShirtApp.directive(Article.Name, MartialShirtApp.Application.GetDirectiveFactory<Article>(Article));
 }

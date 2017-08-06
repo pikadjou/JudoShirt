@@ -56,31 +56,21 @@ class ViewsTable extends Table
         return $this->find()->where(["shopId" => $shopId])->limit(1);
     }
 
-    public function addViewsForProduct($response){
+    public function addByXML($XMLView){
     
-        if(!$response->views){
-            return;            
+        $shopId = (string)$XMLView->attributes()->id;
+            
+        $viewModel = $this->getByShopId($shopId)->first();
+
+        if(!$viewModel){
+            $viewModel = $this->newEntity();
         }
         
-        $return = [];
-        foreach ($response->views->view as $view){
+        $viewModel->name = (string)$XMLView->name;
+        
+        $viewModel->shopId = $shopId;
 
-            $shopId = (string)$view->attributes()->id;
-            
-            $viewModel = $this->getByShopId($shopId)->first();
-
-            if(!$viewModel){
-               $viewModel = $this->newEntity();
-            }
-            
-            $viewModel->name = (string)$view->name;
-            
-            $viewModel->shopId = $shopId;
-
-            $this->save($viewModel);
-            $return[] = $viewModel;
-        }
-    
-        return $return;
+        $this->save($viewModel);
+        return $viewModel;
     }
 }

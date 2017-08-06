@@ -17,6 +17,8 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+
+use Cake\Log\Log;
 /**
  * Application Controller
  *
@@ -55,9 +57,8 @@ class AppController extends Controller
     }
 
     public function setJson($content){
-        debug($content);
+
         if($content === null){
-            
             $this->set('_serialize', []);
             return;
         }
@@ -75,7 +76,9 @@ class AppController extends Controller
 
         if(Configure::read('DebugView')){
             debug($content);
-       }
+        }
+        Log::info("request send: $name \n
+                   content : ". json_encode($content) ."\n");
 
       /*while (ob_get_level() > 0) {
             ob_end_flush();

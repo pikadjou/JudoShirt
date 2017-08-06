@@ -57,7 +57,8 @@
 				.price{
 					font-weight: bold;
 					color: $blue-color;
-				}
+            
+                }
 			}
 			.subinformation{
 				font-size: rem-calc(14);
@@ -67,11 +68,12 @@
 					font-weight: 100;
 				}
 
-				.prefix, .postfix{
+				.input-group-label{
 					background-color: $light-blue-color;
-					color: $white-color;
+                    color: $white-color;
+                    border: none;
 				}
-				.text{
+				.input-group-field{
 					color: $light-blue-color;
 					text-align: center;
 				}

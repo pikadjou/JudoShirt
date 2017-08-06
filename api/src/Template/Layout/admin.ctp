@@ -102,7 +102,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </a>
                     <ul class="treeview-menu">
                         <?php $listeController = ['Articles', 'Products', 'Categories', 'Designs', 'Promotions', 'Prints',
-                        'Appearances', 'Sizes', 'Cms', 'Configs']; 
+                        'Appearances', 'Sizes', 'Cms', 'Configs', 'Types']; 
 
                         asort($listeController);
                         ?>

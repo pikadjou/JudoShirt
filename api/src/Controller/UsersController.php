@@ -46,14 +46,20 @@ class UsersController extends AppController
 
     public function login(){
         
+        if ($this->request->is('options')) {
+            return $this->response;
+        }
         $data = $this->request->data;
         $url = $this->_spreadshirt->_securityHost . "sessions";
-
+        debug($url);
+        debug($data);
         $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><login xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net"><username>'.$data['username'].'</username><password>'.$data['password'].'</password></login>';
-        $login = $this->_spreadshirt->postRequest($url, $xml);        
+        debug($xml);
+        $login = $this->_spreadshirt->postRequest($url, $xml); 
+        debug($login);       
         $headers = $this->get_headers_from_curl_response($login);
 
-        
+        debug($headers);
         $response = new UsersRequestHandler\GetLoginResponse();
         if($headers['http_code'] && strpos($headers['http_code'], '201')){
             $response->init(true);
@@ -71,9 +77,9 @@ class UsersController extends AppController
                         $user = $this->_getUserBySession($idSession);
                         
                         if($user){
-                           $response->init(true);
-                           
-                           $response->addUser($user);
+                        $response->init(true);
+                        
+                        $response->addUser($user);
                         }
                     }
                 }
@@ -82,9 +88,10 @@ class UsersController extends AppController
         }else{
             $response->init(false);
 
-           $response->addCookie("erreur", $headers);
+            $response->addCookie("erreur", $headers);
             
         }
+        
         parent::setJson($response);
     }
     

@@ -49,7 +49,7 @@ class HttpRequest{
         
         $url = $this->encodeUrl($url);
         // Open the Curl session
-       $this->secureUrl('POST', $url);
+       //$this->secureUrl('POST', $url);
         
         $session = curl_init($this->secureUrl('POST', $url));
         curl_setopt($session, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
@@ -58,6 +58,13 @@ class HttpRequest{
         curl_setopt($session, CURLOPT_HTTPHEADER, $this->getRelevantRequestHeaders());
         curl_setopt($session, CURLOPT_HEADER, true);
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+        /*curl_setopt($session, CURLOPT_VERBOSE, true);
+
+        
+        $verbose = fopen('php://temp', 'w+');
+        curl_setopt($session, CURLOPT_STDERR, $verbose);
+*/
         // Make the call
         $response = curl_exec($session);
         // The web service returns XML. Set the Content-Type appropriately
@@ -65,8 +72,19 @@ class HttpRequest{
         //header("Location: " . parseHttpHeaders($response, "Location"), true);
         //header(getStatusMessage("".curl_getinfo($session, CURLINFO_HTTP_CODE)));
         
+        /*if ($response === FALSE) {
+            printf("cUrl error (#%d): %s<br>\n", curl_errno($session),
+           htmlspecialchars(curl_error($session)));
+        }*/
+
         curl_close($session);
         
+        
+/*
+        rewind($verbose);
+        $verboseLog = stream_get_contents($verbose);
+
+        echo "Verbose information:\n<pre>", htmlspecialchars($verboseLog), "</pre>\n";*/
         return $response;
     }
     

@@ -30,6 +30,8 @@
 @import 'typography/typography';
 @import 'forms/forms';
 
+@import 'components/table';
+
 @import 'components/flex';
 @import 'components/label';
 @import 'components/accordion-menu';
@@ -87,6 +89,8 @@
   @include foundation-accordion;
   @include foundation-accordion-menu;
 
+  @include foundation-table;
+  
   @include foundation-close-button;
 
   @include foundation-reveal;

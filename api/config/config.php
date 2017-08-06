@@ -1,9 +1,11 @@
 <?php
 return [
     "CacheUpdateDB" => true,
-    "CacheEnabled" => true,
+    "CacheEnabled" => false,
     
-    "DebugView" => false
+    "DebugView" => false,
+
+    "DebugResponse" => false
 ];
 
 ?>
