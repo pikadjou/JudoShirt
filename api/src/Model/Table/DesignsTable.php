@@ -127,6 +127,12 @@ class DesignsTable extends Table
 
     }
 
+    public function findBySearchTerm($term){
+        $query = $this->_findByTerm($term);
+
+        return $query;
+    }
+
     public function findTop(){
 
         $query = $this->_findTop();
@@ -177,6 +183,19 @@ class DesignsTable extends Table
                         return $q->where(["Types.id IN" => $typeId]);
                     }
                 );
+    }
+
+    private function _findByTerm($term){
+        $query = $this->_findActive()->where(
+            ['OR' 
+                => [
+                    'Designs.name LIKE' => '%'.$term.'%',
+                    'Designs.content LIKE' => '%'.$term.'%'
+                ]
+            ]
+        );
+
+        return $query;
     }
     /**
      * Make join

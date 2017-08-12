@@ -124,6 +124,11 @@ class ProductsTable extends Table
 
 
     }
+    public function findBySearchTerm($term){
+        $query = $this->_findByTerm($term);
+
+        return $query;
+    }
 
     public function updateProduct($shopId){
         
@@ -163,6 +168,19 @@ class ProductsTable extends Table
         $products = $this->_find()->where(["Products.visible" => true]);
         
         return $products;
+    }
+
+    private function _findByTerm($term){
+        $query = $this->_findActive()->where(
+            ['OR' 
+                => [
+                    'Products.name LIKE' => '%'.$term.'%',
+                    'Products.content LIKE' => '%'.$term.'%'
+                ]
+            ]
+        );
+
+        return $query;
     }
 
     private function _doUpdateProduct($productShopId){

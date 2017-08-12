@@ -2,16 +2,16 @@
 	
 	<ul>
 		<li>
-			<a href="{{vm._application.getUrl('Promotions')}}">Promotions</a>
+			<a href="{{vm._application.getUrl('Promotions')}}" ng-class="vm.isActive('Promotions') ? 'active' : ''">Promotions</a>
 		</li>
 		<li>
-			<a href="{{vm._application.getUrl('Prints')}}">Type d'impression</a>
+			<a href="{{vm._application.getUrl('Prints')}}" ng-class="vm.isActive('Prints') ? 'active' : ''">Type d'impression</a>
 		</li>
 		<li>
-			<a href="{{vm._application.getUrl('Shipping')}}">Méthode de livraison</a>
+			<a href="{{vm._application.getUrl('Shipping')}}" ng-class="vm.isActive('Shipping') ? 'active' : ''">Méthode de livraison</a>
 		</li>
 		<li>
-			<a href="{{vm._application.getUrl('Contact')}}">Contact</a>
+			<a href="{{vm._application.getUrl('Contact')}}" ng-class="vm.isActive('Contact') ? 'active' : ''">Contact</a>
 		</li>
 	</ul>
 </div>

@@ -48,7 +48,10 @@
 				a{
 					font-family: 'Lato', sans-serif;
 					color: $black-color;
-					font-size: rem-calc(16);
+                    font-size: rem-calc(16);
+                    &:hover, &.active{
+                        color: $blue-color;
+                    }
 				}
 			}
 		}

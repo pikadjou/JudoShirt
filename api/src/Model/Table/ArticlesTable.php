@@ -250,6 +250,11 @@ class ArticlesTable extends Table
         return $articles;
     }
     
+    public function findBySearchTerm($term){
+        $query = $this->_findByTerm($term);
+
+        return $query;
+    }
     public function addAppearence($query){
         $query->contain([
             'Products' => [
@@ -257,6 +262,20 @@ class ArticlesTable extends Table
             ]
         ]);
     }
+
+    private function _findByTerm($term){
+        $query = $this->_find()->where(
+            ['OR' 
+                => [
+                    'Articles.name LIKE' => '%'.$term.'%',
+                    'Articles.content LIKE' => '%'.$term.'%'
+                ]
+            ]
+        );
+
+        return $query;
+    }
+
     public function addProduct($query){
         $query->contain([
             'Products' => [
