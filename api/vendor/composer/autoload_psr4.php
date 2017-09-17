@@ -26,7 +26,9 @@ return array(
     'Cake\\Chronos\\' => array($vendorDir . '/cakephp/chronos/src'),
     'Cake\\' => array($vendorDir . '/cakephp/cakephp/src'),
     'Bake\\' => array($vendorDir . '/cakephp/bake/src'),
+    'Automattic\\WooCommerce\\' => array($vendorDir . '/automattic/woocommerce/src/WooCommerce'),
     'Aura\\Intl\\_Config\\' => array($vendorDir . '/aura/intl/config'),
     'App\\Test\\' => array($baseDir . '/tests'),
     'App\\' => array($baseDir . '/src'),
+    'Acl\\' => array($vendorDir . '/cakephp/acl/src'),
 );

@@ -1,5 +1,5 @@
 ﻿.widget__account{
-	.connection{
+	.connection, .my-account{
 		font-family: $font-lato;
 		font-weight: $font-bold;
 
@@ -10,71 +10,112 @@
 			padding: 10px;
 		}
 
-		&.active{
+		&.active, &:hover{
 			background-color: $white-color;
 			a{
 				color: $blue-color;
 			}
-		}
-	}
+        }
+        
+        .account-panel{
+            position: relative;
+    
+            .account-panel-content{
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 3;
+    
+                padding: 15px 30px;
+    
+                width: 150%;
+                background-color: $white-color;
+                @include box-shadow( 0px 6px 10px 0px rgba(121,121,121,0.5));
+            }
+            .connection-panel{
+                label{
+                    text-align: left;
+                    font-size: rem-calc(12);
+                    margin-bottom: 10px;
+                    input{
+                        height: 40px;
+                        display: block;
+                        width: 100%;
+                        
+                    }
+                }
+                .forget{
+                    a{
+                        color: $light-black-color;
+                        padding: 0;
+                        font-size: rem-calc(12);
+    
+                        display: block;
+                        text-align: right;
+                    }
+                }
+                .submit{
+                    padding: 15px 0;
+    
+                    border-bottom: 1px solid $light-black-color;
+                    button{
+                        margin: 0;
+                    }
+                }
+                .register{
+                    padding: 15px 0;
+                    .button{
+                        margin: 0;
+    
+                        border: 1px solid $blue-color;
+                        background-color: $white-color;
+    
+                        color: $blue-color;
+                    }
+                }
+                .error{
+                    color: $error-color;
+                }
+            }
+            .my-account-panel{
+                ul{
+                    list-style: none;
+                    margin: 0;
+                    li{
+                        list-style: none;
+                        color: $black-color;
+                        padding: 0;
+                        border-bottom: 1px $gray-color solid;
+                        text-align: left;
+                        a{
+                            width: 100%;
+                            height: 100%;
+                            display: block;
+                            padding: 10px 0;
+                            color: $black-color;
+                            font-weight: normal;
+                        }
 
-	.account-panel{
-		position: relative;
+                        &.deconnection{
+                            margin: 15px 5px;
+                            border-bottom: none;
+                            text-align: center;
+                            a{
+                                background-color: $light-blue-color;
+                                color: $white-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .my-account{
+        .account-panel{
+            .account-panel-content{
+                width: 120%;
+            }
+        }
+    }
 
-		.account-panel-content{
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 3;
-
-			padding: 15px 30px;
-
-			width: 150%;
-			background-color: $white-color;
-
-			label{
-				text-align: left;
-				font-size: rem-calc(12);
-				margin-bottom: 10px;
-				input{
-					height: 40px;
-					display: block;
-					width: 100%;
-					
-				}
-			}
-			.forget{
-				a{
-					color: $light-black-color;
-					padding: 0;
-					font-size: rem-calc(12);
-
-					display: block;
-					text-align: right;
-				}
-			}
-			.submit{
-				padding: 15px 0;
-
-				border-bottom: 1px solid $light-black-color;
-				button{
-					margin: 0;
-				}
-			}
-			.register{
-				padding: 15px 0;
-				.button{
-					margin: 0;
-
-					border: 1px solid $blue-color;
-					background-color: $white-color;
-
-					color: $blue-color;
-				}
-			}
-			.error{
-				color: $error-color;
-			}
-		}
-	}
 }

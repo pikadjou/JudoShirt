@@ -3,6 +3,12 @@
 		Prix des livraison
 	</h1>
 	<div class="module__content row">
+		<div ng-repeat="header in vm.headers" class="small-12 columns">
+            <a ng-click='vm.goToCountry(header)' 
+                ng-class"disable : vm.isLettreActive(header)">
+                {{header}}
+            </a>
+		</div>                
 		<div ng-repeat="country in vm.countries" class="small-4 columns">
 			<div class="country">
 				<h6 class="country__title" ng-click="vm.openClose(country)">

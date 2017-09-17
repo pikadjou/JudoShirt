@@ -5,7 +5,7 @@ return [
     
     "DebugView" => false,
 
-    "DebugResponse" => false
+    "DebugResponse" => false,
 ];
 
 ?>

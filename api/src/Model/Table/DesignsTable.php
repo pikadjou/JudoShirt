@@ -78,12 +78,8 @@ class DesignsTable extends Table
         
         return $design;
     }
-    /**
-     * Default get all design by category id.
-     *
-     * @param integer $id (optional)
-     * @return App\Model\Table\DesignsTable
-     */
+    
+    
     public function getAllById($catId = null, $withJoin = true)
     {
         $designs = $this->getAll();

@@ -39,18 +39,62 @@ class AppController extends Controller
      *
      * @return void
      */
+
+     public $components = [
+        'Acl' => [
+            'className' => 'Acl.Acl'
+        ]
+    ];
+
+    
+
     public function initialize()
     {
         parent::initialize();
-        
-       // $this->viewBuilder()->layout('empty');
+
+        $this->loadComponent('Auth', [
+            'authorize' => [
+                'Acl.Actions' => ['actionPath' => 'controllers/']
+            ],
+            'loginAction' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => 'admin'
+            ],
+            'loginRedirect' => [
+                'plugin' => false,
+                'controller' => 'Posts',
+                'action' => 'index',
+                'prefix' => 'admin'
+            ],
+            'logoutRedirect' => [
+                'plugin' => false,
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => 'admin'
+            ],
+            'unauthorizedRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login',
+                'prefix' => 'admin'
+            ],
+            'authError' => 'You are not authorized to access that location.',
+            'flash' => [
+                'element' => 'error'
+            ]
+        ]);
+       // $this->viewBuilder()->layout('empty');*/
         if(Configure::read('DebugView')){
             $this->render('/index');  
        }
     }
     
-    function beforeFilter(Event $event) {
-        if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
+    function beforeFilter(Event $event = null) {
+        parent::beforeFilter($event);
+        if(!isset($this->request->params['prefix'])){
+            $this->Auth->allow();
+        }else if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
             $this->viewBuilder()->layout('admin');
 //            $this->layout = 'admin';
         }

@@ -34,15 +34,18 @@ class AdminJoinAppController extends AdminAppController
         $this->order = ['priority', 'id'];
  
         $index = 1;
-        foreach ($this->model->associations() as $k => $v){
-            $this->join[$index] = $v;
+        if($this->model){
+            foreach ($this->model->associations() as $k => $v){
+                $this->join[$index] = $v;
 
-            $this->join[$index]->structure = $this->_getColumnsType($v);
-            
-            $joinkey = $v->foreignKey();
-            $this->join[$index]->joinalias = explode('_', $joinkey)[0];
-            $index++;
+                $this->join[$index]->structure = $this->_getColumnsType($v);
+                
+                $joinkey = $v->foreignKey();
+                $this->join[$index]->joinalias = explode('_', $joinkey)[0];
+                $index++;
+            }
         }
+        
     }
     
     public function index($tableMain = 1)

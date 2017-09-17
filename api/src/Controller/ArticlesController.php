@@ -5,6 +5,8 @@ use App\Model\Cache;
 
 use App\Controller\AppController;
 use App\Services\ArticlesRequestHandler;
+
+
 /**
  * Categories Controller
  *
@@ -43,6 +45,21 @@ class ArticlesController extends AppController
 
         Cache\CacheModel::write($key, $response);
         parent::setJson($response);
+    }
+
+    public function testArticles()
+    {
+        
+
+        $resultats = $woocommerce->get("products");
+
+        // Last request data.
+        debug($woocommerce->http->getRequest());
+
+        // Last response data.
+        debug($woocommerce->http->getResponse());
+
+        die();
     }
 
     public function getArticles($id)

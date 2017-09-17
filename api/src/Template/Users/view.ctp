@@ -1,70 +1,40 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Category'), ['action' => 'delete', $category->id], ['confirm' => __('Are you sure you want to delete # {0}?', $category->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Categories'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Category'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Designs'), ['controller' => 'Designs', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Design'), ['controller' => 'Designs', 'action' => 'add']) ?> </li>
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?> </li>
     </ul>
-</div>
-<div class="categories view large-10 medium-9 columns">
-    <h2><?= h($category->name) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Name') ?></h6>
-            <p><?= h($category->name) ?></p>
-        </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($category->id) ?></p>
-        </div>
-    </div>
-    <div class="row texts">
-        <div class="columns large-9">
-            <h6 class="subheader"><?= __('Content') ?></h6>
-            <?= $this->Text->autoParagraph(h($category->content)) ?>
-        </div>
-    </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Designs') ?></h4>
-    <?php if (!empty($category->designs)): ?>
-    <table cellpadding="0" cellspacing="0">
+</nav>
+<div class="users view large-9 medium-8 columns content">
+    <h3><?= h($user->id) ?></h3>
+    <table class="vertical-table">
+        <tr>
+            <th><?= __('Username') ?></th>
+            <td><?= h($user->username) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Password') ?></th>
+            <td><?= h($user->password) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Group') ?></th>
+            <td><?= $user->has('group') ? $this->Html->link($user->group->name, ['controller' => 'Groups', 'action' => 'view', $user->group->id]) : '' ?></td>
+        </tr>
         <tr>
             <th><?= __('Id') ?></th>
-            <th><?= __('Name') ?></th>
-            <th><?= __('Content') ?></th>
-            <th><?= __('Thumbnail') ?></th>
-            <th><?= __('Header') ?></th>
-            <th><?= __('shopId') ?></th>
-            <th><?= __('IdCustomShop') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
+            <td><?= $this->Number->format($user->id) ?></td>
         </tr>
-        <?php foreach ($category->designs as $designs): ?>
         <tr>
-            <td><?= h($designs->id) ?></td>
-            <td><?= h($designs->name) ?></td>
-            <td><?= h($designs->content) ?></td>
-            <td><?= h($designs->thumbnail) ?></td>
-            <td><?= h($designs->header) ?></td>
-            <td><?= h($designs->shopId) ?></td>
-            <td><?= h($designs->idCustomShop) ?></td>
-
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Designs', 'action' => 'view', $designs->id]) ?>
-
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Designs', 'action' => 'edit', $designs->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Designs', 'action' => 'delete', $designs->id], ['confirm' => __('Are you sure you want to delete # {0}?', $designs->id)]) ?>
-
-            </td>
+            <th><?= __('Created') ?></th>
+            <td><?= h($user->created) ?></td>
         </tr>
-
-        <?php endforeach; ?>
+        <tr>
+            <th><?= __('Modified') ?></th>
+            <td><?= h($user->modified) ?></td>
+        </tr>
     </table>
-    <?php endif; ?>
-    </div>
 </div>

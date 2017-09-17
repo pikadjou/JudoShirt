@@ -1,16 +1,28 @@
 ﻿<div class="widget__account">
 	<div ng-if="vm.isAuthenticated">
 		<div class="authenticated">
-			<div class=" my-account">
-				<a ng-click="vm._accountPanelOpen = !vm._accountPanelOpen" class="button button-player expanded">
+			<div class="my-account" ng-class="vm.panelOpen === true ? 'active' : ''">
+				<a ng-click="vm.panelOpen = !vm.panelOpen">
 					Mon compte
 				</a>
 				<div class="account-panel">
-					<div ng-if="vm._accountPanelOpen === true" class="account-panel-content my-account-panel">
+					<div ng-if="vm.panelOpen === true" class="account-panel-content my-account-panel">
 						<ul>
-							<li><a href="{{vm._application.getUrl('AccountOrder')}}" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-shopping-cart"></i> Mes commandes</a></li>
-							<li><a href="{{vm._application.getUrl('AccountDetail')}}" ng-click="vm._accountPanelOpen = !vm._accountPanelOpen"><i class="fa fa-user"></i> Mes details</a></li>
-							<li><a ng-click="vm.logout()"><i class="fa fa-unlock"></i> Deconnection</a></li>
+                            <li>
+                                <a href="{{vm._application.getUrl('AccountDetail')}}" ng-click="vm.panelOpen = !vm.panelOpen">
+                                    Mes details
+                                </a>
+                            </li>
+							<li>
+                                <a href="{{vm._application.getUrl('AccountOrder')}}" ng-click="vm.panelOpen = !vm.panelOpen">
+                                    Mes commandes
+                                </a>
+                            </li>
+							<li class="deconnection">
+                                <a ng-click="vm.logout()">
+                                    Deconnection
+                                </a>
+                            </li>
 						</ul>
 					</div>
 				</div>
@@ -19,12 +31,12 @@
 	</div>
 	<div ng-if="!vm.isAuthenticated">
 		<div class="unauthenticated">
-			<div class="connection" ng-class="vm._connectionPanelOpen === true ? 'active' : ''">
-				<a ng-click="vm._connectionPanelOpen = !vm._connectionPanelOpen">
+			<div class="connection" ng-class="vm.panelOpen === true ? 'active' : ''">
+				<a ng-click="vm.panelOpen = !vm.panelOpen">
 					Connection
 				</a>
 				<div class="account-panel">
-					<div ng-if="vm._connectionPanelOpen === true" class="account-panel-content connection-panel">
+					<div ng-if="vm.panelOpen === true" class="account-panel-content connection-panel">
 						<div class="pseudo">
 							<label>
 								Pseudo ou email
@@ -63,13 +75,6 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="row">
-			<div class="small-offset-5 small-6 columns subscribe">
-				<a href="{{vm._application.getUrl('AccountSubscription')}}" class="button button-action">
-					Inscription
-				</a>
-			</div>
-		</div>-->
 		</div>
 	</div>
 </div>

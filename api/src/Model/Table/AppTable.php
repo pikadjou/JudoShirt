@@ -5,6 +5,7 @@ use Cake\ORM\Table;
 
 use Cake\Log\Log;
 
+
 class AppTable extends Table
 {
     public function formatQueryResult($query){

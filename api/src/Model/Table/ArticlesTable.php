@@ -177,7 +177,6 @@ class ArticlesTable extends Table
     public function findByDesign($design, $forced = false)
     {
         $id = $design->id;
-        $lastUpdate = $design->lastUpdate;
         
         $date = new \DateTime();
         $actualTime = $date->getTimestamp();
@@ -187,7 +186,9 @@ class ArticlesTable extends Table
         
         if($forced === true || Configure::read('CacheUpdateDB') === false){
             $lastUpdate = null;
-        }       
+        }else{
+            $lastUpdate = $design->lastUpdate;
+        }
         if($lastUpdate === null || $lastUpdate < $cacheTime){
             
             $this->_setDirty($id);
@@ -198,11 +199,14 @@ class ArticlesTable extends Table
             $response = simplexml_load_string($response);
 
             if($response->article){
+                $artcilesModel = [];
+                Log::notice("retreive article for design: $id ". date("d-m-Y H:i:s"));
                 foreach ($response->article as $article){
                     $articleId = (string)$article->attributes()->id;
                     //debug($articleId);
                     $articleModel = $this->getByShopIdNoCache($articleId)->first();
-
+                    Log::notice("find article in db - ". date("d-m-Y H:i:s"));
+                    
                     if(!$articleModel){
                         $articleModel = $this->newEntity();
                     }
@@ -234,10 +238,12 @@ class ArticlesTable extends Table
                     $articleModel->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
 
                     $articleModel->dirty = false;
-                    $this->save($articleModel);
+                    $articlesModel[] = $articleModel;
 
                 }
-
+                Log::notice("end retrive article for design: $id - nb articles: ".count($articlesModel)." - ". date("d-m-Y H:i:s"));
+                
+                $this->saveMany($articlesModel);
                 $design->lastUpdate = $actualTime;
                 $this->_desingsModel->save($design);
             }

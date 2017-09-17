@@ -1,25 +1,25 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $category->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $category->id)]
+                ['action' => 'delete', $user->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Categories'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Designs'), ['controller' => 'Designs', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Design'), ['controller' => 'Designs', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?></li>
     </ul>
-</div>
-<div class="categories form large-10 medium-9 columns">
-    <?= $this->Form->create($category) ?>
+</nav>
+<div class="users form large-9 medium-8 columns content">
+    <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __('Edit Category') ?></legend>
+        <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('content');
-            echo $this->Form->input('designs._ids', ['options' => $designs]);
+            echo $this->Form->input('username');
+            echo $this->Form->input('password');
+            echo $this->Form->input('group_id', ['options' => $groups]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -49,12 +49,8 @@ Router::scope('/', function ($routes) {
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-    /**
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
-    
+    //$routes->connect('/enigma/:controller', ['controller' => 'Pages', 'action' => 'display', 'home']);
+   
     /**
      * Connect catchall routes for all controllers.
      *
@@ -72,10 +68,11 @@ Router::scope('/', function ($routes) {
      * routes you want in your application.
      */
     $routes->extensions(['json']);
-    
-    $routes->fallbacks('InflectedRoute');
+
+    $routes->fallbacks(DashedRoute::class);
 });
 
+//Router::connect("/admin/:controller/:action/*", array('prefix' => 'admin', 'admin' => true));
 /*Router::prefix('api', function ($routes) {
 
     $routes->extensions(['json']);
@@ -84,7 +81,7 @@ Router::scope('/', function ($routes) {
 
 Router::prefix('admin', function ($routes) {
 
-    $routes->fallbacks('InflectedRoute');
+    $routes->fallbacks(DashedRoute::class);
 });
 
 /**

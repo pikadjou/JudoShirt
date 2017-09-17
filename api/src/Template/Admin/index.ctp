@@ -57,6 +57,9 @@
                                             case "sizeThumbnail": ?>
                                                 <img src="<?php echo $data->$name; ?>">
                                                 <?php break;
+                                            case "lastUpdate": ?>
+                                                <?php echo date("d-m-Y H:i:s", $data->$name); ?>
+                                                <?php break;
                                             default: ?>
                                                 <?= h($data->$name) ?>
                                                 <?php break;

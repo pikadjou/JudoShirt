@@ -180,6 +180,50 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 </li>
             </ul>
             <ul class="sidebar-menu">
+                <li class="header">Users</li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> 
+                        <span>Users</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <?php $listeController = ['Users', 'Groups']; 
+
+                        asort($listeController);
+                        ?>
+
+                        <?php foreach($listeController as $controller): ?>
+                        <li class="treeview">
+                          <a href="#">
+                            <i class="fa fa-dashboard"></i> <span><?= __($controller) ?></span>
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                          <ul class="treeview-menu">
+                            <li>
+                                <a href="<?php echo $this->Url->build(['controller' => $controller, 'action' => 'index']) ?>">
+                                    <i class="fa fa-circle-o"></i>
+                                    <?= __('List') ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->Url->build(['controller' => $controller, 'action' => 'edit']) ?>">
+                                    <i class="fa fa-circle-o"></i>
+                                    <?= __('New') ?>
+                                </a>
+                            </li>
+                          </ul>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="sidebar-menu">
                 <li class="header">Cache</li>
 
                 <li class="treeview">

@@ -64,9 +64,11 @@ class ComposerStaticInit6a586b8c23c1a1110ddd59e74a2ddc89
         ),
         'A' => 
         array (
+            'Automattic\\WooCommerce\\' => 23,
             'Aura\\Intl\\_Config\\' => 18,
             'App\\Test\\' => 9,
             'App\\' => 4,
+            'Acl\\' => 4,
         ),
     );
 
@@ -151,6 +153,10 @@ class ComposerStaticInit6a586b8c23c1a1110ddd59e74a2ddc89
         array (
             0 => __DIR__ . '/..' . '/cakephp/bake/src',
         ),
+        'Automattic\\WooCommerce\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/automattic/woocommerce/src/WooCommerce',
+        ),
         'Aura\\Intl\\_Config\\' => 
         array (
             0 => __DIR__ . '/..' . '/aura/intl/config',
@@ -162,6 +168,10 @@ class ComposerStaticInit6a586b8c23c1a1110ddd59e74a2ddc89
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Acl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cakephp/acl/src',
         ),
     );
 
