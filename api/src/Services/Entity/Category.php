@@ -24,19 +24,11 @@ class Category
         $this->id = $category->id;
         $this->name = $category->name;
         $this->url = $this->id ."/". Inflector::slug($this->name);
-
+        $this->parent = $category->parent;
         $this->content = $category->content;
         
         for($i = 0, $l = count($category->children); $i < $l; $i++){           
             $this->children[] = new \App\Services\Entity\Category($category->children[$i]);
-        }
-        
-        for($i = 0, $l = count($category->design); $i < $l; $i++){
-            $this->designs[] = new \App\Services\Entity\Design($category->design[$i]);
-        }
-        
-        if($category->parent){
-            $this->parent = new \App\Services\Entity\Category($category->parent);
         }
     }
 }

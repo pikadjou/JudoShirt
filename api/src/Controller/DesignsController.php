@@ -30,16 +30,16 @@ class DesignsController extends AppController
      */
     public function getDesign($id)
     {
-        $query = $this->Designs->getOne($id);
+        /*$query = $this->Designs->getOne($id);
  
         $query->contain([
             'Products.Colors'
         ]);
         
         $design = $query->first();
-        
+        */
         $response = new DesignsRequestHandler\GetDesignResponse();
-        $response->init($design);
+       // $response->init($design);
         
         parent::setJson($response);
     }
@@ -55,11 +55,8 @@ class DesignsController extends AppController
             parent::setJson($response);
             return;
         }
-        if($catId === null || $catId == 0){
-            $query = $this->Designs->getAll();
-        }else{
-            $query = $this->Designs->getAllById($catId);
-        }
+        
+        $designs = $this->Designs->getAllById($catId);
         /*
         $query->contain([
             'Categories'
@@ -71,12 +68,7 @@ class DesignsController extends AppController
             'Products.Colors'
         ]);
 */
-        $designs = $query->toArray();
-        
-        $category = null;
-        if($catId !== null){
-            $category = $this->Categories->getOne($catId);    
-        }
+$category = null;
         
         $response = new DesignsRequestHandler\GetDesignsResponse();
         $response->init($designs, $category);

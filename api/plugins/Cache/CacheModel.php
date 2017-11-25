@@ -11,32 +11,33 @@ use Cake\Core\Configure;
  */
 class CacheModel
 {
+    public static $type = ["Externe" => "CacheExternalCall", "RH" => "CacheRH"];
     public static $listKeyServeur = "CacheListKey";
-    public static function write($key, $value, $config = 'default')
+    public static function write($key, $value, $config = 'RH')
     {
-        if(!Configure::read('CacheEnabled')){
+        if(!Configure::read(Self::$type[$config])){
             return false;
         }
         CacheModel::addKeyInList($key);
-        return Cache::write($key, $value, $config);
+        return Cache::write($key, $value);
     }
     
-   public static function read($key, $config = 'default')
+   public static function read($key, $config = 'RH')
     {
-        if(!Configure::read('CacheEnabled')){            
-            CacheModel::delete($key, $config);
+        if(!Configure::read(Self::$type[$config])){
+            CacheModel::delete($key);
             return false;
         }
-       $cache = Cache::read($key, $config);
+       $cache = Cache::read($key);
        if($cache === false){
-           CacheModel::delete($key, $config);
+           CacheModel::delete($key);
        }
        return $cache;
     }
-    public static function delete($key, $config = 'default')
+    public static function delete($key)
     {
         CacheModel::removeKeyInList($key);
-        return Cache::delete($key, $config);
+        return Cache::delete($key);
     }
 
     public static function getAllValues()

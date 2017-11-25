@@ -46,7 +46,7 @@ class Article
         
         $this->url = $this->id ."/". Inflector::slug($article->slug);
 
-        $this->short = $article->product->short;
+        /*$this->short = $article->product->short;*/
         $this->content = $article->content;
         if(!$this->content){
             $this->content = $article->product->content;
@@ -56,29 +56,29 @@ class Article
         
         $this->thumbnail = $article->thumbnail;
         
-        $this->sizeThumbnail = $article->product->sizeThumbnail;
+       /* $this->sizeThumbnail = $article->product->sizeThumbnail;*/
 
-        $this->extra = $article->extra;
+       /* $this->extra = $article->extra;*/
 
-        $this->shopId = $article->shopId;
-        $this->idCustomShop = $article->idCustomShop;
+        //$this->shopId = $article->shopId;
+        //$this->idCustomShop = $article->idCustomShop;
         
-        $this->priority = $article->priority;
+        /*$this->priority = $article->priority;
         if(!$this->priority || $this->priority === 0){
             $this->priority = $article->product->priority;
-        }
+        }*/
         
-        for($i = 0, $l = count($article->product->types); $i < $l; $i++){
+       /* for($i = 0, $l = count($article->product->types); $i < $l; $i++){
             $this->types[] = new \App\Services\Entity\Type($article->product->types[$i]);
-        }
-        for($i = 0, $l = count($article->product->measures); $i < $l; $i++){
+        }*/
+        /*for($i = 0, $l = count($article->product->measures); $i < $l; $i++){
             $this->measures[] = new \App\Services\Entity\Measure($article->product->measures[$i]);
-        }
+        }*/
          
-        for($i = 0, $l = count($article->product->sizes); $i < $l; $i++){
-            $this->sizes[] = new \App\Services\Entity\Size($article->product->sizes[$i]);
+        for($i = 0, $l = count($article->sizes); $i < $l; $i++){
+            $this->sizes[] = new \App\Services\Entity\Size($article->sizes[$i]);
         }
-    debug($article->product);
+    /*debug($article->product);
         for($i = 0, $l = count($article->product->appearances); $i < $l; $i++){
             $this->appearances[] = new \App\Services\Entity\Appearance($article->product->appearances[$i]);
         }
@@ -88,7 +88,7 @@ class Article
         
         if($article->design){
              $this->design = new \App\Services\Entity\Design($article->design);
-        }
+        }*/
     }
 }
 

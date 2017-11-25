@@ -21,12 +21,56 @@ class ArticlesController extends AppController
         parent::initialize();
         $this->loadComponent('RequestHandler');
         
-        $this->loadModel("Designs");
-        $this->loadModel("Categories");
+        //$this->loadModel("Designs");
+        //$this->loadModel("Categories");
         
 
     }
-    
+
+    public function getArticlesByDesign($designId)
+    {
+        $key = "ArticlesController-getArticlesByDesign-".$designId;
+        if (($response = Cache\CacheModel::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+
+        /*$query = $this->Designs->getOne($id);
+        $this->Designs->addCategories($query);
+        $design = $query->first();*/
+        
+        $articles = $this->Articles->findByDesignId($designId);
+        
+        //$this->Articles->addProduct($query);
+        //$this->Articles->addAppearence($query);
+        
+        //$articles = $query->toArray();
+        
+        $response = new ArticlesRequestHandler\GetArticlesByDesignResponse();
+        $response->init($articles);
+
+        Cache\CacheModel::write($key, $response);
+        parent::setJson($response);
+    }
+
+    public function getArticle($id)
+    {
+        $key = "ArticlesController-getArticle-".$id;
+        if (($response = Cache\CacheModel::read($key)) !== false) {
+            parent::setJson($response);
+            return;
+        }
+        $article = $this->Articles->getOne((int)$id);
+        
+        $response = new ArticlesRequestHandler\GetArticleResponse();
+        $response->init($article);
+
+        Cache\CacheModel::write($key, $response);
+        parent::setJson($response);
+
+    }
+
+//Odl code
     public function getHilightArticles($catId = null)
     {
         $key = "ArticlesController-getHilightArticles";
@@ -46,49 +90,7 @@ class ArticlesController extends AppController
         Cache\CacheModel::write($key, $response);
         parent::setJson($response);
     }
-
-    public function testArticles()
-    {
-        
-
-        $resultats = $woocommerce->get("products");
-
-        // Last request data.
-        debug($woocommerce->http->getRequest());
-
-        // Last response data.
-        debug($woocommerce->http->getResponse());
-
-        die();
-    }
-
-    public function getArticles($id)
-    {
-        $key = "ArticlesController-getArticles-".$id;
-        if (($response = Cache\CacheModel::read($key)) !== false) {
-            parent::setJson($response);
-            return;
-        }
-
-        $query = $this->Designs->getOne($id);
-        $this->Designs->addCategories($query);
-        $design = $query->first();
-        
-        $query = $this->Articles->findByDesign($design);
-        
-        $this->Articles->addProduct($query);
-        $this->Articles->addAppearence($query);
-        
-        $articles = $query->toArray();
-        
-        $response = new ArticlesRequestHandler\GetArticlesResponse();
-        $response->init($articles, $design);
-
-        Cache\CacheModel::write($key, $response);
-        parent::setJson($response);
-    }
-
-    public function getArticlesByCategory($catId)
+    public function getArticlesByCategory($catId = 0)
     {
         $key = "ArticlesController-getArticlesByCategory-$catId";
         if (($response = Cache\CacheModel::read($key)) !== false) {
@@ -96,7 +98,7 @@ class ArticlesController extends AppController
             return;
         }
 
-        $articles = $this->Articles->findByCategory($catId);
+        $articles = $this->Articles->findByCategories($catId);
         $category = $this->Categories->getOne($catId);
         
         $response = new ArticlesRequestHandler\getArticlesByCategoryResponse();
@@ -134,7 +136,7 @@ class ArticlesController extends AppController
         parent::setJson($response);
     }
     
-    public function getArticle($id = null)
+    /*public function getArticle($id = null)
     {
         $key = "ArticlesController-getArticle-".$id;
         if (($response = Cache\CacheModel::read($key)) !== false) {
@@ -150,7 +152,7 @@ class ArticlesController extends AppController
         Cache\CacheModel::write($key, $response);
         parent::setJson($response);
 
-    }
+    }*/
     
     
 }

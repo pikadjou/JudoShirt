@@ -17,8 +17,7 @@ class ProductsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        
-        $this->loadModel("Articles");
+
 
     }
     
@@ -29,11 +28,7 @@ class ProductsController extends AppController
             parent::setJson($response);
             return;
         }
-        $query = $this->Products->getAll();
-        
-//        $this->Products->addType($query);
-        
-        $products = $query->toArray();
+        $products = $this->Products->getAll();
                
         $response = new ProductsRequestHandler\GetProductsResponse();
         $response->init($products);
@@ -51,16 +46,10 @@ class ProductsController extends AppController
             return;
         }
         
-        $query = $this->Products->getOne($id);
-        $product = $query->first();
-        
-        $query = $this->Articles->getAllByProductId($id);
-        $this->Articles->addDesign($query);
-
-        $artciles = $query->toArray();
-
+        $product = $this->Products->getOne($id);
+        debug($product);
         $response = new ProductsRequestHandler\GetProductResponse();
-        $response->init($product, $artciles);
+        $response->init($product, null);
 
         Cache\CacheModel::write($key, $response);
         parent::setJson($response);

@@ -7,6 +7,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+use Cake\ORM\TableRegistry;
+
 /**
  * Designs Model
  *
@@ -16,6 +18,7 @@ use Cake\Validation\Validator;
 class DesignsTable extends Table
 {
 
+    private $_categoriesModel = null;
     /**
      * Initialize method
      *
@@ -42,6 +45,8 @@ class DesignsTable extends Table
             'foreignKey' => 'design_id',
             'dependent' => true,
         ]);
+
+        $this->_categoriesModel = TableRegistry::get('Categories');
     }
     
     /**
@@ -80,27 +85,56 @@ class DesignsTable extends Table
     }
     
     
-    public function getAllById($catId = null, $withJoin = true)
+    public function getAllById($catId = null)
     {
-        $designs = $this->getAll();
-
-        if($catId !== null){
-            $designs->matching('Categories', function(\Cake\ORM\Query $q) use ($catId) {
-                return $q->where([
-                    'Categories.id' => $catId
-                ]);
-            });
+        $designs = $this->_find();
+        if($catId === null || $catId === 0){
+            return $designs;
         }
+        foreach($categories as $category){
 
-        if($withJoin){
-            $this->addCategories($designs);
-        }else{
-           $designs->select($this);
+        }
+        if($catId !== null){
+            
         }
         
         return $designs;
     }
+
+    private function _find(){
+        $categories = $this->_categoriesModel->findSports();
+
+        $designs = $this->_formatArray($categories);
+
+        return $designs;
+    }
+    private function _formatArray($categories){
+        $return = [];
+        foreach($categories as $category){
+            if(count($category->children) > 0){
+                $return = array_merge($return, $this->_formatArray($category->children));
+                continue;
+            }
+            if($category->parent === 0){
+                continue;
+            }
+            $return[] = $this->_mapping($category);
+        }
+        return $return;
+    }
+    private function _mapping($categoryModel){
         
+        $design = new Design();
+
+        $design->id = $categoryModel->id;
+        $design->name = $categoryModel->name;
+        $design->content = $categoryModel->content;
+        $design->thumbnail = $categoryModel->picture;
+        
+        return $design;
+    }
+    /*   
+//commente 
     public function findDesignsByTypes($typeId){
         return $this->_matchWithType($this->_findActive(), $typeId)
                 ->distinct(["Designs.id"])
@@ -153,7 +187,6 @@ class DesignsTable extends Table
     }
     private function _findNew(){
 
-//Better to use config
         $designs = $this->_findActive()->matching(
                             'Categories', function ($q) {
                         return $q->where(["Categories.id" => 2]);
@@ -193,9 +226,6 @@ class DesignsTable extends Table
 
         return $query;
     }
-    /**
-     * Make join
-     */
     public function addTags($query, $select = []){
         
         $query->contain([
@@ -214,5 +244,5 @@ class DesignsTable extends Table
              }
         ]);
         
-    }
+    }*/
 }

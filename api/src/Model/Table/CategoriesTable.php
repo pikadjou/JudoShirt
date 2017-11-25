@@ -8,6 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
 
+use App\Model\WooCommerce;
 
 /**
  * Categories Model
@@ -44,203 +45,98 @@ class CategoriesTable extends AppTable
             'foreignKey' => 'parent_id'
         ]);
     }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
-        $validator
-            ->allowEmpty('name');
-            
-        $validator
-            ->allowEmpty('content');
-
-        return $validator;
-    }
     
-    /**
-     * Default get all design by category id.
-     *
-     * @param 
-     * @return App\Model\Table\DesignsTable
-     */
-    public function getAll()
-    {
-        $category = $this->find()->where(["visible" => 1])->order('visible');
+    public function all(){
         
-        return $category;
-    }
-    
-    public function getParents()
-    {
-        $category = $this->find()->where(["visible" => 1, "parent_id IS" => null]);
-        
-        return $category;
+        $categories = $this->_find();
+
+        return $this->_formatArray($categories);
     }
 
-    public function getChildren($parentId)
-    {
-        $category = $this->find()->where(["visible" => 1, "parent_id IS" => $parentId]);
+    public function findSports(){
         
-        return $category;
-    }
-    /**
-     * Default get all design by category id.
-     *
-     * @param 
-     * @return App\Model\Table\DesignsTable
-     */
-    public function getOne($id)
-    {
-        $category = $this->find()->where(["id" => $id])->limit(1);
-        
-        return $category->first();
-    }
-    /**
-     * Default get all design by category id.
-     *
-     * @param 
-     * @return App\Model\Table\DesignsTable
-     */
-    public function getTop()
-    {
-        $design = $this->find()->where(["type" => 1])->limit(1);
-        
-        return $design;
-    }
-    
-     /**
-     * Default get all design by category id.
-     *
-     * @param 
-     * @return App\Model\Table\DesignsTable
-     */
-    public function getNew()
-    {
-        $design = $this->find()->where(["type" => 2])->limit(1);
-        
-        return $design;
-    }
-    
-     /**
-     * Default get all design by category id.
-     *
-     * @param 
-     * @return App\Model\Table\DesignsTable
-     */
-    public function getHome()
-    {
-        $design = $this->find()->where(["type" => 3])->limit(1);
-        
-        return $design;
-    }
-    
-    /**
-     * Default get all design by category id.
-     *
-     * @param 
-     * @return App\Model\Table\DesignsTable
-     */
-    public function getPromotion()
-    {
-        $design = $this->find()->where(["type" => 4])->limit(1);
-        
-        return $design;
-    }
-    
-    public function findByGenders($types){
-        $typeId = [];
+        $categories = $this->_find();
+        $categories = $this->_formatArray($categories);
 
-        foreach($types as $v){
-            $typeId[] = $v->id;
+        foreach($categories as $category){
+           if($category->name === "BySports"){
+                return $category->children;
+           }
         }
-        $query = $this->_matchWithType($this->_findActive(), $typeId);
 
-        $query->group('Designs.id');
-
-        $query->select($this);
-
-        return $query->toArray();
+        return [];
     }
 
-    public function findWithDesigns(){
+    public function findTypes(){
+        
+        $categories = $this->_find();
 
-        $designTable = TableRegistry::get('Designs');
+        $categories = $this->_formatArray($categories);
 
-        $parent = $this->getParents()->toArray();
+        foreach($categories as $category){
+           if($category->name === "ByTypes"){
+                return $category->children;
+           }
+        }
 
-        foreach($parent as $category){
-            $category['children'] = $this->getChildren($category->id)->toArray();
+        return [];
+    }
 
-            foreach($category->children as $child){
-                $child['design'] = $designTable->getAllById($child->id, false)->toArray();
+    public function mapping($category){
+        return $this->_mapping($category);
+    }
+// Private Methode
+    private function _formatArray($categories){
+        $return = [];
+        foreach($categories as $category){
+            $return[] = $this->_mapping($category, $categories);
+        }
+        
+        return array_filter($return, function($v, $k) {
+            return $v->parent === 0;
+        }, ARRAY_FILTER_USE_BOTH);
+    }
+    private function _mapping($wooCategory, $wooCategories = []){
+
+        $category = new Category();
+
+        $category->id = $wooCategory->id;
+        $category->name = $wooCategory->name;
+
+        if(property_exists ($wooCategory, "description"))
+            $category->content = $wooCategory->description;
+        if(property_exists ($wooCategory, "display"))     
+            $category->visible = ($wooCategory->display === "default") ? true : false;
+        if(property_exists ($wooCategory, "parent"))     
+            $category->parent = $wooCategory->parent;
+        if(property_exists ($wooCategory, "count"))
+            $category->nbDesigns = $wooCategory->count;
+        
+        if(property_exists ($wooCategory, "image") && property_exists ($wooCategory->image, "src"))
+            $category->picture = $wooCategory->image->src;
+
+        if($wooCategories){
+            $category->children = [];
+            foreach($wooCategories as $wooChildren){
+                if($wooChildren->parent !== $category->id){
+                    continue;
+                }
+                $child = $this->_mapping($wooChildren, $wooCategories);
+                $category->children[] = $child;
             }
         }
+        
 
-        return $parent;
+        return $category;
     }
-    private function _find(){
-        
-        $categories = $this->find('all')->order('Categories.priority');
-        
-        return $categories;
-    }
-    private function _findActive(){
-        
-        $categories =  $this->_find()->where(["Categories.visible" => true]);
-        
-        return $categories;
-    }
+    private function _find($options = []){
+        if(array_key_exists("per_page", $options) === false){
+            $options["per_page"] = 50;
+        }
+        $woo = WooCommerce\WooCommerce::getInstance();
 
-    
-    private function _matchWithType($query, $typeIds){
+        $woo->get("products/categories", $options);
 
-        return $query->matching(
-                        'Designs.Articles.Products.Types', function ($q) use ($typeIds) {
-                    return $q->where(["Types.id IN" => $typeIds]);
-                }
-            );
-    }
-
-    private function _addDesign($query){
-        
-        $query->matching('Children.Designs', function(\Cake\ORM\Query $q) {
-                return $q->where([
-                    'Designs.visible' => true
-                ]);
-            });
-
-            return $query;
-    }
-
-    private function _addChildren($query){
-        
-        $query->matching('Children', function(\Cake\ORM\Query $q) {
-
-            return $q->matching('Designs', function(\Cake\ORM\Query $q) {
-                return $q->where([
-                    'Designs.visible' => true
-                ]);
-            })
-            ->where([
-                'Children.visible' => true
-            ]);
-        });
-
-        return $query;
-        
-    }
-    public function addChildren($query){
-        
-        $query->contain(['Children']);
-        
+        return json_decode($woo->http->getResponse()->getBody());
     }
 }

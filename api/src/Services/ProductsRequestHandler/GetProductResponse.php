@@ -16,9 +16,12 @@ class GetProductResponse extends \App\Services\RHBaseResponse
     function init ($product, $articles) {
         $this->product = new \App\Services\Entity\Product($product);
         
-        for($i = 0, $l = count($articles); $i < $l; $i++){
-            $this->articles[] = new \App\Services\Entity\Article($articles[$i]);
+        if($articles !== null){
+            for($i = 0, $l = count($articles); $i < $l; $i++){
+                $this->articles[] = new \App\Services\Entity\Article($articles[$i]);
+            }
         }
+        
     }
 }
 

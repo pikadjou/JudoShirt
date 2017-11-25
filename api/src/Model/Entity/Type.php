@@ -4,16 +4,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Category Entity.
+ * Type Entity.
  */
-class Category
+class Type
 {
     public $id = 0;
     public $name = "";
     public $content = "";
-    public $visible = false;
-    public $nbDesigns = 0;
-    public $picture = "";
+    public $priority = 0;
 
     public $parent = 0;
     public $children = []; 

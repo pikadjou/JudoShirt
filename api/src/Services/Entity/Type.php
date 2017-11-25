@@ -23,8 +23,8 @@ class Type
         $this->id = $type->id;
         $this->name = $type->name;
         $this->content = $type->content;
-        $this->type = $type->type;
-
+        //$this->type = $type->type;
+/*
         if($type->desings){
             for($i = 0, $l = count($type->desings); $i < $l; $i++){
                 $this->desings[] = new \App\Services\Entity\design($type->desings[$i]);
@@ -46,10 +46,11 @@ class Type
         if($type->parent_type){
             $this->parent = new \App\Services\Entity\type($type->parent_type);
         }
+*/
 
-        if($type->children_types){
-            for($i = 0, $l = count($type->children_types); $i < $l; $i++){
-                $this->children[] = new \App\Services\Entity\type($type->children_types[$i]);
+        if($type->children){
+            for($i = 0, $l = count($type->children); $i < $l; $i++){
+                $this->children[] = new \App\Services\Entity\type($type->children[$i]);
             }
         }
     }

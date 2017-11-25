@@ -41,7 +41,7 @@ module MartialShirt
             }
         }
 
-        public isLettreActive(lettre: string): boolan
+        public isLettreActive(lettre: string): boolean
         {
             if (this.activeHeaders.indexOf(lettre) > -1)
             {

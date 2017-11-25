@@ -25,6 +25,31 @@ class SizesTable extends Table
         
     }
     
+    public function mappingByAttribute($attributes){
+        foreach($attributes as $attribute){
+            if($attribute->name === "Size"){
+                return $this->_formatArray($attribute->options);
+            }
+        }
+        return [];
+    }
+    private function _formatArray($sizes){
+        
+        $return = [];
+        foreach($sizes as $size){
+            $return[] = $this->_mapping($size);
+        }
+        return $return;
+    }
+    private function _mapping($wooSize){
+        $size = new Size();
+        $size->id = $wooSize;
+        $size->name = $wooSize;
+        
+        return $size;
+    }
+
+//old code
     public function getByShopId($shopId){
         return $this->find()->where(["shopId" => $shopId])->limit(1);
     }

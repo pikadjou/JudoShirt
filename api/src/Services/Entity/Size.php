@@ -18,10 +18,10 @@ class Size
         
         $this->id = $size->id;
         $this->name = $size->name;
-        
+        /*
         $this->shopId = $size->shopId;
         
-        $this->priority = $size->priority;
+        $this->priority = $size->priority;*/
     }
 }
 

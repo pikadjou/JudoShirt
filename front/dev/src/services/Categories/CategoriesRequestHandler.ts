@@ -19,7 +19,7 @@ module MartialShirt.Services {
 		}
 
 		public GetCategories(request: any): string {
-			return this.server.request(new MartialShirt.Services.Request("GET", "GetCategories", this.controller, "index", []));
+			return this.server.request(new MartialShirt.Services.Request("GET", "GetCategories", this.controller, "findAll", []));
 		}
 
 		private addEvents(): void {

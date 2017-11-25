@@ -1,10 +1,9 @@
 <?php
 return [
-    "CacheUpdateDB" => true,
-    "CacheEnabled" => false,
+    "CacheExternalCall" => true,
+    "CacheRH" => false,
     
     "DebugView" => false,
-
     "DebugResponse" => false,
 ];
 

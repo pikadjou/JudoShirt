@@ -1,12 +1,12 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Tag;
+use App\Model\Entity\Type;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
+use Cake\ORM\TableRegistry;
 
 /**
  * Tags Model
@@ -16,6 +16,9 @@ use Cake\Validation\Validator;
 class TypesTable extends Table
 {
 
+    private $_categoriesModel = null;
+
+    
     private $_manualClotheType = ["Tee shirt", "Sweat-shirt", "Veste", "Débardeur", "Coque", "Sac", "Casquette", "Mug", "Peluche"];
     private $_manualClotheMatch = [
         "T-shirt" => "Tee shirt",
@@ -49,8 +52,46 @@ class TypesTable extends Table
             'className' => 'types',
             'foreignKey' => 'parent_id'
         ]);
+
+        $this->_categoriesModel = TableRegistry::get('Categories');
+        
     }
     
+    public function findMasterTypes(){
+        
+        $categories = $this->_categoriesModel->findTypes();
+
+        $return = $this->_formatArray($categories);
+ 
+        return $return;
+    }
+
+    
+    private function _formatArray($categories){
+        $return = [];
+        foreach($categories as $category){
+            $return[] = $this->_mapping($category);
+        }
+        return $return;
+    }
+    private function _mapping($categoryModel){
+        
+        $type = new Type();
+
+        $type->id = $categoryModel->id;
+        $type->name = $categoryModel->name;
+        $type->content = $categoryModel->content;
+        $type->parent = $categoryModel->parent;
+        
+        $type->children = [];
+        if($categoryModel->children && count($categoryModel->children) > 0){
+            $type->children = $this->_formatArray($categoryModel->children);
+        }
+        return $type;
+    }
+
+
+// OLD CODE
     public function getByShopId($id){
         return $this->_find()->where(["Types.shopId" => $id])->limit(1);
     }
@@ -64,13 +105,14 @@ class TypesTable extends Table
     public function getSubByName($name){
         return $this->_find()->where(["Types.name" => $name, "Types.parent_id IS NOT" => null])->limit(1)->first();
     }
+    private function _matchWithTypeDesign($query, $designId){
     
-    public function findMasterTypes(){
-        return $this->_findType(1)
-        ->where(["Types.parent_id IS" => null])
-        ->contain(['ChildrenTypes'])
-        ->toArray();
-    }
+            return $query->matching(
+                        'Products.Articles.Designs', function ($q) use ($designId) {
+                            return $q->where(["Designs.id" => $designId]);
+                        }
+                    );
+        }
     public function findAllChildren($typeId){
         return $this->_find()->where(["Types.parent_id" => $typeId])->toArray();
     }
@@ -138,8 +180,8 @@ class TypesTable extends Table
         
         
         /*
-         * Check Homme/Femme/mixte
-         */
+        * Check Homme/Femme/mixte
+        */
         $find = false;
         for($i = 0, $l = count($this->_manualType); $i < $l; $i++){
             if(stripos($fullName, $this->_manualType[$i]) !== false){
@@ -147,7 +189,7 @@ class TypesTable extends Table
                 $type = $this->getByName($this->_manualType[$i])->first();
 
                 if(!$type){
-                   $type = $this->newEntity();
+                $type = $this->newEntity();
                 }        
                 $type->name = $this->_manualType[$i];
                 $type->type = 2;
@@ -159,14 +201,14 @@ class TypesTable extends Table
                 break;
             }
         }
-         if(!$find){
-                 
+        if(!$find){
+                
             $defaultName = "Autre";
 
             $type = $this->getByName($defaultName)->first();
 
             if(!$type){
-               $type = $this->newEntity();
+            $type = $this->newEntity();
             }        
             $type->name = $defaultName;
             $type->type = 2;
@@ -176,7 +218,7 @@ class TypesTable extends Table
         
         return $types;   
     }
-    
+
 
     public function findByGenders($types, $productModel){
 
@@ -211,15 +253,6 @@ class TypesTable extends Table
         return $query->matching(
                     'Products', function ($q) use ($productIds) {
                         return $q->where(["Products.id IN" => $productIds]);
-                    }
-                );
-    }
-
-    private function _matchWithTypeDesign($query, $designId){
-
-        return $query->matching(
-                    'Products.Articles.Designs', function ($q) use ($designId) {
-                        return $q->where(["Designs.id" => $designId]);
                     }
                 );
     }

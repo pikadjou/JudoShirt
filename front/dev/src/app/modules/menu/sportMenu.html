@@ -30,8 +30,8 @@
 						</span>
 					</div>
 
-					<ul class="designs" ng-if="child.designs.length > 0" ng-show="(vm.openCategories.length > 0 && vm.openCategories.indexOf(child) > -1)">
-						<li ng-repeat="design in child.designs" ng-class="(vm.design && vm.design.id === design.id) ? 'active' : '' ">
+					<ul class="designs" ng-if="child.children.length > 0" ng-show="(vm.openCategories.length > 0 && vm.openCategories.indexOf(child) > -1)">
+						<li ng-repeat="design in child.children" ng-class="(vm.design && vm.design.id === design.id) ? 'active' : '' ">
 							<div class="content">
 								<a class="design-link" href="{{vm._application.getUrl('Design')}}/{{design.url}}">{{design.name}}</a>
 							</div>

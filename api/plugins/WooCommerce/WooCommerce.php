@@ -8,7 +8,7 @@ use Automattic\WooCommerce\Client;
  *
  * @property \App\Model\Table\CategoriesTable $Categories
  */
-class WooComerce
+class WooCommerce
 {
     private static $_instance = null;
 
@@ -20,6 +20,8 @@ class WooComerce
                 'ck_0c84c8e2050660718b7650a12678f16ae15f5e48', 
                 'cs_387bc9f8fa9c877e7079a835a0cfdcccc637d117',
                 [
+                    'wp_api' => true, // Enable the WP REST API integration
+                    'version' => 'wc/v2',
                     'verify_ssl' => false,
                     'query_string_auth' => true
                 ]

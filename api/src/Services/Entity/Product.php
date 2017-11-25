@@ -12,8 +12,8 @@ class Product
     public $content = "";
     public $price = "";
     public $thumbnail = "";
-    public $shopId = 0;
-    public $idCustomShop = 0;
+   // public $shopId = 0;
+    //public $idCustomShop = 0;
     public $priority = 0;
 //    
 //    public $types = [];
@@ -31,7 +31,7 @@ class Product
 
         $this->content = $product->content;
         $this->thumbnail = $product->thumbnail;
-        $this->shopId = $product->shopId;
+       // $this->shopId = $product->shopId;
         
         $this->priority = $product->priority;
         

@@ -8,32 +8,14 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
 
+use App\Model\Cache;
 use Cake\Log\Log;
 
-use App\Model\SpreadShirt;
-/**
- * Categories Model
- *
- * @property \Cake\ORM\Association\BelongsToMany $Designs
- */
-require_once(ROOT . DS . 'vendor' . DS  . 'SpreadShirt' . DS . 'HttpRequest.php');
+use App\Model\Printful;
 
-
-class ProductsTable extends Table
+class ProductsTable extends AppTable
 {
-    protected $_spreadshirt = null;
     
-    private $_typesModel = null;
-    private $_productsTypesModel = null;
-    
-    private $_appearancesModel = null;
-    private $_productsAppearancesModel = null;
-    
-    private $_sizesModel = null;
-    private $_productsSizesModel = null;
-
-    private $_measuresModel = null;
-    private $_productsSizesMeasuresModel = null;
     /**
      * Initialize method
      *
@@ -74,27 +56,73 @@ class ProductsTable extends Table
             'targetForeignKey' => 'view_id',
             'joinTable' => 'products_views'
         ]);
-        
-        $this->_spreadshirt = new SpreadShirt\HttpRequest();
-        
-        $this->_typesModel = TableRegistry::get('Types');
-        $this->_productsTypesModel = TableRegistry::get('ProductsTypes');
-        
-        
-        $this->_appearancesModel = TableRegistry::get('Appearances');
-        $this->_productsAppearancesModel = TableRegistry::get('ProductsAppearances');
-        
-        $this->_sizesModel = TableRegistry::get('Sizes');
-        $this->_productsSizesModel = TableRegistry::get('ProductsSizes');
-
-        $this->_measuresModel = TableRegistry::get('Measures');
-        $this->_productsSizesMeasuresModel = TableRegistry::get('ProductsSizesMeasures');
-        
-        $this->_viewsModel = TableRegistry::get('Views');
-        $this->_productsViewsModel = TableRegistry::get('ProductsViews');
     }
     
     public function getAll(){
+        return $this->_findAll();
+    }
+    public function getOne($id){
+        return $this->_getOne($id);
+    }
+// Private Methode
+
+    private function _findAll(){
+        $data = $this->_findAndMap();
+        return $data;
+    }
+    private function _getOne($id){
+        $id = (int)$id;
+        $data = $this->_findAndMAp();
+        foreach($data as $d){
+            if($d->id === $id){
+                return $d;
+            }
+        }
+        return null;
+    }
+    private function _find($options = []){
+        $key = "ProductsTable-_find-".json_encode($options);
+        if (($response = Cache\CacheModel::read($key, "Externe")) !== false) {
+            return $response;
+        }
+        $pf = Printful\PrintfulApiClient::getInstance();
+
+        $data = $pf->get("products", $options);
+        $response = json_decode (json_encode ($data), FALSE);
+
+        Cache\CacheModel::write($key, $response, "Externe");
+        return $response;
+    }
+    private function _findAndMap($options = []){
+        $data = $this->_find($options);
+
+        return $this->_formatArray($data);
+    }
+    private function _formatArray($products){
+
+        $return = [];
+        foreach($products as $product){
+            $return[] = $this->_mapping($product);
+        }
+        
+        return $return;
+    }
+    private function _mapping($printProduct){
+        
+        $product = new Product();
+
+        $product->id = $printProduct->id;
+        $product->name = $printProduct->model;
+        $product->short = "";
+        $product->content = $printProduct->description;
+        $product->thumbnail = $printProduct->image;
+        
+        
+        return $product;
+    }
+
+//OLD
+    /*public function getAll(){
         
         $products = $this->find()->where(["Products.visible" => 1]);
         
@@ -224,9 +252,6 @@ class ProductsTable extends Table
                 );
     }
 
-    /*
-        Join Table
-    */
     public function parseXmlFeatures($xmlProduct, $productModel){
 
         $this->_addType($xmlProduct, $productModel);
@@ -301,9 +326,6 @@ class ProductsTable extends Table
 
         $this->_productsViewsModel->linkProductAndViewId($product->id, $view->id);
     }
-    /*
-     * Make join
-     */
     
     public function addType($query){
         
@@ -311,5 +333,5 @@ class ProductsTable extends Table
             'Types'
         ]);
     }
-    
+    */
 }

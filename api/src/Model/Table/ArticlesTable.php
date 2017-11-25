@@ -1,7 +1,7 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Product;
+use App\Model\Entity\Article;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -10,27 +10,18 @@ use Cake\ORM\TableRegistry;
 
 use Cake\Log\Log;
 use Cake\Core\Configure;
-use App\Model\SpreadShirt;
-/**
- * Categories Model
- *
- * @property \Cake\ORM\Association\BelongsToMany $Designs
- */
-require_once(ROOT . DS . 'vendor' . DS  . 'SpreadShirt' . DS . 'HttpRequest.php');
+
+use App\Model\WooCommerce;
 
 
-class ArticlesTable extends Table
+class ArticlesTable extends AppTable
 {
-    protected $_spreadshirt = null;
-//    
+
     private $_productsModel = null;
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
+    private $_categoriesModel = null;
+    private $_sizesModel = null;
     
+
     public function initialize(array $config)
     {
         
@@ -43,329 +34,129 @@ class ArticlesTable extends Table
             'foreignKey' => 'product_id'
         ]);
         
-        $this->_spreadshirt = new SpreadShirt\HttpRequest();
-        $this->_desingsModel = TableRegistry::get('Designs');
         $this->_productsModel = TableRegistry::get('Products');
+        $this->_categoriesModel = TableRegistry::get('Categories');
+        $this->_sizesModel = TableRegistry::get('Sizes');
+        
     }
     
-    
-    public function getOneNoCache($id){
-        return $this->find()->where(["Articles.id" => $id])->limit(1);
-    }
-    public function getByShopIdNoCache($id){
-        return $this->find()->where(["Articles.shopId" => $id])->limit(1);
-    }
-    public function getAllByProductId($id){
-        return $this->find()->where(["Articles.product_id" => $id, "Articles.visible" => true]);
-    }
-    
-    public function findArticlesByType($catId, $designId, $typesId){
-        $query = $this->_find();
-
-        if($catId){
-            $query = $this->_byCategory($query, $catId);
-        }
-        if($designId){
-            $query = $this->_byDesign($query, $designId);
-        }
-        if($typesId && count($typesId) > 0){
-            $query = $this->_byTypes($query, $typesId);
-        }
-
-        return $query->contain(["Products"])->toArray();
-    }
-
-    public function findHilightProducts($catId){
-        return $this->_findHilight(null, $catId)
-                    ->contain([
-                        'Products' => [
-                            "Appearances"
-                        ]
-                    ])
-                    ->toArray();
-    }
-
-    public function findAllArticles(){
-
-        $query = $this->_find();
-
-        return $query->toArray();
-
-    }
-    public function findByCategory($catId){
-
-        if($catId == 0){
-            $query = $this->_find();
-        }else{
-            $query = $this->_byCategory($this->_find(), $catId);
-        }
+    public function all(){
         
-
-        $this->addProduct($query);
-
-        //$query->select($this);
-
-        return $query->toArray();
-
-    }
-
-    public function getOne($id, $forced = false){
-        
-        $article = $this->getOneNoCache($id)->first();
-       
-        if(!$article){
-            return;
-        }
-        $shopId = $article->shopId;
-        $lastUpdate = $article->lastUpdate;
-        
-        $date = new \DateTime();
-        $actualTime = $date->getTimestamp();
-        
-        $date->sub(new \DateInterval('PT' . 12 . 'H'));
-        $cacheTime = $date->getTimestamp();
-        
-
-        if($forced === true || Configure::read('CacheUpdateDB') === false){
-            $lastUpdate = null;
-        }
-                
-        if($lastUpdate === null || $lastUpdate < $cacheTime){
-            
-            $url = $this->_spreadshirt->_urlShop . "/articles/". $shopId;
-
-            $response = $this->_spreadshirt->getRequest($url);
-
-            $response = simplexml_load_string($response);
-            
-            if(!$response){
-                return;
-            }
-            
-           
-            //update product
-            $productId = (string)$response->product->productType->attributes()->id;
-            $this->_productsModel->updateProduct($productId);
-
-            
-            $extra = "view:".$response->product->defaultValues->defaultView->attributes()->id;
-            $extra .= "-appearance:".$response->product->appearance->attributes()->id;
-
-            $article->extra = $extra;
-            $article->lastUpdate = $actualTime;
-            
-            $this->save($article);
-            
-            
-        }
-        
-        $articles = $this->find()
-                ->where(["Articles.id" => $id, "Articles.visible" => true])
-                ->contain([
-                    "Designs",
-                    'Products' => [
-                        "Views",
-                        "Sizes",
-                        "Appearances",
-                        "Measures"
-                    ]
-                ]);
+        $articles = $this->_findAndMap();
         
         return $articles;
     }
-    
-    public function findByDesign($design, $forced = false)
-    {
-        $id = $design->id;
+    public function getOne($id){
+
+        $article = $this->_findById($id);
+        $article = $this->_linkPoduct([$article])[0];
         
-        $date = new \DateTime();
-        $actualTime = $date->getTimestamp();
+        return $article;
+    }
+    public function findByDesignId($designIds){
         
-        $date->sub(new \DateInterval('PT' . 24 . 'H'));
-        $cacheTime = $date->getTimestamp();
+        $articles = $this->_findByCategoryIds([$designIds]);
+
+        return $articles;
+    }
+
+    public function findByCategories($catIds = []){
         
-        if($forced === true || Configure::read('CacheUpdateDB') === false){
-            $lastUpdate = null;
-        }else{
-            $lastUpdate = $design->lastUpdate;
+        $articles = $this->_findByCategoryIds($catIds);
+        return $articles;
+    }
+
+//private methode
+    private function _findById($id){
+        $articles = $this->_findAndMap();
+
+        foreach($articles as $article){
+            if($article->id === $id){
+                return $article;
+            }
         }
-        if($lastUpdate === null || $lastUpdate < $cacheTime){
-            
-            $this->_setDirty($id);
-            $url = $this->_spreadshirt->_urlShop . "/articles?fullData=true&limit=1000&query=designIds:($design->shopId)";
-
-            $response = $this->_spreadshirt->getRequest($url);
-
-            $response = simplexml_load_string($response);
-
-            if($response->article){
-                $artcilesModel = [];
-                Log::notice("retreive article for design: $id ". date("d-m-Y H:i:s"));
-                foreach ($response->article as $article){
-                    $articleId = (string)$article->attributes()->id;
-                    //debug($articleId);
-                    $articleModel = $this->getByShopIdNoCache($articleId)->first();
-                    Log::notice("find article in db - ". date("d-m-Y H:i:s"));
-                    
-                    if(!$articleModel){
-                        $articleModel = $this->newEntity();
-                    }
-                    
-                   // debug($article->product);
-                    $articleModel->shopId = $articleId;
-                    $articleModel->design_id = $id;
-                    
-                    //product id
-                    $idProductShop = (string)$article->product->productType->attributes()->id;
-                    $product = $this->_productsModel->updateProduct($idProductShop)->first();
-                    
-                    $articleModel->product_id = $product->id;
-                    
-                    
-                    $articleModel->name = (string)$article->name;
-
-                   
-                    $articleModel->slug = $design->name ." - ". $product->name;
+        return null;
+    }
+    private function _findByCategoryIds($catIds = []){
         
-                            
-                    $articleModel->content = (string)$article->description;
-                    
-                    $url = $this->_spreadshirt->_urlShop . "/articles/".$articleModel->shopId."/price";
-                    $responsePrice = $this->_spreadshirt->getRequest($url);
-                    $responsePrice = simplexml_load_string($responsePrice);
-                    $articleModel->price = (string)$responsePrice->vatIncluded;
+        $articles = $this->_findAndMap();
 
-                    $articleModel->thumbnail = (string)$article->resources->resource[0]->attributes('xlink', true);
+        if(count($catIds) === 0){
+            $filtersCollection = $this->_linkPoduct($articles);
+            return $articles;
+        }
 
-                    $articleModel->dirty = false;
-                    $articlesModel[] = $articleModel;
-
+        $filtersCollection = [];
+        foreach($articles as $article){
+            if(!$article->categories || count($article->categories) === 0){
+                continue;
+            }
+            foreach($article->categories as $category){
+                if(array_search($category->id, $catIds) === false){
+                    continue;
                 }
-                Log::notice("end retrive article for design: $id - nb articles: ".count($articlesModel)." - ". date("d-m-Y H:i:s"));
-                
-                $this->saveMany($articlesModel);
-                $design->lastUpdate = $actualTime;
-                $this->_desingsModel->save($design);
+
+                $filtersCollection[] = $article;
             }
-            
-            $this->_deleteDirty();
         }
-        
-        $articles = $this->find()->where(["design_id" => $id, "Articles.visible" => true]);
-        
+        $filtersCollection = $this->_linkPoduct($filtersCollection);
+        return $filtersCollection;
+    }
+    
+    private function _find($options = []){
+        if(array_key_exists("per_page", $options) === false){
+            $options["per_page"] = 50;
+        }
+        $woo = WooCommerce\WooCommerce::getInstance();
+
+        $woo->get("products", $options);
+
+        return json_decode($woo->http->getResponse()->getBody());
+    }
+    private function _findAndMap($option = []){
+        $articles = $this->_find($option);
+
+        return $this->_formatArray($articles);
+    }
+
+    private function _linkPoduct($articles = []){
+        foreach($articles as $article){
+            $article->product = $this->_productsModel->getOne(2);
+        }
         return $articles;
     }
-    
-    public function findBySearchTerm($term){
-        $query = $this->_findByTerm($term);
+    private function _formatArray($articles){
 
-        return $query;
-    }
-    public function addAppearence($query){
-        $query->contain([
-            'Products' => [
-                'Appearances'
-            ]
-        ]);
-    }
-
-    private function _findByTerm($term){
-        $query = $this->_find()->where(
-            ['OR' 
-                => [
-                    'Articles.name LIKE' => '%'.$term.'%',
-                    'Articles.content LIKE' => '%'.$term.'%'
-                ]
-            ]
-        );
-
-        return $query;
-    }
-
-    public function addProduct($query){
-        $query->contain([
-            'Products' => [
-                'Types' => [
-                    'ParentTypes'
-                ]
-            ]
-        ]);
-    }
-    
-    public function addDesign($query){
-        $query->contain([
-            'Designs'
-        ]);
-    }
-    
-    
-    private function _find(){
-        return $this->find()
-            ->where(["Articles.visible" => true])
-            ->order('Articles.priority ASC');
-    }
-
-    private function _byDesign($query, $designId){
-        if($query == null){
-            $query = $this->_find();
+        $return = [];
+        foreach($articles as $article){
+            $return[] = $this->_mapping($article);
         }
-        $query->matching('Designs', function(\Cake\ORM\Query $q) use ($designId) {
-                return $q->where([
-                    'Designs.id' => $designId
-                ]);
-            });
-
-        return $query;
+        return $return;
     }
+    private function _mapping($wooArticle){
 
-    private function _byCategory($query, $catId){
-        if($query == null){
-            $query = $this->_find();
+        $article = new Article();
+        $article->id = $wooArticle->id;
+        $article->slug = $wooArticle->slug;
+        $article->name = $wooArticle->name;
+        $article->content = $wooArticle->description;
+        $article->price = $wooArticle->price;
+
+        $article->visible = $wooArticle->catalog_visibility === "visible" ? true : false;
+
+        if(property_exists ($wooArticle, "images") && count($wooArticle->images) > 0){
+            $article->thumbnail = $wooArticle->images[0]->src;
         }
-        $query->matching('Designs.Categories', function(\Cake\ORM\Query $q) use ($catId) {
-                return $q->where([
-                    'Categories.id' => $catId
-                ]);
-            });
-
-        return $query;
-    }
-    private function _byTypes($query, $typesId){
-        if($query == null){
-            $query = $this->_find();
+/*
+        $priority = 0;	
+        $extra = "";
+        */
+        foreach($wooArticle->categories as $category){
+            $article->categories[] = $this->_categoriesModel->mapping($category);
         }
-        $query->matching('Products.Types', function(\Cake\ORM\Query $q) use ($typesId) {
-                return $q->where([
-                    'Types.id IN' => $typesId
-                ]);
-            });
-
-        return $query;
-    }
-
-    private function _findHilight($query = null, $catId){
-        if($query == null){
-            $query = $this->_find();
+        if(property_exists ($wooArticle, "attributes") && count($wooArticle->attributes) > 0){
+            $article->sizes = $this->_sizesModel->mappingByAttribute($wooArticle->attributes);
         }
-        $query->where(["Articles.priority" => -1]);
-        
-        $this->_byCategory($query, $catId);
-
-        $query->contain(["Products"]);
-
-        return $query;
-    }
-
-    private function _setDirty($designId){
-        
-        $this->updateAll(
-                ['dirty' => true], // champs
-                ['design_id' => $designId]); // conditions
-        
-    
-    }
-    
-    private function _deleteDirty(){
-        $this->deleteAll(['dirty' => true]);
+        return $article;
     }
 }

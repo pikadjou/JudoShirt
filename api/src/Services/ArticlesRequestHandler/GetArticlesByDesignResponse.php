@@ -2,7 +2,7 @@
 
 namespace App\Services\ArticlesRequestHandler;
 
-class GetArticlesResponse extends \App\Services\RHBaseResponse
+class GetArticlesByDesignResponse extends \App\Services\RHBaseResponse
 {
     public $design = [];
     public $articles = [];
@@ -12,12 +12,13 @@ class GetArticlesResponse extends \App\Services\RHBaseResponse
         
     }
     
-    function init ($articles, $design) {
+    function init ($articles, $design = null) {
         for($i = 0, $l = count($articles); $i < $l; $i++){
             $this->articles[] = new \App\Services\Entity\Article($articles[$i]);
         }
 
-        $this->design = new \App\Services\Entity\Design($design);
+        if($design)
+            $this->design = new \App\Services\Entity\Design($design);
     }
 }
 
