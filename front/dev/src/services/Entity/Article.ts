@@ -23,6 +23,7 @@
         public views: Services.Entity.View[];
         public appearances: Services.Entity.Appearance[];
         public sizes: Services.Entity.Size[];
+        public variations: Services.Entity.Variation[];
 
     }
 } 

@@ -95,10 +95,10 @@ class ProductsTable extends AppTable
     }
     private function _findAndMap($options = []){
         $data = $this->_find($options);
-
+        
         return $this->_formatArray($data);
     }
-    private function _formatArray($products){
+    protected function _formatArray($products){
 
         $return = [];
         foreach($products as $product){

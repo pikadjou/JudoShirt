@@ -16,32 +16,13 @@ class BasketsController extends AppController
         $this->loadComponent('RequestHandler');
     }
    
-    public function getBasket($id = null, $token = null){
+    public function getBasket(){
         
-        if($id === "null"){
-            $id = null;
+        if ($this->request->is('options')) {
+            return $this->response;
         }
-        
-        if($token === "null" || $token === ""){
-            $token = null;
-        }
-        
-        $basket = null;
-        if($id === null){
-            // creation du basket
-            $basket = $this->Baskets->create($token);
-        }else{
-            //recuperation du basket
-            $basket = $this->Baskets->getOne($id);
-            
-            if($basket === null){
-              $basket = $this->Baskets->create($token);
-            }
-        }
-        
-        $explode = explode("\r\n\r\n", $basket, 2);
-        $basket = end($explode);
-        $basket = simplexml_load_string($basket);
+        $data = $this->request->data;
+        $basket = $this->Baskets->getOneOrCreate($data);
         
         //traitement du basket
         $response = new BasketsRequestHandler\GetBasketResponse();
@@ -51,26 +32,26 @@ class BasketsController extends AppController
     }
     
     public function updateQuantity(){
+
+        if ($this->request->is('options')) {
+            return $this->response;
+        }
         $data = $this->request->data;
 
         if($data){
             $basketId = $data['basketId'];
             $id = $data['id'];
             $quantity = $data['quantity'];
-            $element = $data['element'];
+
+            $basketId = ['id' => $data['basketId'], "token" => $data['token']];
+ 
+            $basket = $this->Baskets->getOneOrCreate($basketId);
 
             if($quantity === 0){
-                $ok = $this->Baskets->deleteArticle($basketId, $id);
+                $basket = $this->Baskets->deleteArticle($basket, $id);
             }else{
-                $ok = $this->Baskets->updateArticleQuantity($basketId, $id, $quantity, $element);
+                $basket = $this->Baskets->updateArticleQuantity($basket, $id, $quantity);
             }
-            
-
-            $basket = $this->Baskets->getOne($basketId);
-            $explode = explode("\r\n\r\n", $basket, 2);
-            $basket = end($explode);
-            $basket = simplexml_load_string($basket);
-
             //traitement du basket
             $response = new BasketsRequestHandler\GetBasketResponse();
             $response->init($basket);
@@ -87,27 +68,19 @@ class BasketsController extends AppController
     }
     
     public function addArticle(){
-        $data = $this->request->data;
 
+        if ($this->request->is('options')) {
+            return $this->response;
+        }
+
+        $data = $this->request->data;
         if($data){
             $article = $data['article'];
-            $basketId = $data['basketId'];
-                    
-            $basket = $this->Baskets->getOne($basketId);
-            $explode = explode("\r\n\r\n", $basket, 2);
-            $basket = end($explode);
-            $basket = simplexml_load_string($basket);
+            $basketId = ['id' => $data['basketId'], "token" => $data['token']];
+        
 
-            $basketId = (string)$basket->attributes()->id;
-            
-            $ok = $this->Baskets->addArticle($basketId, $article);
-            
-            
-            //traitement du basket
-            $basket = $this->Baskets->getOne($basketId);
-            $explode = explode("\r\n\r\n", $basket, 2);
-            $basket = end($explode);
-            $basket = simplexml_load_string($basket);
+            $basket = $this->Baskets->getOneOrCreate($basketId);
+            $basket = $this->Baskets->addArticle($basket, $article);
             
             $response = new BasketsRequestHandler\GetBasketResponse();
             $response->init($basket);
@@ -120,6 +93,5 @@ class BasketsController extends AppController
 
             parent::setJson($response);
         }
-        
     }
 }

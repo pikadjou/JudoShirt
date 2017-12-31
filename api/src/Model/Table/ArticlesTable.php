@@ -20,6 +20,8 @@ class ArticlesTable extends AppTable
     private $_productsModel = null;
     private $_categoriesModel = null;
     private $_sizesModel = null;
+    private $_appearancesModel = null;
+    private $_variationsModel = null;    
     
 
     public function initialize(array $config)
@@ -37,6 +39,8 @@ class ArticlesTable extends AppTable
         $this->_productsModel = TableRegistry::get('Products');
         $this->_categoriesModel = TableRegistry::get('Categories');
         $this->_sizesModel = TableRegistry::get('Sizes');
+        $this->_appearancesModel = TableRegistry::get('Appearances');
+        $this->_variationsModel = TableRegistry::get('Variations');
         
     }
     
@@ -50,6 +54,7 @@ class ArticlesTable extends AppTable
 
         $article = $this->_findById($id);
         $article = $this->_linkPoduct([$article])[0];
+        $article = $this->_linkVariations([$article])[0];
         
         return $article;
     }
@@ -64,6 +69,15 @@ class ArticlesTable extends AppTable
         
         $articles = $this->_findByCategoryIds($catIds);
         return $articles;
+    }
+
+    public function getVariation($articleId, $variationId){
+
+        $article = $this->getOne($articleId);
+
+        $article = $this->_filterVariations($article, [$variationId]);
+
+        return $article;
     }
 
 //private methode
@@ -115,7 +129,6 @@ class ArticlesTable extends AppTable
     }
     private function _findAndMap($option = []){
         $articles = $this->_find($option);
-
         return $this->_formatArray($articles);
     }
 
@@ -125,7 +138,26 @@ class ArticlesTable extends AppTable
         }
         return $articles;
     }
-    private function _formatArray($articles){
+    private function _linkVariations($articles = []){
+
+        foreach($articles as $article){
+            $article = $this->_variationsModel->setVariations($article);
+        }
+        return $articles;
+    }
+    private function _filterVariations($article, $variationsId){
+        $variations = [];
+
+        foreach($article->variations as $variation){
+            if(array_search ($variation->id, $variationsId) !== false){
+                $variations[] = $variation;
+            }
+        }
+        $article->variations = $variations;
+
+        return $article;
+    }
+    protected function _formatArray($articles){
 
         $return = [];
         foreach($articles as $article){
@@ -156,6 +188,7 @@ class ArticlesTable extends AppTable
         }
         if(property_exists ($wooArticle, "attributes") && count($wooArticle->attributes) > 0){
             $article->sizes = $this->_sizesModel->mappingByAttribute($wooArticle->attributes);
+            $article->appearances = $this->_appearancesModel->mappingByAttribute($wooArticle->attributes);           
         }
         return $article;
     }

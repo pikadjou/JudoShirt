@@ -1,176 +1,206 @@
-module MartialShirt {
+module MartialShirt
+{
     'use strict';
 
-	export class C_BasketItems extends MartialShirt.Init.AbstractModule {
+    export class C_BasketItems extends MartialShirt.Init.AbstractModule
+    {
 
-		public showBasket: boolean = false;
+        public showBasket: boolean = false;
 
-		public basketId: string = null;
-		public basket: Services.Entity.Basket = null;
+        public basketId: string = null;
+        public basket: Services.Entity.Basket = null;
 
-		public loader: boolean = false;
-		public static $inject = [
-			'$scope',
-			'$location',
-			Services.BasketsRequestHandler.Name
-		];
-		constructor(
-			private $scope: ng.IScope,
-			private $location: any,
-			private RH: Services.BasketsRequestHandler
-			) {
-			super();
+        public loader: boolean = false;
+        public static $inject = [
+            '$scope',
+            '$location',
+            Services.BasketsRequestHandler.Name
+        ];
+        constructor(
+            private $scope: ng.IScope,
+            private $location: any,
+            private RH: Services.BasketsRequestHandler
+        )
+        {
+            super();
 
-			this.init($scope);
+            this.init($scope);
 
-			this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
+            this.RH.GetBasketReceived.add(this.onPacketRecieved, this);
 
-			this._signal.askAddArticle.add(this.addArticle, this);
+            this._signal.askAddArticle.add(this.addArticle, this);
 
-			this._fillBasketId();
-			if (!this._login.hasToken()) {
-				this.launchGetBasket();
-			}
-			
-		}
+            this._fillBasketId();
+            if (!this._login.hasToken())
+            {
+                this.launchGetBasket();
+            }
 
-		public Authenticated() {
-			super.Authenticated();
-			this.launchGetBasket();
-		}
+        }
 
-		public launchGetBasket() {
-			var request = new Services.BasketsClass.GetBasketRequest();
-			request.id = this.basketId;
-			request.token = this._login.getToken();
+        public Authenticated()
+        {
+            super.Authenticated();
+            this.launchGetBasket();
+        }
 
-			this.loader = true;
-			this.RH.GetBasket(request);
-		}
-		public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse) {
-			this.basket = response.basket;
+        public launchGetBasket()
+        {
+            var request = new Services.BasketsClass.GetBasketRequest();
+            request.id = this.basketId;
+            request.token = this._login.getToken();
 
-			this._setBasketID(this.basket.id);
+            this.loader = true;
+            this.RH.GetBasket(request);
+        }
+        public onPacketRecieved(response: Services.BasketsClass.GetBasketResponse)
+        {
+            this.basket = response.basket;
 
-			this.loader = false;
-		}
+            this._setBasketID(this.basket.id);
 
-		private _fillBasketId() {
-			var basketId = Models.PlayerStorage.PlayerStorage.getInstance(Models.PlayerStorage.EStorageType.SESSION).getItem(Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
+            this.loader = false;
+        }
 
-			if (basketId) {
-				this._setBasketID(basketId);
-			}
-		}
-		private _setBasketID(basketId: string) {
-			if (!basketId) {
-				return;
-			}
-			this.basketId = basketId;
-			Models.PlayerStorage.PlayerStorage.getInstance(Models.PlayerStorage.EStorageType.SESSION).setItem(Models.PlayerStorage.PlayerStorageConst.BASKET_ID, basketId);
+        private _fillBasketId()
+        {
+            var basketId = Models.PlayerStorage.PlayerStorage.getInstance(Models.PlayerStorage.EStorageType.SESSION).getItem(Models.PlayerStorage.PlayerStorageConst.BASKET_ID);
 
-		}
+            if (basketId)
+            {
+                this._setBasketID(basketId);
+            }
+        }
+        private _setBasketID(basketId: string)
+        {
+            if (!basketId)
+            {
+                return;
+            }
+            this.basketId = basketId;
+            Models.PlayerStorage.PlayerStorage.getInstance(Models.PlayerStorage.EStorageType.SESSION).setItem(Models.PlayerStorage.PlayerStorageConst.BASKET_ID, basketId);
+        }
 
-		public showHideBasket() {
-			this.showBasket = !this.showBasket;
+        public showHideBasket()
+        {
+            this.showBasket = !this.showBasket;
 
-			if (this.showBasket === true) {
-				Controller.GTM.getInstance().LocationChange("/basket");
-			} else {
-				Controller.GTM.getInstance().LocationChange(this.$location.path());
-			}
-		}
+            if (this.showBasket === true)
+            {
+                Controller.GTM.getInstance().LocationChange("/basket");
+            } else
+            {
+                Controller.GTM.getInstance().LocationChange(this.$location.path());
+            }
+        }
 
-		public getNbItems() : number {
-			if (!this.basket || this.basket === null) {
-				return 0;
-			}
+        public getNbItems(): number
+        {
+            if (!this.basket || this.basket === null)
+            {
+                return 0;
+            }
 
-			var nb = 0;
+            var nb = 0;
 
-			for (var i = 0, l = this.basket.basketItems.length; i < l; i++) {
-				nb += this.basket.basketItems[i].quantity;
-			}
-			return nb;
-		}
+            for (var i = 0, l = this.basket.basketItems.length; i < l; i++)
+            {
+                nb += this.basket.basketItems[i].quantity;
+            }
+            return nb;
+        }
 
-		public addArticle(article: Services.Entity.Article) {
+        public addArticle(article: Services.Entity.Article)
+        {
 
-			var basketItem = this.getBasketItemByArticle(article);
+            var basketItem = this.getBasketItemByArticle(article);
 
-			if (basketItem) {
-				basketItem.quantity++;
-				this.updateBasketItem(basketItem);
-			} else {
-				this.createBasketItem(article);
-			}
-		}
+            if (basketItem !== null)
+            {
+                basketItem.quantity++;
+                this.updateBasketItem(basketItem);
+            } else
+            {
+                this.createBasketItem(article);
+            }
+        }
 
-		public createBasketItem(article: Services.Entity.Article) {
+        public createBasketItem(article: Services.Entity.Article)
+        {
+            var request = new Services.BasketsClass.AddArticleRequest();
+            request.article = article;
+            request.basketId = this.basket.id;
+            request.token = this._login.getToken();
 
-			var basketItem = this.getBasketItemByArticle(article);
+            this.loader = true;
+            this.RH.addArticle(request);
+        }
+        public updateBasketItem(basketItem: Services.Entity.BasketItem)
+        {
 
-			var request = new Services.BasketsClass.AddArticleRequest();
-			request.article = article;
-			request.basketId = this.basket.id;
-			request.token = this._login.getToken();
+            var request = new Services.BasketsClass.UpdateQuantityRequest();
+            request.basketId = this.basket.id;
+            request.id = basketItem.id;
+            request.quantity = basketItem.quantity;
+            request.element = basketItem.extraElement;
+            request.token = this._login.getToken();
 
-			this.loader = true;
-			this.RH.addArticle(request);
-		}
-		public updateBasketItem(basketItem: Services.Entity.BasketItem) {
 
-			var request = new Services.BasketsClass.UpdateQuantityRequest();
-			request.basketId = this.basket.id;
-			request.id = basketItem.id;
-			request.quantity = basketItem.quantity;
-			request.element = basketItem.extraElement;
+            this.loader = true;
+            this.RH.UpdateQuantity(request);
+        }
 
-			this.loader = true;
-			this.RH.UpdateQuantity(request);
-		}
+        public addQuantity(basketItem: Services.Entity.BasketItem, quantity: number)
+        {
 
-		public addQuantity(basketItem: Services.Entity.BasketItem, quantity: number) {
+            if (quantity === 0)
+            {
+                basketItem.quantity = 0;
+            } else
+            {
+                basketItem.quantity += quantity;
+            }
+            this.updateBasketItem(basketItem);
+        }
 
-			if (quantity === 0) {
-				basketItem.quantity = 0;
-			} else {
-				basketItem.quantity += quantity;
-			}
-			this.updateBasketItem(basketItem);
-		}
+        public getBasketItemByArticle(article: Services.Entity.Article): Services.Entity.BasketItem
+        {
+            if (!this.basket || !this.basket.basketItems)
+            {
+                return null;
+            }
+            for (var array = this.basket.basketItems, i = 0, l = array.length, basketItem: Services.Entity.BasketItem; i < l; i++)
+            {
+                basketItem = array[i];
+                if (basketItem.articleId !== article.shopId)
+                {
+                    continue;
+                }
 
-		public getBasketItemByArticle(article: Services.Entity.Article) : Services.Entity.BasketItem {
+                if (basketItem.size.shopId !== article.sizes[0].shopId)
+                {
+                    continue;
+                }
+                if (basketItem.appearance.shopId !== article.appearances[0].shopId)
+                {
+                    continue;
+                }
+                return basketItem;
+            }
+            return null;
+        }
+    }
 
-			if (!this.basket || !this.basket.basketItems) {
-				return null;
-			}
-			for (var array = this.basket.basketItems, i = 0, l = array.length, basketItem : Services.Entity.BasketItem; i < l; i++) {
-				basketItem = array[i];
-				if (basketItem.articleId !== article.shopId) {
-					continue;
-				}
+    export class BasketItems extends Init.AbstractDirective implements ng.IDirective
+    {
+        public templateUrl = "/scripts/app/modules/basket/items.html";
 
-				if (basketItem.size.shopId !== article.sizes[0].shopId) {
-					continue;
-				}
-				if (basketItem.appearance.shopId !== article.appearances[0].shopId) {
-					continue;
-				}
-				return basketItem;
-			}
-		}
-	}
 
-	export class BasketItems extends Init.AbstractDirective implements ng.IDirective {
-		public templateUrl = "/scripts/app/modules/basket/items.html";
-		
+        public static Name = "BasketItems".toLocaleLowerCase();
 
-		public static Name = "BasketItems".toLocaleLowerCase();
+        constructor() { super(); }
 
-		constructor() { super(); }
-
-		public controller = C_BasketItems;
-	}
-	MartialShirt.Init.Application.MartialShirtApp.directive(BasketItems.Name, MartialShirtApp.Application.GetDirectiveFactory<BasketItems>(BasketItems));
+        public controller = C_BasketItems;
+    }
+    MartialShirt.Init.Application.MartialShirtApp.directive(BasketItems.Name, MartialShirtApp.Application.GetDirectiveFactory<BasketItems>(BasketItems));
 }

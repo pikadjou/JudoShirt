@@ -6,7 +6,8 @@
 		<div class="alert label">
 			{{vm.errorMessage}}
 		</div>
-	</div>
+    </div>
+    {{ vm.SelectedVariation }}
 	<div class="row" ng-if="!vm.loader">
 		<div class="small-6 columns">
 			<img src="{{vm.getImageUrl(0, 0)}}" alt="{{vm.article.name}}" class="main" />

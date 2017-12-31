@@ -4,8 +4,8 @@ namespace App\Services;
 
 class RHBaseResponse
 {
-    //public $Identifier = "";
-    
+    public $Identifier = "";
+    public $errorMessage = "";
     function __construct(){
         /*$classe = get_class($this);
         $explode = explode("\\", $classe);
@@ -15,6 +15,10 @@ class RHBaseResponse
         $this->set('Identifier', $name);
          * */
          
+    }
+
+    function initError($message){
+        $this->errorMessage = $message;
     }
 }
 

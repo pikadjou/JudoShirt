@@ -1,7 +1,10 @@
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1  
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
 </IfModule>
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Methods: "GET, POST, OPTIONS"

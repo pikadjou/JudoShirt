@@ -39,7 +39,7 @@ module MartialShirt.Services {
 			) {
 
 			this.RH.GetSessionReveived.addOnce(this._getServeurSession, this);
-			var session = this.Application.getCookie("sprd_auth_token");
+			var session = this.Application.getCookie("jwt_token");
 			if (session) {
 				this._token = session;
 
@@ -90,7 +90,7 @@ module MartialShirt.Services {
 			this.RH.Login(request);
 		}
 		public Logout() {
-			this.Application.removeCookie("sprd_auth_token");
+			this.Application.removeCookie("jwt_token");
 			window.location = <any>"/";
 		}
 		public CheckUserSessionId() {

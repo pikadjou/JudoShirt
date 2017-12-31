@@ -67,7 +67,7 @@ class TypesTable extends Table
     }
 
     
-    private function _formatArray($categories){
+    protected function _formatArray($categories){
         $return = [];
         foreach($categories as $category){
             $return[] = $this->_mapping($category);

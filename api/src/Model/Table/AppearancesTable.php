@@ -34,24 +34,33 @@ class AppearancesTable extends Table
         ]);
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id');
-            
-        $validator
-            ->allowEmpty('name');
-            
 
-        return $validator;
+
+    public function mappingByAttribute($attributes){
+        foreach($attributes as $attribute){
+            if($attribute->name === "Color"){
+                $attribute->options = property_exists ($attribute, "options") ? $attribute->options : [$attribute->option];
+                return $this->_formatArray($attribute->options);
+            }
+        }
+        return [];
     }
+    protected function _formatArray($apps){
+        
+        $return = [];
+        foreach($apps as $app){
+            $return[] = $this->_mapping($app);
+        }
+        return $return;
+    }
+    private function _mapping($wooApp){
+        $app = new Appearance();
+        $app->id = $wooApp;
+        $app->name = $wooApp;
+        
+        return $app;
+    }
+//old code
     public function getByShopId($shopId){
         return $this->find()->where(["shopId" => $shopId])->limit(1);
     }

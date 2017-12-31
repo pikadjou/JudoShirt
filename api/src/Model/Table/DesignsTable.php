@@ -108,7 +108,7 @@ class DesignsTable extends Table
 
         return $designs;
     }
-    private function _formatArray($categories){
+    protected function _formatArray($categories){
         $return = [];
         foreach($categories as $category){
             if(count($category->children) > 0){

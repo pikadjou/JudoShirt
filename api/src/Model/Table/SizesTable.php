@@ -26,14 +26,16 @@ class SizesTable extends Table
     }
     
     public function mappingByAttribute($attributes){
+
         foreach($attributes as $attribute){
             if($attribute->name === "Size"){
+                $attribute->options = property_exists ($attribute, "options") ? $attribute->options : [$attribute->option];
                 return $this->_formatArray($attribute->options);
             }
         }
         return [];
     }
-    private function _formatArray($sizes){
+    protected function _formatArray($sizes){
         
         $return = [];
         foreach($sizes as $size){

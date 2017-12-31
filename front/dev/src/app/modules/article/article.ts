@@ -15,6 +15,8 @@ module MartialShirt
 
         public measures: Services.Entity.Measure[] = null;
 
+        public SelectedVariation: Services.Entity.Variation = null;
+
         public appearances: Services.Entity.Appearance[] = null;
         public SelectedAppearance: Services.Entity.Appearance = null;
 
@@ -194,15 +196,39 @@ module MartialShirt
         public changeSelectedAppearance(appearance: Services.Entity.Appearance)
         {
             this.SelectedAppearance = appearance;
+            this.updateVariation();
             this.showAppearance = false;
-
         }
         public changeSelectedSize(size: Services.Entity.Size)
         {
             this.SelectedSize = size;
+            this.updateVariation();
             this.showSize = false;
         }
 
+        public updateVariation()
+        {
+            if (this.SelectedSize === null || this.SelectedAppearance === null)
+            {
+                this.SelectedVariation = null;
+                return;
+            }
+            for (let variation of this.article.variations)
+            {
+                if (variation.sizeId !== this.SelectedSize.id)
+                {
+                    continue;
+                }
+                if (variation.appearanceId !== this.SelectedAppearance.id)
+                {
+                    continue;
+                }
+                this.SelectedVariation = variation;
+                return;
+            }
+
+            this.SelectedVariation = null;
+        }
         public isDefaultSize(size: Services.Entity.Size): boolean
         {
             if (!this.SelectedSize)
@@ -266,10 +292,16 @@ module MartialShirt
                 this.errorMessage = "Merci de selectionner une couleur pour votre produit";
                 return;
             }
+            if (!this.SelectedVariation)
+            {
+                this.errorMessage = "Cette conbinaison n'existe pas pour votre produit";
+                return;
+            }
 
             var article: Services.Entity.Article = this.article;
             article.sizes = [this.SelectedSize];
             article.appearances = [this.SelectedAppearance];
+            article.variations = [this.SelectedVariation];
 
             this._signal.askAddArticle.dispatch(article);
             this.errorMessage = "";

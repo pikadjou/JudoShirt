@@ -86,7 +86,7 @@ class CategoriesTable extends AppTable
         return $this->_mapping($category);
     }
 // Private Methode
-    private function _formatArray($categories){
+    protected function _formatArray($categories){
         $return = [];
         foreach($categories as $category){
             $return[] = $this->_mapping($category, $categories);

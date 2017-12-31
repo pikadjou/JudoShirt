@@ -32,35 +32,23 @@ class BasketItem
             return;
         }
         
-        $this->id = (string)$item->attributes()->id;
-        $this->name = "";
-        $this->articleId = (int)$item->element->attributes()->id;
+        $this->id = $item->id;
+       // $this->name = "";
+        $this->articleId = $item->articleId;
          
-        $this->description = (string)$item->description;
-        $this->quantity = (int)$item->quantity;
+        //$this->description = $item->description;
+        $this->quantity = $item->quantity;
         
-        $this->appearance = new \App\Services\Entity\Appearance();
-        $this->size = new \App\Services\Entity\Size();
-
-        foreach ($item->element->properties->property as $property){
-            if((string)$property->attributes()->key === "size"){
-                $this->size->shopId = (int)$property;
-            } else if((string)$property->attributes()->key === "sizeLabel"){
-                $this->size->name = (string)$property;
-            } else if((string)$property->attributes()->key === "product"){
-                $this->productId = (float)$property;
-            } else if((string)$property->attributes()->key === "appearanceLabel"){
-                $this->appearance->name = (string)$property;
-            } else if((string)$property->attributes()->key === "appearance"){
-                $this->appearance->shopId = (int)$property;
-            }
-        }
         
-        $this->priceItem = (float)$item->priceItem->display;
-        $this->price = (float)$item->price->display;
+        $this->appearance = new \App\Services\Entity\Appearance($item->appearance);
+        $this->size = new \App\Services\Entity\Size($item->size);
 
-        $this->pictureLink = "http://image.spreadshirtmedia.net/image-server/v1/products/". $this->productId .",appearanceId=". $this->appearance->shopId .".jpg";
+        $this->priceItem = $item->priceItem;
+        $this->price = $item->price;
+
+        $this->pictureLink = $item->pictureLink;
     
+        /*
         foreach ($item->links->link as $link){
         
             if((string)$link->attributes()->type === "edit"){
@@ -68,7 +56,7 @@ class BasketItem
             }
         }
         $this->extraElement = $item->element->asXML();
-        
+        */
     }
 }
 

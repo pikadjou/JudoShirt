@@ -29,6 +29,8 @@ class Article
     public $sizes = [];
     public $measures = [];
     public $appearances = [];
+    public $variations = [];
+    
     public $views = [];
     
     public $design = null;
@@ -78,10 +80,13 @@ class Article
         for($i = 0, $l = count($article->sizes); $i < $l; $i++){
             $this->sizes[] = new \App\Services\Entity\Size($article->sizes[$i]);
         }
-    /*debug($article->product);
-        for($i = 0, $l = count($article->product->appearances); $i < $l; $i++){
-            $this->appearances[] = new \App\Services\Entity\Appearance($article->product->appearances[$i]);
+        for($i = 0, $l = count($article->appearances); $i < $l; $i++){
+            $this->appearances[] = new \App\Services\Entity\Appearance($article->appearances[$i]);
         }
+        for($i = 0, $l = count($article->variations); $i < $l; $i++){
+            $this->variations[] = new \App\Services\Entity\Variation($article->variations[$i]);
+        }
+        /*
         for($i = 0, $l = count($article->product->views); $i < $l; $i++){
             $this->views[] = new \App\Services\Entity\View($article->product->views[$i]);
         }

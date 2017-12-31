@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Error\Client;
+
 use App\Controller\AppController;
 use App\Services\UsersRequestHandler;
 use App\Services\Entity;
@@ -13,35 +15,10 @@ require_once(ROOT . DS . 'vendor' . DS  . 'SpreadShirt' . DS . 'HttpRequest.php'
  */
 class UsersController extends AppController
 {
-
-    protected $_spreadshirt = null;
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('RequestHandler');
-        
-        $this->_spreadshirt = new \App\Model\SpreadShirt\HttpRequest();  
-        
-    }
-    /**
-     * Index method
-     *
-     * @return void
-     */
-    public function getLoginMethodes()
-    {
-        
-        $url = $this->_spreadshirt->_securityHost . "sessions";
-
-        //$url = $this->_spreadshirt->secureUrl("POST", $url);
-        $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><login xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net"><username>pikadjou@gmail.com</username><password>blacks-159</password></login>';
-        
-        $response = new UsersRequestHandler\GetLoginMethodesResponse();
-        $response->init();
-        
-        $response->add(new \App\Services\Entity\LoginMethode("SpreadShirt", $url, "xml", $xml));
-
-        parent::setJson($response);
+        $this->loadComponent('RequestHandler');        
     }
 
     public function login(){
@@ -50,129 +27,96 @@ class UsersController extends AppController
             return $this->response;
         }
         $data = $this->request->data;
-        $url = $this->_spreadshirt->_securityHost . "sessions";
-        debug($url);
-        debug($data);
-        $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><login xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://api.spreadshirt.net"><username>'.$data['username'].'</username><password>'.$data['password'].'</password></login>';
-        debug($xml);
-        $login = $this->_spreadshirt->postRequest($url, $xml); 
-        debug($login);       
-        $headers = $this->get_headers_from_curl_response($login);
+        
+        $this->loadModel("Clients");
 
-        debug($headers);
+        $client = $this->Clients->GetUserByCredential($data['username'], $data['password']);
+          
         $response = new UsersRequestHandler\GetLoginResponse();
-        if($headers['http_code'] && strpos($headers['http_code'], '201')){
-            $response->init(true);
-            
-            if($headers['Set-Cookie']){
-                $explode = explode(";", $headers['Set-Cookie']);
-                
-                if($explode[0]){
-                    $cookie = explode("=", $explode[0]);
-                    
-                    $response->addCookie($cookie[0], $cookie[1]);
-                    if($cookie[1]){
-                        $idSession = $cookie[1];
-                        
-                        $user = $this->_getUserBySession($idSession);
-                        
-                        if($user){
-                        $response->init(true);
-                        
-                        $response->addUser($user);
-                        }
-                    }
-                }
-                
-            }
+        if(is_string ($client)){
+            $response->init(false);   
+            $response->addCookie("erreur", $client);         
         }else{
-            $response->init(false);
-
-            $response->addCookie("erreur", $headers);
-            
+            $response->init(true);
+            $response->addCookie("jwt_token", $client->token);
+            $response->addUser($client);
         }
         
         parent::setJson($response);
     }
     
-    private function _getXmlUserBySession($sessionId){
-        $url = $this->_spreadshirt->_securityHost . "sessions/" . $sessionId;
-
-        $response = $this->_spreadshirt->getRequest($url, false);
-        
-        if(!$response){
-            return false;
-        }
-        $response = simplexml_load_string($response);
-        
-        $userLink = (string)$response->user->attributes('xlink', true);
-        
-        $user = $this->_spreadshirt->getRequest($userLink);
-        $user = simplexml_load_string($user);
-        
-        return $user;
-    }
-    private function _getUserBySession($sessionId){
-        
-        $user = $this->_getXmlUserBySession($sessionId);
-        
-        if(!$user){
-            return false;
-        }
-
-        $userModel = new Entity\User();
-        $userModel->initByXml($user);
-        
-        return $userModel;
-    }
-    
     public function session($id){
         
-        $user = $this->_getUserBySession($id);
+        $this->loadModel("Clients");
+        $client = $this->Clients->GetActiveUser($id);
         
         $response = new UsersRequestHandler\GetSessionResponse();
-
-        if($user == false){
+        if($client == false){
             $response->init(false);
         }else{
             $response->init(true);
             
-            $response->addUser($user);
+            $response->addUser($client);
             //continue traitement
         }
 
         parent::setJson($response);
     }
     
-    public function details($sessionId){
+    public function create(){
+        if ($this->request->is('options')) {
+            return $this->response;
+        }
+        $data = $this->request->data;
+        $this->loadModel("Clients");
         
-        $response = $this->_getXmlUserBySession($sessionId);
-        
-        if(!$response){
-            return false;
+        $response = new UsersRequestHandler\GetCreateResponse();
+        try{
+            $user = $this->Clients->CreateUser($data);
+            $response->init(true);
+            $response->addUser($user);
+        }catch (\Exception $e) {
+            $response->init(true);
+            $response->initError($e->getMessage());         
         }
         
-        $addressesLink = (string)$response->printTypes->attributes('xlink', true);
-        
-        $addresses = $this->_spreadshirt->getRequest($addressesLink, true, $sessionId);
-        debug($addresses);
-        
+        parent::setJson($response);
     }
-    private function get_headers_from_curl_response($response)
-    {
-        $headers = array();
+    public function recovery(){
+        if ($this->request->is('options')) {
+            return $this->response;
+        }
+        $data = $this->request->data;
+        $this->loadModel("Clients");
+        
+        $response = new UsersRequestHandler\GetRecoveryResponse();
+        try{
+            $this->Clients->RecoveryPassword($data["username"]);
+            $response->init(true);
+        }catch (\Exception $e) {
+            $response->init(true);
+            $response->initError($e->getMessage());         
+        }
+        
+        parent::setJson($response);
+    }
 
-        $header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
-
-        foreach (explode("\r\n", $header_text) as $i => $line)
-            if ($i === 0){
-                $headers['http_code'] = $line;
-            } else {
-                list ($key, $value) = explode(': ', $line);
-
-                $headers[$key] = $value;
-            }
-
-        return $headers;
+    public function getInfo($id){
+        
+        $this->loadModel("Clients");
+        $client = $this->Clients->GetInfo($id);
+        
+        debug($client);
+        die();
+        $response = new UsersRequestHandler\GetRecoveryResponse();
+        try{
+            $this->Clients->RecoveryPassword($data["username"]);
+            $response->init(true);
+        }catch (\Exception $e) {
+            $response->init(true);
+            $response->initError($e->getMessage());         
+        }
+        
+        parent::setJson($response);
     }
 }

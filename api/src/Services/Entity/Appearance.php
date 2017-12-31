@@ -20,10 +20,10 @@ class Appearance
         
         $this->id = $appearance->id;
         $this->name = $appearance->name;
-        $this->color = $appearance->color;
-        $this->thumbnail = $appearance->thumbnail;
-        $this->shopId = $appearance->shopId;
-        $this->priority = $appearance->priority;
+        $this->color = $appearance->name;
+        $this->thumbnail = $appearance->name;
+        /*$this->shopId = $appearance->shopId;
+        $this->priority = $appearance->priority;*/
     }
 }
 

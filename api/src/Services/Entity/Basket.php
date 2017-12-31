@@ -20,8 +20,16 @@ class Basket
             return;
         }
         
-        $this->id = (string)$basket->attributes()->id;
-        
+        $this->id = $basket->id;
+
+        foreach ($basket->items as $item){
+            $this->basketItems[] = new BasketItem($item);
+        }
+
+        $this->priceItems = $basket->priceItems;
+        $this->priceShipping = $basket->priceShipping;
+        $this->priceTotal = $basket->priceTotal;
+        /*
         if((string)$basket->getName() === 'reference'){
             return;
         }
@@ -33,10 +41,6 @@ class Basket
             }
         }
         
-        $this->priceItems = (float)$basket->priceItems->display;
-        $this->priceShipping = (float)$basket->shipping->price->display;
-        $this->priceTotal = (float)$basket->priceTotal->display;
-        
         foreach ($basket->basketItems->basketItem as $basketItem){
             $this->basketItems[] = new BasketItem($basketItem);
         }
@@ -46,7 +50,7 @@ class Basket
                 $this->discounts[] = new Discount($discount);
             }
         }
-        
+        */
     }
 }
 

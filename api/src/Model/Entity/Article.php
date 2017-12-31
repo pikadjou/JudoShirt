@@ -21,5 +21,7 @@ class Article
     public $product = null;
     public $categories = [];
     public $sizes = [];
+    public $appearances = [];
+    public $variations = [];
     
 }
