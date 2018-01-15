@@ -40,7 +40,7 @@ class VariationsTable extends AppTable
  
 //private
     private function _findVatiations($id){
-        $variations = $this->_findAndMap($id);
+        $variations = $this->_findAndMap(['id' => $id]);
 
         return $variations;
     }
@@ -54,7 +54,9 @@ class VariationsTable extends AppTable
 
         return json_decode($woo->http->getResponse()->getBody());
     }
-    private function _findAndMap($id, $option = []){
+    protected function _findAndMap($option = []){
+        $id = $option['id'];
+
         $variations = $this->_find($id, $option);
 
         return $this->_formatArray($variations);

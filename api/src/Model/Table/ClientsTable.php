@@ -15,9 +15,12 @@ class ClientsTable extends AppTable
         $data = $wp->get("wp/v2/users/me", $token);
         $data = json_decode($data);
 
-        debug($data);
-        $client = new Client();
-        $client->set($data, $token);
+        if(property_exists ($data, 'code')){
+            $client = null;
+        }else{
+            $client = new Client();
+            $client->set($data, $token);
+        }
 
         return $client;
 

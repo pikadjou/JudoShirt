@@ -93,7 +93,7 @@ class ProductsTable extends AppTable
         Cache\CacheModel::write($key, $response, "Externe");
         return $response;
     }
-    private function _findAndMap($options = []){
+    protected function _findAndMap($options = []){
         $data = $this->_find($options);
         
         return $this->_formatArray($data);

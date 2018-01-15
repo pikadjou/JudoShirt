@@ -12,6 +12,7 @@ class Order extends AppEntity
     public $items = [];
     public $billing;
     public $shipping;
+    public $coupons = [];
 
     function __construct() {
         parent::__construct();
@@ -28,8 +29,18 @@ class Order extends AppEntity
             $item = new OrderItem();
             $this->items[] = $item->set($article);
         }
-
+        foreach($entity->coupon_lines as $coupon){
+            $item = new Coupon();
+            $this->coupons[] = $item->set($coupon);
+        }
 
         return $this;
+    }
+
+    public function addCoupon($code){
+        $coupon = new Coupon();
+        $coupon->code = $code;
+
+        $this->coupons[] = $coupon;
     }
 }

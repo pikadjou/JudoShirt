@@ -20,13 +20,16 @@ class AppTable extends Table
 
         $return = [];
         foreach($entities as $entity){
-            $enti = $this->getNewModel();
-            $return[] = $enti->set($entity);
-
-            debug($enti);
+            $return[] = $this->_format($entity);
         }
-
-        debug($return);
         return $return;
+    }
+    protected function _format($entity){
+        $model = $this->getNewModel();
+        return $model->set($entity);
+    }
+    protected function _findAndMap($options = []){
+        $entities = $this->_find($options);
+        return $this->_formatArray($entities);
     }
 }

@@ -127,7 +127,7 @@ class ArticlesTable extends AppTable
 
         return json_decode($woo->http->getResponse()->getBody());
     }
-    private function _findAndMap($option = []){
+    protected function _findAndMap($option = []){
         $articles = $this->_find($option);
         return $this->_formatArray($articles);
     }

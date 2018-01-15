@@ -1,13 +1,7 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Basket;
-use App\Model\Entity\BasketItem;
-
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
-use Cake\Validation\Validator;
+use App\Model\Entity\OrderItem;
 
 use Cake\ORM\TableRegistry;
 
@@ -16,155 +10,139 @@ use Cake\ORM\TableRegistry;
  *
  * @property \Cake\ORM\Association\BelongsToMany $Designs
  */
-class BasketsTable extends Table
+class BasketsTable extends AppTable
 {
-    
     protected $_articlesModel = null;
 
     public function initialize(array $config)
     {
-        $this->entityClass('App\Model\Entity\BasketRecovery');
-
         $this->_articlesModel = TableRegistry::get('Articles');
     }
+    public function link($id, $clientId){
+        return $this->_link($id, $clientId);
+    }
 
-    public function getOneOrCreate($data){
+    public function getOne($id){
 
-        $clientsTable = TableRegistry::get('Clients');
-        $user = $clientsTable->GetActiveUser($data['token']);
+        $basket = $this->_getOne($id);
 
-        if($data['id'] === null){
-            $basket = $this->_create(property_exists($client, 'id') ? $client->id : null);
-        }else{
-            $basket = $this->_getOne($data['id']);
-            
-            if($basket === null){
-              $basket = $this->_create(property_exists($client, 'id') ? $client->id : null);
-            }
+        return $basket;
+    }
+    public function getOneOrCreate($client){
+
+        $id = ($client !== null) ? $client->id : null;
+        $basket = null;
+
+        if($id !== null){
+            $basket = $this->_getOneByClientId($id);
         }
-        $basket = $this->_fill($basket);
+            
+        if($basket === null){
+            $basket = $this->_create($id);
+        }
+        
         return $basket;
     }
-    public function addArticle($basket, $article){
+    public function addArticle($basketId, $article){
         
-        $item = new BasketItem();
-        $item->initByArticle($article);
+        $basket = $this->_addArticle($basketId, $article);
 
-        $item = $this->_fillItem($item);
-      
-        $basket->items[] = $item;
-        
-        $basket = $this->_fillPrice($basket);
-
-        $this->_save($basket);
         return $basket;
     }
-    public function deleteArticle($basket, $id){
-        return $this->_removeArticle($basket, $id);
+    public function deleteArticle($basketId, $id){
+        return $this->_updateArticle($basketId, $id, 0);
     }
 
-    public function updateArticleQuantity($basket, $id, $quantity){
-        
-        return $this->_updateArticle($basket, $id, $quantity);
+    public function updateArticleQuantity($basketId, $id, $quantity){
+        return $this->_updateArticle($basketId, $id, $quantity);
+    }
+    public function addCoupon($basketId, $couponCode){
+        return $this->_addCoupon($basketId, $couponCode);
     }
 
 // private methode
     private function _create($clientId){
-        $basketRecovery = $this->_getOneByClientId($clientId);
-
-        if($basketRecovery !== null){
-            return $basketRecovery;
+        
+        $data = [];
+        if($clientId){
+            $data["customer_id"] = $clientId;
         }
-        $basketRecovery = $this->newEntity();
-        $basketRecovery->client_id = $clientId;
-        $basketRecovery->content = json_encode(new Basket());
 
-        if ( $this->save($basketRecovery)) {
-            return $basketRecovery;
-        }
-        return $basketRecovery;
+        return $this->_save($data);
     }
     private function _save($basket){
-        $basketRecovery = $this->_getOne($basket->id);
-        $basketRecovery->content = json_encode($basket);
-
-        $this->save($basketRecovery);
-
+        $basket = TableRegistry::get('Orders')->createBasket($data);
+        return $basket;
+    }
+    protected function _update($basket){
+        $basket = TableRegistry::get('Orders')->updateBasket($basket->id, $basket);
+        return $basket;
     }
     private function _getOne($id){
-        $basket = $this->find()->where(["id" => $id])->first();
+        if($id === null){
+            return null;
+        }
+        $basket = TableRegistry::get('Orders')->getBasketById($id);
         return $basket;
     }
     private function _getOneByClientId($id){
         if($id === null){
             return null;
         }
-        $basket = $this->find()->where(["client_id" => $id])->first();
+        $basket = TableRegistry::get('Orders')->getBasketByClientId($id);
         return $basket;
     }
-    private function _fill($basketRecovery){
-        $basket = json_decode($basketRecovery->content);
-        $basket->id = $basketRecovery->id;
+    private function _link($id, $clientId){
+        $basket = $this->getOne($id);
 
-        foreach($basket->items as $item){
-            $item = $this->_fillItem($item);
-        }
-        $basket = $this->_fillPrice($basket);
+        $basket->clientId = $clientId;
 
-        $this->_save($basket);
-
+        $basket = $this->_update($basket);
         return $basket;
     }
-    private function _fillItem($item){
+    private function _addArticle($basketId, $article){
 
-        $article = $this->_articlesModel->getVariation($item->articleId, $item->variationId);
+        $item = new OrderItem();
+        $item->initByArticle($article);
 
-        $variation = $article->variations[0];
-        $item->id = $variation->id;
-        $item->priceItem = (float)$variation->price;
-        $item->price = $item->priceItem * $item->quantity;
-        $item->pictureLink = $variation->image;
-        $item->size = $variation->size;
-        $item->appearance = $variation->appearance;
+        $basket = $this->getOne($basketId);
+        $basket->items[] = $item;
         
-        
-        return $item;
-    }
-    private function _fillPrice($basket){
+        $basket = $this->_update($basket);
 
-        $total = 0;
-        foreach($basket->items as $item){
-            $total += $item->price;
-        }
-        $basket->priceItems = $total;
-        $basket->priceShipping = 10;
-        $basket->priceTotal = $basket->priceItems + $basket->priceShipping;
         return $basket;
     }
-    private function _removeArticle($basket, $id){
+    private function _removeArticle($basketId, $id){
+        $basket = $this->getOne($basketId);
         foreach($basket->items as $k => $item){
             if($item->id === $id){
                 array_splice($basket->items, $k, 1);
             }
         }
 
-        $basket = $this->_fillPrice($basket);
-        
-        $this->_save($basket);
-
+        $basket = $this->_update($basket);
         return $basket;
     }
-    private function _updateArticle($basket, $id, $quantity){
+    private function _updateArticle($basketId, $id, $quantity){
+
+        $basket = $this->getOne($basketId);
         foreach($basket->items as $k => $item){
             if($item->id === $id){
                 $item->quantity = $quantity;
-                $item = $this->_fillItem($item);
                 break;
             }
         }
-        $basket = $this->_fillPrice($basket);
-        $this->_save($basket);
+        $basket = $this->_update($basket);
 
+        return $basket;
+    }
+
+    private function _addCoupon($id, $couponCode){
+        $basket = $this->getOne($id);
+
+        $basket->addCoupon($couponCode);
+        
+        $basket = $this->_update($basket);
         return $basket;
     }
 }
