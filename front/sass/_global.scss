@@ -1,0 +1,17 @@
+$foundation-palette: (
+    primary : #2196F3,
+    secondary: #767676,
+    success: #3adb76,
+    warning: #ffae00,
+    alert: #cc4b37,
+) !default;
+
+$white-color: #ffffff;
+/*$path-foundation : "node_modules/foundation-sites/";
+$path-scss-foundation : $path-foundation + "scss/";*/
+
+@import 'node_modules/foundation-sites/scss/global';
+
+
+@import 'node_modules/foundation-sites/scss/util/util';
+@import './utils/util';

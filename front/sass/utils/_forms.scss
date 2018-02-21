@@ -1,0 +1,10 @@
+@import "global";
+@import 'node_modules/foundation-sites/scss/forms/forms';
+
+@mixin wa-forms{
+    @include foundation-forms;
+
+    .input-group{
+        margin: 0;
+    }
+}

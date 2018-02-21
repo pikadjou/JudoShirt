@@ -1,0 +1,25 @@
+@import "global";
+
+.sidebar{
+    margin-top: -50px;
+    & > div{
+        margin-bottom: 15px;
+    }
+    .menu{
+        padding: 30px;
+        background: $white-color;
+        border: 1px solid black;
+    }
+    .info{
+        background: #00B1A6;
+        padding: 30px;
+    }
+    .partners{
+        background: #2196F3;
+        padding: 30px;
+    }
+    .social{
+        text-align: center;
+        font-size: rem-calc(25);
+    }
+}

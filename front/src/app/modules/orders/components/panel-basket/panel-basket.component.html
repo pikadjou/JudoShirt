@@ -1,0 +1,14 @@
+<div class="panel-backet" [class.open]="open">
+  <div class="target row collapse align-middle" (click)="toggle()">
+    <div class="label columns small-9">
+      <i class="fas fa-shopping-cart"></i>
+      Mon panier
+    </div>
+    <div class="number columns">
+      2
+    </div>
+  </div>
+  <div class="content" *ngIf="open">
+    Baaaaaaaasket content
+  </div>
+</div>

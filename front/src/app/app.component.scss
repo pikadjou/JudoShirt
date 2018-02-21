@@ -1,0 +1,9 @@
+@import "global";
+
+@import "utils/forms";
+@include wa-forms();
+
+a{
+    color: $white-color;
+    text-decoration: none;
+}

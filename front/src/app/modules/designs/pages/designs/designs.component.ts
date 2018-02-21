@@ -5,7 +5,7 @@ import { DesignsComponent } from 'app/modules/designs/components/designs/designs
 @Component({
   selector: 'app-pages-designs',
   templateUrl: './designs.component.html',
-  styleUrls: ['./designs.component.css']
+  styleUrls: ['./designs.component.scss']
 })
 export class DesignsPageComponent implements OnInit {
 

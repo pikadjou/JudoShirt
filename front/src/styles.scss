@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@charset 'utf-8';
+
+// Dependencies
+@import 'node_modules/foundation-sites/_vendor/normalize-scss/sass/normalize';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/helpers/missing-dependencies';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/helpers/true';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/functions/contain';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/functions/purge';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/functions/remove';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/functions/replace';
+@import 'node_modules/foundation-sites/_vendor/sassy-lists/stylesheets/functions/to-list';
+
+@import "global";
+
+@import 'node_modules/foundation-sites/scss/grid/grid';
+@import 'node_modules/foundation-sites/scss/components/flex';
+
+@include foundation-flex-classes;
+@include foundation-flex-grid;
+
+@include foundation-global-styles;

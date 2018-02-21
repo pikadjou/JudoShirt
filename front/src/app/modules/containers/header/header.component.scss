@@ -1,0 +1,7 @@
+@import "global";
+
+$header-padding: rem-calc(10px) !default;
+#header{
+    background-color: $primary-color;
+    padding: $header-padding;
+}

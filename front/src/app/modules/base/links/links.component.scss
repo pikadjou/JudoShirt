@@ -1,0 +1,13 @@
+@import "utils/menu";
+
+.link-list{
+    a{
+        font-size: rem-calc(12px);
+        display: block;
+        text-align: center;
+    }
+    svg{
+        color:$white-color;
+        font-size: rem-calc(10px);
+    }
+}

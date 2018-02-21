@@ -1,0 +1,72 @@
+<div class="panel-account">
+  <div style="display:none">
+    <div class="authenticated">
+      <div class="my-account">
+        <a>
+          Mon compte
+        </a>
+        <div class="account-panel">
+          <div class="account-panel-content my-account-panel">
+            <ul class="menu vertical">
+              <li>
+                <a >
+                    Mes details
+                </a>
+              </li>
+              <li>
+                <a>
+                  Mes commandes
+                </a>
+              </li>
+              <li class="deconnection">
+                  <a>
+                      Deconnection
+                  </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="unauthenticated">
+      <div class="connection" [class.open]="open">
+        <a (click)="togglePanel()" class="target">
+          Connection
+        </a>
+        <div *ngIf="open">
+          <div class="account-panel-content connection-panel">
+            <div class="pseudo">
+              <label>
+                Pseudo ou email
+                <input type="text" placeholder="Pseudo ou email">
+              </label>
+            </div>
+            <div class="password">
+              <label>
+                Mot de passe
+                <input type="password" placeholder="Mot de passe">
+              </label>
+            </div>
+            <div class="forget">
+              <a hre="#">
+                Mot de passe oublié?
+              </a>
+            </div>
+            <div class="submit">
+              <button class="button button-action expanded">
+                <span>Se Connecter</span>
+              </button>
+            </div>
+            <div class="register">
+              <a class="button expanded">
+                <span>S'inscrire</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

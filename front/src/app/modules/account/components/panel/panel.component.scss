@@ -1,0 +1,24 @@
+@import "global";
+
+.panel-account{
+    position: relative;
+    .target{
+        padding: 10px;
+        display: block;
+        text-align: center;
+        cursor: pointer;
+    }
+    .account-panel-content{
+        position: absolute;
+        width: 150%;
+        background-color: $white-color;
+        padding: 20px;
+    }
+
+    .open{
+        .target{
+            color: $primary-color;
+            background-color: $white-color;
+        }
+    }
+}

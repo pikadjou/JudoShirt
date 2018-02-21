@@ -7,7 +7,7 @@ import { IGetDesignsRequest, IGetDesignsResponse } from 'app/services/designs/ID
 @Component({
   selector: 'app-design',
   templateUrl: './design.component.html',
-  styleUrls: ['./design.component.css'],
+  styleUrls: ['./design.component.scss'],
   providers: [ DesignsService ]
 })
 export class DesignComponent implements OnInit {
